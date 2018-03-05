@@ -1,0 +1,258 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% "ModernCV" CV and Cover Letter
+% LaTeX Template
+% Version 1.3 (29/10/16)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Xavier Danaux (xdanaux@gmail.com) with modifications by:
+% Vel (vel@latextemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+% Important note:
+% This template requires the moderncv.cls and .sty files to be in the same
+% directory as this .tex file. These files provide the resume style and themes
+% used for structuring the document.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%   PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[11pt,a4paper,sans]{moderncv}
+\moderncvstyle{casual} % CV theme - options include: 'casual' (default), 'classic', 'oldstyle' and 'banking'
+\moderncvcolor{orange} % CV color - options include: 'blue' (default), 'orange', 'green', 'red', 'purple', 'grey' and 'black'
+\usepackage[scale=0.75]{geometry} % Reduce document margins
+
+%----------------------------------------------------------------------------------------
+%   NAME AND CONTACT INFORMATION SECTION
+%----------------------------------------------------------------------------------------
+
+\firstname{Kamil} % Your first name
+\familyname{Czarnecki} % Your last name
+
+\title{Curriculum Vitae}
+\address{Calchaslaan 4}{5631CC, Eindhoven}% optional, remove / comment the line if not wanted; the "postcode city" and "country" arguments can be omitted or provided empty
+\mobile{+31~(633)~241~768}
+\email{kamil.czarnecki@outlook.com}
+\homepage{facebook.com/ExclusiveDance4All}{facebook.com/ExclusiveDance4All} % The first argument is the url for the clickable link, the second argument is the url displayed in the template - this allows special characters to be displayed such as the tilde in this example
+%\extrainfo{additional information}
+\extrainfo{linkedIn: http://lnkd.in/9Qv2sD}
+\extrainfo{GitHub: https://github.com/kamoyl}
+\photo[80pt][0.2pt]{pictures/linkedinkamil} % The first bracket is the picture height, the second is the thickness of the frame around the picture (0pt for no frame)
+\quote{"Logic will get you from A to Z; imagination will get you everywhere." - Albert Einstein}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\makecvtitle % Print the CV title
+
+\section{Summary}
+
+\cventry{}{{\footnotesize IT Specialist, Systems Engineer, IT Manager and Project Manager, {\Large responsible} for implementing and managing IT projects with {\large huge} technical {\large knowledge and experience}. Analysing Operating Enviroments and Business Needs with {\Large excellent organisation and communication} skills. Very {\large organised} person with good {\large analytic} and logic thinking, {\large honest}, dutifull and {\large creative}. Good {\Large team player}. An experienced problem {\large solver}, who adapts to challenging situations and {\Large learns quickly and constantly}. An aptitude for hard work with an ability to manage multiple tasks {\large efficiently} and a positive 'can-- do' attitude. Commitment has been taken by me very seriously.
+\footnotesize My long-term goal is to be a {\large Team Leader} or an IT {\Large Architect}. I'm very interested in {\Large R\&D} work, or services {\large support} area}}{}{}{}{}
+
+%----------------------------------------------------------------------------------------
+%   WORK EXPERIENCE SECTION
+%----------------------------------------------------------------------------------------
+
+\section{Experience}
+\cventry{Feb2016 -- present}{Senior System and Network Engineer}{\textsc{Koninklijke KPN N.V.,}}{Den Haag, the Netherlands}{}{Main activities and responsibilities:
+\begin{itemize}
+\item Automation of management of Teradata environment:
+  \begin{itemize}
+    \item Generating performance and security reports (Teradata client tools, bash, python);
+    \item Creating Jira tickets based on automatically generated performance report;
+    \item Sending notifications regarding to issues (email, slack) with automatically generated documentation in \LaTeX;
+    \item Management confluence pages with current and history reports;
+  \end{itemize}
+\item Management of automation deployment platform
+  \begin{itemize}
+    \item management firewall access;
+    \item management of deployment system (Jenkins);
+    \item slack integration;
+    \item email system management;
+  \end{itemize}
+\item design and management of tools for zoning relaying;
+\item architecture and design consultations;
+\end{itemize}}
+%--------------------------------------------------------------------------------------------------------------
+\cventry{Jan2015 -- Jan2016}{Linux System Engineer}{\textsc{CompareGroup}}{Utrecht, the Netherlands}{}{Main activities and responsibilities:
+{\begin{itemize}
+\item Automation and configuration management of infrastructure (Puppet/MCollective/git/r10k/jenkins);
+\item Linux/Windows engineering;
+\item VMWare ESXi maintenence and management;
+\item Management of hardware (DELL servers and blades, EMC and Equallogic storage solutions etc.) and software server solutions;
+\item Design and implementation of innovations;
+\item Setup and maintenance of file (CEPH, CIFS), and DB systems (Percona MySQL);
+\item Implementation and maintenence of backup solution (Bacula/Bareos);
+\item Office desktop and network support;
+\end{itemize}}
+}
+%--------------------------------------------------------------------------------------------------------------
+\cventry{Aug2014 -- Nov2014}{System\&Security Engineer}{\textsc{CMNTY}}{Einhoven, the Netherlands}{}{Main activities and responsibilities:
+{\begin{itemize}
+\item Security of infrastructure systems and customer cloud services -- procedures and instructions creation;
+\item Automation and configuration management of infrastructure and customer systems;
+\item Design and maintenance web--accelerators/reverse--proxies, httpd servers (also active/active nodes), MySQL clusters (with DRBD backend) etc.;
+\item Cluster solution design (based on RedHat pacemaker/corosync solutions);
+\item Office desktop and network support;
+\item Involvement in procedures and best practices in IT area;
+\end{itemize}}
+}
+%--------------------------------------------------------------------------------------------------------------
+\cventry{aug2013 -- aug2014}{System\&Tools Engineer}{\textsc{Backbase}}{Amsterdam, the Netherlands}{}{Main activities and responsibilities:
+{\begin{itemize}
+\item Setup and maintenance of file-- and web servers (Linux\&Windows Server);
+\item Setup and maintenance of Application (Tomcat, JBoss) and/or Database Servers (MSSQL\&MySQL);
+\item Setup and maintenance of network infrastructure (VPN/Router/Switches) and security management;
+\item Setup and maintenance VM's infrastructure: vSphere\&AWS infrastructure;
+\item Design and setup of RedHat clusters (pacemaker/cman/corosync);
+\item Design and setup web--accellerators, proxies, https terminators, web cache solutions (varnish, pound, apache);
+\item Automation of deployment and installation (puppet) of infrastructure systems/services;
+\item Backup management;
+\item Co--define infrastructure policies and procedures;
+\item Mentor and Cross--train departmental staff, and collaborate on inter--departmental projects.
+\end{itemize}}
+}
+%--------------------------------------------------------------------------------------------------------------
+\cventry{aug2012 -- may2013}{Technical Solution Manager}{\textsc{IBM Global Services Delivery Center Sp. z o.o.}}{Wroclaw, Poland}{}{Main activities and responsibilities:
+{\begin{itemize}
+\item{manage technical team of: developers, specialists, customer support etc.}
+\item{manage customer requirements and links those requirements to IBM's solution}
+\item{preparation of RfS's}
+\end{itemize}}
+}
+%--------------------------------------------------------------------------------------------------------------
+\cventry{jul2010 -- feb2011}{IT Specialist}{\textsc{SwissRe AG (IBM contractor)}}{Zurich, Switzerland}{}{Main activities and responsibilities:
+{\begin{itemize}
+\item{maintenance of Unix (AIX/Solaris/Linux SLES)/Windows operating environment}
+\item{event handling, incidents solving and support changes (RfC/RfD)}
+\item{maintenance and management of VMWare environent (vSphere)}
+\end{itemize}}
+}
+%--------------------------------------------------------------------------------------------------------------
+\cventry{mar2010 -- jul2012}{Senior IT Specialist/shift leader of Unix team}{\textsc{IBM Global Services Delivery Center Sp. z o.o.}}{Wroclaw, Poland}{}{Main activities and responsibilities:
+{\begin{itemize}
+\item{administration and maintenance of Unix operating environment: SLES (physical and VMWared), AIX (LPAR) and Solaris}
+\item{management of PowerHA and Veritas Cluster (Solaris environment)}
+\item{maintenance and management of VMWare environment (vSphere with HA, live migration feature)}
+\item{incident (resolving customer tickets) and change management (implementation of changes)}
+\item{security issues management and privileged account management}
+\item{redesign of customer systems}
+\end{itemize}}
+}
+%--------------------------------------------------------------------------------------------------------------
+\cventry{jan2008 -- feb2010}{IT Specialist}{\textsc{Bank Zachodni WBK S.A.}}{Wroclaw, Poland}{}{Main activities and responsibilities:
+{\begin{itemize}
+\item{administration and maintenance of Wintel/Unix environment (Windows 2003 servers, fileservers, AD, windows cluster, MOSS 2007, SLES, Tomcat, AIX 5L)}
+\item{management (resolving, dispatching and statistical analysis) of task changes and incident tickets;}
+\item{implementation of Bank Intranet solution (based on software load balancers (Apache reverse proxy) and Tomcat (application server) with AD access control)}
+\end{itemize}}
+}
+%--------------------------------------------------------------------------------------------------------------
+\cventry{aug2005 -- sep2007}{Project manager}{\textsc{Wroclaw Centre for Technology Transfer}}{Wroclaw, Poland}{}{Main activities and responsibilities:
+{\begin{itemize}
+\item{management of two projects: Rozwój Regionalnego Systemu Innowacji (Building and management the network of technology transfer between universities and companies) and Nanomat (Supraregional Network for Nanotechnology Materials);}
+\item{managment of IT system, consultancy in implementation of MS Project Server in WCTT}
+\end{itemize}}
+}
+%--------------------------------------------------------------------------------------------------------------
+\cventry{apr2004 -- dec2008}{IT specialist}{\textsc{Inter-system Sp. z o.o.}}{Wroclaw, Poland}{}{Main activities and responsibilities:
+{\begin{itemize}
+\item{design and build whole IT system: from servers and workstations to implementation of applications:}
+\begin{itemize}
+\item{operating systems (Linux RHEL, Windows 2003 Server with AD, Windows XP) and security management (firewall, IDS etc.)}
+\item{DB (MS SQL) administration;}
+\item{backup planning and automation}
+\end{itemize}
+\end{itemize}}
+}
+%--------------------------------------------------------------------------------------------------------------
+\cventry{may2001 -- jul2005}{Manager of R\&D Department}{\textsc{Alkam Group Sp. z o.o./SSI S.A.}}{Wroclaw, Poland}{}{Main activities and responsibilities:
+{\begin{itemize}
+\item{management and design of CCTV projects;}
+\item{consultancy of security systems design (CCTV);}
+\item{architecture creation, design and development of DIGIWinner system (distributed client--server CCTV system)}
+\item{documentation and specification creation (\LaTeXe{} with CVS);}
+\item{management of IT department;}
+\item{design and implementation of IT system based on KVM virtualization hypervisor (with HA and live migration features)}
+\end{itemize}}
+}
+%--------------------------------------------------------------------------------------------------------------
+\cventry{jul1999 -- apr2002}{IT manager}{\textsc{Wroclaw Hospital of Mental Health}}{Wroclaw, Poland}{}{Main activities and responsibilities:
+{\begin{itemize}
+\item{design and build IT system in hospital (from network to applications);}
+\item{configuration, administration and maintenance IT system in hospital (HW and SW);}
+\item{management of IT department}
+\end{itemize}}
+}
+%--------------------------------------------------------------------------------------------------------------
+\subsection{One-man-business, owner}
+\cventry{nov2003 -- jun2013}{Consultant, IT specialist, IT architect, manager}{\textsc{ITC Kamil Czarnecki}}{Wroclaw, Poland}{}{Main activities and responsibilities:
+{\begin{itemize}
+\item{creating architecture and design (based on either physical or virtual techniques: KVM, VMWare, Hyper-V) of customer IT systems (SME's)}
+\item{administration of Unix/Linux/Windows environments}
+\item{administration and implementation of servers, storage, networks, security and applications (ERP/MRP/CRM)}
+\item{consultancy and implementation in security area (access control, secure system management, central logging, firewalling etc.)}
+\end{itemize}}
+}
+%--------------------------------------------------------------------------------------------------------------
+\subsection{Parttime job next to study}
+\cventry{oct1996 -- nov2000}{working student -- IT}{\textsc{Wroclaw University of Technology, Department of Computer Science and Management}}{Wroclaw, Poland}{}{Main activities and responsibilities:
+{\begin{itemize}
+\item{administration, configuration, support etc. of Department of Computer Science servers and workstations (Debian linux, Solaris, SCO and AIX on RS/6000), applications and network;}
+\item{responsibility for student IT laboratory}
+\end{itemize}}
+}
+
+%----------------------------------------------------------------------------------------
+%       EDUCATION SECTION
+%----------------------------------------------------------------------------------------
+
+\section{Education}
+
+\cventry{2007}{Wroclaw Centre for Technology Transfer}{}{Wroclaw, Poland}{}{Quality Management}
+\cventry{1996 -- 1999}{Wroclaw University of Technology}{M.Sc. Eng. in Computer Science and Management}{Wroclaw, Poland}{}{Control Systems}
+\cventry{1994 -- 1998}{Wroclaw University of Technology}{M.Sc. Eng. in Biotechnology}{Wroclaw, Poland}{}{Molecular Biology and Genetic Engineering}
+\cventry{1991 -- 1994}{Secondary School (VWO, Junior High School) No. XII}{}{}{Wroclaw, Poland}{}
+
+\section{Languages}
+\cvitemwithcomment{Polish}{Mothertongue}{}
+\cvitemwithcomment{English}{Fluent}{}
+\cvitemwithcomment{German}{Intermediate}{}
+\cvitemwithcomment{Dutch}{Basic}{}
+
+\section{Trainings}{}
+\cvitem{}{Red Hat Ceph Storage Architecture and Administration}
+\cvitem{}{AIX 6 Jumpstart for UNIX Professionals}
+\cvitem{}{PowerHA for AIX I: Implementation, Configuration and Administration}
+\cvitem{}{PowerHA for AIX II: Extended Administration and Problem Determination}
+\cvitem{}{System-p LPAR and Virtualization I: Planning and Configuration}
+\cvitem{}{Solaris 10 System Administration (Exam CX-310-202), Part I \& II}
+\cvitem{}{MOSS 2007 - Availabililty, Backup and Restore}
+\cvitem{}{Implementing and Managing Microsoft Exchange Server 2003}
+\cvitem{}{IBM IT Architect Foundation Program}
+\cvitem{}{MCP ID\# 2449652}
+\cvitem{}{Advanced Certificate In English}
+\cvitem{}{Rudiments of Project Management}
+
+\section{Miscellaneous}
+\cvitem{Artistic skills}{Professional Ballroom Dancer had trained for over 15 years}
+\cvitem{Driving license}{B type}
+
+\section{Interests}
+
+\renewcommand{\listitemsymbol}{-~} % Changes the symbol used for lists
+
+\cvlistdoubleitem{Dancing}{Snowboarding}
+\cvlistdoubleitem{Psychology}{Science\&Technology}
+\cvlistdoubleitem{Fitness}{Sport}
+
+\end{document}
