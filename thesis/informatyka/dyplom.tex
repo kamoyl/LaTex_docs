@@ -1,6 +1,6 @@
 \documentclass[a4paper,polish,titlepage,12pt]{report}
-\oddsidemargin 1.0cm
-\textwidth 15.2cm
+%\oddsidemargin 1.0cm
+%\textwidth 15.2cm
 \usepackage[T1]{fontenc}
 \usepackage{babel}
 \usepackage{textcomp}
@@ -10,8 +10,30 @@
 \usepackage{pslatex}
 \pagestyle{fancy}
 \lhead{}
-%%\bibliographystyle{cplplain}
 \bibliographystyle{unsrt}
+
+\usepackage{times}
+\usepackage{hyperref}
+\usepackage{xcolor,listings}
+\usepackage{array}
+\usepackage{color}
+\usepackage{textcomp}
+\lstset{upquote=true}
+%\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{wrapfig}
+\usepackage[margin=1.3in]{geometry}
+\graphicspath{ {rysunki/} }
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+%    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+    colorlinks,
+    citecolor=blue,
+    filecolor=blue,
+    urlcolor=blue
+}
+
 \begin{document}
 
 \begin{titlepage}
