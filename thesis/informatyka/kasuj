@@ -1,4 +1,5 @@
 rm -f dyplom.aux
+rm -rf dyplom.out
 rm -f dyplom.bbl
 rm -f dyplom.blg
 rm -f dyplom.dvi
