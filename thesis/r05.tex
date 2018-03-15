@@ -1,141 +1,141 @@
-\chapter{System do zarz±dzania wielokomputerowym serwerem WWW}
+\chapter{System do zarzÄ…dzania wielokomputerowym serwerem WWW}
 \label{r05}
 
-\section{Wstêp}
-W tym rozdziale zostanie przedstawiony opis konfiguracji stanowiska u¿ytego do badañ nad charakterystykami 
-ró¿nych konfiguracji i algorytmów klastra serwerów WWW zestawionego w ¶rodowisku systemu AIX i Windows NT z 
-wykorzystaniem pakietu IBM WebSphere Performance Pack. Opisana zostanie konfiguracja sieci komputerowej, w której zosta³y 
-przeprowadzone badania oraz charakterystyka poszczególnych testów.
+\section{WstÄ™p}
+W tym rozdziale zostanie przedstawiony opis konfiguracji stanowiska uÅ¼ytego do badaÅ„ nad charakterystykami 
+rÃ³Å¼nych konfiguracji i algorytmÃ³w klastra serwerÃ³w WWW zestawionego w Å›rodowisku systemu AIX i Windows NT z 
+wykorzystaniem pakietu IBM WebSphere Performance Pack. Opisana zostanie konfiguracja sieci komputerowej, w ktÃ³rej zostaÅ‚y 
+przeprowadzone badania oraz charakterystyka poszczegÃ³lnych testÃ³w.
 
-\section{Charakterystyka u¿ytego oprogramowania}
+\section{Charakterystyka uÅ¼ytego oprogramowania}
 
 \subsection{IBM WebSphere Performance Pack}
 
-IBM WebSphere Performance Pack jest oprogramowaniem infrastrukturalnym WWW wi±¿±cym ze sob± skalowalno¶æ, niezawodno¶æ i 
-wydajno¶æ, które to cechy s± niezbêdne dla aplikacji e-biznesu zarówno w ¶rodowiskach lokalnych jak i rozproszonych. Jego 
-funkcje ³±cz± ze sob± znakomity caching, zarz±dzanie plikami i równowa¿enie obci±¿enia, które razem kompensuj± wrodzone 
-s³abo¶ci Internetu by wspieraæ krytyczne aplikacje biznesowe.
+IBM WebSphere Performance Pack jest oprogramowaniem infrastrukturalnym WWW wiÄ…Å¼Ä…cym ze sobÄ… skalowalnoÅ›Ä‡, niezawodnoÅ›Ä‡ i 
+wydajnoÅ›Ä‡, ktÃ³re to cechy sÄ… niezbÄ™dne dla aplikacji e-biznesu zarÃ³wno w Å›rodowiskach lokalnych jak i rozproszonych. Jego 
+funkcje Å‚Ä…czÄ… ze sobÄ… znakomity caching, zarzÄ…dzanie plikami i rÃ³wnowaÅ¼enie obciÄ…Å¼enia, ktÃ³re razem kompensujÄ… wrodzone 
+sÅ‚aboÅ›ci Internetu by wspieraÄ‡ krytyczne aplikacje biznesowe.
 
-IBM WebSphere Performance Pack sk³ada siê z trzech g³ównych elementów, które to pozwalaj± zredukowaæ obci±¿enie serwera WWW, 
-zwiêkszyæ dyspozycyjno¶æ zasobów (zawarto¶ci) i zwiêkszyæ wydajno¶æ serwera WWW \cite{GettingStarted}:
+IBM WebSphere Performance Pack skÅ‚ada siÄ™ z trzech gÅ‚Ã³wnych elementÃ³w, ktÃ³re to pozwalajÄ… zredukowaÄ‡ obciÄ…Å¼enie serwera WWW, 
+zwiÄ™kszyÄ‡ dyspozycyjnoÅ›Ä‡ zasobÃ³w (zawartoÅ›ci) i zwiÄ™kszyÄ‡ wydajnoÅ›Ä‡ serwera WWW \cite{GettingStarted}:
 \begin{description}
-\item[Wspó³dzielenie plików]\
+\item[WspÃ³Å‚dzielenie plikÃ³w]\
 
-Komponent zajmuj±cy siê wspó³dzieleniem plików, znany jako IBM AFS Enterprise File System (AFS), jest systemem plików 
-pozwalaj±cym wspó³pracuj±cym hostom (klientom i serwerom) efektywnie wspó³dzieliæ zasoby systemów plików poprzez 
-zarówno LAN jak i WAN. Prowadzi on replikacjê informacji pomiêdzy wieloma serwerami w czasie rzeczywistym, gwarantuj±c przy 
-tym spójno¶æ danych, dostêpno¶æ, stabilno¶æ i efektywno¶æ w administrowaniu, wymaganych przez du¿e, rozproszone serwisy webowe.
+Komponent zajmujÄ…cy siÄ™ wspÃ³Å‚dzieleniem plikÃ³w, znany jako IBM AFS Enterprise File System (AFS), jest systemem plikÃ³w 
+pozwalajÄ…cym wspÃ³Å‚pracujÄ…cym hostom (klientom i serwerom) efektywnie wspÃ³Å‚dzieliÄ‡ zasoby systemÃ³w plikÃ³w poprzez 
+zarÃ³wno LAN jak i WAN. Prowadzi on replikacjÄ™ informacji pomiÄ™dzy wieloma serwerami w czasie rzeczywistym, gwarantujÄ…c przy 
+tym spÃ³jnoÅ›Ä‡ danych, dostÄ™pnoÅ›Ä‡, stabilnoÅ›Ä‡ i efektywnoÅ›Ä‡ w administrowaniu, wymaganych przez duÅ¼e, rozproszone serwisy webowe.
 \item[Keszowanie i filtrowanie]\
 
-Komponent odpowiedzialny za pamiêæ podrêczn± i filtrowanie zawarto¶ci webowej, znany jako IBM Web Traffic Express (WTE) jest 
-proxy serwerem, który dostarcza wysoce skalowalnych funkcji keszowania i filtrowania zwi±zanych z przesy³aniem ¿±dañ webowych 
-i dostarczaniem adresów URL. Modu³ ten jest w stanie zredukowaæ kosztown± szeroko¶æ wykorzystywanego pasma dostêpowego i w 
-szybszy sposób, oraz z mniejszymi opó¼nieniami dostarczaæ informacje do klienta.
-\item[Równowa¿nie obci±¿enia]\
+Komponent odpowiedzialny za pamiÄ™Ä‡ podrÄ™cznÄ… i filtrowanie zawartoÅ›ci webowej, znany jako IBM Web Traffic Express (WTE) jest 
+proxy serwerem, ktÃ³ry dostarcza wysoce skalowalnych funkcji keszowania i filtrowania zwiÄ…zanych z przesyÅ‚aniem Å¼Ä…daÅ„ webowych 
+i dostarczaniem adresÃ³w URL. ModuÅ‚ ten jest w stanie zredukowaÄ‡ kosztownÄ… szerokoÅ›Ä‡ wykorzystywanego pasma dostÄ™powego i w 
+szybszy sposÃ³b, oraz z mniejszymi opÃ³Åºnieniami dostarczaÄ‡ informacje do klienta.
+\item[RÃ³wnowaÅ¼nie obciÄ…Å¼enia]\
 
-Modu³ odpowiedzialny za równowa¿enie obci±¿eñ, znany jako IBM SecureWay Network Dispatcher jest serwerem zdolnym do 
-dynamicznego monitorowania i równowa¿enia aplikacji i serwerów TCP w czasie rzeczywistym. G³ówn± zalet± tego komponentu jest 
-mo¿liwo¶æ dynamicznego zwi±zania ze sob± wielu serwerów TCP tak, ¿e wygl±daj± z sieci jak pojedynczy logicznie serwer.
+ModuÅ‚ odpowiedzialny za rÃ³wnowaÅ¼enie obciÄ…Å¼eÅ„, znany jako IBM SecureWay Network Dispatcher jest serwerem zdolnym do 
+dynamicznego monitorowania i rÃ³wnowaÅ¼enia aplikacji i serwerÃ³w TCP w czasie rzeczywistym. GÅ‚Ã³wnÄ… zaletÄ… tego komponentu jest 
+moÅ¼liwoÅ›Ä‡ dynamicznego zwiÄ…zania ze sobÄ… wielu serwerÃ³w TCP tak, Å¼e wyglÄ…dajÄ… z sieci jak pojedynczy logicznie serwer.
 \end{description}
 
-Ka¿dy z elementów IBM WebSphere Performance Pack mo¿e byæ zainstalowany oddzialenie od pozosta³ych -- tak¿e na innych 
-komputerach. Dziêki zwi±zaniu tylu elementów w jednym pakiecie - klient otrzymuje oprogramowanie o scentralizowanej 
+KaÅ¼dy z elementÃ³w IBM WebSphere Performance Pack moÅ¼e byÄ‡ zainstalowany oddzialenie od pozostaÅ‚ych -- takÅ¼e na innych 
+komputerach. DziÄ™ki zwiÄ…zaniu tylu elementÃ³w w jednym pakiecie - klient otrzymuje oprogramowanie o scentralizowanej 
 administracji i zminimalizowanym koszcie. 
 
-Procedury instalacyjne pozwalaj± wybraæ, który komponent nale¿y zainstalowaæ i na jakich maszynach w sieci maj± siê one 
-znajdowaæ. Oprogramowanie to jest portowane na nastêpuj±ce platformy: AIX (od wersji 4.2.1), Solaris (od wersji 2.6) oraz 
+Procedury instalacyjne pozwalajÄ… wybraÄ‡, ktÃ³ry komponent naleÅ¼y zainstalowaÄ‡ i na jakich maszynach w sieci majÄ… siÄ™ one 
+znajdowaÄ‡. Oprogramowanie to jest portowane na nastÄ™pujÄ…ce platformy: AIX (od wersji 4.2.1), Solaris (od wersji 2.6) oraz 
 MS Windows NT i 2000.
 
 \subsection{Web Traffic Express}
-WTE jest naraz kaszuj±cym serwerem proxy i filtrem zawarto¶ci pakietów. Zaawansowane keszowanie pozwala zminimalizowaæ 
-wykorzystanie przepustowo¶ci zwiêkszaj±c przy tym pewno¶æ, ¿e klienci spêdz± znacznie mniej czasu podczas pobrania tej samej 
+WTE jest naraz kaszujÄ…cym serwerem proxy i filtrem zawartoÅ›ci pakietÃ³w. Zaawansowane keszowanie pozwala zminimalizowaÄ‡ 
+wykorzystanie przepustowoÅ›ci zwiÄ™kszajÄ…c przy tym pewnoÅ›Ä‡, Å¼e klienci spÄ™dzÄ… znacznie mniej czasu podczas pobrania tej samej 
 informacji kilka razy \cite{WTEUsersGuide,WTEProgramming}. 
 
-Tradycyjny proxy serwer przesy³a ¿±dania dla URL od klienta i podaje je dalej do serwera przeznaczenia. WTE daje co¶ wiêcej; 
-pozwala zapisaæ lub keszowaæ dokumenty, które przesy³a oraz serwowaæ je podczas pó¼niejszych ¿±dañ ze swojego keszu, a nie ze 
-¼ród³owego serwera. Co oznacza, ¿e klient ¿±dany dokument otrzymuje szybciej przy zmniejszonym obci±¿eniu ³±cz. 
+Tradycyjny proxy serwer przesyÅ‚a Å¼Ä…dania dla URL od klienta i podaje je dalej do serwera przeznaczenia. WTE daje coÅ› wiÄ™cej; 
+pozwala zapisaÄ‡ lub keszowaÄ‡ dokumenty, ktÃ³re przesyÅ‚a oraz serwowaÄ‡ je podczas pÃ³Åºniejszych Å¼Ä…daÅ„ ze swojego keszu, a nie ze 
+ÅºrÃ³dÅ‚owego serwera. Co oznacza, Å¼e klient Å¼Ä…dany dokument otrzymuje szybciej przy zmniejszonym obciÄ…Å¼eniu Å‚Ä…cz. 
 
-Modu³ ten posiada tak¿e dodatkowe cechy takie jak:
+ModuÅ‚ ten posiada takÅ¼e dodatkowe cechy takie jak:
 \begin{itemize}
-\item mo¿liwo¶æ utrzymania bardzo du¿ego keszu;
-\item opcjê automatycznego od¶wie¿ania tej czê¶ci pamiêci podrêcznej zawieraj±cej najczê¶ciej popobierane strony;
-\item mo¿liwo¶æ keszowania tak¿e tych stron, których nag³ówek wymaga by by³y zawsze pobierane ze ¼ród³owego serwera;
-\item konfigurowania okresowego porz±dkowania keszu z informacji bezu¿ytecznych w celu poprawy wydajno¶ci i utrzymania 
-efektywno¶ci jego dzia³ania;
-\item Remote Cache Access (RCA) - w³a¶ciwo¶æ pozwalaj±ca na wielu maszynom z WTE uwspólniania tego samego keszu poprzez 
-rozproszony system plików, taki jak AFS, w celu zredukowania redundancji zawarto¶ci.
+\item moÅ¼liwoÅ›Ä‡ utrzymania bardzo duÅ¼ego keszu;
+\item opcjÄ™ automatycznego odÅ›wieÅ¼ania tej czÄ™Å›ci pamiÄ™ci podrÄ™cznej zawierajÄ…cej najczÄ™Å›ciej popobierane strony;
+\item moÅ¼liwoÅ›Ä‡ keszowania takÅ¼e tych stron, ktÃ³rych nagÅ‚Ã³wek wymaga by byÅ‚y zawsze pobierane ze ÅºrÃ³dÅ‚owego serwera;
+\item konfigurowania okresowego porzÄ…dkowania keszu z informacji bezuÅ¼ytecznych w celu poprawy wydajnoÅ›ci i utrzymania 
+efektywnoÅ›ci jego dziaÅ‚ania;
+\item Remote Cache Access (RCA) - wÅ‚aÅ›ciwoÅ›Ä‡ pozwalajÄ…ca na wielu maszynom z WTE uwspÃ³lniania tego samego keszu poprzez 
+rozproszony system plikÃ³w, taki jak AFS, w celu zredukowania redundancji zawartoÅ›ci.
 \end{itemize}
 
-Dodatkowo WTE pozwala na ustawianie filtrowania zawarto¶ci na poziomie serwera proxy -- pozwalaj±c na takie zabiegi jak np. 
-blokowanie URL--ów. Zwielokrotnione serwery WTE mog± byæ obci±¿eniowo zrównowa¿one.
+Dodatkowo WTE pozwala na ustawianie filtrowania zawartoÅ›ci na poziomie serwera proxy -- pozwalajÄ…c na takie zabiegi jak np. 
+blokowanie URL--Ã³w. Zwielokrotnione serwery WTE mogÄ… byÄ‡ obciÄ…Å¼eniowo zrÃ³wnowaÅ¼one.
 
-Kolejn± cech± jak± posiada ten modu³ jest mo¿liwo¶æ pracy jako przezroczysty proxy -- czyli taki, do którego dzia³ania nie jest 
-potrzebna ¿adna zmiana w konfiguracji przegl±darki klienta -- WTE pracuje wtedy na porcie serwera WWW. 
+KolejnÄ… cechÄ… jakÄ… posiada ten moduÅ‚ jest moÅ¼liwoÅ›Ä‡ pracy jako przezroczysty proxy -- czyli taki, do ktÃ³rego dziaÅ‚ania nie jest 
+potrzebna Å¼adna zmiana w konfiguracji przeglÄ…darki klienta -- WTE pracuje wtedy na porcie serwera WWW. 
 
 \subsection{IBM SecureWay Network Dispatcher}
-Jest to jedno z pierwszych komercyjnych rozwi±zañ, które pozwala zwiêkszyæ wydajno¶æ i zapewniæ ci±g³± pracê serwisów 
-internetowych. Znalaz³o ono ju¿ szerokie zastosowanie w znacz±cych serwisach WWW, takich jak serwisy prowadzone w trakcie 
+Jest to jedno z pierwszych komercyjnych rozwiÄ…zaÅ„, ktÃ³re pozwala zwiÄ™kszyÄ‡ wydajnoÅ›Ä‡ i zapewniÄ‡ ciÄ…gÅ‚Ä… pracÄ™ serwisÃ³w 
+internetowych. ZnalazÅ‚o ono juÅ¼ szerokie zastosowanie w znaczÄ…cych serwisach WWW, takich jak serwisy prowadzone w trakcie 
 olimpiad w Atlancie i Nagano. 
-System jest przeznaczony do obs³ugi serwerów webowych zbudowanych w technologii klastrowej. Klaster jest grup± serwerów 
-webowych obs³uguj±cych jedn± witrynê WWW. Wszystkie serwery w klastrze posiadaj± tê sam± zawarto¶æ i zapytanie mo¿e byæ 
-obs³u¿one przez dowolny z nich serwer. Pojedyncze zapytanie obs³ugiwane jest przez jeden z aktualnie sprawnych serwerów. 
-IBM SecureWay Network Dispatcher sk³ada siê z trzech komponentów: podsystemu Dispatcher, podsystemu Interactive Session 
-Support (ISS) oraz podsystemu Content--based Routing (CBR). Komponenty te mog± byæ u¿ywane ³±cznie lub ka¿dy z 
+System jest przeznaczony do obsÅ‚ugi serwerÃ³w webowych zbudowanych w technologii klastrowej. Klaster jest grupÄ… serwerÃ³w 
+webowych obsÅ‚ugujÄ…cych jednÄ… witrynÄ™ WWW. Wszystkie serwery w klastrze posiadajÄ… tÄ™ samÄ… zawartoÅ›Ä‡ i zapytanie moÅ¼e byÄ‡ 
+obsÅ‚uÅ¼one przez dowolny z nich serwer. Pojedyncze zapytanie obsÅ‚ugiwane jest przez jeden z aktualnie sprawnych serwerÃ³w. 
+IBM SecureWay Network Dispatcher skÅ‚ada siÄ™ z trzech komponentÃ³w: podsystemu Dispatcher, podsystemu Interactive Session 
+Support (ISS) oraz podsystemu Content--based Routing (CBR). Komponenty te mogÄ… byÄ‡ uÅ¼ywane Å‚Ä…cznie lub kaÅ¼dy z 
 osobna \cite{LoadBalancingWithND}.
 
 \subsubsection{Komponent Dispatcher}
 
-Podstawowym komponentem systemu jest Dispatcher, którego zadaniem jest zapewnienie równomiernej dystrybucji zapytañ 
-realizowanych za po¶rednictwem protoko³u TCP/IP miêdzy wieloma serwerami realizuj±cymi tê sam± us³ugê w konfiguracji 
-klastrowej. Funkcjonowanie Network Dispatcher'a opiera siê na architekturze przedstawionego wcze¶niej dystrybutora. 
-Dispatcher mo¿e równowa¿yæ obci±¿enia w obrêbie sieci lokalnej lub rozleg³ej. Dla ka¿dego klastra definiuje siê porty, które 
-chcemy, aby by³y obs³ugiwane przez klaster, nastêpnie serwery, które bêd± dostarczaæ us³ugi na ka¿dym z zdefiniowanych portów. 
-Dispatcher mo¿e obs³ugiwaæ wiele klastrów \cite{NDUsersGuide}. 
+Podstawowym komponentem systemu jest Dispatcher, ktÃ³rego zadaniem jest zapewnienie rÃ³wnomiernej dystrybucji zapytaÅ„ 
+realizowanych za poÅ›rednictwem protokoÅ‚u TCP/IP miÄ™dzy wieloma serwerami realizujÄ…cymi tÄ™ samÄ… usÅ‚ugÄ™ w konfiguracji 
+klastrowej. Funkcjonowanie Network Dispatcher'a opiera siÄ™ na architekturze przedstawionego wczeÅ›niej dystrybutora. 
+Dispatcher moÅ¼e rÃ³wnowaÅ¼yÄ‡ obciÄ…Å¼enia w obrÄ™bie sieci lokalnej lub rozlegÅ‚ej. Dla kaÅ¼dego klastra definiuje siÄ™ porty, ktÃ³re 
+chcemy, aby byÅ‚y obsÅ‚ugiwane przez klaster, nastÄ™pnie serwery, ktÃ³re bÄ™dÄ… dostarczaÄ‡ usÅ‚ugi na kaÅ¼dym z zdefiniowanych portÃ³w. 
+Dispatcher moÅ¼e obsÅ‚ugiwaÄ‡ wiele klastrÃ³w \cite{NDUsersGuide}. 
 
-Wysok± dostêpno¶æ serwisu osi±gniêto poprzez dzia³anie samego Dispatcher'a, który wykrywa niesprawne serwery w klastrze i 
-omija je przy dystrybucji zapytañ oraz poprzez wprowadzenie drugiego systemu Dispatcher'a. W podstawowym trybie pracy 
-Dispatcher wymaga, aby wszystkie serwery w klastrze by³y w tej samej podsieci co Dispatcher. Wówczas, aby podwy¿szyæ 
-dostêpno¶æ serwisu, mo¿emy skonfigurowaæ drugi system Dispatcher'a, który pe³niæ bêdzie rolê maszyny zapasowej i czuwaj±cej w 
-gotowo¶ci do przejêcia zadania równowa¿enia obci±¿enia w przypadku, gdyby maszyna podstawowa Dispatcher'a przesta³a dzia³aæ 
-poprawnie. Mechanizm typu heartbeat zapewnia monitorowanie stanów przez obie maszyny, podstawow± i zapasow± oraz przejêcie 
-zadañ w przypadku wyst±pienia awarii.
+WysokÄ… dostÄ™pnoÅ›Ä‡ serwisu osiÄ…gniÄ™to poprzez dziaÅ‚anie samego Dispatcher'a, ktÃ³ry wykrywa niesprawne serwery w klastrze i 
+omija je przy dystrybucji zapytaÅ„ oraz poprzez wprowadzenie drugiego systemu Dispatcher'a. W podstawowym trybie pracy 
+Dispatcher wymaga, aby wszystkie serwery w klastrze byÅ‚y w tej samej podsieci co Dispatcher. WÃ³wczas, aby podwyÅ¼szyÄ‡ 
+dostÄ™pnoÅ›Ä‡ serwisu, moÅ¼emy skonfigurowaÄ‡ drugi system Dispatcher'a, ktÃ³ry peÅ‚niÄ‡ bÄ™dzie rolÄ™ maszyny zapasowej i czuwajÄ…cej w 
+gotowoÅ›ci do przejÄ™cia zadania rÃ³wnowaÅ¼enia obciÄ…Å¼enia w przypadku, gdyby maszyna podstawowa Dispatcher'a przestaÅ‚a dziaÅ‚aÄ‡ 
+poprawnie. Mechanizm typu heartbeat zapewnia monitorowanie stanÃ³w przez obie maszyny, podstawowÄ… i zapasowÄ… oraz przejÄ™cie 
+zadaÅ„ w przypadku wystÄ…pienia awarii.
 \begin{figure}[h]
 \centering
 \includegraphics[width=3in]{./rysunki/dispatcher.eps}
-\caption{Konfiguracja logiczna modu³u dispatcher}
+\caption{Konfiguracja logiczna moduÅ‚u dispatcher}
 \label{dispatcher}
 \end{figure}
 
-Dispatcher realizuje swoje zadania za pomoc± trzech wewnêtrznych komponentów: Egzekutora, Menad¿era i Doradców. Egzekutor 
-realizuje równowa¿enie obci±¿eñ. Dla pakietu wysy³anego w ramach nowego po³±czenia miêdzy klientem a serwerem WEB Dispatcher 
-sprawdza, który z serwerów mo¿e przej±æ obs³ugê zlecenia na ¿±danym przez klienta porcie i adresie klastra. Nastêpnie, dla 
-ka¿dego takiego serwera, na podstawie zgromadzonych wag okre¶laj±cych poziom obci±¿eñ serwerów, okre¶la serwer najmniej 
-obci±¿ony, do którego przekazuje pakiet. Je¶li po³±czenie ju¿ istnieje, wtedy bez ¿adnego przetwarzania pakiet jest natychmiast
-wysy³any do tego samego serwera, który zosta³ wybrany podczas inicjalizacji po³±czenia. Rozdzia³ zleceñ miêdzy serwery bazuje 
-na warto¶ciach wag wskazuj±cych na mo¿liwo¶æ potencjalnego obci±¿enia serwera -- np. je¿eli jeden serwer ma wagê 2, a drugi ma 
-wagê 1, to serwer o wadze 2 powinien dostaæ dwa razy wiêcej ¿±dañ ni¿ ten o wadze 1. Wagi mog± byæ ustawiane rêcznie lub przez 
-Menad¿era. Najczê¶ciej do ustawiania wag korzysta siê z Menad¿era, który ustawia wagi automatycznie i w sposób adaptacyjny, z 
-uwzglêdnieniem aktualnych warunków pracy klastra. Menad¿er mo¿e korzystaæ z wewnêtrznych liczników systemowych oraz z 
-informacji dostarczanych przez inne komponenty systemu, takich jak ISS czy WLM. Zarz±dca decyduje który z serwerów jest 
-najmniej obci±¿onym poprzez obserwacjê wag serwerów, które to okresowo analizuje i uaktualnia. Decyzjê jak± serwerowi nadaæ 
-wagê podejmuje opieraj±c siê na czterech parametrach:
+Dispatcher realizuje swoje zadania za pomocÄ… trzech wewnÄ™trznych komponentÃ³w: Egzekutora, MenadÅ¼era i DoradcÃ³w. Egzekutor 
+realizuje rÃ³wnowaÅ¼enie obciÄ…Å¼eÅ„. Dla pakietu wysyÅ‚anego w ramach nowego poÅ‚Ä…czenia miÄ™dzy klientem a serwerem WEB Dispatcher 
+sprawdza, ktÃ³ry z serwerÃ³w moÅ¼e przejÄ…Ä‡ obsÅ‚ugÄ™ zlecenia na Å¼Ä…danym przez klienta porcie i adresie klastra. NastÄ™pnie, dla 
+kaÅ¼dego takiego serwera, na podstawie zgromadzonych wag okreÅ›lajÄ…cych poziom obciÄ…Å¼eÅ„ serwerÃ³w, okreÅ›la serwer najmniej 
+obciÄ…Å¼ony, do ktÃ³rego przekazuje pakiet. JeÅ›li poÅ‚Ä…czenie juÅ¼ istnieje, wtedy bez Å¼adnego przetwarzania pakiet jest natychmiast
+wysyÅ‚any do tego samego serwera, ktÃ³ry zostaÅ‚ wybrany podczas inicjalizacji poÅ‚Ä…czenia. RozdziaÅ‚ zleceÅ„ miÄ™dzy serwery bazuje 
+na wartoÅ›ciach wag wskazujÄ…cych na moÅ¼liwoÅ›Ä‡ potencjalnego obciÄ…Å¼enia serwera -- np. jeÅ¼eli jeden serwer ma wagÄ™ 2, a drugi ma 
+wagÄ™ 1, to serwer o wadze 2 powinien dostaÄ‡ dwa razy wiÄ™cej Å¼Ä…daÅ„ niÅ¼ ten o wadze 1. Wagi mogÄ… byÄ‡ ustawiane rÄ™cznie lub przez 
+MenadÅ¼era. NajczÄ™Å›ciej do ustawiania wag korzysta siÄ™ z MenadÅ¼era, ktÃ³ry ustawia wagi automatycznie i w sposÃ³b adaptacyjny, z 
+uwzglÄ™dnieniem aktualnych warunkÃ³w pracy klastra. MenadÅ¼er moÅ¼e korzystaÄ‡ z wewnÄ™trznych licznikÃ³w systemowych oraz z 
+informacji dostarczanych przez inne komponenty systemu, takich jak ISS czy WLM. ZarzÄ…dca decyduje ktÃ³ry z serwerÃ³w jest 
+najmniej obciÄ…Å¼onym poprzez obserwacjÄ™ wag serwerÃ³w, ktÃ³re to okresowo analizuje i uaktualnia. DecyzjÄ™ jakÄ… serwerowi nadaÄ‡ 
+wagÄ™ podejmuje opierajÄ…c siÄ™ na czterech parametrach:
 \begin{itemize}
-\item liczba aktywnych po³±czeñ realizowanych na ka¿dym serwerze TCP;
-\item liczba nowych po³±czeñ na ka¿dym serwerze TCP;
-\item danych wej¶ciowych pochodz±cych od doradców;
-\item informacji pochodz±cych od narzêdzi monitoruj±cych pracê systemu, takich jak ISS;
+\item liczba aktywnych poÅ‚Ä…czeÅ„ realizowanych na kaÅ¼dym serwerze TCP;
+\item liczba nowych poÅ‚Ä…czeÅ„ na kaÅ¼dym serwerze TCP;
+\item danych wejÅ›ciowych pochodzÄ…cych od doradcÃ³w;
+\item informacji pochodzÄ…cych od narzÄ™dzi monitorujÄ…cych pracÄ™ systemu, takich jak ISS;
 \end{itemize}
 
-U¿ywanie zarz±dcy jest opcjonalne, ale je¶li 
-nie jest on u¿ywany, równowa¿enie obci±¿enia jest dokonywane przy u¿yciu marszrutowania algorytmem wa¿onego Round Robina, 
-gdzie wagi poszczególnych serwerów WWW s± nadawane statycznie; 
+UÅ¼ywanie zarzÄ…dcy jest opcjonalne, ale jeÅ›li 
+nie jest on uÅ¼ywany, rÃ³wnowaÅ¼enie obciÄ…Å¼enia jest dokonywane przy uÅ¼yciu marszrutowania algorytmem waÅ¼onego Round Robina, 
+gdzie wagi poszczegÃ³lnych serwerÃ³w WWW sÄ… nadawane statycznie; 
 
-Aby daæ administratorowi wiêksz± kontrolê nad tym, gdzie kierowane bêd± ¿±dania ró¿nego typu pochodz±ce od ró¿nych grup 
-u¿ytkowników, wprowadzono pojêcie regu³ i grup serwerów im podleg³ych, tj. serwerów, w¶ród których bêdzie realizowane 
-równowa¿enie obci±¿enia w razie spe³nienia regu³y. Dla Dispatcher'a dostêpne s± regu³y bazuj±ce na: adresie IP klienta, porcie 
-klienta, porze dnia, po³±czeniach na sekundê dla danego portu, aktywnych po³±czeniach dla danego portu. Regu³y daj± mo¿liwo¶æ 
-implementacji wysokiej jako¶ci us³ug dla wybranych klientów b±d¼ w okre¶lonej porze dnia. Dostêpna jest tak¿e regu³a ,,zawsze 
-prawdziwe'', która oznacza spe³nienie zadanego warunku dla wszystkich przyjmowanych zleceñ.
+Aby daÄ‡ administratorowi wiÄ™kszÄ… kontrolÄ™ nad tym, gdzie kierowane bÄ™dÄ… Å¼Ä…dania rÃ³Å¼nego typu pochodzÄ…ce od rÃ³Å¼nych grup 
+uÅ¼ytkownikÃ³w, wprowadzono pojÄ™cie reguÅ‚ i grup serwerÃ³w im podlegÅ‚ych, tj. serwerÃ³w, wÅ›rÃ³d ktÃ³rych bÄ™dzie realizowane 
+rÃ³wnowaÅ¼enie obciÄ…Å¼enia w razie speÅ‚nienia reguÅ‚y. Dla Dispatcher'a dostÄ™pne sÄ… reguÅ‚y bazujÄ…ce na: adresie IP klienta, porcie 
+klienta, porze dnia, poÅ‚Ä…czeniach na sekundÄ™ dla danego portu, aktywnych poÅ‚Ä…czeniach dla danego portu. ReguÅ‚y dajÄ… moÅ¼liwoÅ›Ä‡ 
+implementacji wysokiej jakoÅ›ci usÅ‚ug dla wybranych klientÃ³w bÄ…dÅº w okreÅ›lonej porze dnia. DostÄ™pna jest takÅ¼e reguÅ‚a ,,zawsze 
+prawdziwe'', ktÃ³ra oznacza speÅ‚nienie zadanego warunku dla wszystkich przyjmowanych zleceÅ„.
 \begin{figure}[h]
 \centering
 \includegraphics[width=5in]{./rysunki/executor.eps}
@@ -143,261 +143,261 @@ prawdziwe'', która oznacza spe³nienie zadanego warunku dla wszystkich przyjmowan
 \label{dispatcher1}
 \end{figure}
 
-Zadaniem doradców jest zbieranie informacji na temat obci±¿enia serwerów. Doradcy sprawdzaj± równie¿, czy serwery, na których 
-dokonywane jest równowa¿enie obci±¿eñ, funkcjonuj± prawid³owo. Doradcy okresowo otwieraj± po³±czenia TCP i wysy³aj± do serwera 
-wiadomo¶æ z ¿±daniem specyficznym dla danego typu doradcy. Po wys³aniu wiadomo¶ci Doradcy czekaj± na odpowied¼. Po jej 
-otrzymaniu wiêkszo¶æ Doradców szacuje warto¶æ obci±¿enia serwera na podstawie czasu, jaki up³yn±³ nim serwer zwróci³ odpowied¼ 
-na ¿±danie i zg³aszaj± ten czas (w milisekundach) Menad¿erowi, aby ten na podstawie tej i innych informacji oszacowa³ warto¶æ 
-wag poszczególnych serwerów. 
+Zadaniem doradcÃ³w jest zbieranie informacji na temat obciÄ…Å¼enia serwerÃ³w. Doradcy sprawdzajÄ… rÃ³wnieÅ¼, czy serwery, na ktÃ³rych 
+dokonywane jest rÃ³wnowaÅ¼enie obciÄ…Å¼eÅ„, funkcjonujÄ… prawidÅ‚owo. Doradcy okresowo otwierajÄ… poÅ‚Ä…czenia TCP i wysyÅ‚ajÄ… do serwera 
+wiadomoÅ›Ä‡ z Å¼Ä…daniem specyficznym dla danego typu doradcy. Po wysÅ‚aniu wiadomoÅ›ci Doradcy czekajÄ… na odpowiedÅº. Po jej 
+otrzymaniu wiÄ™kszoÅ›Ä‡ DoradcÃ³w szacuje wartoÅ›Ä‡ obciÄ…Å¼enia serwera na podstawie czasu, jaki upÅ‚ynÄ…Å‚ nim serwer zwrÃ³ciÅ‚ odpowiedÅº 
+na Å¼Ä…danie i zgÅ‚aszajÄ… ten czas (w milisekundach) MenadÅ¼erowi, aby ten na podstawie tej i innych informacji oszacowaÅ‚ wartoÅ›Ä‡ 
+wag poszczegÃ³lnych serwerÃ³w. 
 
-Wraz z produktem IBM SecureWay Network Dispatcher dostarczeni s± doradcy: HTTP, FTP, Telnet, NNTP, POP3, SMTP, SSL, WTE, TCP, 
-Ping, WLM. Istnieje równie¿ mo¿liwo¶æ napisania w³asnego doradcy. 
+Wraz z produktem IBM SecureWay Network Dispatcher dostarczeni sÄ… doradcy: HTTP, FTP, Telnet, NNTP, POP3, SMTP, SSL, WTE, TCP, 
+Ping, WLM. Istnieje rÃ³wnieÅ¼ moÅ¼liwoÅ›Ä‡ napisania wÅ‚asnego doradcy. 
 
 \subsubsection{Komponent Interactive Session Support}
 
-Interactive Session Support (ISS) jest komponentem wspó³pracuj±cym z Domain Name Server (DNS) w jednym z trzech mo¿liwych 
-trybów pracy: DNS--Update, DNS--Replace lub DNS--Ignore. Komponent ten mo¿e byæ równie¿ wykorzystany do zbierania informacji na 
-temat obci±¿enia serwerów, któr± nastêpnie przekazuje do Dispatcher'a. W trybie DNS--Update ISS uaktualnia serwer nazw DNS. W 
-tym trybie dzia³a on w po³±czeniu z serwerem nazw w celu mapowania nazw DNS na adresy IP serwerów najlepiej nadaj±cych siê do 
-obs³ugi danego zadania. W trybie DNS--Replace ISS spe³nia dla ograniczonej podgrupy sieci funkcjê serwera nazw, nie zawiera 
-jednak wszystkich funkcji standardowego DNS. W trybie DNS--Ignore, ISS dzia³a w po³±czeniu z Dispatcher'em w celu lepszego 
-równowa¿enia obci±¿eñ.
+Interactive Session Support (ISS) jest komponentem wspÃ³Å‚pracujÄ…cym z Domain Name Server (DNS) w jednym z trzech moÅ¼liwych 
+trybÃ³w pracy: DNS--Update, DNS--Replace lub DNS--Ignore. Komponent ten moÅ¼e byÄ‡ rÃ³wnieÅ¼ wykorzystany do zbierania informacji na 
+temat obciÄ…Å¼enia serwerÃ³w, ktÃ³rÄ… nastÄ™pnie przekazuje do Dispatcher'a. W trybie DNS--Update ISS uaktualnia serwer nazw DNS. W 
+tym trybie dziaÅ‚a on w poÅ‚Ä…czeniu z serwerem nazw w celu mapowania nazw DNS na adresy IP serwerÃ³w najlepiej nadajÄ…cych siÄ™ do 
+obsÅ‚ugi danego zadania. W trybie DNS--Replace ISS speÅ‚nia dla ograniczonej podgrupy sieci funkcjÄ™ serwera nazw, nie zawiera 
+jednak wszystkich funkcji standardowego DNS. W trybie DNS--Ignore, ISS dziaÅ‚a w poÅ‚Ä…czeniu z Dispatcher'em w celu lepszego 
+rÃ³wnowaÅ¼enia obciÄ…Å¼eÅ„.
 \begin{figure}[h]
 \centering
 \includegraphics[width=3in]{./rysunki/ISS.eps}
-\caption{Konfiguracja logiczna modu³u Interactive Session Support}
+\caption{Konfiguracja logiczna moduÅ‚u Interactive Session Support}
 \label{ISS}
 \end{figure}
 
-Obci±¿enie na poszczególnych wêz³ach mo¿e byæ okre¶lane poprzez pomiar wykorzystania ró¿nych zasobów, takich jak ilo¶æ wolnej 
-pamiêci, u¿ycie procesora czy licznik procesów. ISS pos³uguje siê jedn± z trzech strategii alokacji zleceñ: RoundRobin, Best, 
+ObciÄ…Å¼enie na poszczegÃ³lnych wÄ™zÅ‚ach moÅ¼e byÄ‡ okreÅ›lane poprzez pomiar wykorzystania rÃ³Å¼nych zasobÃ³w, takich jak iloÅ›Ä‡ wolnej 
+pamiÄ™ci, uÅ¼ycie procesora czy licznik procesÃ³w. ISS posÅ‚uguje siÄ™ jednÄ… z trzech strategii alokacji zleceÅ„: RoundRobin, Best, 
 i Statistical RoundRobin.
 
-Przy u¿yciu algorytmu RoundRobin, ISS równowa¿y obci±¿enia serwerów w sposób klasyczny dla tej strategii. Z danej grupy 
-serwerów ISS wybiera na okre¶lony przedzia³ czasu jeden serwer, który bêdzie obci±¿any w tym przedziale czasu. ISS nie zwraca 
-wówczas uwagi na poziom obci±¿enia serwera, ale te¿ nie zaleci serwera, który niedomaga. Takie podej¶cie mo¿e funkcjonowaæ 
-dobrze, pod warunkiem ¿e obci±¿enie wywo³ywane przez klientów jest równomierne. Zalet± tej metody jest brak obci±¿enia 
-serwerów poprzez procesy pomiarowe. Natomiast jej du¿± wad± jest brak elastyczno¶ci. Metoda ta mo¿e powodowaæ, ¿e np. serwer, 
-który ju¿ jest bardzo obci±¿ony, mo¿e byæ dalej preferowany przez ISS, gdy¿ nie skoñczy³ siê jeszcze przydzielony mu czas.
-Stosuj±c strategiê Best, w czasie trwania okre¶lonego interwa³u, ISS trasuje ¿±dania do serwera, który na pocz±tku tego 
-interwa³u mia³ najni¿szy poziom obci±¿enia. Tak jak w przypadku poprzedniej metody, korzystaj±cy z niej ISS nie zaleci 
-serwera, który przesta³ funkcjonowaæ. Ta metoda selekcji sprawdza siê bardzo dobrze dla ka¿dego czasu trwania po³±czeñ, pod 
-warunkiem, ¿e czêsto¶æ nowych po³±czeñ bêdzie relatywnie niska w stosunku do ustawionego interwa³u czasu przydzia³u dla 
-pojedynczego serwera. Ta strategia jest przyjmowana domy¶lnie przez system.
-W strategii Statistical RoundRobin, ISS równowa¿y obci±¿enia na podstawie statystyk obci±¿enia, które generuje dla wszystkich 
-serwerów. Wykorzystuje te statystyki do budowy profilu najbardziej i najmniej obci±¿onych serwerów, a nastêpnie w ci±gu 
-trwania interwa³u ,,heartbeat'' rozdziela ¿±dania pomiêdzy serwery, proporcjonalnie do ich obci±¿enia. Równie¿ przy u¿yciu tej 
-metody ISS nie zaleci niedomagaj±cego serwera. Metoda ta sprawdza siê wszêdzie tam, gdzie wystêpuje du¿a czêsto¶æ 
-krótkotrwa³ych po³±czeñ.
+Przy uÅ¼yciu algorytmu RoundRobin, ISS rÃ³wnowaÅ¼y obciÄ…Å¼enia serwerÃ³w w sposÃ³b klasyczny dla tej strategii. Z danej grupy 
+serwerÃ³w ISS wybiera na okreÅ›lony przedziaÅ‚ czasu jeden serwer, ktÃ³ry bÄ™dzie obciÄ…Å¼any w tym przedziale czasu. ISS nie zwraca 
+wÃ³wczas uwagi na poziom obciÄ…Å¼enia serwera, ale teÅ¼ nie zaleci serwera, ktÃ³ry niedomaga. Takie podejÅ›cie moÅ¼e funkcjonowaÄ‡ 
+dobrze, pod warunkiem Å¼e obciÄ…Å¼enie wywoÅ‚ywane przez klientÃ³w jest rÃ³wnomierne. ZaletÄ… tej metody jest brak obciÄ…Å¼enia 
+serwerÃ³w poprzez procesy pomiarowe. Natomiast jej duÅ¼Ä… wadÄ… jest brak elastycznoÅ›ci. Metoda ta moÅ¼e powodowaÄ‡, Å¼e np. serwer, 
+ktÃ³ry juÅ¼ jest bardzo obciÄ…Å¼ony, moÅ¼e byÄ‡ dalej preferowany przez ISS, gdyÅ¼ nie skoÅ„czyÅ‚ siÄ™ jeszcze przydzielony mu czas.
+StosujÄ…c strategiÄ™ Best, w czasie trwania okreÅ›lonego interwaÅ‚u, ISS trasuje Å¼Ä…dania do serwera, ktÃ³ry na poczÄ…tku tego 
+interwaÅ‚u miaÅ‚ najniÅ¼szy poziom obciÄ…Å¼enia. Tak jak w przypadku poprzedniej metody, korzystajÄ…cy z niej ISS nie zaleci 
+serwera, ktÃ³ry przestaÅ‚ funkcjonowaÄ‡. Ta metoda selekcji sprawdza siÄ™ bardzo dobrze dla kaÅ¼dego czasu trwania poÅ‚Ä…czeÅ„, pod 
+warunkiem, Å¼e czÄ™stoÅ›Ä‡ nowych poÅ‚Ä…czeÅ„ bÄ™dzie relatywnie niska w stosunku do ustawionego interwaÅ‚u czasu przydziaÅ‚u dla 
+pojedynczego serwera. Ta strategia jest przyjmowana domyÅ›lnie przez system.
+W strategii Statistical RoundRobin, ISS rÃ³wnowaÅ¼y obciÄ…Å¼enia na podstawie statystyk obciÄ…Å¼enia, ktÃ³re generuje dla wszystkich 
+serwerÃ³w. Wykorzystuje te statystyki do budowy profilu najbardziej i najmniej obciÄ…Å¼onych serwerÃ³w, a nastÄ™pnie w ciÄ…gu 
+trwania interwaÅ‚u ,,heartbeat'' rozdziela Å¼Ä…dania pomiÄ™dzy serwery, proporcjonalnie do ich obciÄ…Å¼enia. RÃ³wnieÅ¼ przy uÅ¼yciu tej 
+metody ISS nie zaleci niedomagajÄ…cego serwera. Metoda ta sprawdza siÄ™ wszÄ™dzie tam, gdzie wystÄ™puje duÅ¼a czÄ™stoÅ›Ä‡ 
+krÃ³tkotrwaÅ‚ych poÅ‚Ä…czeÅ„.
 
 \subsubsection{Komponent Content Base Routing}
  
-Komponent CBR mo¿e byæ skonfigurowany z WTE (Web Traffic Express) dla serwerów HTTP, lub jako CBR proxy (bez wspó³pracy z WTE)
-dla serwerów IMAP i POP3. CBR wspó³pracuje wespó³ z Web Traffic Express, w ten sposób, ¿e klient wysy³a ¿±danie do WTE, który 
-jest skonfigurowany by móc korzystaæ z CBR; CBR musi byæ zainstalowany na tej samej maszynie co serwer WTE. WTE wypytuje 
-komponent CBR który serwer ma obs³u¿yæ ¿±danie. Gdy CBR otrzyma ¿±danie próbuje je dopasowaæ do ustawionych regu³. Je¶li 
-pasuj±, CBR wybiera serwer, z grupy skonfigurowanych do odbierania konkretnego typu ¿±dañ, jednocze¶nie równowa¿±c pomiêdzy 
-t± grup± serwerów obci±¿enie. 
+Komponent CBR moÅ¼e byÄ‡ skonfigurowany z WTE (Web Traffic Express) dla serwerÃ³w HTTP, lub jako CBR proxy (bez wspÃ³Å‚pracy z WTE)
+dla serwerÃ³w IMAP i POP3. CBR wspÃ³Å‚pracuje wespÃ³Å‚ z Web Traffic Express, w ten sposÃ³b, Å¼e klient wysyÅ‚a Å¼Ä…danie do WTE, ktÃ³ry 
+jest skonfigurowany by mÃ³c korzystaÄ‡ z CBR; CBR musi byÄ‡ zainstalowany na tej samej maszynie co serwer WTE. WTE wypytuje 
+komponent CBR ktÃ³ry serwer ma obsÅ‚uÅ¼yÄ‡ Å¼Ä…danie. Gdy CBR otrzyma Å¼Ä…danie prÃ³buje je dopasowaÄ‡ do ustawionych reguÅ‚. JeÅ›li 
+pasujÄ…, CBR wybiera serwer, z grupy skonfigurowanych do odbierania konkretnego typu Å¼Ä…daÅ„, jednoczeÅ›nie rÃ³wnowaÅ¼Ä…c pomiÄ™dzy 
+tÄ… grupÄ… serwerÃ³w obciÄ…Å¼enie. 
 
-CBR jest bardzo podobny w strukturze do pakietu Dispatcher. Trzy kluczowe elementy CBR (Egzekutor, Menad¿er i Doradcy) 
-wspó³pracuj± by zrównowa¿yæ i rozdzieliæ przychodz±ce ¿±dania pomiêdzy serwery w zbli¿ony sposób jak w Dispatcherze. 
-Jednak¿e w przeciwieñstwie do modu³u Dispatcher -- CBR nie oferuje funkcji zwiêkszonej dostêpno¶ci. Jednak¿e mo¿na po³±czyæ 
-kilka serwerów CBR i równowa¿yæ ich obci±¿enie poprzez serwer ND, który to mo¿e sprawdzaæ czy ¿aden z CBR serwerów nie 
-przesta³ odpowiadaæ.
+CBR jest bardzo podobny w strukturze do pakietu Dispatcher. Trzy kluczowe elementy CBR (Egzekutor, MenadÅ¼er i Doradcy) 
+wspÃ³Å‚pracujÄ… by zrÃ³wnowaÅ¼yÄ‡ i rozdzieliÄ‡ przychodzÄ…ce Å¼Ä…dania pomiÄ™dzy serwery w zbliÅ¼ony sposÃ³b jak w Dispatcherze. 
+JednakÅ¼e w przeciwieÅ„stwie do moduÅ‚u Dispatcher -- CBR nie oferuje funkcji zwiÄ™kszonej dostÄ™pnoÅ›ci. JednakÅ¼e moÅ¼na poÅ‚Ä…czyÄ‡ 
+kilka serwerÃ³w CBR i rÃ³wnowaÅ¼yÄ‡ ich obciÄ…Å¼enie poprzez serwer ND, ktÃ³ry to moÅ¼e sprawdzaÄ‡ czy Å¼aden z CBR serwerÃ³w nie 
+przestaÅ‚ odpowiadaÄ‡.
 
 \begin{itemize}
-\item CBR z WTE (obs³uguj±cy ruch HTTP)
+\item CBR z WTE (obsÅ‚ugujÄ…cy ruch HTTP)
 
-Komponent CBR wspó³pracuj±c z Web Traffic Express dzia³a jako proxy serwer przekierowuj±c rz±dania klientów do odpowiednich
-serwerów. Modu³ WTE jest proxy serwerem, pozwalaj±cym manipulowaæ pamiêci± podrêczn± w celu szybkiego transferu dokumentów
-przy niewielkich wymaganiach dotycz±cych przepustowo¶ci sieci. CBR za¶ jest w stanie przefiltrowaæ zawarto¶æ stron WWW 
-korzystaj±c ze specyficznych ci±gów warunków nazywanych rolami. CBR daje mo¿liwo¶æ okre¶lenia grupy serwerów, które powinny
-przej±æ ¿±danie opieraj±c siê na wyra¿eniach regularnych pasuj±cych do zawarto¶ci ¿±dania. Poniewa¿ CBR pozwala na
-,,przywi±zanie'' poszczególnych serwerów do ka¿dego typu ¿±dania nastêpuje zrównowa¿enie obci±¿enia serwerów. CBR potrafi
-tak¿e wykrywaæ kiedy serwer przestaje odpowiadaæ wy³±czaj±c routing ¿±dañ do niego. Zastosowane w module CBR algorytmy
-równowa¿enia obci±¿enia s± identyczny z tymi zastosowanymi w komponencie Dispatcher. 
+Komponent CBR wspÃ³Å‚pracujÄ…c z Web Traffic Express dziaÅ‚a jako proxy serwer przekierowujÄ…c rzÄ…dania klientÃ³w do odpowiednich
+serwerÃ³w. ModuÅ‚ WTE jest proxy serwerem, pozwalajÄ…cym manipulowaÄ‡ pamiÄ™ciÄ… podrÄ™cznÄ… w celu szybkiego transferu dokumentÃ³w
+przy niewielkich wymaganiach dotyczÄ…cych przepustowoÅ›ci sieci. CBR zaÅ› jest w stanie przefiltrowaÄ‡ zawartoÅ›Ä‡ stron WWW 
+korzystajÄ…c ze specyficznych ciÄ…gÃ³w warunkÃ³w nazywanych rolami. CBR daje moÅ¼liwoÅ›Ä‡ okreÅ›lenia grupy serwerÃ³w, ktÃ³re powinny
+przejÄ…Ä‡ Å¼Ä…danie opierajÄ…c siÄ™ na wyraÅ¼eniach regularnych pasujÄ…cych do zawartoÅ›ci Å¼Ä…dania. PoniewaÅ¼ CBR pozwala na
+,,przywiÄ…zanie'' poszczegÃ³lnych serwerÃ³w do kaÅ¼dego typu Å¼Ä…dania nastÄ™puje zrÃ³wnowaÅ¼enie obciÄ…Å¼enia serwerÃ³w. CBR potrafi
+takÅ¼e wykrywaÄ‡ kiedy serwer przestaje odpowiadaÄ‡ wyÅ‚Ä…czajÄ…c routing Å¼Ä…daÅ„ do niego. Zastosowane w module CBR algorytmy
+rÃ³wnowaÅ¼enia obciÄ…Å¼enia sÄ… identyczny z tymi zastosowanymi w komponencie Dispatcher. 
 
-Sposób dzia³ania CBR: gdy klienckie ¿±danie jest przesy³ane do WTE proxy nastêpuje tu korelowanie zawarto¶ci ¿±dania
-z regu³ami zdefiniowanymi w module CBR. Je¶li zbiór regu³ pasuje do zawarto¶ci ¿±dania jeden z serwerów ,,zwi±zanych'' z 
-obs³ug± tego typu ¿±dañ zostaje wybrany do przyjêcia ¿±dania. Wtedy WTE jako proxy serwer przekierowuje do wybranego serwera 
-¿±danie. Jak widaæ modu³ WTE musi byæ uruchomiony zanim CBR zostanie skonfigurowany, poniewa¿ dzia³a on jako podproces WTE.
-Oczywi¶cie oba modu³y musz± znajdowaæ siê na tej samej maszynie.
+SposÃ³b dziaÅ‚ania CBR: gdy klienckie Å¼Ä…danie jest przesyÅ‚ane do WTE proxy nastÄ™puje tu korelowanie zawartoÅ›ci Å¼Ä…dania
+z reguÅ‚ami zdefiniowanymi w module CBR. JeÅ›li zbiÃ³r reguÅ‚ pasuje do zawartoÅ›ci Å¼Ä…dania jeden z serwerÃ³w ,,zwiÄ…zanych'' z 
+obsÅ‚ugÄ… tego typu Å¼Ä…daÅ„ zostaje wybrany do przyjÄ™cia Å¼Ä…dania. Wtedy WTE jako proxy serwer przekierowuje do wybranego serwera 
+Å¼Ä…danie. Jak widaÄ‡ moduÅ‚ WTE musi byÄ‡ uruchomiony zanim CBR zostanie skonfigurowany, poniewaÅ¼ dziaÅ‚a on jako podproces WTE.
+OczywiÅ›cie oba moduÅ‚y muszÄ… znajdowaÄ‡ siÄ™ na tej samej maszynie.
 
-Oznacza to podzia³ farmy serwerów na czê¶ci realizuj±ce odpowiedni typ ¿±dañ. Taki podzia³ jest przezroczysty dla klienta. 
-Mo¿na np. podzieliæ witrynê na dwie czê¶ci -- kilka serwerów realizuj±cych tylko ¿±dania CGI, a pozosta³e resztê ruchu HTTP.
-Pozwala to na realizacjê intensywnie przetwarzanych skryptów CGI w sposób nie koliduj±cy z prac± reszty serwerów WWW 
-obs³uguj±cych normalny ruch HTTP -- co oznacza dla klienta lepszy ogólny czas odpowiedzi. W ten sposób komputery o wiêkszej
-mocy obliczeniowej mo¿na przeznaczyæ na obs³uge normalnego ruchu bez kosztownego upgradu wszystkich komputerów.
+Oznacza to podziaÅ‚ farmy serwerÃ³w na czÄ™Å›ci realizujÄ…ce odpowiedni typ Å¼Ä…daÅ„. Taki podziaÅ‚ jest przezroczysty dla klienta. 
+MoÅ¼na np. podzieliÄ‡ witrynÄ™ na dwie czÄ™Å›ci -- kilka serwerÃ³w realizujÄ…cych tylko Å¼Ä…dania CGI, a pozostaÅ‚e resztÄ™ ruchu HTTP.
+Pozwala to na realizacjÄ™ intensywnie przetwarzanych skryptÃ³w CGI w sposÃ³b nie kolidujÄ…cy z pracÄ… reszty serwerÃ³w WWW 
+obsÅ‚ugujÄ…cych normalny ruch HTTP -- co oznacza dla klienta lepszy ogÃ³lny czas odpowiedzi. W ten sposÃ³b komputery o wiÄ™kszej
+mocy obliczeniowej moÅ¼na przeznaczyÄ‡ na obsÅ‚uge normalnego ruchu bez kosztownego upgradu wszystkich komputerÃ³w.
 \begin{figure}[h]
 \centering
 \includegraphics[width=3in]{./rysunki/CBR-WTE.eps}
-\caption{Konfiguracja logiczna modu³u Content Base Routing (wraz z WTE)}
+\caption{Konfiguracja logiczna moduÅ‚u Content Base Routing (wraz z WTE)}
 \label{CBR}
 \end{figure}
 
 
-Inn± mo¿liwo¶ci± podzia³u serwera WWW jest bezpo¶rednie przekierowanie klientów, którzy chc± dostaæ siê do stron wymagaj±cych
-rejestracji, do jednego typu serwerów, a resztê do pozosta³ych. Wtedy obs³ug± stron wymagaj±cych rejestracji zajmuj± siê
-np. komputery o wiêkszej mocy obliczeniowej i klienci, którzy s± ju¿ zarejestrowani maj± lepszy czas odpowiedzi ni¿ inni. 
+InnÄ… moÅ¼liwoÅ›ciÄ… podziaÅ‚u serwera WWW jest bezpoÅ›rednie przekierowanie klientÃ³w, ktÃ³rzy chcÄ… dostaÄ‡ siÄ™ do stron wymagajÄ…cych
+rejestracji, do jednego typu serwerÃ³w, a resztÄ™ do pozostaÅ‚ych. Wtedy obsÅ‚ugÄ… stron wymagajÄ…cych rejestracji zajmujÄ… siÄ™
+np. komputery o wiÄ™kszej mocy obliczeniowej i klienci, ktÃ³rzy sÄ… juÅ¼ zarejestrowani majÄ… lepszy czas odpowiedzi niÅ¼ inni. 
 
-Wybieraj±c role dokonuj±ce równowa¿enia obci±¿enia nale¿y sprawdziæ czy wszystkie ¿±dania do klastra WWW posiadaj± role, 
-na podstawie ktorych mo¿na wybraæ serwer. Je¶li tak nie jest, tzn. je¶li przychodz±ce ¿±danie nie pasuje do ¿adnej roli, klient
-otrzyma komunikat o b³êdzie pochodz±cy z WTE. Najprostszym rozwi±zaniem jest stworzenie roli zawsze prawdziwej z bardzo 
-wysokim priorytetem i ,,przywi±zanie'' jej do osobnej grupy serwerów.
+WybierajÄ…c role dokonujÄ…ce rÃ³wnowaÅ¼enia obciÄ…Å¼enia naleÅ¼y sprawdziÄ‡ czy wszystkie Å¼Ä…dania do klastra WWW posiadajÄ… role, 
+na podstawie ktorych moÅ¼na wybraÄ‡ serwer. JeÅ›li tak nie jest, tzn. jeÅ›li przychodzÄ…ce Å¼Ä…danie nie pasuje do Å¼adnej roli, klient
+otrzyma komunikat o bÅ‚Ä™dzie pochodzÄ…cy z WTE. Najprostszym rozwiÄ…zaniem jest stworzenie roli zawsze prawdziwej z bardzo 
+wysokim priorytetem i ,,przywiÄ…zanie'' jej do osobnej grupy serwerÃ³w.
 
-\item CBR proxy (obs³uguj±cy ruch IMAP i POP3)
+\item CBR proxy (obsÅ‚ugujÄ…cy ruch IMAP i POP3)
 
-CBR bez WTE mo¿e byæ proxy wybieraj±cym odpowiedni serwer opieraj±c siê na ID u¿ytkownika i ha¶le. Nie wspiera wtedy opartego
-na rolach równowa¿enia obci±¿eñ.
+CBR bez WTE moÅ¼e byÄ‡ proxy wybierajÄ…cym odpowiedni serwer opierajÄ…c siÄ™ na ID uÅ¼ytkownika i haÅ›le. Nie wspiera wtedy opartego
+na rolach rÃ³wnowaÅ¼enia obciÄ…Å¼eÅ„.
 \end{itemize}
 
 \subsection{Content Base Routing -- konfiguracja}
 
-CBR mo¿e zostaæ skonfigurowany jako proxy dla us³ug opartych o protoko³y POP3 lub IMAP -- dzia³a wtedy bez wspó³pracy
-z modu³em WTE, lub tez jako narzêdzie równowa¿±ce obci±¿enie ruchu HTTP -- systemem proxy jest wtedy WTE  \cite{NDUsersGuide}.
+CBR moÅ¼e zostaÄ‡ skonfigurowany jako proxy dla usÅ‚ug opartych o protokoÅ‚y POP3 lub IMAP -- dziaÅ‚a wtedy bez wspÃ³Å‚pracy
+z moduÅ‚em WTE, lub tez jako narzÄ™dzie rÃ³wnowaÅ¼Ä…ce obciÄ…Å¼enie ruchu HTTP -- systemem proxy jest wtedy WTE  \cite{NDUsersGuide}.
 
-Modu³ ten mo¿na skonfigurowaæ za pomoc± linii komend lub z pomoc± graficznego interfejsu u¿ytkownika
-(\emph{GUI}). Modu³ Content Base Routing jest bardzo podobny w architekturze do Dispatchera. Sk³ada siê on z trzech
-funkcjonalnych czê¶ci:
+ModuÅ‚ ten moÅ¼na skonfigurowaÄ‡ za pomocÄ… linii komend lub z pomocÄ… graficznego interfejsu uÅ¼ytkownika
+(\emph{GUI}). ModuÅ‚ Content Base Routing jest bardzo podobny w architekturze do Dispatchera. SkÅ‚ada siÄ™ on z trzech
+funkcjonalnych czÄ™Å›ci:
     \begin{itemize}
-    \item Egzekutor -- zajmuje siê równowa¿eniem obci±¿enia zapytañ klienckich. Jest zawsze uruchomiany je¶li CBR
-    jest w u¿yciu;
-    \item Menad¿er -- ustala wagi dla poszczególnych serwerów opieraj±c siê na:
+    \item Egzekutor -- zajmuje siÄ™ rÃ³wnowaÅ¼eniem obciÄ…Å¼enia zapytaÅ„ klienckich. Jest zawsze uruchomiany jeÅ›li CBR
+    jest w uÅ¼yciu;
+    \item MenadÅ¼er -- ustala wagi dla poszczegÃ³lnych serwerÃ³w opierajÄ…c siÄ™ na:
         \begin{itemize}
-        \item wewnêtrznych licznikach Egzekutora;
-        \item informacjach zbieranych z serwerów przez doradców;
-        \item informacjach z programów monitoruj±cych prace systemu, takich jak ISS czy WLM.
+        \item wewnÄ™trznych licznikach Egzekutora;
+        \item informacjach zbieranych z serwerÃ³w przez doradcÃ³w;
+        \item informacjach z programÃ³w monitorujÄ…cych prace systemu, takich jak ISS czy WLM.
         \end{itemize}
-        Korzystanie z menad¿era jest opcjonalne. Jednak¿e gdy jest on nieu¿ywany -- równowa¿enie obci±¿enia jest
-        realizowane za pomoc± algorytmu statycznego Wa¿onego Round--Robin opartego na domy¶lnych wagach, a
-        doradcy nie bêd± wtedy dostêpni.
-    \item Doradcy -- wypytuj± serwery oraz analizuj± dane o ich stanie, by nastêpnie z tak spreparowanych danych
-    Menad¿er ustali³ odpowiednie wagi. Korzystanie z Doradców jest równie¿ opcjonalne, a typowej konfiguracji wrêcz
-    mo¿e nie byæ potrzebne, jednak¿e mimo to poleca siê z nich korzystaæ.
+        Korzystanie z menadÅ¼era jest opcjonalne. JednakÅ¼e gdy jest on nieuÅ¼ywany -- rÃ³wnowaÅ¼enie obciÄ…Å¼enia jest
+        realizowane za pomocÄ… algorytmu statycznego WaÅ¼onego Round--Robin opartego na domyÅ›lnych wagach, a
+        doradcy nie bÄ™dÄ… wtedy dostÄ™pni.
+    \item Doradcy -- wypytujÄ… serwery oraz analizujÄ… dane o ich stanie, by nastÄ™pnie z tak spreparowanych danych
+    MenadÅ¼er ustaliÅ‚ odpowiednie wagi. Korzystanie z DoradcÃ³w jest rÃ³wnieÅ¼ opcjonalne, a typowej konfiguracji wrÄ™cz
+    moÅ¼e nie byÄ‡ potrzebne, jednakÅ¼e mimo to poleca siÄ™ z nich korzystaÄ‡.
     \end{itemize}
 
-Wszystkie trzy czê¶ci (Egzekutor, Menad¿er oraz Doradcy) wspó³pracuj± ze sob± w celu rozbalansowania i
-rozpropagowania przychodz±cych ¿±dañ pomiêdzy serwery.
+Wszystkie trzy czÄ™Å›ci (Egzekutor, MenadÅ¼er oraz Doradcy) wspÃ³Å‚pracujÄ… ze sobÄ… w celu rozbalansowania i
+rozpropagowania przychodzÄ…cych Å¼Ä…daÅ„ pomiÄ™dzy serwery.
 
-Aby skonfigurowaæ wstêpnie CBR, mo¿na pos³u¿yæ siê jedna z czterech dostêpnych metod:
+Aby skonfigurowaÄ‡ wstÄ™pnie CBR, moÅ¼na posÅ‚uÅ¼yÄ‡ siÄ™ jedna z czterech dostÄ™pnych metod:
     \begin{enumerate}
     \item Linii komend;
-    \item Skryptów konfiguracyjnych;
-    \item Graficznego interfejsu u¿ytkownika;
+    \item SkryptÃ³w konfiguracyjnych;
+    \item Graficznego interfejsu uÅ¼ytkownika;
     \item Konfiguracyjnego wizarda.
     \end{enumerate}
 
 \subsubsection{Konfiguracja maszyny CBR}
 
-Aby moc konfigurowaæ CBR, nale¿y mieæ status root--a w systemie. Nale¿y tak¿e znaæ adresy ka¿dego z
-konfigurowanych klastrow serwerów. Pojedynczy adres IP jest tu u¿ywany jako jeden adres dla ca³ego klastra.
-Zanim jednak¿e przeprowadzi siê konfiguracje i uruchomienie modu³u CBR -- musi byæ ju¿ skonfigurowany i
-uruchomiony WTE. Konfiguracje wykonuje siê w takiej kolejno¶ci (konfiguracja dotyczy tylko ruchu HTTP):
+Aby moc konfigurowaÄ‡ CBR, naleÅ¼y mieÄ‡ status root--a w systemie. NaleÅ¼y takÅ¼e znaÄ‡ adresy kaÅ¼dego z
+konfigurowanych klastrow serwerÃ³w. Pojedynczy adres IP jest tu uÅ¼ywany jako jeden adres dla caÅ‚ego klastra.
+Zanim jednakÅ¼e przeprowadzi siÄ™ konfiguracje i uruchomienie moduÅ‚u CBR -- musi byÄ‡ juÅ¼ skonfigurowany i
+uruchomiony WTE. Konfiguracje wykonuje siÄ™ w takiej kolejnoÅ›ci (konfiguracja dotyczy tylko ruchu HTTP):
     \begin{enumerate}
     \item Uruchomienie WTE
-    \item Po uruchomieniu WTE, nale¿y zdefiniowaæ klaster WWW, oraz ustawiæ specyficzne dla tego
-    klastra opcje. Do zdefiniowania klastra oraz opcji s³u¿y komenda:\\
+    \item Po uruchomieniu WTE, naleÅ¼y zdefiniowaÄ‡ klaster WWW, oraz ustawiÄ‡ specyficzne dla tego
+    klastra opcje. Do zdefiniowania klastra oraz opcji sÅ‚uÅ¼y komenda:\\
     
-    cbrcontrol cluster set \emph{cluster opcja warto¶æ}\\
+    cbrcontrol cluster set \emph{cluster opcja wartoÅ›Ä‡}\\
     
-    \item Nastêpnym krokiem jest zdefiniowanie portów ustalenie ich opcji. Wykonuje siê to komend±:\\
+    \item NastÄ™pnym krokiem jest zdefiniowanie portÃ³w ustalenie ich opcji. Wykonuje siÄ™ to komendÄ…:\\
     
-    cbrcontrol port set \emph{cluster:port opcja warto¶æ}\\
+    cbrcontrol port set \emph{cluster:port opcja wartoÅ›Ä‡}\\
     
-    \item Definiowanie poszczególnych komputerów nale¿±cych do serwera:\\
+    \item Definiowanie poszczegÃ³lnych komputerÃ³w naleÅ¼Ä…cych do serwera:\\
     
     cbrcontrol server add \emph{cluster:port:server}\\
     
-    gdzie \emph{server} jest nazw± symboliczn± pojedynczego komputera w klastrze, lub jego adresem IP;
-    \item Nastêpnym krokiem jest konfiguracja regu³ CBR. Jest to krok kluczowy w konfiguracji CBR przy ruchu po protokole HTTP
-    regu³y (role) definiuj± jak zadanie URL zostanie przes³ane do jednego lub wiêkszej ilo¶ci serwerów. Te specyficzne
-    regu³y nazywaj± siê regu³ami zawartosci\footnote{\emph{and. -- content rule}}. Aby zdefiniowaæ regu³ê
-    korzysta siê z nastêpuj±cej komendy:\\
+    gdzie \emph{server} jest nazwÄ… symbolicznÄ… pojedynczego komputera w klastrze, lub jego adresem IP;
+    \item NastÄ™pnym krokiem jest konfiguracja reguÅ‚ CBR. Jest to krok kluczowy w konfiguracji CBR przy ruchu po protokole HTTP
+    reguÅ‚y (role) definiujÄ… jak zadanie URL zostanie przesÅ‚ane do jednego lub wiÄ™kszej iloÅ›ci serwerÃ³w. Te specyficzne
+    reguÅ‚y nazywajÄ… siÄ™ reguÅ‚ami zawartosci\footnote{\emph{and. -- content rule}}. Aby zdefiniowaÄ‡ reguÅ‚Ä™
+    korzysta siÄ™ z nastÄ™pujÄ…cej komendy:\\
     
     cbrcontrol rule add \emph{cluster:port:rule} type content pattern=\emph{pattern}\\
     
-    gdzie warto¶æ \emph{pattern} jest wyra¿eniem regularnym, które bêdzie porównywane za ka¿dym razem jak
-    nadejdzie ¿±danie od klienta.
-    \item Nastêpnie nale¿y dodaæ poszczególne serwery obs³uguj±ce regu³y zawarto¶ci. Gdy wystêpuje dopasowanie
-    pomiêdzy ¿±danym URL, a regu³± zawarto¶ci zostaje wybrany najlepszy z serwerów obs³uguj±cych ten typ
-    ¿±dañ. Aby wykonaæ takie dopasowanie -- regu³a dopasowania--serwer obs³uguj±cy wykonuje siê polecenie:\\
+    gdzie wartoÅ›Ä‡ \emph{pattern} jest wyraÅ¼eniem regularnym, ktÃ³re bÄ™dzie porÃ³wnywane za kaÅ¼dym razem jak
+    nadejdzie Å¼Ä…danie od klienta.
+    \item NastÄ™pnie naleÅ¼y dodaÄ‡ poszczegÃ³lne serwery obsÅ‚ugujÄ…ce reguÅ‚y zawartoÅ›ci. Gdy wystÄ™puje dopasowanie
+    pomiÄ™dzy Å¼Ä…danym URL, a reguÅ‚Ä… zawartoÅ›ci zostaje wybrany najlepszy z serwerÃ³w obsÅ‚ugujÄ…cych ten typ
+    Å¼Ä…daÅ„. Aby wykonaÄ‡ takie dopasowanie -- reguÅ‚a dopasowania--serwer obsÅ‚ugujÄ…cy wykonuje siÄ™ polecenie:\\
     
     cbrcontrol rule useserver \emph{cluster:port:rule server}\\
     
-    \item Uruchomienie Menad¿era (opcjonalne):\\
+    \item Uruchomienie MenadÅ¼era (opcjonalne):\\
     
     cbrcontrol manager start\\
 
-    \item Uruchomienie Doradców (opcjonalne):\\
+    \item Uruchomienie DoradcÃ³w (opcjonalne):\\
 
     cbrcontrol advisor start http \emph{port}
 
-    \item Ostatnim krokiem jest skonfigurowanie Doradców, aby ich informacje bra³y udzia³ w decyzjach równowa¿enia
-    obci±¿enia.
+    \item Ostatnim krokiem jest skonfigurowanie DoradcÃ³w, aby ich informacje braÅ‚y udziaÅ‚ w decyzjach rÃ³wnowaÅ¼enia
+    obciÄ…Å¼enia.
     
     \end{enumerate}
 
-\subsubsection{Konfiguracja LB opartego na regu³ach}
+\subsubsection{Konfiguracja LB opartego na reguÅ‚ach}
 
-Wykorzystuj±c do równowa¿enia obci±¿enia WTE wraz z modu³em CBR -- mo¿na rozdzielaæ ruch sieciowy
-wykorzystuj±c nastêpuj±ce typy regu³:
+WykorzystujÄ…c do rÃ³wnowaÅ¼enia obciÄ…Å¼enia WTE wraz z moduÅ‚em CBR -- moÅ¼na rozdzielaÄ‡ ruch sieciowy
+wykorzystujÄ…c nastÄ™pujÄ…ce typy reguÅ‚:
     \begin{itemize}
-    \item Adres IP klienta; jest to sytuacja, gdy wymaga siê alokacji zasobów w zale¿no¶ci od tego sk±d przychodzi
-    zadanie. Mo¿na za³o¿yæ, ze z pewnych adresów (od klientów) wymagamy by zadania nie by³y realizowane, zatem
-    przygotowuje siê regule i nie dodaje do ¿adnego serwera -- wtedy okre¶leni klienci nie bêd± obs³ugiwani
-    (wyst±pi b³±d). np.:\\
+    \item Adres IP klienta; jest to sytuacja, gdy wymaga siÄ™ alokacji zasobÃ³w w zaleÅ¼noÅ›ci od tego skÄ…d przychodzi
+    zadanie. MoÅ¼na zaÅ‚oÅ¼yÄ‡, ze z pewnych adresÃ³w (od klientÃ³w) wymagamy by zadania nie byÅ‚y realizowane, zatem
+    przygotowuje siÄ™ regule i nie dodaje do Å¼adnego serwera -- wtedy okreÅ›leni klienci nie bÄ™dÄ… obsÅ‚ugiwani
+    (wystÄ…pi bÅ‚Ä…d). np.:\\
 
     ndcontrol rule add 9.67.131.153:80:ni type ip beginrange 9.0.0.0 endrange \
     9.255.255.255\\
 
-    taka regu³a oznacza, ze klienci z domeny IBM--a nie osi±gn± serwera CBR;        
-    \item Godzina po³±czenia; tak± regu³ê wykorzystuje siê g³ownie przy okre¶lonych planach obs³ugi obci±¿eñ.
-    W przypadku gdy witryna produkcyjna otrzymuje pewna grupê ¿±dañ o pewne dokumenty w okre¶lonym
-    (i sta³ym) czasie ka¿dego dnia -- mo¿na tylko dla tych ¿±dañ wyznaczyæ osobne serwery; mo¿e to byæ tak¿e
-    przydatne w przypadku gdy w godzinach nocnych (najmniejszy ruch) -- niektóre maszyny z powodu wykonywania
-    backupu powinny byæ wy³±czone z realizacji ¿±dañ;
-    \item Ilo¶æ po³±czeñ na sekundê, na port; (dzia³a tylko podczas uruchomionego Menad¿era) mo¿na wykorzystywaæ
-    np. w przypadku: \emph{if po³±czeñ na sekundê na porcie 80 > 100 then u¿yj te dwa serwery}, \emph{if po³±czeñ
-    na sekundê na porcie 80 > 2000 u¿yj te 8 serwerów};
-    \item Ca³kowita ilo¶æ aktywnych po³±czeñ na porcie; (wymóg jak wy¿ej -- Menad¿er musi byæ uruchomiony);
-    Jest to regu³a potrzebna w przypadku gdy wiadomo kiedy serwer bêdzie np. prze³adowany (przy ilu po³±czeniach)
-    Je¶li np. wiadomo, ze serwer nie jest w stanie przyj±æ i zrealizowaæ naraz wiêcej niz. 250 jednoczesnych po³±czeñ
-    tworzy siê regu³ê:\\
+    taka reguÅ‚a oznacza, ze klienci z domeny IBM--a nie osiÄ…gnÄ… serwera CBR;        
+    \item Godzina poÅ‚Ä…czenia; takÄ… reguÅ‚Ä™ wykorzystuje siÄ™ gÅ‚ownie przy okreÅ›lonych planach obsÅ‚ugi obciÄ…Å¼eÅ„.
+    W przypadku gdy witryna produkcyjna otrzymuje pewna grupÄ™ Å¼Ä…daÅ„ o pewne dokumenty w okreÅ›lonym
+    (i staÅ‚ym) czasie kaÅ¼dego dnia -- moÅ¼na tylko dla tych Å¼Ä…daÅ„ wyznaczyÄ‡ osobne serwery; moÅ¼e to byÄ‡ takÅ¼e
+    przydatne w przypadku gdy w godzinach nocnych (najmniejszy ruch) -- niektÃ³re maszyny z powodu wykonywania
+    backupu powinny byÄ‡ wyÅ‚Ä…czone z realizacji Å¼Ä…daÅ„;
+    \item IloÅ›Ä‡ poÅ‚Ä…czeÅ„ na sekundÄ™, na port; (dziaÅ‚a tylko podczas uruchomionego MenadÅ¼era) moÅ¼na wykorzystywaÄ‡
+    np. w przypadku: \emph{if poÅ‚Ä…czeÅ„ na sekundÄ™ na porcie 80 > 100 then uÅ¼yj te dwa serwery}, \emph{if poÅ‚Ä…czeÅ„
+    na sekundÄ™ na porcie 80 > 2000 uÅ¼yj te 8 serwerÃ³w};
+    \item CaÅ‚kowita iloÅ›Ä‡ aktywnych poÅ‚Ä…czeÅ„ na porcie; (wymÃ³g jak wyÅ¼ej -- MenadÅ¼er musi byÄ‡ uruchomiony);
+    Jest to reguÅ‚a potrzebna w przypadku gdy wiadomo kiedy serwer bÄ™dzie np. przeÅ‚adowany (przy ilu poÅ‚Ä…czeniach)
+    JeÅ›li np. wiadomo, ze serwer nie jest w stanie przyjÄ…Ä‡ i zrealizowaÄ‡ naraz wiÄ™cej niz. 250 jednoczesnych poÅ‚Ä…czeÅ„
+    tworzy siÄ™ reguÅ‚Ä™:\\
 
     ndcontrol rule add 130.40.52.153:80:pool2 type active beginrange 250 endrange 500\\
 
-    Wtedy do tak stworzonej regu³y do pojedynczego serwera mo¿na dodaæ nastêpne maszyny, które w przypadku
-    wiêkszej ilo¶ci po³±czeñ zostan± w³±czone w podejmowanie ¿±dañ;
-    \item regu³a zawsze prawdziwe; Regu³a ta jest zawsze spe³niona -- chyba ze serwery z którymi jest zwi±zana
-    nie pracuj±; przydaj± siê w przypadku gdy nie chcemy aby jakikolwiek klient dosta³ zwrot w postaci b³êdu
+    Wtedy do tak stworzonej reguÅ‚y do pojedynczego serwera moÅ¼na dodaÄ‡ nastÄ™pne maszyny, ktÃ³re w przypadku
+    wiÄ™kszej iloÅ›ci poÅ‚Ä…czeÅ„ zostanÄ… wÅ‚Ä…czone w podejmowanie Å¼Ä…daÅ„;
+    \item reguÅ‚a zawsze prawdziwe; ReguÅ‚a ta jest zawsze speÅ‚niona -- chyba ze serwery z ktÃ³rymi jest zwiÄ…zana
+    nie pracujÄ…; przydajÄ… siÄ™ w przypadku gdy nie chcemy aby jakikolwiek klient dostaÅ‚ zwrot w postaci bÅ‚Ä™du
     zadania dokumentu (od WTE);
-    \item Zawarto¶æ zadania; (jest to regu³a dostêpna tylko z poziomy modu³u CBR); regu³a wykorzystywana
-    w przypadku dystrybucji ¿±dañ w zale¿no¶ci od zawarto¶ci zadania; np. gdy potrzeba aby jedna grupa serwerów
-    obs³ugiwa³a zadania \emph{cgi--bin}, inna grupa obs³ugiwa³a media strumieniowe (np. real media), za¶ trzecia wszystkie
-    pozosta³e wtedy wzorcem pierwszej z regu³ 
-    bêdzie ¶cie¿ka do katalogu cgi--bin, drugiej do plików strumieniowych, a trzeciej regu³a zawsze prawdziwe;
-    nastêpnie nale¿y tylko przyporz±dkowaæ regu³y do odpowiadaj±cych im grup serwerów;
+    \item ZawartoÅ›Ä‡ zadania; (jest to reguÅ‚a dostÄ™pna tylko z poziomy moduÅ‚u CBR); reguÅ‚a wykorzystywana
+    w przypadku dystrybucji Å¼Ä…daÅ„ w zaleÅ¼noÅ›ci od zawartoÅ›ci zadania; np. gdy potrzeba aby jedna grupa serwerÃ³w
+    obsÅ‚ugiwaÅ‚a zadania \emph{cgi--bin}, inna grupa obsÅ‚ugiwaÅ‚a media strumieniowe (np. real media), zaÅ› trzecia wszystkie
+    pozostaÅ‚e wtedy wzorcem pierwszej z reguÅ‚ 
+    bÄ™dzie Å›cieÅ¼ka do katalogu cgi--bin, drugiej do plikÃ³w strumieniowych, a trzeciej reguÅ‚a zawsze prawdziwe;
+    nastÄ™pnie naleÅ¼y tylko przyporzÄ…dkowaÄ‡ reguÅ‚y do odpowiadajÄ…cych im grup serwerÃ³w;
         \begin{description}
-        \item[Typy regu³ dla CBR]\
+        \item[Typy reguÅ‚ dla CBR]\
 
-        sk³adnia wzorców regu³ wygl±da nastêpuj±co: w regule (wzorcu)  nie mo¿e byæ ¿adnych przerw (spacji)
-        ani znaków specjalnych:
+        skÅ‚adnia wzorcÃ³w reguÅ‚ wyglÄ…da nastÄ™pujÄ…co: w regule (wzorcu)  nie moÅ¼e byÄ‡ Å¼adnych przerw (spacji)
+        ani znakÃ³w specjalnych:
             \begin{description}
-            \item[*] -- odpowiada 0 do x wyst±pienia dowolnych znaków;
-            \item[)(] -- u¿ywane do grupowania logicznego;
+            \item[*] -- odpowiada 0 do x wystÄ…pienia dowolnych znakÃ³w;
+            \item[)(] -- uÅ¼ywane do grupowania logicznego;
             \item[\&] -- logiczne AND;
             \item[|] -- logiczne OR;
             \item[!] -- logiczne NOT;
             \end{description}
-        Zarezerwowane s³owa (zawsze nastêpuje do nich przyporz±dkowanie w postaci znaku równo¶ci):
+        Zarezerwowane sÅ‚owa (zawsze nastÄ™puje do nich przyporzÄ…dkowanie w postaci znaku rÃ³wnoÅ›ci):
             \begin{description}
             \item[client] -- adres IP klienta;
             \item[url] -- URL w zadaniu;
-            \item[path] -- sekcja ¶cie¿ka URL--a;
-            \item[protocol] -- sekcja protokó³u URL--a;
+            \item[path] -- sekcja Å›cieÅ¼ka URL--a;
+            \item[protocol] -- sekcja protokÃ³Å‚u URL--a;
             \item[refer] -- \emph{quality of service}
             \end{description}
-        Poni¿ej znajduj± siê przyk³ady:\\
+        PoniÅ¼ej znajdujÄ… siÄ™ przykÅ‚ady:\\
 
         \emph{url=http://*/*.gif}\\
 
@@ -409,45 +409,45 @@ wykorzystuj±c nastêpuj±ce typy regu³:
         \end{description}
     \end{itemize}
 
-Wszystkie regu³y posiadaj± nazwê, typ, priorytet, pocz±tkowy zakres dzia³ania, koñcowy zakres dzia³ania oraz
-grupê obs³uguj±cych serwerów. Dodatkowo, regu³a zawarto¶ci w komponencie CBR posiada zwi±zane ze sob±
-wyra¿enie regularne. Regu³y s± wykorzystywane w kolejno¶ci ich priorytetów. Regu³y z niskim priorytetem s±
-realizowane wcze¶niej. Innymi s³owy, regu³a z priorytetem 1 jest wykorzystywana przed regu³a o priorytecie 2.
-Pierwsza poprawnie dopasowana regu³a zostaje wykorzystana (reszta ju¿ nie jest próbkowana).
+Wszystkie reguÅ‚y posiadajÄ… nazwÄ™, typ, priorytet, poczÄ…tkowy zakres dziaÅ‚ania, koÅ„cowy zakres dziaÅ‚ania oraz
+grupÄ™ obsÅ‚ugujÄ…cych serwerÃ³w. Dodatkowo, reguÅ‚a zawartoÅ›ci w komponencie CBR posiada zwiÄ…zane ze sobÄ…
+wyraÅ¼enie regularne. ReguÅ‚y sÄ… wykorzystywane w kolejnoÅ›ci ich priorytetÃ³w. ReguÅ‚y z niskim priorytetem sÄ…
+realizowane wczeÅ›niej. Innymi sÅ‚owy, reguÅ‚a z priorytetem 1 jest wykorzystywana przed reguÅ‚a o priorytecie 2.
+Pierwsza poprawnie dopasowana reguÅ‚a zostaje wykorzystana (reszta juÅ¼ nie jest prÃ³bkowana).
 
-Aby regu³a zosta³a spe³niona musza byæ spe³nione naraz dwa warunki:
+Aby reguÅ‚a zostaÅ‚a speÅ‚niona musza byÄ‡ speÅ‚nione naraz dwa warunki:
     \begin{enumerate}
-    \item Predykat regu³y musi byæ prawdziwy. Co oznacza, ze warto¶æ porównana musi znajdowaæ siê pomiêdzy
-    warto¶ciami pocz±tkowa i koñcowa, lub zawarto¶æ zadania musi pasowaæ do wyra¿enia regularnego
-    wyspecyfikowanego w wzorcu\footnote{ang. \emph{pattern}}. Dla regu³ o typie ,,zawsze prawdziwy''
-    regu³a jest zawsze spe³niona (bez warunków);
-    \item Je¶li istniej± serwery zwi±zane do poszczególnych regu³, co najmniej jeden z nich musi byæ dostêpny do
+    \item Predykat reguÅ‚y musi byÄ‡ prawdziwy. Co oznacza, ze wartoÅ›Ä‡ porÃ³wnana musi znajdowaÄ‡ siÄ™ pomiÄ™dzy
+    wartoÅ›ciami poczÄ…tkowa i koÅ„cowa, lub zawartoÅ›Ä‡ zadania musi pasowaÄ‡ do wyraÅ¼enia regularnego
+    wyspecyfikowanego w wzorcu\footnote{ang. \emph{pattern}}. Dla reguÅ‚ o typie ,,zawsze prawdziwy''
+    reguÅ‚a jest zawsze speÅ‚niona (bez warunkÃ³w);
+    \item JeÅ›li istniejÄ… serwery zwiÄ…zane do poszczegÃ³lnych reguÅ‚, co najmniej jeden z nich musi byÄ‡ dostÄ™pny do
     odebranie zadania.
     \end{enumerate}
 
-W przypadku, gdy nie ma serwerów dla których konkretna regu³a nie mog³aby byæ spe³niona -- zadanie zostaje
-porzucone, a CBR zwróci do serwera proxy (WTE) komunikat b³êdu. Je¶li za¶ ¿adna z regu³ nie mo¿e zostaæ
-spe³niona -- jak wy¿ej -- CBR zwróci do WTE komunikat b³êdu.
+W przypadku, gdy nie ma serwerÃ³w dla ktÃ³rych konkretna reguÅ‚a nie mogÅ‚aby byÄ‡ speÅ‚niona -- zadanie zostaje
+porzucone, a CBR zwrÃ³ci do serwera proxy (WTE) komunikat bÅ‚Ä™du. JeÅ›li zaÅ› Å¼adna z reguÅ‚ nie moÅ¼e zostaÄ‡
+speÅ‚niona -- jak wyÅ¼ej -- CBR zwrÃ³ci do WTE komunikat bÅ‚Ä™du.
 
-\subsection{Narzêdzie do testów -- Astra Load Runner}
+\subsection{NarzÄ™dzie do testÃ³w -- Astra Load Runner}
 
-Narzêdziem testowym w wykonanym projekcie by³o oprogramowanie firmy Mercury Interactive\footnote{http://www.merc-int.com}
--- Astra Load Runner. Jego wybór by³ spowodowany szerokim wachlarzem mo¿liwo¶ci testowych, obs³ugiwanych protoko³ów oraz
-mo¿liwo¶ci dokonywania analiz i wizualizacji rezultatów. Poni¿ej znajduje siê krótka charakterystyka tego progrmau:
+NarzÄ™dziem testowym w wykonanym projekcie byÅ‚o oprogramowanie firmy Mercury Interactive\footnote{http://www.merc-int.com}
+-- Astra Load Runner. Jego wybÃ³r byÅ‚ spowodowany szerokim wachlarzem moÅ¼liwoÅ›ci testowych, obsÅ‚ugiwanych protokoÅ‚Ã³w oraz
+moÅ¼liwoÅ›ci dokonywania analiz i wizualizacji rezultatÃ³w. PoniÅ¼ej znajduje siÄ™ krÃ³tka charakterystyka tego progrmau:
 
-LoadRunner jest narzêdziem do testów wydajno¶ciowych, dziêki którym mo¿na sprawdziæ wydajno¶æ i skalowalno¶æ systemu webowego.
-Jest on w stanie generowaæ dziesi±tki, setki czy nawet tysi±ce jednoczesnych u¿ytkowników, umo¿liwiaj±c w ten sposób wykrycie 
-wszystkich s³abych, b±d¼ niewydajnych miejsc w naszym systemie. W czasie trwania testu dostêpne s± ró¿norakie 
-monitory, wy¶wietlaj±ce ca³y czas wszystkie interesuj±ce parametry systemu funkcjonuj±cego pod obci±¿eniem. Dziêki 
-tym wbudowanym monitorom mo¿na np.:  na bie¿±co ¶ledziæ czasy odpowiedzi wszystkich serwerów, czasy wykonywania siê danych 
-transakcji czy szybko¶æ transferu danych w sieci z podzia³em na segmenty.
+LoadRunner jest narzÄ™dziem do testÃ³w wydajnoÅ›ciowych, dziÄ™ki ktÃ³rym moÅ¼na sprawdziÄ‡ wydajnoÅ›Ä‡ i skalowalnoÅ›Ä‡ systemu webowego.
+Jest on w stanie generowaÄ‡ dziesiÄ…tki, setki czy nawet tysiÄ…ce jednoczesnych uÅ¼ytkownikÃ³w, umoÅ¼liwiajÄ…c w ten sposÃ³b wykrycie 
+wszystkich sÅ‚abych, bÄ…dÅº niewydajnych miejsc w naszym systemie. W czasie trwania testu dostÄ™pne sÄ… rÃ³Å¼norakie 
+monitory, wyÅ›wietlajÄ…ce caÅ‚y czas wszystkie interesujÄ…ce parametry systemu funkcjonujÄ…cego pod obciÄ…Å¼eniem. DziÄ™ki 
+tym wbudowanym monitorom moÅ¼na np.:  na bieÅ¼Ä…co Å›ledziÄ‡ czasy odpowiedzi wszystkich serwerÃ³w, czasy wykonywania siÄ™ danych 
+transakcji czy szybkoÅ›Ä‡ transferu danych w sieci z podziaÅ‚em na segmenty.
 
-Wszyscy u¿ytkownicy generowani przez LoadRunnera kontrolowani s± z jednego centralnego modu³u zwanego kontrolerem. Testuj±c 
-system pod obci±¿eniem mo¿na symulowaæ ró¿ne numery IP klientów, ró¿ne przegl±darki internetowe oraz ró¿ne 
-szybko¶ci ³±czy internetowych, ca³y czas jednocze¶nie monitoruj±c zachowanie naszego obci±¿anego systemu.
-Dane Techniczne Narzêdzia:
+Wszyscy uÅ¼ytkownicy generowani przez LoadRunnera kontrolowani sÄ… z jednego centralnego moduÅ‚u zwanego kontrolerem. TestujÄ…c 
+system pod obciÄ…Å¼eniem moÅ¼na symulowaÄ‡ rÃ³Å¼ne numery IP klientÃ³w, rÃ³Å¼ne przeglÄ…darki internetowe oraz rÃ³Å¼ne 
+szybkoÅ›ci Å‚Ä…czy internetowych, caÅ‚y czas jednoczeÅ›nie monitorujÄ…c zachowanie naszego obciÄ…Å¼anego systemu.
+Dane Techniczne NarzÄ™dzia:
 \begin{description}
-\item[Wspierane protoko³y typu klient/serwer]\
+\item[Wspierane protokoÅ‚y typu klient/serwer]\
 	\begin{itemize}
 	\item Oracle UPI
 	\item Oracle OCI
@@ -463,7 +463,7 @@ Dane Techniczne Narzêdzia:
 	\item COM/DCOM
 	\item WinSocket
 	\end{itemize}
-\item[Wspierane protoko³y ERP]\
+\item[Wspierane protokoÅ‚y ERP]\
 	\begin{itemize}
 	\item SAP R/3
 	\item PeopleSoft (2-tier i Tuxedo-based)
@@ -471,7 +471,7 @@ Dane Techniczne Narzêdzia:
 	\item Siebel
 	\item Baan
 	\end{itemize}
-\item[Wspierane protoko³y internetowe]\
+\item[Wspierane protokoÅ‚y internetowe]\
 	\begin{itemize}
 	\item Streaming (Real Audio and Real Video)
 	\item MS Media
@@ -496,60 +496,60 @@ Dane Techniczne Narzêdzia:
 	\item VT    Terminal   (DEC)
 	\item X Window Applications
 	\end{itemize}
-\item[Tworzenie testów wydajno¶ciowych:]\
+\item[Tworzenie testÃ³w wydajnoÅ›ciowych:]\
 	\begin{itemize}
-	\item Mo¿liwo¶æ prze³±czania rodzaju nagrywanego protoko³u w trakcie rejestracji jednego skryptu;
-	\item Narzêdzie automatycznie generuje skrypty testów obci±¿eniowych, oparte na operacjach biznesowych wykonywanych na 
+	\item MoÅ¼liwoÅ›Ä‡ przeÅ‚Ä…czania rodzaju nagrywanego protokoÅ‚u w trakcie rejestracji jednego skryptu;
+	\item NarzÄ™dzie automatycznie generuje skrypty testÃ³w obciÄ…Å¼eniowych, oparte na operacjach biznesowych wykonywanych na 
 	testowanej aplikacji;
-	\item Narzêdzia do automatycznej parametryzacji skryptów pozwalaj± na szybk± i wydajn± obróbkê stworzonego testu;
-	\item Przypisywanie ró¿nych numerów IP do poszczególnych symulowanych u¿ytkowników daje du¿e mo¿liwo¶ci w tworzeniu 
+	\item NarzÄ™dzia do automatycznej parametryzacji skryptÃ³w pozwalajÄ… na szybkÄ… i wydajnÄ… obrÃ³bkÄ™ stworzonego testu;
+	\item Przypisywanie rÃ³Å¼nych numerÃ³w IP do poszczegÃ³lnych symulowanych uÅ¼ytkownikÃ³w daje duÅ¼e moÅ¼liwoÅ›ci w tworzeniu 
 	scenariuszy testowych;
-	\item Automatyczna kontrola zawarto¶ci danych w czasie testów wydajno¶ciowych, stanowi±ca jednocze¶nie kontrolê funkcjonaln±;
-	\item Automatyczne korelowanie dynamicznie zmieniaj±cych siê danych przy nagrywaniu i odtwarzaniu skryptów;
-	\item Korelacja zapytañ Oraclowych, polegaj±ca na mo¿liwo¶ci przechwytywania danych pobieranych z bazy i wykorzystywaniu ich w 
-	dalszej czê¶ci skryptu;
-	\item Emulacja po³±czenia modemowego o ró¿nej przepustowo¶ci;
-	\item Kreator scenariuszy testowych, daj±cy mo¿liwo¶æ szybkiego i efektywnego tworzenia ca³ych scenariuszy testowych.
+	\item Automatyczna kontrola zawartoÅ›ci danych w czasie testÃ³w wydajnoÅ›ciowych, stanowiÄ…ca jednoczeÅ›nie kontrolÄ™ funkcjonalnÄ…;
+	\item Automatyczne korelowanie dynamicznie zmieniajÄ…cych siÄ™ danych przy nagrywaniu i odtwarzaniu skryptÃ³w;
+	\item Korelacja zapytaÅ„ Oraclowych, polegajÄ…ca na moÅ¼liwoÅ›ci przechwytywania danych pobieranych z bazy i wykorzystywaniu ich w 
+	dalszej czÄ™Å›ci skryptu;
+	\item Emulacja poÅ‚Ä…czenia modemowego o rÃ³Å¼nej przepustowoÅ›ci;
+	\item Kreator scenariuszy testowych, dajÄ…cy moÅ¼liwoÅ›Ä‡ szybkiego i efektywnego tworzenia caÅ‚ych scenariuszy testowych.
 	\end{itemize}
 
-\item[Kontrolowanie testów wydajno¶ciowych]\
+\item[Kontrolowanie testÃ³w wydajnoÅ›ciowych]\
 	\begin{itemize}
-	\item Automatyczna kontrola i synchronizacja wszystkich symulowanych u¿ytkowników z jednego centralnego punku kontroli;
-	\item Monitorowanie w czasie rzeczywistym wszystkich parametrów systemu;
-	\item £atwy w u¿yciu graficzny interfejs, umo¿liwiaj±cy tworzenie, uruchamianie, monitorowanie i analizowanie wyników testu;
-	\item Jeden wspólny punk kontroli dla ca³ego testu z mo¿liwo¶ci± uruchamiania u¿ytkowników na systemach Windows i Unix.
+	\item Automatyczna kontrola i synchronizacja wszystkich symulowanych uÅ¼ytkownikÃ³w z jednego centralnego punku kontroli;
+	\item Monitorowanie w czasie rzeczywistym wszystkich parametrÃ³w systemu;
+	\item Åatwy w uÅ¼yciu graficzny interfejs, umoÅ¼liwiajÄ…cy tworzenie, uruchamianie, monitorowanie i analizowanie wynikÃ³w testu;
+	\item Jeden wspÃ³lny punk kontroli dla caÅ‚ego testu z moÅ¼liwoÅ›ciÄ… uruchamiania uÅ¼ytkownikÃ³w na systemach Windows i Unix.
 	\end{itemize}
 
-\item[Pomiary i kontrola wydajno¶ci]\
+\item[Pomiary i kontrola wydajnoÅ›ci]\
 \begin{itemize}
-	\item Mo¿liwo¶æ pomiaru i kontroli czasu wykonywania siê mierzonych transformacji w zadanych kryteriach lub od ,,zapytania -- 
-	do odpowiedzi'' tzn. ³±cznie z czasem przetwarzania klienta, serwera i sieci komputerowej;
-	\item Mo¿liwo¶æ wygenerowania dedykowanego obci±¿enia serwera, powielaj±c zarejestrowan± transmisjê po konkretnym protokole;
-	\item Pomiar parametrów systemu operacyjnego dzia³aj±cego na obci±¿anym serwerze, daj±cy mo¿liwo¶æ znalezienia s³abych punktów 
+	\item MoÅ¼liwoÅ›Ä‡ pomiaru i kontroli czasu wykonywania siÄ™ mierzonych transformacji w zadanych kryteriach lub od ,,zapytania -- 
+	do odpowiedzi'' tzn. Å‚Ä…cznie z czasem przetwarzania klienta, serwera i sieci komputerowej;
+	\item MoÅ¼liwoÅ›Ä‡ wygenerowania dedykowanego obciÄ…Å¼enia serwera, powielajÄ…c zarejestrowanÄ… transmisjÄ™ po konkretnym protokole;
+	\item Pomiar parametrÃ³w systemu operacyjnego dziaÅ‚ajÄ…cego na obciÄ…Å¼anym serwerze, dajÄ…cy moÅ¼liwoÅ›Ä‡ znalezienia sÅ‚abych punktÃ³w 
 	konfiguracji i zasobach systemu operacyjnego;
-	\item Pomiar parametrów sprzêtowych maszyny bêd±cej obci±¿anym serwerem, daj±cy mo¿liwo¶æ znalezienia s³abych i niewydolnych 
-	punków w konfiguracji sprzêtowej testowanej maszyny;
-	\item Mo¿liwo¶æ pomiaru czasów wykonywania siê transakcji zdefiniowanych przez testera.
+	\item Pomiar parametrÃ³w sprzÄ™towych maszyny bÄ™dÄ…cej obciÄ…Å¼anym serwerem, dajÄ…cy moÅ¼liwoÅ›Ä‡ znalezienia sÅ‚abych i niewydolnych 
+	punkÃ³w w konfiguracji sprzÄ™towej testowanej maszyny;
+	\item MoÅ¼liwoÅ›Ä‡ pomiaru czasÃ³w wykonywania siÄ™ transakcji zdefiniowanych przez testera.
 	\end{itemize}
-\item[Analiza i kontrola wyników, dostêpne monitory:]\
+\item[Analiza i kontrola wynikÃ³w, dostÄ™pne monitory:]\
 	\begin{itemize}
-	\item Server Resource Monitor ( NT, Unix, Linux) -- pozwala na kontrolowanie zasobów sprzêtowych maszyn bêd±cych 
+	\item Server Resource Monitor ( NT, Unix, Linux) -- pozwala na kontrolowanie zasobÃ³w sprzÄ™towych maszyn bÄ™dÄ…cych 
 	testowanymi serwerami;
-	\item Network Delay Monitor -- pozwala na kontrolowanie czasów odpowiedzi i realizowania siê monitorowanych transakcji we 
-	wszystkich segmentach sieci obci±¿anego systemu;
-	\item SNMP Monitor -- pozwala na kontrolowanie przep³ywu danych pomiêdzy poszczególnymi elementami aktywnymi sieci jak: 
+	\item Network Delay Monitor -- pozwala na kontrolowanie czasÃ³w odpowiedzi i realizowania siÄ™ monitorowanych transakcji we 
+	wszystkich segmentach sieci obciÄ…Å¼anego systemu;
+	\item SNMP Monitor -- pozwala na kontrolowanie przepÅ‚ywu danych pomiÄ™dzy poszczegÃ³lnymi elementami aktywnymi sieci jak: 
 	Routery, Huby, Bridge;
 	\item WebSphere, ColdFusion, SilverStream, BroadVision, ATG Dynamo, GemStone/J, Ariba Buyer, WebLogic, MS ASP, iPlanet -- 
-	monitory serwerów aplikacji internetowych, posiadaj±ce specjalne wsparcie dla ka¿dego z nich;
+	monitory serwerÃ³w aplikacji internetowych, posiadajÄ…ce specjalne wsparcie dla kaÅ¼dego z nich;
 	\item EJB, TUXEDO -- kontroluje i monitoruje wszystkie parametry systemu opartego na aplikacjach TUXEDO i EJB;
-	\item MS IIS, Netscape, Apache -- monitory serwerów webowych;
+	\item MS IIS, Netscape, Apache -- monitory serwerÃ³w webowych;
 	\item RealServer, Windows Media Server -- monitory do kontrolowania technologii strumienowych;
 	\item COM/CORBA -- monitory do kontrolowania i badania technologii rozproszonych;
-	\item ORACLE, SQLServer -- monitory do ¶ledzenia i badania wydajno¶ci serwerów baz danych, zawieraj±ce specjalne wsparcie i 
+	\item ORACLE, SQLServer -- monitory do Å›ledzenia i badania wydajnoÅ›ci serwerÃ³w baz danych, zawierajÄ…ce specjalne wsparcie i 
 	integracje z tym technologiami.
 	\end{itemize}
 
-\item[Wirtualni u¿ytkownicy s± odtwarzani na systemach:]\
+\item[Wirtualni uÅ¼ytkownicy sÄ… odtwarzani na systemach:]\
 	\begin{itemize}
 	\item Windows NT
 	\item Sun Solaris
@@ -562,19 +562,19 @@ Dane Techniczne Narzêdzia:
 
 
 
-\section{Projekt systemu do zarz±dzania wielokomputerowymi serwerami WWW w oparciu o IBM SecureWay Network Dispatcher}
+\section{Projekt systemu do zarzÄ…dzania wielokomputerowymi serwerami WWW w oparciu o IBM SecureWay Network Dispatcher}
 
-Ca³o¶æ zadania polega³a na stworzeniu jednej architektury systemu WWW którego witryna zawiera³aby oko³o 60\% zawarto¶ci
-w postaci stron dynamicznych (wype³nianych danymi pochodz±cymi ze znajduj±cego siê w uk³adzie serwera baz danych) generowanych
-on line. Jednak¿e rozdysponowanie obci±¿enia pomiêdzy poszczególnymi elementami serwisu WWW by³o realizowane na trzy sposoby: 
-statycznie, dynamicznie oraz w zale¿no¶ci od typu nadchodz±cych do serwera ¿±dañ. Taka architektura mia³a daæ odpowied¼ na 
-pytanie -- jak zaprojektowaæ sytem WWW obs³uguj±cy strony generowane dynamicznie w mo¿liwie najbardziej efektywny sposób.
+CaÅ‚oÅ›Ä‡ zadania polegaÅ‚a na stworzeniu jednej architektury systemu WWW ktÃ³rego witryna zawieraÅ‚aby okoÅ‚o 60\% zawartoÅ›ci
+w postaci stron dynamicznych (wypeÅ‚nianych danymi pochodzÄ…cymi ze znajdujÄ…cego siÄ™ w ukÅ‚adzie serwera baz danych) generowanych
+on line. JednakÅ¼e rozdysponowanie obciÄ…Å¼enia pomiÄ™dzy poszczegÃ³lnymi elementami serwisu WWW byÅ‚o realizowane na trzy sposoby: 
+statycznie, dynamicznie oraz w zaleÅ¼noÅ›ci od typu nadchodzÄ…cych do serwera Å¼Ä…daÅ„. Taka architektura miaÅ‚a daÄ‡ odpowiedÅº na 
+pytanie -- jak zaprojektowaÄ‡ sytem WWW obsÅ‚ugujÄ…cy strony generowane dynamicznie w moÅ¼liwie najbardziej efektywny sposÃ³b.
 
 \subsection{Architektura}
 
-W eksperymencie wykorzystano lokaln± sieæ komputerow± z³o¿on± z jednego segmentu sieci FastEthernet. W jego sk³ad wchodzi³y
-komputery, na których zainstalowane by³o oprogramowanie generuj±ce obci±¿enie dla klastera serwerów WWW (razem dziewiêæ sztuk)
-pracuj±cych pod kontrol± systemu Windows NT 4.0 Server (Service Pack 6a).
+W eksperymencie wykorzystano lokalnÄ… sieÄ‡ komputerowÄ… zÅ‚oÅ¼onÄ… z jednego segmentu sieci FastEthernet. W jego skÅ‚ad wchodziÅ‚y
+komputery, na ktÃ³rych zainstalowane byÅ‚o oprogramowanie generujÄ…ce obciÄ…Å¼enie dla klastera serwerÃ³w WWW (razem dziewiÄ™Ä‡ sztuk)
+pracujÄ…cych pod kontrolÄ… systemu Windows NT 4.0 Server (Service Pack 6a).
  
 \begin{figure}[h]
 \centering
@@ -582,208 +582,208 @@ pracuj±cych pod kontrol± systemu Windows NT 4.0 Server (Service Pack 6a).
 \caption{Architektura segmentu sieci testowej.}
 \label{architektura}
 \end{figure}
-Ka¿dy komputer wyposa¿ony by³ w procesor Intel 
-Celeron 300 MHz, 96 MB pamiêci SDRAM, dysk twardy o pojemno¶ci 3 GB oraz kartê sieciow± 3COM EtherLink XL (10/100 Mbps). 
-P³yta g³ówna ka¿dego komputera zbudowana by³a w oparciu o chipset Intel 430 LX. Komputery te posiada³y adresy IP z zakresu 
-156.17.130.69 -- 156.17.130.79 i nazwy odpowiednio Beryl04 -- Beryl12. Na komputerach tych zainstalowane by³o oprogramowanie
-Astra LoadRunner firmy Mercury Interactive. Komputery o identycznej architekturze stanowi³y serwery baz danych: beryl01 (IP = .66), beryl02 (IP = .67), beryl03 (IP = .68).
-Zainstalowano na nich MS SQL server w wersji 7.0 (wersja 120 dniowa) wraz z baz± testow±.
+KaÅ¼dy komputer wyposaÅ¼ony byÅ‚ w procesor Intel 
+Celeron 300 MHz, 96 MB pamiÄ™ci SDRAM, dysk twardy o pojemnoÅ›ci 3 GB oraz kartÄ™ sieciowÄ… 3COM EtherLink XL (10/100 Mbps). 
+PÅ‚yta gÅ‚Ã³wna kaÅ¼dego komputera zbudowana byÅ‚a w oparciu o chipset Intel 430 LX. Komputery te posiadaÅ‚y adresy IP z zakresu 
+156.17.130.69 -- 156.17.130.79 i nazwy odpowiednio Beryl04 -- Beryl12. Na komputerach tych zainstalowane byÅ‚o oprogramowanie
+Astra LoadRunner firmy Mercury Interactive. Komputery o identycznej architekturze stanowiÅ‚y serwery baz danych: beryl01 (IP = .66), beryl02 (IP = .67), beryl03 (IP = .68).
+Zainstalowano na nich MS SQL server w wersji 7.0 (wersja 120 dniowa) wraz z bazÄ… testowÄ….
 
-Poza wy¿ej wymienionymi komputerami PC pod³±czony by³y badany klaster serwerów WWW. Sprzêtow± platform± serwerów by³y 
-komputery IBM RS 6000 43P Model 260 pracuj±ce pod kontrol± systemu operacyjnego AIX 4.3.3. Ka¿dy z tych komputerów posiada³ 
-256 MB pamiêci RAM, dysk twardy UW SCSI o pojemno¶ci 4.3 GB oraz zintegrowan± kartê sieciow± IBM 10/100 Mbps. ,,Sercem'' tej 
-serii komputerów RS 6000 jest procesor RISC PowerPC Power3 taktowany czêstotliwo¶ci± 200 Mhz. Trzy z wykorzystywanych maszyn 
-posiada³y jeden taki procesor a dwa wyposa¿one by³y w dwa procesory po³±czone w architekturze SMP. Na ka¿dym z badanych 
-serwerów zainstalowane by³o oprogramowanie serwera WWW Apache for AIX. Poszczególne komputery RS 6000 posiada³y adresy IP z 
+Poza wyÅ¼ej wymienionymi komputerami PC podÅ‚Ä…czony byÅ‚y badany klaster serwerÃ³w WWW. SprzÄ™towÄ… platformÄ… serwerÃ³w byÅ‚y 
+komputery IBM RS 6000 43P Model 260 pracujÄ…ce pod kontrolÄ… systemu operacyjnego AIX 4.3.3. KaÅ¼dy z tych komputerÃ³w posiadaÅ‚ 
+256 MB pamiÄ™ci RAM, dysk twardy UW SCSI o pojemnoÅ›ci 4.3 GB oraz zintegrowanÄ… kartÄ™ sieciowÄ… IBM 10/100 Mbps. ,,Sercem'' tej 
+serii komputerÃ³w RS 6000 jest procesor RISC PowerPC Power3 taktowany czÄ™stotliwoÅ›ciÄ… 200 Mhz. Trzy z wykorzystywanych maszyn 
+posiadaÅ‚y jeden taki procesor a dwa wyposaÅ¼one byÅ‚y w dwa procesory poÅ‚Ä…czone w architekturze SMP. Na kaÅ¼dym z badanych 
+serwerÃ³w zainstalowane byÅ‚o oprogramowanie serwera WWW Apache for AIX. PoszczegÃ³lne komputery RS 6000 posiadaÅ‚y adresy IP z 
 zakresu 156.17.130.45 -- 156.17.130.49 i nazwy odpowiednio akwamaryn (RS/6000 dwuprocesorowy), szafir (dwuprocesorowy), 
-opal01 -- opal03 (jednoprocesorowe). Jedna maszyna dwuprocesorowa (szafir) pos³u¿y³a do 
-rozpropagowania obci±¿enia (dispatcher+CBR i WTE), druga pos³u¿y³a do obs³ugi ¿±dañ o statyczne
-pliki HTML, za¶ pozosta³e maszyny obs³ugiwa³y dynamicznie generowane (poprzez skrypty PHP) strony,
-w ten sposób, ¿e ka¿dy z opali pobiera³ dane z bazy danych poszczególnych beryli (opal01--beryl01,
+opal01 -- opal03 (jednoprocesorowe). Jedna maszyna dwuprocesorowa (szafir) posÅ‚uÅ¼yÅ‚a do 
+rozpropagowania obciÄ…Å¼enia (dispatcher+CBR i WTE), druga posÅ‚uÅ¼yÅ‚a do obsÅ‚ugi Å¼Ä…daÅ„ o statyczne
+pliki HTML, zaÅ› pozostaÅ‚e maszyny obsÅ‚ugiwaÅ‚y dynamicznie generowane (poprzez skrypty PHP) strony,
+w ten sposÃ³b, Å¼e kaÅ¼dy z opali pobieraÅ‚ dane z bazy danych poszczegÃ³lnych beryli (opal01--beryl01,
  opal02--beryl02 i opal03--beryl03).
 
-Wszystkie komputery by³y po³±czone ze 100Mbps switchem OmniS/R-5 firmy Alcatel. Równie¿ wyj¶cie na Swiat by³o realizowane z
-t± szybko¶ci±. 
+Wszystkie komputery byÅ‚y poÅ‚Ä…czone ze 100Mbps switchem OmniS/R-5 firmy Alcatel. RÃ³wnieÅ¼ wyjÅ›cie na Swiat byÅ‚o realizowane z
+tÄ… szybkoÅ›ciÄ…. 
 
-Konstrukcja zarz±dzanego, wielokomputerowego systemu WWW by³a bardzo z³o¿ona. Sk³ada³a siê z 
-nastêpuj±cych elementów:
+Konstrukcja zarzÄ…dzanego, wielokomputerowego systemu WWW byÅ‚a bardzo zÅ‚oÅ¼ona. SkÅ‚adaÅ‚a siÄ™ z 
+nastÄ™pujÄ…cych elementÃ³w:
 \begin{enumerate}
 \item Instalacja i konfiguracja switcha OmniSwitch/Router firmy Alcatel;
-\item Instalacja i konfiguracja dispatchera z modu³em CBR. W sk³ad tej czê¶ci wesz³y: 
+\item Instalacja i konfiguracja dispatchera z moduÅ‚em CBR. W skÅ‚ad tej czÄ™Å›ci weszÅ‚y: 
 \begin{itemize}
-\item instalacja systemu AIX w wersji 4.3.3 oraz jego update do wersji 4.3.3.0.8 (niezbêdne pliki
-zosta³y ¶ci±gniête z odpowiedniej strony firmy IBM;
+\item instalacja systemu AIX w wersji 4.3.3 oraz jego update do wersji 4.3.3.0.8 (niezbÄ™dne pliki
+zostaÅ‚y Å›ciÄ…gniÄ™te z odpowiedniej strony firmy IBM;
 \item instalacja wirtualnej maszyny (VM) Javy w wersji 1.3.0;
-\item instalacja oprogramowania IBM WebSphere Edge Server 1.0.3  wraz z 60--dniow± licencj±;
-\item skonfigurowanie WTE jako \emph{reverse proxy } o adresie URL: www1.ists.pwr.wroc.pl, który
-przekierowywa³ adresy URL do serwerów: opal01, opal02, opal03 i akwamaryn, w ten sposób, aby
-¿±dania o statyczne pliki HTML zosta³y skierowane do serwera akwamaryn, za¶ ¿±dania o dynamicznie
-generowane strony z rozszerzeniami: .PHP, .PHP3 i PHP4 zosta³y rozpropagowane na pozosta³e
+\item instalacja oprogramowania IBM WebSphere Edge Server 1.0.3  wraz z 60--dniowÄ… licencjÄ…;
+\item skonfigurowanie WTE jako \emph{reverse proxy } o adresie URL: www1.ists.pwr.wroc.pl, ktÃ³ry
+przekierowywaÅ‚ adresy URL do serwerÃ³w: opal01, opal02, opal03 i akwamaryn, w ten sposÃ³b, aby
+Å¼Ä…dania o statyczne pliki HTML zostaÅ‚y skierowane do serwera akwamaryn, zaÅ› Å¼Ä…dania o dynamicznie
+generowane strony z rozszerzeniami: .PHP, .PHP3 i PHP4 zostaÅ‚y rozpropagowane na pozostaÅ‚e
 trzy maszyny;
 \end{itemize}
-\item Instalacja i konfiguracja oprogramowania dodatkowego na poszczególne serwery WWW i 
+\item Instalacja i konfiguracja oprogramowania dodatkowego na poszczegÃ³lne serwery WWW i 
 dispatchera tzn. HTTP Server Apache w wersji 1.3.19, kompilator C i C++ w postaci gcc w wersji
-2.95.3 oraz jêzyka skryptowego PHP w wersji 4.0.6;
+2.95.3 oraz jÄ™zyka skryptowego PHP w wersji 4.0.6;
 \item Instalacja i konfiguracja Windows NT 4.0 Server wraz z Service Pack 6.0 na dwunastu
 laboratoryjnych komputerach PC;
 \item Instalacja i konfiguracja Microsoft SQL Serwera w wersji 7.0 na serwerach baz danych oraz
 instalacja bazy testowej;
-\item Instalacja oprogramowania do testów na pozosta³ych komputerach; przygotowanie testu;
-\item przygotowanie witryny WWW do testów;
+\item Instalacja oprogramowania do testÃ³w na pozostaÅ‚ych komputerach; przygotowanie testu;
+\item przygotowanie witryny WWW do testÃ³w;
 \end{enumerate}
 
 \subsection{Algorytmy i metody}
-Poni¿ej znajduj± siê opisane trzy powsta³e modele. W ka¿dym z nich program komputer (RS/6000) wraz z zainstalowanym programem 
-IBM SecureWay Network Dispatcher stanowi uk³ad rozdysponuj±cy ¿±daniami. 
+PoniÅ¼ej znajdujÄ… siÄ™ opisane trzy powstaÅ‚e modele. W kaÅ¼dym z nich program komputer (RS/6000) wraz z zainstalowanym programem 
+IBM SecureWay Network Dispatcher stanowi ukÅ‚ad rozdysponujÄ…cy Å¼Ä…daniami. 
 
-\subsubsection{Information less -- modu³ dispatcher + Round Robin}
+\subsubsection{Information less -- moduÅ‚ dispatcher + Round Robin}
 
-Sam Dispatcher nie ma mo¿liwo¶ci pracy w statycznym algorytmie Round Robin, jednak¿e (jak napisano powy¿ej, w charakterystyce 
-oprogramowania) mo¿na pos³ugiwaæ siê modu³em Dispatcher z wy³±czonym modu³em Zarz±dcy oraz z ogórnie nadanymi wagami. W tym
-przypadku, pomimo niehomogenicznego ¶rodowiska nadano wszystkim elementom klastra WWW wagi równe jeden. W tej sytuacji komputer
-z zainstalowanym dispatcherem równomiernie (bez jakiejkolwiek analizy) propagowa³ ¿±dania do poszczególnych komputerów.
+Sam Dispatcher nie ma moÅ¼liwoÅ›ci pracy w statycznym algorytmie Round Robin, jednakÅ¼e (jak napisano powyÅ¼ej, w charakterystyce 
+oprogramowania) moÅ¼na posÅ‚ugiwaÄ‡ siÄ™ moduÅ‚em Dispatcher z wyÅ‚Ä…czonym moduÅ‚em ZarzÄ…dcy oraz z ogÃ³rnie nadanymi wagami. W tym
+przypadku, pomimo niehomogenicznego Å›rodowiska nadano wszystkim elementom klastra WWW wagi rÃ³wne jeden. W tej sytuacji komputer
+z zainstalowanym dispatcherem rÃ³wnomiernie (bez jakiejkolwiek analizy) propagowaÅ‚ Å¼Ä…dania do poszczegÃ³lnych komputerÃ³w.
 
-W tym przypadku dostêp do bazy danych móg³ byæ realizowany z dowolnego komputera (serwera WWW).
+W tym przypadku dostÄ™p do bazy danych mÃ³gÅ‚ byÄ‡ realizowany z dowolnego komputera (serwera WWW).
 
-\subsubsection{Server info aware -- modu³ dispatcher + Weighted Round Robin}
+\subsubsection{Server info aware -- moduÅ‚ dispatcher + Weighted Round Robin}
 
-W porównaniu do poprzedniego przypadku w tym u¿yto Dispatchera z uruchomionym modu³em zarz±dcy. Wtedy te¿ realizowany by³
-algorytm Wa¿ony Round--Robin. Wagi nadawane by³y dynamicznie tzn. w zale¿no¶ci od obci±¿enia poszczególnych komputerów -- 
-serwerów WWW. 
+W porÃ³wnaniu do poprzedniego przypadku w tym uÅ¼yto Dispatchera z uruchomionym moduÅ‚em zarzÄ…dcy. Wtedy teÅ¼ realizowany byÅ‚
+algorytm WaÅ¼ony Round--Robin. Wagi nadawane byÅ‚y dynamicznie tzn. w zaleÅ¼noÅ›ci od obciÄ…Å¼enia poszczegÃ³lnych komputerÃ³w -- 
+serwerÃ³w WWW. 
 
-W tym jak i w powy¿szym przypadku dostêp do bazy móg³ byæ równie¿ realizowany z dolwolnego z serwerów WWW.
+W tym jak i w powyÅ¼szym przypadku dostÄ™p do bazy mÃ³gÅ‚ byÄ‡ rÃ³wnieÅ¼ realizowany z dolwolnego z serwerÃ³w WWW.
 
-\subsubsection{Client info aware -- modu³ CBR + WTE}
+\subsubsection{Client info aware -- moduÅ‚ CBR + WTE}
 
-By³ to najbardziej z³o¿ony przypadek. Ka¿dy pakiet by³ analizowany pod wzglêdem typu zawarto¶ci oraz pod wzglêdem jego 
-obecno¶ci w keszu komponentu WTE. CBR zosta³ tak skonfigurowany aby rozpoznawaæ URL z zawartym w nim wyrazem .php 
-(identyfikuj±cym plik HTML z zawartym kodem PHP dostêpu do bazy). Pozwoli³o to na rozdzdzia³ zapytañ na ¿±dania o pliki
-statyczne (te by³y rozsy³ane go trzech jednoprocesorowych maszyn RS/6000), za¶ te ¿±dania o pliki, których czê¶æ by³a
-generowana dynamicznie by³y przekazywane na dwuprocesorowy serwer, który komunikowa³ sie (tylko on) z serwerem baz danych.
-Taka konfiguracja pozwoli³a rozdysponowaæ zarówno obci±¿enie jak i typ po³±czeñ.
+ByÅ‚ to najbardziej zÅ‚oÅ¼ony przypadek. KaÅ¼dy pakiet byÅ‚ analizowany pod wzglÄ™dem typu zawartoÅ›ci oraz pod wzglÄ™dem jego 
+obecnoÅ›ci w keszu komponentu WTE. CBR zostaÅ‚ tak skonfigurowany aby rozpoznawaÄ‡ URL z zawartym w nim wyrazem .php 
+(identyfikujÄ…cym plik HTML z zawartym kodem PHP dostÄ™pu do bazy). PozwoliÅ‚o to na rozdzdziaÅ‚ zapytaÅ„ na Å¼Ä…dania o pliki
+statyczne (te byÅ‚y rozsyÅ‚ane go trzech jednoprocesorowych maszyn RS/6000), zaÅ› te Å¼Ä…dania o pliki, ktÃ³rych czÄ™Å›Ä‡ byÅ‚a
+generowana dynamicznie byÅ‚y przekazywane na dwuprocesorowy serwer, ktÃ³ry komunikowaÅ‚ sie (tylko on) z serwerem baz danych.
+Taka konfiguracja pozwoliÅ‚a rozdysponowaÄ‡ zarÃ³wno obciÄ…Å¼enie jak i typ poÅ‚Ä…czeÅ„.
 
 \subsection{Metodologia testowania}
 
-Celem testowania powsta³ego systemu do zarz±dzania wielokomputerowym serwerem WWW
-jest zbadanie wydolno¶ci takiego systemu -- tzn. jego wydajno¶ci w sytuacji
-maksymalnego obci±¿enia, czyli tak¿e mo¿liwo¶ci odpowiedzi na klienckie 
-¿±danie w takiej sytuacji. Zamierzeniem testowania jest odpowied¼ na 
-pytanie jak obci±¿enie jest równowa¿one pomiêdzy poszczególnymi czê¶ciami
-sk³adowymi systemu, w zale¿no¶ci od algorytmu dysypacji obci±¿enia
+Celem testowania powstaÅ‚ego systemu do zarzÄ…dzania wielokomputerowym serwerem WWW
+jest zbadanie wydolnoÅ›ci takiego systemu -- tzn. jego wydajnoÅ›ci w sytuacji
+maksymalnego obciÄ…Å¼enia, czyli takÅ¼e moÅ¼liwoÅ›ci odpowiedzi na klienckie 
+Å¼Ä…danie w takiej sytuacji. Zamierzeniem testowania jest odpowiedÅº na 
+pytanie jak obciÄ…Å¼enie jest rÃ³wnowaÅ¼one pomiÄ™dzy poszczegÃ³lnymi czÄ™Å›ciami
+skÅ‚adowymi systemu, w zaleÅ¼noÅ›ci od algorytmu dysypacji obciÄ…Å¼enia
 (Round--Robin, Weighted Round--Robin oraz rozproszenie oparte na CBR), oraz
-jaki dany algorytm ma wp³yw na LB.
+jaki dany algorytm ma wpÅ‚yw na LB.
 
-Testowanie zaprojektowanego rozproszonego serwera WWW polega³o na pomiarze
-wydajno¶ci tak wej¶ciowej jak i wyj¶ciowej ca³ego systemu jak i poszczegolnych
-jego sk³adowych (poszczególnych serwerów WWW, serwera baz danych i dispatchera).
+Testowanie zaprojektowanego rozproszonego serwera WWW polegaÅ‚o na pomiarze
+wydajnoÅ›ci tak wejÅ›ciowej jak i wyjÅ›ciowej caÅ‚ego systemu jak i poszczegolnych
+jego skÅ‚adowych (poszczegÃ³lnych serwerÃ³w WWW, serwera baz danych i dispatchera).
 
-Celem testowania by³o zbadanie maksymalnej wydajno¶ci systemu. Wydajno¶æ systemu mo¿na badaæ na kilka sposobów:
+Celem testowania byÅ‚o zbadanie maksymalnej wydajnoÅ›ci systemu. WydajnoÅ›Ä‡ systemu moÅ¼na badaÄ‡ na kilka sposobÃ³w:
 \begin{itemize}
-\item ilo¶æ zapytañ w czasie,
-\item ilo¶æ danych przes³anych w czasie.
+\item iloÅ›Ä‡ zapytaÅ„ w czasie,
+\item iloÅ›Ä‡ danych przesÅ‚anych w czasie.
 \end{itemize}
 
-Na wynik wp³yw ma informacja w jaki sposób roz³o¿one by³y zapytania oraz czy sesje koñczy³y siê prawid³owo. Za³o¿ono trzy 
-mo¿liwo¶ci odpowiedzi systemu:
+Na wynik wpÅ‚yw ma informacja w jaki sposÃ³b rozÅ‚oÅ¼one byÅ‚y zapytania oraz czy sesje koÅ„czyÅ‚y siÄ™ prawidÅ‚owo. ZaÅ‚oÅ¼ono trzy 
+moÅ¼liwoÅ›ci odpowiedzi systemu:
 \begin{itemize}
 \item w czasie do 3 s.,
 \item w czasie 5 s.,
-\item odpowiedz powy¿ej 8 s.
+\item odpowiedz powyÅ¼ej 8 s.
 \end{itemize}
 
-Za sesjê prawid³owo zakoñczon± uznno tak±, podczas której dwie kolejne odpowiedzi na pytania nie przekroczy³y 8 s.
+Za sesjÄ™ prawidÅ‚owo zakoÅ„czonÄ… uznno takÄ…, podczas ktÃ³rej dwie kolejne odpowiedzi na pytania nie przekroczyÅ‚y 8 s.
 
-Za³o¿ono nastêpuj±ce ¶cie¿ki poruszania siê po serwisie \cite{savoia3}:
+ZaÅ‚oÅ¼ono nastÄ™pujÄ…ce Å›cieÅ¼ki poruszania siÄ™ po serwisie \cite{savoia3}:
 \begin{itemize}
 \item \emph{Home ---> Exit} (Home -- strona domowa);
 \item \emph{Home ---> First Level ---> Exit} (First Level -- np. informacja o produkcie);
 \item \emph{Home ---> First Level ---> Object ---> Exit} (Object -- np. zakup).
 \end{itemize}
-Przy za³o¿eniu, ¿e ruch na ,,typowej'' witrynie \cite{savoia1,savoia2,savoia3} wygl±da w nastêpuj±cy sposób:
+Przy zaÅ‚oÅ¼eniu, Å¼e ruch na ,,typowej'' witrynie \cite{savoia1,savoia2,savoia3} wyglÄ…da w nastÄ™pujÄ…cy sposÃ³b:
 \begin{itemize}
 \item \emph{Home} -- 58 \%;
 \item \emph{First Level} -- 31 \%;
 \item \emph{Object} -- 11 \%;
 \end{itemize}
 
-Na bazie powy¿szych danych nale¿y zbudowaæ skrypty generuj±ce zapytania.
+Na bazie powyÅ¼szych danych naleÅ¼y zbudowaÄ‡ skrypty generujÄ…ce zapytania.
 
-\subsubsection{Analiza wyników}
+\subsubsection{Analiza wynikÃ³w}
 
-Aby prawid³owo odpowiedzieæ na pytanie zwi±zane z wydajno¶ci± i dostêpno¶ci± systemu nale¿y podaæ, 
-przy jakiej ilo¶ci u¿ytkowników system jest w stanie prawid³owo odpowiadaæ czyli
-przy \emph{x} u¿ytkowników (otwartych sesji) system odpowiada (pomiary zostaj± wykonanywane w okre¶lonych przedzia³ach 
+Aby prawidÅ‚owo odpowiedzieÄ‡ na pytanie zwiÄ…zane z wydajnoÅ›ciÄ… i dostÄ™pnoÅ›ciÄ… systemu naleÅ¼y podaÄ‡, 
+przy jakiej iloÅ›ci uÅ¼ytkownikÃ³w system jest w stanie prawidÅ‚owo odpowiadaÄ‡ czyli
+przy \emph{x} uÅ¼ytkownikÃ³w (otwartych sesji) system odpowiada (pomiary zostajÄ… wykonanywane w okreÅ›lonych przedziaÅ‚ach 
 czasowych):
 \begin{itemize}
 \item \% w czasie do 3 s.
 \item \% w czasie do 5 s.
-\item \% powy¿ej 8 s.
+\item \% powyÅ¼ej 8 s.
 \end{itemize}
 
-Je¿eli podczas sesji dwie nastêpuj±ce po sobie odpowiedzi przekroczy³y 8s. -- oznacza to, ¿e ich sesje zosta³y zerwane.
-System nie mo¿e byæ obci±¿ony w wiêkszym stopniu ni¿ aktualny aby wszystkie nap³ywaj±ce do niego sesje zosta³y 
-prawid³owo obs³u¿one.
+JeÅ¼eli podczas sesji dwie nastÄ™pujÄ…ce po sobie odpowiedzi przekroczyÅ‚y 8s. -- oznacza to, Å¼e ich sesje zostaÅ‚y zerwane.
+System nie moÅ¼e byÄ‡ obciÄ…Å¼ony w wiÄ™kszym stopniu niÅ¼ aktualny aby wszystkie napÅ‚ywajÄ…ce do niego sesje zostaÅ‚y 
+prawidÅ‚owo obsÅ‚uÅ¼one.
 
-Tak zaplanowane testy nale¿y wykonaæ podczas pracy Dispatcher--a z ró¿nymi algorytmami: Round Robin, Multi Class Round Robin,
-Weighted Round Robin. Wyniki powy¿szych testów pozwalaj± sprawdziæ, jak zachowuje siê system w przypadku chwilowego du¿ego 
-obci±¿enia. 
+Tak zaplanowane testy naleÅ¼y wykonaÄ‡ podczas pracy Dispatcher--a z rÃ³Å¼nymi algorytmami: Round Robin, Multi Class Round Robin,
+Weighted Round Robin. Wyniki powyÅ¼szych testÃ³w pozwalajÄ… sprawdziÄ‡, jak zachowuje siÄ™ system w przypadku chwilowego duÅ¼ego 
+obciÄ…Å¼enia. 
 
-Kolejnym elementem testów by³oby zasymulowanie normalnych warunków pracy systemu na granicy 80 \% wydajno¶ci. Podczas takiej 
-pracy nale¿a³oby wygenerowaæ obci±¿enie znacznie przewy¿szaj±ce mo¿liwo¶ci systemu. Obci±¿enie to powinno trwaæ 3s, 5s, wiêcej 
-ni¿ 8s. Pozwoli to sprawdziæ jak system reaguje i jak szybko jest w stanie siê ustabilizowaæ doprowadzaj±c do równego 
-roz³o¿enia obci±¿enia na poszczególne serwery. 
-\section{Wyniki wstêpnych eksperymentów}
+Kolejnym elementem testÃ³w byÅ‚oby zasymulowanie normalnych warunkÃ³w pracy systemu na granicy 80 \% wydajnoÅ›ci. Podczas takiej 
+pracy naleÅ¼aÅ‚oby wygenerowaÄ‡ obciÄ…Å¼enie znacznie przewyÅ¼szajÄ…ce moÅ¼liwoÅ›ci systemu. ObciÄ…Å¼enie to powinno trwaÄ‡ 3s, 5s, wiÄ™cej 
+niÅ¼ 8s. Pozwoli to sprawdziÄ‡ jak system reaguje i jak szybko jest w stanie siÄ™ ustabilizowaÄ‡ doprowadzajÄ…c do rÃ³wnego 
+rozÅ‚oÅ¼enia obciÄ…Å¼enia na poszczegÃ³lne serwery. 
+\section{Wyniki wstÄ™pnych eksperymentÃ³w}
 
-Na skutek powa¿nych problemów, tak sprzêtowych jak i programowych autor pracy nie zdo³a³ 
-zrealizowaæ wszystich zaplanowanych zadañ. Poni¿ej wymieniono kolejne elementy budowy systemu do zarz±dzania wielokomputerowym
-serwerem WWW oraz stopieñ ich realizacji. 
+Na skutek powaÅ¼nych problemÃ³w, tak sprzÄ™towych jak i programowych autor pracy nie zdoÅ‚aÅ‚ 
+zrealizowaÄ‡ wszystich zaplanowanych zadaÅ„. PoniÅ¼ej wymieniono kolejne elementy budowy systemu do zarzÄ…dzania wielokomputerowym
+serwerem WWW oraz stopieÅ„ ich realizacji. 
 \begin{enumerate}
-\item przygotowano ¶rodowisko serwerów front--endowych oraz dispatchera:
+\item przygotowano Å›rodowisko serwerÃ³w front--endowych oraz dispatchera:
 \begin{itemize}
-\item uruchomiono oraz zainstalowano system operacyjny AIX 4.3.3 na komputerach IBM RS/6000, ktore mia³y stanowiæ serwer
-dispatchera, oraz cztery serwery WWW; na tych równie¿ maszynach wykonano niezbêdny update do wersji 4.3.3.0.8;
-\item zainstalowano menad¿er pakietów RPM, kompilator gcc 2.95.3, Apache 1.3.19 oraz jêzyk skryptowy PHP 4.0.6 (za jego pomoc±
-nale¿a³o stworzyæ interface pomiêdzy serwerem WWW a serwerem baz danych) -- jako modu³ ³adowalny do serwera Apache;
-\item skonfigurowano ka¿dy z serwerów WWW wraz z modu³em ³adowalnym PHP;
-\item zainstalowano i skonfigurowano IBM WebSphere Edge Server jako \emph{reverse proxy} wraz z modu³em CBR odpowiedzialnym
-za specyficzne, oparte na regu³ach przekierowywanie ¿±dañ; podczas instalacji napotkano jednak¿e na dwa powa¿ne problemy, które
-uniemo¿liwia³y instalacjê, a tym samym dzia³anie pakietu: modu³ dispatcher nie uruchamia³ siê zg³aszaj±c brak pliku licencji,
-za¶ WTE nie uruchamia³ siê z powodu niekompatybilno¶ci z g³ówn± bibliotek± systemow± (libc.a) (na obie sytuacje nie znaleziono
-pomocy w ¿adnej posiadanej literaturze); skorzystano z \emph{supportu} firmy IBM; w pierwszym przypadku -- otrzymano poprawny
-plik licencyjny, za¶ w drugim rozwi±zaniem okaza³o siê prze³±czenie urz±dzeñ I/O w tryb asynchroniczny; po wykonaniu obu zadañ
-oraz skonfigurowaniu modu³ów -- dispatcher + WTE dzia³a³o poprawnie;
+\item uruchomiono oraz zainstalowano system operacyjny AIX 4.3.3 na komputerach IBM RS/6000, ktore miaÅ‚y stanowiÄ‡ serwer
+dispatchera, oraz cztery serwery WWW; na tych rÃ³wnieÅ¼ maszynach wykonano niezbÄ™dny update do wersji 4.3.3.0.8;
+\item zainstalowano menadÅ¼er pakietÃ³w RPM, kompilator gcc 2.95.3, Apache 1.3.19 oraz jÄ™zyk skryptowy PHP 4.0.6 (za jego pomocÄ…
+naleÅ¼aÅ‚o stworzyÄ‡ interface pomiÄ™dzy serwerem WWW a serwerem baz danych) -- jako moduÅ‚ Å‚adowalny do serwera Apache;
+\item skonfigurowano kaÅ¼dy z serwerÃ³w WWW wraz z moduÅ‚em Å‚adowalnym PHP;
+\item zainstalowano i skonfigurowano IBM WebSphere Edge Server jako \emph{reverse proxy} wraz z moduÅ‚em CBR odpowiedzialnym
+za specyficzne, oparte na reguÅ‚ach przekierowywanie Å¼Ä…daÅ„; podczas instalacji napotkano jednakÅ¼e na dwa powaÅ¼ne problemy, ktÃ³re
+uniemoÅ¼liwiaÅ‚y instalacjÄ™, a tym samym dziaÅ‚anie pakietu: moduÅ‚ dispatcher nie uruchamiaÅ‚ siÄ™ zgÅ‚aszajÄ…c brak pliku licencji,
+zaÅ› WTE nie uruchamiaÅ‚ siÄ™ z powodu niekompatybilnoÅ›ci z gÅ‚Ã³wnÄ… bibliotekÄ… systemowÄ… (libc.a) (na obie sytuacje nie znaleziono
+pomocy w Å¼adnej posiadanej literaturze); skorzystano z \emph{supportu} firmy IBM; w pierwszym przypadku -- otrzymano poprawny
+plik licencyjny, zaÅ› w drugim rozwiÄ…zaniem okazaÅ‚o siÄ™ przeÅ‚Ä…czenie urzÄ…dzeÅ„ I/O w tryb asynchroniczny; po wykonaniu obu zadaÅ„
+oraz skonfigurowaniu moduÅ‚Ã³w -- dispatcher + WTE dziaÅ‚aÅ‚o poprawnie;
 \end{itemize}
-\item przygotowano ¶rodowisko serwerów back-endowych (baz danych):
+\item przygotowano Å›rodowisko serwerÃ³w back-endowych (baz danych):
 \begin{itemize}
 \item zainstalowano na trzech komputerach PC system operacyjny Windows NT 4.0 Server wraz z serwerem baz danych Microsoft
-SQL Server 7.0 (wersja 120--dniowa), nastêpnie skonfigurowano te maszyny;
-\item zainstalowano bazê testow± na serwerach;
+SQL Server 7.0 (wersja 120--dniowa), nastÄ™pnie skonfigurowano te maszyny;
+\item zainstalowano bazÄ™ testowÄ… na serwerach;
 \end{itemize}
-\item system testowy Astra LoadRunner; niestety nie uda³o siê uzyskaæ tego oprogramowania testowego z powodu braku wersji 
-testowej (komercyjna kosztuje oko³o 13000\$); uzyskano jednak¿e program Astra LoadTest o zbli¿onej funkcjonalno¶ci (wersja 
-testowa na dzisiêciu wirtualnych u¿ytkowników dzia³aj±ca bez ograniczeñ 7 dni); zosta³ zainstalowany i sprawdzony w kierunku
-wymagañ tej pracy; wykonano za jego pomoc± wstêpny, przyk³adowy test, opis i wyniki znajduj± siê 
+\item system testowy Astra LoadRunner; niestety nie udaÅ‚o siÄ™ uzyskaÄ‡ tego oprogramowania testowego z powodu braku wersji 
+testowej (komercyjna kosztuje okoÅ‚o 13000\$); uzyskano jednakÅ¼e program Astra LoadTest o zbliÅ¼onej funkcjonalnoÅ›ci (wersja 
+testowa na dzisiÄ™ciu wirtualnych uÅ¼ytkownikÃ³w dziaÅ‚ajÄ…ca bez ograniczeÅ„ 7 dni); zostaÅ‚ zainstalowany i sprawdzony w kierunku
+wymagaÅ„ tej pracy; wykonano za jego pomocÄ… wstÄ™pny, przykÅ‚adowy test, opis i wyniki znajdujÄ… siÄ™ 
 w Dodatku;
 \end{enumerate}
 
-Po poprawnym wykonaniu wy¿ej wymienionych czynno¶ci autor pracy stan±³ przed problemem pobierania danych z serwerów baz danych
-przez serwery WWW. Pakiet RPM jêzyka PHP zawiera³ binarny modu³ ³adowalny do Apache skompilowany bez wsparcia w komunikacji
-z bazami danych (poza samym modu³em ³adowalnym istniej± jeszcze modu³y odpowiadaj±ce komunikacji z poszczególnymi serwerami
-baz danych). W zwi±zku z tym, ¿e PHP jest jêzykiem, który jest dostêpny w ¼ród³ach (na licencji GPL) próbowano poprzez 
-kompilacjê i odpowiedni± konfiguracjê w³±czyæ go do Apache. MS SQL Server jest serwerem baz danych opartym na motorze firmy 
-Sybase, dlatego aby nawi±zaæ komunikacjê z serwera WWW do serwera bazy danych MS SQL poprzez PHP nale¿a³o przygotowaæ 
-(przekompilowaæ) odpowiednie modu³y (klienty) PHP w formie modu³ów ³adowalnych. Niestety z powodu braku odpowiedniego API
-nie uda³o siê tego zadania zrealizowaæ (aby móc stworzyæ klienty PHP do baz danych -- nale¿y kompilowaæ PHP wraz z API
+Po poprawnym wykonaniu wyÅ¼ej wymienionych czynnoÅ›ci autor pracy stanÄ…Å‚ przed problemem pobierania danych z serwerÃ³w baz danych
+przez serwery WWW. Pakiet RPM jÄ™zyka PHP zawieraÅ‚ binarny moduÅ‚ Å‚adowalny do Apache skompilowany bez wsparcia w komunikacji
+z bazami danych (poza samym moduÅ‚em Å‚adowalnym istniejÄ… jeszcze moduÅ‚y odpowiadajÄ…ce komunikacji z poszczegÃ³lnymi serwerami
+baz danych). W zwiÄ…zku z tym, Å¼e PHP jest jÄ™zykiem, ktÃ³ry jest dostÄ™pny w ÅºrÃ³dÅ‚ach (na licencji GPL) prÃ³bowano poprzez 
+kompilacjÄ™ i odpowiedniÄ… konfiguracjÄ™ wÅ‚Ä…czyÄ‡ go do Apache. MS SQL Server jest serwerem baz danych opartym na motorze firmy 
+Sybase, dlatego aby nawiÄ…zaÄ‡ komunikacjÄ™ z serwera WWW do serwera bazy danych MS SQL poprzez PHP naleÅ¼aÅ‚o przygotowaÄ‡ 
+(przekompilowaÄ‡) odpowiednie moduÅ‚y (klienty) PHP w formie moduÅ‚Ã³w Å‚adowalnych. Niestety z powodu braku odpowiedniego API
+nie udaÅ‚o siÄ™ tego zadania zrealizowaÄ‡ (aby mÃ³c stworzyÄ‡ klienty PHP do baz danych -- naleÅ¼y kompilowaÄ‡ PHP wraz z API
 odpowiedniego serwera bazy danych).
 
-Próbowano tak¿e skorzystaæ z odpowiednich sterowników ODBC firmy OpenLink\footnote{http://www.openlinksw.com}. Poza 
-ograniczeniami w korzystaniu z tego oprogramowania (mo¿liwo¶æ pracy tylko dwóch jednoczesnych u¿ytkowników podczas sesji) nie
-uda³o siê przekompilowaæ PHP (wystêpowa³y b³êdy podczas kompilacji). Podczas poszukiwania rozwi±zania w Internecie, skorzystano
-równie¿ z mo¿liwo¶ci Usenetu (listy dyskusyjne).
+PrÃ³bowano takÅ¼e skorzystaÄ‡ z odpowiednich sterownikÃ³w ODBC firmy OpenLink\footnote{http://www.openlinksw.com}. Poza 
+ograniczeniami w korzystaniu z tego oprogramowania (moÅ¼liwoÅ›Ä‡ pracy tylko dwÃ³ch jednoczesnych uÅ¼ytkownikÃ³w podczas sesji) nie
+udaÅ‚o siÄ™ przekompilowaÄ‡ PHP (wystÄ™powaÅ‚y bÅ‚Ä™dy podczas kompilacji). Podczas poszukiwania rozwiÄ…zania w Internecie, skorzystano
+rÃ³wnieÅ¼ z moÅ¼liwoÅ›ci Usenetu (listy dyskusyjne).
 
-Powy¿szego problemu nie uda³o siê równie¿ rozwi±zaæ analizuj±c zmianê jêzyka oprogramowania: PERL (kolejny znakomity jêzyk 
-skryptowy umo¿liwiaj±cy generowanie stron dynamicznych) -- ma zbli¿one wymagania je¶li chodzi o klientów baz danych, ASP (nie 
-istnieje na maszyny Unixowe), C, C++ lub Java (du¿e k³opoty implementacyjne, spora pracoch³onno¶æ).
+PowyÅ¼szego problemu nie udaÅ‚o siÄ™ rÃ³wnieÅ¼ rozwiÄ…zaÄ‡ analizujÄ…c zmianÄ™ jÄ™zyka oprogramowania: PERL (kolejny znakomity jÄ™zyk 
+skryptowy umoÅ¼liwiajÄ…cy generowanie stron dynamicznych) -- ma zbliÅ¼one wymagania jeÅ›li chodzi o klientÃ³w baz danych, ASP (nie 
+istnieje na maszyny Unixowe), C, C++ lub Java (duÅ¼e kÅ‚opoty implementacyjne, spora pracochÅ‚onnoÅ›Ä‡).
 
-W zwi±zku z brakiem mo¿liwo¶ci scalenia sewerów WWW z serwerami baz danych nie uda³o siê przetestowaæ w pe³ni dzia³aj±cego
-systemu do zarz±dzania wielokomputerowym serwisem WWW.
+W zwiÄ…zku z brakiem moÅ¼liwoÅ›ci scalenia sewerÃ³w WWW z serwerami baz danych nie udaÅ‚o siÄ™ przetestowaÄ‡ w peÅ‚ni dziaÅ‚ajÄ…cego
+systemu do zarzÄ…dzania wielokomputerowym serwisem WWW.

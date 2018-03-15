@@ -1,473 +1,473 @@
-\chapter{Protoko³y komunikacyjne (sieciowe)}
+\chapter{ProtokoÅ‚y komunikacyjne (sieciowe)}
 \label{r02}
 
-W rozdziale tym przedstawiona zostanie architektura ISO/OSI stosu protoko³ów, dziêki którym wydajna i bezpieczna 
-transmisja w sieci nie by³aby w ogóle mo¿liwa: od protoko³ów TCP/IP, poprzez SSL do protoko³ów FTP i HTTP. 
-Opisany zostanie tak¿e sposób identyfikacji i komunikacji urz±dzeñ i zasobów sieciowych na ró¿nych warstwach 
-czyli DNS i URL. Najwiêcej uwagi po¶wiêcone zostanie na opis protoko³u HTTP i sposób dzia³ania WWW.
+W rozdziale tym przedstawiona zostanie architektura ISO/OSI stosu protokoÅ‚Ã³w, dziÄ™ki ktÃ³rym wydajna i bezpieczna 
+transmisja w sieci nie byÅ‚aby w ogÃ³le moÅ¼liwa: od protokoÅ‚Ã³w TCP/IP, poprzez SSL do protokoÅ‚Ã³w FTP i HTTP. 
+Opisany zostanie takÅ¼e sposÃ³b identyfikacji i komunikacji urzÄ…dzeÅ„ i zasobÃ³w sieciowych na rÃ³Å¼nych warstwach 
+czyli DNS i URL. NajwiÄ™cej uwagi poÅ›wiÄ™cone zostanie na opis protokoÅ‚u HTTP i sposÃ³b dziaÅ‚ania WWW.
 
-\section{Wstêp}
+\section{WstÄ™p}
 
-Podstawow urz±dzenia komunikacyjne sk³adaj± siê z elementów, które przesy³aj± bity z jednego miejsca do drugiego. Jednak¿e
-u¿ywanie ,,surowego'' sprzêtu do komunikacji jest podobne do programowania przez wrowadzanie zer i jedynek -- jest to 
-nieporêczne i niewygodne. Komputery pod³±czone do sieci s± wyposa¿one w skomplikowane oprogramowanie udostêpniej±ce
-wygodny, wysokopoziomowy interfejs dla programów u¿ytkownika. Oprogramowanie to obs³uguje automatycznie wiêkszo¶æ 
-niskopoziomowych szczegó³ów oraz problemów, co pozwala na ³atw± komunikacjê miêdzy programami u¿ytkowymi. W ten sposób
-wiêkszo¶æ programów u¿ytkownika przy komunikacji polega na oprogramowaniu sieciowym i nie komunikuje siê bezpo¶rednio ze
-sprzêtem.
+Podstawow urzÄ…dzenia komunikacyjne skÅ‚adajÄ… siÄ™ z elementÃ³w, ktÃ³re przesyÅ‚ajÄ… bity z jednego miejsca do drugiego. JednakÅ¼e
+uÅ¼ywanie ,,surowego'' sprzÄ™tu do komunikacji jest podobne do programowania przez wrowadzanie zer i jedynek -- jest to 
+nieporÄ™czne i niewygodne. Komputery podÅ‚Ä…czone do sieci sÄ… wyposaÅ¼one w skomplikowane oprogramowanie udostÄ™pniejÄ…ce
+wygodny, wysokopoziomowy interfejs dla programÃ³w uÅ¼ytkownika. Oprogramowanie to obsÅ‚uguje automatycznie wiÄ™kszoÅ›Ä‡ 
+niskopoziomowych szczegÃ³Å‚Ã³w oraz problemÃ³w, co pozwala na Å‚atwÄ… komunikacjÄ™ miÄ™dzy programami uÅ¼ytkowymi. W ten sposÃ³b
+wiÄ™kszoÅ›Ä‡ programÃ³w uÅ¼ytkownika przy komunikacji polega na oprogramowaniu sieciowym i nie komunikuje siÄ™ bezpoÅ›rednio ze
+sprzÄ™tem.
 
-Wszystkie strony bior±ce udzia³ w komunikacji musz± uzgodniæ zbiór regu³ u¿ywanych przy wymianie komunikatów. Zbiór regu³, 
-które okre¶laj± format komunikatów, oraz stosownych dzia³añ wymaganych dla ka¿dego komunikatu nazywa siê protoko³em sieciowym.
+Wszystkie strony biorÄ…ce udziaÅ‚ w komunikacji muszÄ… uzgodniÄ‡ zbiÃ³r reguÅ‚ uÅ¼ywanych przy wymianie komunikatÃ³w. ZbiÃ³r reguÅ‚, 
+ktÃ³re okreÅ›lajÄ… format komunikatÃ³w, oraz stosownych dziaÅ‚aÅ„ wymaganych dla kaÅ¼dego komunikatu nazywa siÄ™ protokoÅ‚em sieciowym.
 
 \section{TCP/IP a ISO/OSI}
 
-Aby sprawienie i efektywnie rozwi±zaæ dowolne zadanie komunikacyjne oraz zaplanowaæ zestaw 
-protoko³ów stworzono model warstwowy \cite{siecikomputerowe}.
-Zestaw protoko³ów mo¿na tym samym zwi±zaæ z okre¶lon± warstw± \cite{barylo1}.
+Aby sprawienie i efektywnie rozwiÄ…zaÄ‡ dowolne zadanie komunikacyjne oraz zaplanowaÄ‡ zestaw 
+protokoÅ‚Ã³w stworzono model warstwowy \cite{siecikomputerowe}.
+Zestaw protokoÅ‚Ã³w moÅ¼na tym samym zwiÄ…zaÄ‡ z okreÅ›lonÄ… warstwÄ… \cite{barylo1}.
 
-Wcze¶nie w historii sieci \emph{International Organization for Stadarization} (ISO) opracowa³a model 7--warstwowy.
-Model ISO/OSI jest standardem stanowi±cym punkt odniesienia dla producentów oprogramowania i sprzêtu sieciowego. 
-Stosowanie siê do zaleceñ tego standardu zapewniæ ma kompatybilno¶æ ró¿nych produktów sieciowych, co implikuje 
-mo¿liwo¶æ swobodnego ich ³±czenia w tzw. system otwarty.
-Wyró¿niæ w nim mo¿na: warstwê aplikacji, prezentacji i sesji -- nazywane warstwami górnymi, oraz
-warstwê transportow±, sieciow±, ³±cza danych i fizyczn± -- nazywane warstwami dolnymi. Warstwy górne zajmuj± siê 
-wspó³prac± procesów wykonuj±cych siê w po³±czonych sieci± komputerach. Warstwy dolne zapewniaj± prawid³ow± 
-komunikacjê pomiêdzy procesami. W ka¿dej z warstw pracuje odpowiednie oprogramowanie realizuj±ce funkcje 
-protoko³u danej warstwy. Protoko³y poszczególnych warstw oferuj± okre¶lony rodzaj us³ug \cite{siecikomputerowe}:
+WczeÅ›nie w historii sieci \emph{International Organization for Stadarization} (ISO) opracowaÅ‚a model 7--warstwowy.
+Model ISO/OSI jest standardem stanowiÄ…cym punkt odniesienia dla producentÃ³w oprogramowania i sprzÄ™tu sieciowego. 
+Stosowanie siÄ™ do zaleceÅ„ tego standardu zapewniÄ‡ ma kompatybilnoÅ›Ä‡ rÃ³Å¼nych produktÃ³w sieciowych, co implikuje 
+moÅ¼liwoÅ›Ä‡ swobodnego ich Å‚Ä…czenia w tzw. system otwarty.
+WyrÃ³Å¼niÄ‡ w nim moÅ¼na: warstwÄ™ aplikacji, prezentacji i sesji -- nazywane warstwami gÃ³rnymi, oraz
+warstwÄ™ transportowÄ…, sieciowÄ…, Å‚Ä…cza danych i fizycznÄ… -- nazywane warstwami dolnymi. Warstwy gÃ³rne zajmujÄ… siÄ™ 
+wspÃ³Å‚pracÄ… procesÃ³w wykonujÄ…cych siÄ™ w poÅ‚Ä…czonych sieciÄ… komputerach. Warstwy dolne zapewniajÄ… prawidÅ‚owÄ… 
+komunikacjÄ™ pomiÄ™dzy procesami. W kaÅ¼dej z warstw pracuje odpowiednie oprogramowanie realizujÄ…ce funkcje 
+protokoÅ‚u danej warstwy. ProtokoÅ‚y poszczegÃ³lnych warstw oferujÄ… okreÅ›lony rodzaj usÅ‚ug \cite{siecikomputerowe}:
 \begin{description}
-\item[warstwa aplikacji] -- okre¶la sposób, w jaki dany program u¿ytkowy korzysta z sieci np.: w wastwie tej dzia³a protokó³ 
+\item[warstwa aplikacji] -- okreÅ›la sposÃ³b, w jaki dany program uÅ¼ytkowy korzysta z sieci np.: w wastwie tej dziaÅ‚a protokÃ³Å‚ 
 HTTP;
-\item[warstwa prezentacji] -- protoko³y tej warstwy okre¶laj± jak prezentowaæ dane. Takie protoko³y s± potrzebne gdy¿ ró¿ne
-marki komputerów u¿ywaj± ró¿nej wewnêtrznej reprezentacji liczb i znaków -- protoko³y tej warstwy t³umacz± reprezentacjê
-na jednej maszynie na reprezentacjê na drugiej;
-\item[warstwa sesji] -- odpowiedzialna jest za synchronizacjê danych przesy³anych pomiêdzy aplikacjami, dziêki 
-udostêpnianym w tej warstwie tzw. punktom synchronizacji aplikacje s± w stanie wzajemnie rozpoznaæ stan 
-zaawansowania w przetwarzaniu wymienianych danych, umo¿liwia to wykrycie takich sytuacji jak np. spowodowane 
-awari± zaprzestanie przetwarzania przez stowarzyszon± aplikacjê;
-\item[warstwa transportowa] -- protoko³y wastwy czwartej okre¶laj± szczegó³y obs³ugi po³±czenia -- s± jednymi z najbardziej
-skomplikowanych protoko³ów;
-\item[warstwa sieciowa] --  protoko³y tej warstwy okre¶laj± sposób przyznawania adresów oraz przekazywania pakietów w sieci;
-\item[warstwa ³±cza danych] -- protoko³y tej warstwy okre¶laj± sposób organizowania ramek i transmitowania ich przez sieæ np.:
-opis formatu ramki, rozpychania bitów lub bajtów oraz obliczania sum kontrolnych;
+\item[warstwa prezentacji] -- protokoÅ‚y tej warstwy okreÅ›lajÄ… jak prezentowaÄ‡ dane. Takie protokoÅ‚y sÄ… potrzebne gdyÅ¼ rÃ³Å¼ne
+marki komputerÃ³w uÅ¼ywajÄ… rÃ³Å¼nej wewnÄ™trznej reprezentacji liczb i znakÃ³w -- protokoÅ‚y tej warstwy tÅ‚umaczÄ… reprezentacjÄ™
+na jednej maszynie na reprezentacjÄ™ na drugiej;
+\item[warstwa sesji] -- odpowiedzialna jest za synchronizacjÄ™ danych przesyÅ‚anych pomiÄ™dzy aplikacjami, dziÄ™ki 
+udostÄ™pnianym w tej warstwie tzw. punktom synchronizacji aplikacje sÄ… w stanie wzajemnie rozpoznaÄ‡ stan 
+zaawansowania w przetwarzaniu wymienianych danych, umoÅ¼liwia to wykrycie takich sytuacji jak np. spowodowane 
+awariÄ… zaprzestanie przetwarzania przez stowarzyszonÄ… aplikacjÄ™;
+\item[warstwa transportowa] -- protokoÅ‚y wastwy czwartej okreÅ›lajÄ… szczegÃ³Å‚y obsÅ‚ugi poÅ‚Ä…czenia -- sÄ… jednymi z najbardziej
+skomplikowanych protokoÅ‚Ã³w;
+\item[warstwa sieciowa] --  protokoÅ‚y tej warstwy okreÅ›lajÄ… sposÃ³b przyznawania adresÃ³w oraz przekazywania pakietÃ³w w sieci;
+\item[warstwa Å‚Ä…cza danych] -- protokoÅ‚y tej warstwy okreÅ›lajÄ… sposÃ³b organizowania ramek i transmitowania ich przez sieÄ‡ np.:
+opis formatu ramki, rozpychania bitÃ³w lub bajtÃ³w oraz obliczania sum kontrolnych;
 \item[warstwa  fizyczna] -- realizuje mechaniczne, elektryczne, funkcjonalne i proceduralne aspekty transmisji 
 danych, czyli definiuje medium transmisyjne takie jak np. kabel miedziany.
 \end{description}
 
-Ka¿da z warstw udostêpnia warstwie bezpo¶rednio wy¿szej zestaw funkcji realizuj±cych  zadania danej warstwy i 
-korzysta z zestawu funkcji udostêpnianych przez warstwê bezpo¶rednio ni¿sz±. Nie jest mo¿liwe by np. warstwa 
-transportowa korzysta³a z funkcji warstwy ³±cza danych z pominiêciem warstwy sieciowej. Porcjê danych 
-przeznaczonych do wys³ania nazywa siê pakietem. Wysy³any pakiet musi przej¶æ kolejno przez wszystkie warstwy 
-modelu ISO/OSI od warstwy aplikacji do warstwy fizycznej. W trakcie tej wêdrówki pakiet obrasta w informacje 
-kontrolne umo¿liwiaj±ce protoko³owi danej warstwy zarz±dzanie danymi i po³±czeniami, tê informacjê kontroln± 
-nazywamy nag³ówkiem lub koñcówk± w zale¿no¶ci od tego, czy jest dodawana na pocz±tku, czy na koñcu danych. 
-Nag³ówek warstwy wy¿szej traktowany jest w warstwie ni¿szej jako czê¶æ danych i nie podlega tam ¿adnym zmianom. 
-Pakiet odbierany odbywa drogê odwrotn± -- od warstwy fizycznej do warstwy aplikacji. W trakcie tej drogi 
-protoko³y poszczególnych warstw usuwaj± swoje nag³ówki, tak aby do aplikacji docelowej pakiet dotar³ w takiej 
-postaci, w jakiej zosta³ wys³any. Poni¿szy rysunek schematycznie przedstawia opisany proces.
+KaÅ¼da z warstw udostÄ™pnia warstwie bezpoÅ›rednio wyÅ¼szej zestaw funkcji realizujÄ…cych  zadania danej warstwy i 
+korzysta z zestawu funkcji udostÄ™pnianych przez warstwÄ™ bezpoÅ›rednio niÅ¼szÄ…. Nie jest moÅ¼liwe by np. warstwa 
+transportowa korzystaÅ‚a z funkcji warstwy Å‚Ä…cza danych z pominiÄ™ciem warstwy sieciowej. PorcjÄ™ danych 
+przeznaczonych do wysÅ‚ania nazywa siÄ™ pakietem. WysyÅ‚any pakiet musi przejÅ›Ä‡ kolejno przez wszystkie warstwy 
+modelu ISO/OSI od warstwy aplikacji do warstwy fizycznej. W trakcie tej wÄ™drÃ³wki pakiet obrasta w informacje 
+kontrolne umoÅ¼liwiajÄ…ce protokoÅ‚owi danej warstwy zarzÄ…dzanie danymi i poÅ‚Ä…czeniami, tÄ™ informacjÄ™ kontrolnÄ… 
+nazywamy nagÅ‚Ã³wkiem lub koÅ„cÃ³wkÄ… w zaleÅ¼noÅ›ci od tego, czy jest dodawana na poczÄ…tku, czy na koÅ„cu danych. 
+NagÅ‚Ã³wek warstwy wyÅ¼szej traktowany jest w warstwie niÅ¼szej jako czÄ™Å›Ä‡ danych i nie podlega tam Å¼adnym zmianom. 
+Pakiet odbierany odbywa drogÄ™ odwrotnÄ… -- od warstwy fizycznej do warstwy aplikacji. W trakcie tej drogi 
+protokoÅ‚y poszczegÃ³lnych warstw usuwajÄ… swoje nagÅ‚Ã³wki, tak aby do aplikacji docelowej pakiet dotarÅ‚ w takiej 
+postaci, w jakiej zostaÅ‚ wysÅ‚any. PoniÅ¼szy rysunek schematycznie przedstawia opisany proces.
 \begin{figure}[h]
 \centering
 \includegraphics[width=5in]{./rysunki/nadawanie_i_odbieranie_naglowkow.eps}
-\caption{Proces nadawania i odbierania nag³ówków transmitowanym danym}
+\caption{Proces nadawania i odbierania nagÅ‚Ã³wkÃ³w transmitowanym danym}
 \label{nadawanie}
 \end{figure}
 
-Protoko³y poszczególnych warstw zarz±dzaj± danymi w specyficzny dla siebie sposób, mog± np. dokonaæ segmentacji, 
-czyli podzia³u danych na mniejsze fragmenty przed przes³aniem ich do ni¿szej warstwy. Ka¿dy fragment otrzymuje 
-wtedy odpowiedni nag³ówek, który umo¿liwia analogicznemu protoko³owi w komputerze adresata danych scalenie 
-fragmentów podczas odbierania pakietu. Nag³ówki umo¿liwiaj± równie¿ zarz±dzanie po³±czeniami np. 
-multipleksowanie po³±czeñ czyli wykorzystywanie jednego po³±czenia, ¶ci¶lej -- punktu dostarczania us³ug SAP 
-(ang. \emph{Service Access Point})  warstwy ni¿szej, np. sieciowej do obs³ugi kilku po³±czeñ nawi±zanych w warstwie 
-bezpo¶rednio wy¿szej (tu transportowej). Odpowiednia informacja zawarta w nag³ówku warstwy wy¿szej umo¿liwia 
-wtedy identyfikacjê odbiorcy danych. Model ISO/OSI definiuje dwa tryby komunikacji. Komunikacje po³±czeniow± 
-stosuje siê gdy kluczowym wymaganiem jest niezawodno¶æ transmisji, musi byæ wtedy znany zarówno odbiorca jak i 
-nadawca danych, a odbiorca potwierdza dotarcie do niego ka¿dego fragmentu pakietu lub sygnalizuje konieczno¶æ 
-retransmisji w przypadku b³êdu. Komunikacja bezpo³±czeniowa nie zapewnia niezawodno¶ci, dane wysy³a siê bez 
-oczekiwania na potwierdzenie, a nadawca  i odbiorca nie s± znani, chyba ¿e wynika to z zawarto¶ci pakietu, 
-pakiety wysy³ane w trybie bezpo³±czeniowym nazywamy datagramami.
+ProtokoÅ‚y poszczegÃ³lnych warstw zarzÄ…dzajÄ… danymi w specyficzny dla siebie sposÃ³b, mogÄ… np. dokonaÄ‡ segmentacji, 
+czyli podziaÅ‚u danych na mniejsze fragmenty przed przesÅ‚aniem ich do niÅ¼szej warstwy. KaÅ¼dy fragment otrzymuje 
+wtedy odpowiedni nagÅ‚Ã³wek, ktÃ³ry umoÅ¼liwia analogicznemu protokoÅ‚owi w komputerze adresata danych scalenie 
+fragmentÃ³w podczas odbierania pakietu. NagÅ‚Ã³wki umoÅ¼liwiajÄ… rÃ³wnieÅ¼ zarzÄ…dzanie poÅ‚Ä…czeniami np. 
+multipleksowanie poÅ‚Ä…czeÅ„ czyli wykorzystywanie jednego poÅ‚Ä…czenia, Å›ciÅ›lej -- punktu dostarczania usÅ‚ug SAP 
+(ang. \emph{Service Access Point})  warstwy niÅ¼szej, np. sieciowej do obsÅ‚ugi kilku poÅ‚Ä…czeÅ„ nawiÄ…zanych w warstwie 
+bezpoÅ›rednio wyÅ¼szej (tu transportowej). Odpowiednia informacja zawarta w nagÅ‚Ã³wku warstwy wyÅ¼szej umoÅ¼liwia 
+wtedy identyfikacjÄ™ odbiorcy danych. Model ISO/OSI definiuje dwa tryby komunikacji. Komunikacje poÅ‚Ä…czeniowÄ… 
+stosuje siÄ™ gdy kluczowym wymaganiem jest niezawodnoÅ›Ä‡ transmisji, musi byÄ‡ wtedy znany zarÃ³wno odbiorca jak i 
+nadawca danych, a odbiorca potwierdza dotarcie do niego kaÅ¼dego fragmentu pakietu lub sygnalizuje koniecznoÅ›Ä‡ 
+retransmisji w przypadku bÅ‚Ä™du. Komunikacja bezpoÅ‚Ä…czeniowa nie zapewnia niezawodnoÅ›ci, dane wysyÅ‚a siÄ™ bez 
+oczekiwania na potwierdzenie, a nadawca  i odbiorca nie sÄ… znani, chyba Å¼e wynika to z zawartoÅ›ci pakietu, 
+pakiety wysyÅ‚ane w trybie bezpoÅ‚Ä…czeniowym nazywamy datagramami.
 
-W praktyce nie istnieje rozwi±zanie przemys³owe, które ¶ci¶le implementowa³oby wszystkie warstwy modelu ISO/OSI, 
-czêst± praktyk± jest np. ³±czenie warstw fizycznej i ³±cza danych w jedn± warstwê. Równie¿ protoko³y TCP/IP nie 
-s± w pe³ni kompatybilne z modelem ISO/OSI, nie s± te¿ jednak ca³kowicie niekompatybilne. Wzajemn± relacjê 
-architektury ISO/OSI i TCP/IP przedstawia poni¿szy rysunek \cite{barylo1}.
+W praktyce nie istnieje rozwiÄ…zanie przemysÅ‚owe, ktÃ³re Å›ciÅ›le implementowaÅ‚oby wszystkie warstwy modelu ISO/OSI, 
+czÄ™stÄ… praktykÄ… jest np. Å‚Ä…czenie warstw fizycznej i Å‚Ä…cza danych w jednÄ… warstwÄ™. RÃ³wnieÅ¼ protokoÅ‚y TCP/IP nie 
+sÄ… w peÅ‚ni kompatybilne z modelem ISO/OSI, nie sÄ… teÅ¼ jednak caÅ‚kowicie niekompatybilne. WzajemnÄ… relacjÄ™ 
+architektury ISO/OSI i TCP/IP przedstawia poniÅ¼szy rysunek \cite{barylo1}.
 \begin{figure}[h]
 \centering
 \includegraphics[width=5in]{./rysunki/architektura_ISO_a_tcp.eps}
 \caption{Architektura ISO/OSI a TCP/IP}
 \label{ISO_TCP}
 \end{figure}
-\section{Protokó³ IP}
+\section{ProtokÃ³Å‚ IP}
 
-Protokó³ IP (ang. \emph{Internet Protocol}) dzia³a w warstwie sieciowej i jest podstawowym protoko³em rodziny TCP/IP --
-wszystkie dane nap³ywaj±ce z wy¿szych warstw przesy³ane s± w sieci jako datagramy IP. Protokó³ ten ¶wiadczy 
-zawodne, bezpo³±czeniowe us³ugi dostarczania pakietów. Przez zawodne rozumiemy tu tak± w³a¶ciwo¶æ, ¿e IP nie 
-daje gwarancji dostarczenia pakietu do punktu przeznaczenia, a wszelkie mechanizmy zapewnienia niezawodno¶ci transmisji musz±
-zostaæ zapewnione przez protoko³y wy¿szych warstw (np. TCP). Termin bezpo³±czeniowy oznacza tu, ¿e IP nie 
-przechowuje ¿adnej informacji na temat prawid³owo przesy³anych datagramów, ka¿dy z nich obs³ugiwany jest osobno, 
-co w praktyce mo¿e oznaczaæ, ¿e datagramy mog± docieraæ do adresata w innej kolejno¶ci, ni¿ zosta³y wys³ane. 
-Wszystkie dane konieczne do poprawnej pracy IP zawarte s± w jego nag³ówku, który typowo (je¶li nie zawiera 
-opcji) ma d³ugo¶æ 20 bajtów i przedstawiony poni¿ej format \cite{barylo2}.
+ProtokÃ³Å‚ IP (ang. \emph{Internet Protocol}) dziaÅ‚a w warstwie sieciowej i jest podstawowym protokoÅ‚em rodziny TCP/IP --
+wszystkie dane napÅ‚ywajÄ…ce z wyÅ¼szych warstw przesyÅ‚ane sÄ… w sieci jako datagramy IP. ProtokÃ³Å‚ ten Å›wiadczy 
+zawodne, bezpoÅ‚Ä…czeniowe usÅ‚ugi dostarczania pakietÃ³w. Przez zawodne rozumiemy tu takÄ… wÅ‚aÅ›ciwoÅ›Ä‡, Å¼e IP nie 
+daje gwarancji dostarczenia pakietu do punktu przeznaczenia, a wszelkie mechanizmy zapewnienia niezawodnoÅ›ci transmisji muszÄ…
+zostaÄ‡ zapewnione przez protokoÅ‚y wyÅ¼szych warstw (np. TCP). Termin bezpoÅ‚Ä…czeniowy oznacza tu, Å¼e IP nie 
+przechowuje Å¼adnej informacji na temat prawidÅ‚owo przesyÅ‚anych datagramÃ³w, kaÅ¼dy z nich obsÅ‚ugiwany jest osobno, 
+co w praktyce moÅ¼e oznaczaÄ‡, Å¼e datagramy mogÄ… docieraÄ‡ do adresata w innej kolejnoÅ›ci, niÅ¼ zostaÅ‚y wysÅ‚ane. 
+Wszystkie dane konieczne do poprawnej pracy IP zawarte sÄ… w jego nagÅ‚Ã³wku, ktÃ³ry typowo (jeÅ›li nie zawiera 
+opcji) ma dÅ‚ugoÅ›Ä‡ 20 bajtÃ³w i przedstawiony poniÅ¼ej format \cite{barylo2}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=5in]{./rysunki/datagram_ip.eps}
-\caption{Format datagramu IP z wyró¿nieniem nag³ówka}
+\caption{Format datagramu IP z wyrÃ³Å¼nieniem nagÅ‚Ã³wka}
 \label{datagram_ip}
 \end{figure}
 
-Pole \emph{d³ugo¶æ nag³ówka} okre¶la d³ugo¶æ nag³ówka w 32--bitowych s³owach i wraz z polem D³ugo¶æ ca³kowita datagramu 
-s³u¿y do okre¶lenia miejsca w którym zaczynaj± siê w³a¶ciwe dane. Ca³kowita d³ugo¶æ datagramu ograniczona jest 
-zwykle przez warstwê fizyczn± np. dla sieci Ethernet jest to maksymalnie 1500 bajtów a wielko¶æ tê nazywamy MTU 
+Pole \emph{dÅ‚ugoÅ›Ä‡ nagÅ‚Ã³wka} okreÅ›la dÅ‚ugoÅ›Ä‡ nagÅ‚Ã³wka w 32--bitowych sÅ‚owach i wraz z polem DÅ‚ugoÅ›Ä‡ caÅ‚kowita datagramu 
+sÅ‚uÅ¼y do okreÅ›lenia miejsca w ktÃ³rym zaczynajÄ… siÄ™ wÅ‚aÅ›ciwe dane. CaÅ‚kowita dÅ‚ugoÅ›Ä‡ datagramu ograniczona jest 
+zwykle przez warstwÄ™ fizycznÄ… np. dla sieci Ethernet jest to maksymalnie 1500 bajtÃ³w a wielkoÅ›Ä‡ tÄ™ nazywamy MTU 
 (ang. \emph{Maximum Transmission Unit}) danej sieci.
 
-Pole \emph{identyfikacja} zawiera unikalny numer dla ka¿dego wysy³anego datagramu. Je¿eli przechodz±c przez kolejne 
-wêz³y sieci datagram musi zostaæ podzielony, to warto¶æ ta jest kopiowana do wszystkich nag³ówków IP 
-powstaj±cych fragmentów i wraz z warto¶ci± pola Przesuniêcie fragmentu umo¿liwia poprawne scalenie datagramu w 
-punkcie docelowym. Pomocne s± w tym równie¿ warto¶ci bitów pola Znaczniki. Ustawienie jednego z nich wskazuje, 
-¿e istnieje kilka fragmentów datagramu, ustawienie drugiego zabrania fragmentacji datagramu.
+Pole \emph{identyfikacja} zawiera unikalny numer dla kaÅ¼dego wysyÅ‚anego datagramu. JeÅ¼eli przechodzÄ…c przez kolejne 
+wÄ™zÅ‚y sieci datagram musi zostaÄ‡ podzielony, to wartoÅ›Ä‡ ta jest kopiowana do wszystkich nagÅ‚Ã³wkÃ³w IP 
+powstajÄ…cych fragmentÃ³w i wraz z wartoÅ›ciÄ… pola PrzesuniÄ™cie fragmentu umoÅ¼liwia poprawne scalenie datagramu w 
+punkcie docelowym. Pomocne sÄ… w tym rÃ³wnieÅ¼ wartoÅ›ci bitÃ³w pola Znaczniki. Ustawienie jednego z nich wskazuje, 
+Å¼e istnieje kilka fragmentÃ³w datagramu, ustawienie drugiego zabrania fragmentacji datagramu.
 
-Pole \emph{czas ¿ycia TTL} wyznacza  maksymaln± liczbê routerów przez które mo¿e przej¶æ datagram (routerem 
-nazywamy tu specjalizowane urz±dzenie lub odpowiednio oprogramowany komputer s³u¿±ce do przekazywania datagramów 
-pomiêdzy sieciami ró¿ni±cymi siê w warstwie fizycznej np. Ethernet i Token Ring, lecz pracuj±cymi w oparciu o 
-wspólny protokó³ warstwy sieciowej - IP). Warto¶æ tego pola jest wielko¶ci± ca³kowit± zmniejszan± o jeden przez 
-ka¿dy router, do którego dociera datagram. Datagram z warto¶ci± TTL równ± 0 usuwany jest z sieci, co zapobiega 
-kr±¿eniu w niej b³êdnie zaadresowanych datagramów.
+Pole \emph{czas Å¼ycia TTL} wyznacza  maksymalnÄ… liczbÄ™ routerÃ³w przez ktÃ³re moÅ¼e przejÅ›Ä‡ datagram (routerem 
+nazywamy tu specjalizowane urzÄ…dzenie lub odpowiednio oprogramowany komputer sÅ‚uÅ¼Ä…ce do przekazywania datagramÃ³w 
+pomiÄ™dzy sieciami rÃ³Å¼niÄ…cymi siÄ™ w warstwie fizycznej np. Ethernet i Token Ring, lecz pracujÄ…cymi w oparciu o 
+wspÃ³lny protokÃ³Å‚ warstwy sieciowej - IP). WartoÅ›Ä‡ tego pola jest wielkoÅ›ciÄ… caÅ‚kowitÄ… zmniejszanÄ… o jeden przez 
+kaÅ¼dy router, do ktÃ³rego dociera datagram. Datagram z wartoÅ›ciÄ… TTL rÃ³wnÄ… 0 usuwany jest z sieci, co zapobiega 
+krÄ…Å¼eniu w niej bÅ‚Ä™dnie zaadresowanych datagramÃ³w.
 
-Pole \emph{protokó³} okre¶la typ protoko³u bêd±cego nadawc± datagramu i jednocze¶nie protokó³ który powinien 
-odebraæ datagram w punkcie docelowym.
+Pole \emph{protokÃ³Å‚} okreÅ›la typ protokoÅ‚u bÄ™dÄ…cego nadawcÄ… datagramu i jednoczeÅ›nie protokÃ³Å‚ ktÃ³ry powinien 
+odebraÄ‡ datagram w punkcie docelowym.
 
-Kluczowe znaczenie dla wyznaczania trasy przesy³ania datagramu maj± pola \emph{adres docelowy} i \emph{adres ¼ród³owy}. Na 
-podstawie warto¶ci pola Adres docelowy protokó³ IP dynamicznie wyznacza kolejny wêze³ sieci na drodze pakietu, 
-proces ten nazywamy marszrutowaniem IP. Adres IP jest 32--bitowym numerem, który w sposób unikalny wyznacza 
-miejsce pod³±czenia interfejsu sieciowego (karty sieciowej) do sieci. W adresie IP wyró¿niamy czê¶æ globaln± 
-okre¶laj±c± adres sieci i czê¶æ lokaln± identyfikuj±c± komputer w konkretnej sieci. Istnieje piêæ klas adresów IP (Rys.: \ref{klasy_ip}):
+Kluczowe znaczenie dla wyznaczania trasy przesyÅ‚ania datagramu majÄ… pola \emph{adres docelowy} i \emph{adres ÅºrÃ³dÅ‚owy}. Na 
+podstawie wartoÅ›ci pola Adres docelowy protokÃ³Å‚ IP dynamicznie wyznacza kolejny wÄ™zeÅ‚ sieci na drodze pakietu, 
+proces ten nazywamy marszrutowaniem IP. Adres IP jest 32--bitowym numerem, ktÃ³ry w sposÃ³b unikalny wyznacza 
+miejsce podÅ‚Ä…czenia interfejsu sieciowego (karty sieciowej) do sieci. W adresie IP wyrÃ³Å¼niamy czÄ™Å›Ä‡ globalnÄ… 
+okreÅ›lajÄ…cÄ… adres sieci i czÄ™Å›Ä‡ lokalnÄ… identyfikujÄ…cÄ… komputer w konkretnej sieci. Istnieje piÄ™Ä‡ klas adresÃ³w IP (Rys.: \ref{klasy_ip}):
 \begin{figure}[h]
 \centering
 \includegraphics[width=5in]{./rysunki/klasy_adresow.eps}
-\caption{Klasy adresów IP}
+\caption{Klasy adresÃ³w IP}
 \label{klasy_ip}
 \end{figure}
 
-Aby zapewniæ unikalno¶æ adresów sieci przydzielane s± one centralnie przez organizacjê InterNIC. Adres zapisuje
-siê zwykle w tzw. notacji kropkowo -- dziesiêtnej, dzieli siê go na cztery o¶miobitowe  grupy i warto¶æ ka¿dej z 
-nich zapisuje dziesiêtnie np.156.17.130.10 jest adresem serwera pocztowego Instytutu Sterowania i Techniki Systemów
-Politechniki Wroc³awskiej.
+Aby zapewniÄ‡ unikalnoÅ›Ä‡ adresÃ³w sieci przydzielane sÄ… one centralnie przez organizacjÄ™ InterNIC. Adres zapisuje
+siÄ™ zwykle w tzw. notacji kropkowo -- dziesiÄ™tnej, dzieli siÄ™ go na cztery oÅ›miobitowe  grupy i wartoÅ›Ä‡ kaÅ¼dej z 
+nich zapisuje dziesiÄ™tnie np.156.17.130.10 jest adresem serwera pocztowego Instytutu Sterowania i Techniki SystemÃ³w
+Politechniki WrocÅ‚awskiej.
 
-Istniej± trzy typy adresów IP: adres unicast dotyczy pojedynczego komputera, adres broadcast dotyczy 
-wszystkich komputerów w danej sieci a adres multicast obejmuje grupê komputerów nale¿±cych do jednej grupy 
-multicastowej. Obecnie wszystkie implementacje IP musz± obs³ugiwaæ tzw. adresowanie podsieci. Zamiast traktowaæ 
-adres IP jako proste z³o¿enie adresu sieci i hosta (komputera) w czê¶ci adresu wskazuj±cej hosta wydziela siê 
-adres podsieci i w³a¶ciwy adres hosta. Wynika to z faktu, ¿e adresy klasy A i B przeznaczaj± zbyt wiele bitów na 
-adres hosta, adres klasy B umo¿liwia np. zaadresowanie 65535 komputerów, a rzadko spotyka siê tak wiele hostów 
-pod³±czonych do jednej sieci. Podzia³ 16 bitowego adresu hosta klasy B na dwie czê¶ci o¶miobitowe umo¿liwia 
-utworzenie w jednej sieci 255 podsieci z 254 hostami w ka¿dej z nich. Decyzjê o podziale na podsieci podejmuje 
-lokalny administrator, a informacjê o tym jaka ilo¶æ bitów przeznaczona jest na adres podsieci przechowywana 
-jest przez tzw. maskê podsieci. Jest to warto¶æ 32--bitowa  zawieraj±ca jedynki dla czê¶ci adresuj±cej sieæ i 
-podsieæ oraz zera dla czê¶ci adresuj±cej hosta. Maska podsieci ma w omówionym przypadku postaæ 255.255.255.224.
+IstniejÄ… trzy typy adresÃ³w IP: adres unicast dotyczy pojedynczego komputera, adres broadcast dotyczy 
+wszystkich komputerÃ³w w danej sieci a adres multicast obejmuje grupÄ™ komputerÃ³w naleÅ¼Ä…cych do jednej grupy 
+multicastowej. Obecnie wszystkie implementacje IP muszÄ… obsÅ‚ugiwaÄ‡ tzw. adresowanie podsieci. Zamiast traktowaÄ‡ 
+adres IP jako proste zÅ‚oÅ¼enie adresu sieci i hosta (komputera) w czÄ™Å›ci adresu wskazujÄ…cej hosta wydziela siÄ™ 
+adres podsieci i wÅ‚aÅ›ciwy adres hosta. Wynika to z faktu, Å¼e adresy klasy A i B przeznaczajÄ… zbyt wiele bitÃ³w na 
+adres hosta, adres klasy B umoÅ¼liwia np. zaadresowanie 65535 komputerÃ³w, a rzadko spotyka siÄ™ tak wiele hostÃ³w 
+podÅ‚Ä…czonych do jednej sieci. PodziaÅ‚ 16 bitowego adresu hosta klasy B na dwie czÄ™Å›ci oÅ›miobitowe umoÅ¼liwia 
+utworzenie w jednej sieci 255 podsieci z 254 hostami w kaÅ¼dej z nich. DecyzjÄ™ o podziale na podsieci podejmuje 
+lokalny administrator, a informacjÄ™ o tym jaka iloÅ›Ä‡ bitÃ³w przeznaczona jest na adres podsieci przechowywana 
+jest przez tzw. maskÄ™ podsieci. Jest to wartoÅ›Ä‡ 32--bitowa  zawierajÄ…ca jedynki dla czÄ™Å›ci adresujÄ…cej sieÄ‡ i 
+podsieÄ‡ oraz zera dla czÄ™Å›ci adresujÄ…cej hosta. Maska podsieci ma w omÃ³wionym przypadku postaÄ‡ 255.255.255.224.
 
-Istnieje kilka zarezerwowanych adresów IP wykorzystywanych do celów specjalnych. Obowi±zkowym adresem 
-specjalnym jest adres interfejsu pêtli zwrotnej (ang. \emph{loopback}). Wiêkszo¶æ systemów przypisuje temu interfejsowi 
-z definicji adres 127.0.0.1, choæ poprawny jest dowolny adres klasy A z adresem sieci 127. Datagramy kierowane 
-na adres pêtli zwrotnej przechodz± przez warstwê transportow± i sieciow± po czym s± zawracane w górê stosu 
-TCP/IP. Najczêstszym zastosowaniem pêtli zwrotnej jest testowanie poprawno¶ci dzia³ania protoko³ów TCP/IP. 
-Niektóre systemy (np. system AIX) umo¿liwiaj± dodawanie aliasów (dodatkowych adresów) do adresu interfejsu pêtli 
+Istnieje kilka zarezerwowanych adresÃ³w IP wykorzystywanych do celÃ³w specjalnych. ObowiÄ…zkowym adresem 
+specjalnym jest adres interfejsu pÄ™tli zwrotnej (ang. \emph{loopback}). WiÄ™kszoÅ›Ä‡ systemÃ³w przypisuje temu interfejsowi 
+z definicji adres 127.0.0.1, choÄ‡ poprawny jest dowolny adres klasy A z adresem sieci 127. Datagramy kierowane 
+na adres pÄ™tli zwrotnej przechodzÄ… przez warstwÄ™ transportowÄ… i sieciowÄ… po czym sÄ… zawracane w gÃ³rÄ™ stosu 
+TCP/IP. NajczÄ™stszym zastosowaniem pÄ™tli zwrotnej jest testowanie poprawnoÅ›ci dziaÅ‚ania protokoÅ‚Ã³w TCP/IP. 
+NiektÃ³re systemy (np. system AIX) umoÅ¼liwiajÄ… dodawanie aliasÃ³w (dodatkowych adresÃ³w) do adresu interfejsu pÄ™tli 
 zwrotnej.
 
-Ka¿dy komputer (host) pod³±czony do sieci IP posiada co najmniej jeden adres IP, hosty posiadaj±ce kilka 
-interfejsów sieciowych posiadaj± po jednym adresie dla ka¿dego interfejsu. Wszystkie te adresy, wraz z adresami 
-specjalnymi i adresami typu broadcast przechowywane s± w tzw. tablicy marszrutowania (routingu). Protokó³ IP po otrzymaniu 
-datagramu sprawdza, czy jego adres IP zgodny jest z którym¶ z adresów hosta lub jednym z adresów specjalnych. 
-Je¶li tak jest datagram zostaje zaakceptowany. Postêpowanie w przeciwnym wypadku zale¿y od tego, czy warstwa IP 
-skonfigurowana jest jako router. Je¿eli host nie jest routerem nastêpuje odrzucenie datagramu, w przeciwnym wypadku
-uruchamiany jest opisany poni¿ej algorytm marszrutowania.
+KaÅ¼dy komputer (host) podÅ‚Ä…czony do sieci IP posiada co najmniej jeden adres IP, hosty posiadajÄ…ce kilka 
+interfejsÃ³w sieciowych posiadajÄ… po jednym adresie dla kaÅ¼dego interfejsu. Wszystkie te adresy, wraz z adresami 
+specjalnymi i adresami typu broadcast przechowywane sÄ… w tzw. tablicy marszrutowania (routingu). ProtokÃ³Å‚ IP po otrzymaniu 
+datagramu sprawdza, czy jego adres IP zgodny jest z ktÃ³rymÅ› z adresÃ³w hosta lub jednym z adresÃ³w specjalnych. 
+JeÅ›li tak jest datagram zostaje zaakceptowany. PostÄ™powanie w przeciwnym wypadku zaleÅ¼y od tego, czy warstwa IP 
+skonfigurowana jest jako router. JeÅ¼eli host nie jest routerem nastÄ™puje odrzucenie datagramu, w przeciwnym wypadku
+uruchamiany jest opisany poniÅ¼ej algorytm marszrutowania.
 
-Marszrutowanie IP dokonywane jest na podstawie kolejnych przej¶æ pomiêdzy wêz³ami sieci zapisanych (wraz z 
-adresami w³asnymi hosta) w tablicy marszrutowania. Pojedynczy rekord tablicy routingu zawiera znany adres 
-docelowy IP i adres IP na który nale¿y skierowaæ datagram je¶li jego adres docelowy jest zgodny z adresem 
-zapisanym w rekordzie. Je¿eli nadawca i odbiorca s± bezpo¶rednio po³±czeni rekord tablicy marszrutowania zawiera 
+Marszrutowanie IP dokonywane jest na podstawie kolejnych przejÅ›Ä‡ pomiÄ™dzy wÄ™zÅ‚ami sieci zapisanych (wraz z 
+adresami wÅ‚asnymi hosta) w tablicy marszrutowania. Pojedynczy rekord tablicy routingu zawiera znany adres 
+docelowy IP i adres IP na ktÃ³ry naleÅ¼y skierowaÄ‡ datagram jeÅ›li jego adres docelowy jest zgodny z adresem 
+zapisanym w rekordzie. JeÅ¼eli nadawca i odbiorca sÄ… bezpoÅ›rednio poÅ‚Ä…czeni rekord tablicy marszrutowania zawiera 
 wskazanie (w postaci adresu IP) na adresata datagramu, o czym informuje specjalny znacznik w danym rekordzie. 
-W przeciwnym wypadku jest to adres routera stanowi±cego po³±czenie z inn± sieci± lokaln± lub punkt wyj¶cia do 
-sieci rozleg³ej. Zak³ada siê ¿e router taki znajduje siê bli¿ej punktu docelowego datagramu, gdy¿ IP nie zna 
-pe³nej trasy dla ¿adnego z datagramów adresowanych poza sieæ lokaln±. Wybór drogi datagramu przebiega 
-nastêpuj±co \cite{barylo2}: 
-w pierwszej kolejno¶ci poszukiwany jest rekord zawieraj±cy w pe³ni zgodny adres docelowy IP. Je¶li zostanie on 
-znaleziony, datagram jest wysy³any na adres wskazany przez rekord. Mo¿e byæ to adres docelowy lub znane 
-przej¶cie przez router do innej sieci lokalnej.
-Nastêpnie w tablicy marszrutowania  poszukiwany jest rekord z adresem sieci zgodnym z adresem sieci 
-marszroutowanego datagramu. Je¶li poszukiwania zakoñcz± siê sukcesem datagram jest wysy³any na zawarty tam adres. 
-W ten sposób mog± byæ obs³ugiwane  datagramy zaadresowane do hostów po³±czonych z nadawc± przez wspóln± sieæ 
-(w sensie zgodno¶ci adresów globalnych IP). 
-W przypadku niepowodzenia poprzednich poszukiwañ datagram wysy³any jest na adres IP routera domy¶lnego.
+W przeciwnym wypadku jest to adres routera stanowiÄ…cego poÅ‚Ä…czenie z innÄ… sieciÄ… lokalnÄ… lub punkt wyjÅ›cia do 
+sieci rozlegÅ‚ej. ZakÅ‚ada siÄ™ Å¼e router taki znajduje siÄ™ bliÅ¼ej punktu docelowego datagramu, gdyÅ¼ IP nie zna 
+peÅ‚nej trasy dla Å¼adnego z datagramÃ³w adresowanych poza sieÄ‡ lokalnÄ…. WybÃ³r drogi datagramu przebiega 
+nastÄ™pujÄ…co \cite{barylo2}: 
+w pierwszej kolejnoÅ›ci poszukiwany jest rekord zawierajÄ…cy w peÅ‚ni zgodny adres docelowy IP. JeÅ›li zostanie on 
+znaleziony, datagram jest wysyÅ‚any na adres wskazany przez rekord. MoÅ¼e byÄ‡ to adres docelowy lub znane 
+przejÅ›cie przez router do innej sieci lokalnej.
+NastÄ™pnie w tablicy marszrutowania  poszukiwany jest rekord z adresem sieci zgodnym z adresem sieci 
+marszroutowanego datagramu. JeÅ›li poszukiwania zakoÅ„czÄ… siÄ™ sukcesem datagram jest wysyÅ‚any na zawarty tam adres. 
+W ten sposÃ³b mogÄ… byÄ‡ obsÅ‚ugiwane  datagramy zaadresowane do hostÃ³w poÅ‚Ä…czonych z nadawcÄ… przez wspÃ³lnÄ… sieÄ‡ 
+(w sensie zgodnoÅ›ci adresÃ³w globalnych IP). 
+W przypadku niepowodzenia poprzednich poszukiwaÅ„ datagram wysyÅ‚any jest na adres IP routera domyÅ›lnego.
 
-Ostatni± czynno¶ci± dokonywan± zanim datagram rzeczywi¶cie opu¶ci komputer nadawcy jest ustalenie jego adresu 
-fizycznego w danej sieci lokalnej (np. adresu Ethernet lub Token Ring). Ka¿de urz±dzenie: komputer, router, czy 
+OstatniÄ… czynnoÅ›ciÄ… dokonywanÄ… zanim datagram rzeczywiÅ›cie opuÅ›ci komputer nadawcy jest ustalenie jego adresu 
+fizycznego w danej sieci lokalnej (np. adresu Ethernet lub Token Ring). KaÅ¼de urzÄ…dzenie: komputer, router, czy 
 most (bridge) posiada unikalny w obszarze danej sieci lokalnej adres fizyczny. Odwzorowanie adresu IP w adres fizyczny 
-dokonuje siê przy u¿yciu protoko³u ARP (ang. \emph{Address Resolution Protocol}), opis jego dzia³ania le¿y poza 
+dokonuje siÄ™ przy uÅ¼yciu protokoÅ‚u ARP (ang. \emph{Address Resolution Protocol}), opis jego dziaÅ‚ania leÅ¼y poza 
 zakresem tej pracy.
-Wypada zaznaczyæ, ¿e adresy IP klasy B wyczerpa³y siê w roku 1997, co wymusi³o wprowadzenie nowej specyfikacji
-protoko³u IP tzw. IPv6, który wprowadza adresy 128 bitowe. 
+Wypada zaznaczyÄ‡, Å¼e adresy IP klasy B wyczerpaÅ‚y siÄ™ w roku 1997, co wymusiÅ‚o wprowadzenie nowej specyfikacji
+protokoÅ‚u IP tzw. IPv6, ktÃ³ry wprowadza adresy 128 bitowe. 
 
-\section{Protokó³ TCP}
+\section{ProtokÃ³Å‚ TCP}
 
-Protokó³ TCP (ang. \emph{Transmission Control Protocol}) zapewnia niezawodne, zorientowane 
-po³±czeniowo, oparte na strumieniach bajtów (tzn. nie stosuj±ce ¿adnego arbitralnego podzia³u przesy³anych 
-danych na jednostki sta³ej d³ugo¶ci) us³ugi warstwy transportowej. Przed rozpoczêciem transmisji dwie aplikacje 
-u¿ywaj±ce TCP musz± ustanowiæ po³±czenie w postaci wirtualnego kana³u transmisyjnego. Niezawodno¶æ tego 
-po³±czenia zapewniana jest przez dzia³ania takie jak: podzia³ przesy³anych danych na segmenty o rozmiarze 
-optymalnym ze wzglêdu na poprawno¶æ transmisji; utrzymywanie dla ka¿dego segmentu osobnego zestawu zegarów 
-wyznaczaj±cych m. in. maksymalny czas oczekiwania na potwierdzenie odbioru segmentu i wymuszaj±cego retransmisjê 
-w przypadku przekroczenia tego czasu; u¿ywanie obowi±zkowych sum kontrolnych; odrzucanie zdublowanych 
-datagramów IP; zdolno¶æ rozpoznania kolejno¶ci datagramów IP (mog± one docieraæ w kolejno¶ci innej ni¿ by³y 
-wysy³ane).
+ProtokÃ³Å‚ TCP (ang. \emph{Transmission Control Protocol}) zapewnia niezawodne, zorientowane 
+poÅ‚Ä…czeniowo, oparte na strumieniach bajtÃ³w (tzn. nie stosujÄ…ce Å¼adnego arbitralnego podziaÅ‚u przesyÅ‚anych 
+danych na jednostki staÅ‚ej dÅ‚ugoÅ›ci) usÅ‚ugi warstwy transportowej. Przed rozpoczÄ™ciem transmisji dwie aplikacje 
+uÅ¼ywajÄ…ce TCP muszÄ… ustanowiÄ‡ poÅ‚Ä…czenie w postaci wirtualnego kanaÅ‚u transmisyjnego. NiezawodnoÅ›Ä‡ tego 
+poÅ‚Ä…czenia zapewniana jest przez dziaÅ‚ania takie jak: podziaÅ‚ przesyÅ‚anych danych na segmenty o rozmiarze 
+optymalnym ze wzglÄ™du na poprawnoÅ›Ä‡ transmisji; utrzymywanie dla kaÅ¼dego segmentu osobnego zestawu zegarÃ³w 
+wyznaczajÄ…cych m. in. maksymalny czas oczekiwania na potwierdzenie odbioru segmentu i wymuszajÄ…cego retransmisjÄ™ 
+w przypadku przekroczenia tego czasu; uÅ¼ywanie obowiÄ…zkowych sum kontrolnych; odrzucanie zdublowanych 
+datagramÃ³w IP; zdolnoÅ›Ä‡ rozpoznania kolejnoÅ›ci datagramÃ³w IP (mogÄ… one docieraÄ‡ w kolejnoÅ›ci innej niÅ¼ byÅ‚y 
+wysyÅ‚ane).
 
-Informacjê kontroln± segmentu TCP zawiera przedstawiony poni¿ej nag³ówek \cite{barylo2}.
+InformacjÄ™ kontrolnÄ… segmentu TCP zawiera przedstawiony poniÅ¼ej nagÅ‚Ã³wek \cite{barylo2}.
 \begin{figure}[h]
 \centering
 \includegraphics[width=5in]{./rysunki/format_segmentu_tcp.eps}
-\caption{Format segmentu TCP z wyró¿nieniem nag³ówka.}
+\caption{Format segmentu TCP z wyrÃ³Å¼nieniem nagÅ‚Ã³wka.}
 \label{segment_TCP}
 \end{figure}
 
-Pola \emph{numer portu ¼ród³owego} i \emph{numer portu docelowego} zawieraj± wielko¶ci ca³kowite i pe³ni± kluczow± rolê w 
-identyfikacji po³±czeñ TCP. Numery portów od 1 do 1023 s± zarezerwowane dla tzw. us³ug dobrze znanych i 
-zazwyczaj przydzielane s± aplikacjom pracuj±cym jako serwery. Przyk³adowo serwery WWW (protokó³ HTTP) otrzymuj± 
-numer portu 80, serwery FTP wykorzystuj± porty 20 i 21 a serwery pocztowe (SMTP) port 25. Do nawi±zania 
-po³±czenia proces klienta (np. przegl±darka WWW) uzyskuje od protoko³u TCP tzw. numer krótkotrwa³y unikalny dla 
-ka¿dej aplikacji u¿ywaj±cej TCP w danym ho¶cie. W przypadku przegl±darki WWW mo¿e byæ to numer 80 lub dowolny 
-numer z zakresu 1024... 5000. Para port ¼ród³owy -- port docelowy jest wystarczaj±ca do identyfikacji po³±czenia 
-po stronie klienta. Je¶li nawet u¿ytkownik uruchomi dwie identyczne aplikacje (np. dwie przegl±darki WWW), to 
-otrzymaj± one ró¿ne numery krótkotrwa³e. Po stronie serwera sytuacja jest trudniejsza, typowo serwer poprzez 
-multipleksacjê portu obs³uguje wiele po³±czeñ z u¿yciem jednego numeru portu ¼ród³owego (np. 80 dla serwera WWW),
-mo¿e siê wiêc zdarzyæ, ¿e dwóch niezale¿nych klientów zg³osi ten sam numer krótkotrwa³y portu docelowego. Do 
-jednoznacznej identyfikacji po³±czeñ wykorzystuje siê kombinacjê numeru portu i adresu IP nazywan± gniazdem. 
-Gniazda s± jednym z podstawowych pojêæ interfejsu programisty TCP/IP.
+Pola \emph{numer portu ÅºrÃ³dÅ‚owego} i \emph{numer portu docelowego} zawierajÄ… wielkoÅ›ci caÅ‚kowite i peÅ‚niÄ… kluczowÄ… rolÄ™ w 
+identyfikacji poÅ‚Ä…czeÅ„ TCP. Numery portÃ³w od 1 do 1023 sÄ… zarezerwowane dla tzw. usÅ‚ug dobrze znanych i 
+zazwyczaj przydzielane sÄ… aplikacjom pracujÄ…cym jako serwery. PrzykÅ‚adowo serwery WWW (protokÃ³Å‚ HTTP) otrzymujÄ… 
+numer portu 80, serwery FTP wykorzystujÄ… porty 20 i 21 a serwery pocztowe (SMTP) port 25. Do nawiÄ…zania 
+poÅ‚Ä…czenia proces klienta (np. przeglÄ…darka WWW) uzyskuje od protokoÅ‚u TCP tzw. numer krÃ³tkotrwaÅ‚y unikalny dla 
+kaÅ¼dej aplikacji uÅ¼ywajÄ…cej TCP w danym hoÅ›cie. W przypadku przeglÄ…darki WWW moÅ¼e byÄ‡ to numer 80 lub dowolny 
+numer z zakresu 1024... 5000. Para port ÅºrÃ³dÅ‚owy -- port docelowy jest wystarczajÄ…ca do identyfikacji poÅ‚Ä…czenia 
+po stronie klienta. JeÅ›li nawet uÅ¼ytkownik uruchomi dwie identyczne aplikacje (np. dwie przeglÄ…darki WWW), to 
+otrzymajÄ… one rÃ³Å¼ne numery krÃ³tkotrwaÅ‚e. Po stronie serwera sytuacja jest trudniejsza, typowo serwer poprzez 
+multipleksacjÄ™ portu obsÅ‚uguje wiele poÅ‚Ä…czeÅ„ z uÅ¼yciem jednego numeru portu ÅºrÃ³dÅ‚owego (np. 80 dla serwera WWW),
+moÅ¼e siÄ™ wiÄ™c zdarzyÄ‡, Å¼e dwÃ³ch niezaleÅ¼nych klientÃ³w zgÅ‚osi ten sam numer krÃ³tkotrwaÅ‚y portu docelowego. Do 
+jednoznacznej identyfikacji poÅ‚Ä…czeÅ„ wykorzystuje siÄ™ kombinacjÄ™ numeru portu i adresu IP nazywanÄ… gniazdem. 
+Gniazda sÄ… jednym z podstawowych pojÄ™Ä‡ interfejsu programisty TCP/IP.
 
-Jak ju¿ wspomniano TCP przesy³a dane w postaci strumienia bajtów, w praktyce oznacza to, ¿e wysy³any 
-segment danych mo¿e mieæ ka¿dorazowo inn±  d³ugo¶æ. Do umo¿liwienia uformowania z segmentów oryginalnego pakietu 
-s³u¿y warto¶æ pola \emph{numer sekwencyjny}. Je¶li rozpatrzymy strumieñ bajtów przesy³any tylko w jedn± stronê, to 
-warto¶æ tego pola okre¶la  numer jaki ma w strumieniu ostatni bajt segmentu. Warto¶æ pocz±tkow± numeru 
-sekwencyjnego ustala nadawca w momencie ustanawiania po³±czenia. Je¶li pocz±tkowym numerem sekwencyjnym by³o 
-100, a pierwszy segment ma d³ugo¶æ 1024 bajty, to jego numerem sekwencyjnym jest 1123. Pierwszy bajt kolejnego 
-segmentu sk³adaj±cego siê na pakiet bêdzie mia³ numer 1124, je¶li segment ten ma d³ugo¶æ 125 bajtów, to jego 
-numerem sekwencyjnym jest 1248. Koniec strumienia oznacza siê przez ustawienie flagi bitowej FIN w nag³ówku 
+Jak juÅ¼ wspomniano TCP przesyÅ‚a dane w postaci strumienia bajtÃ³w, w praktyce oznacza to, Å¼e wysyÅ‚any 
+segment danych moÅ¼e mieÄ‡ kaÅ¼dorazowo innÄ…  dÅ‚ugoÅ›Ä‡. Do umoÅ¼liwienia uformowania z segmentÃ³w oryginalnego pakietu 
+sÅ‚uÅ¼y wartoÅ›Ä‡ pola \emph{numer sekwencyjny}. JeÅ›li rozpatrzymy strumieÅ„ bajtÃ³w przesyÅ‚any tylko w jednÄ… stronÄ™, to 
+wartoÅ›Ä‡ tego pola okreÅ›la  numer jaki ma w strumieniu ostatni bajt segmentu. WartoÅ›Ä‡ poczÄ…tkowÄ… numeru 
+sekwencyjnego ustala nadawca w momencie ustanawiania poÅ‚Ä…czenia. JeÅ›li poczÄ…tkowym numerem sekwencyjnym byÅ‚o 
+100, a pierwszy segment ma dÅ‚ugoÅ›Ä‡ 1024 bajty, to jego numerem sekwencyjnym jest 1123. Pierwszy bajt kolejnego 
+segmentu skÅ‚adajÄ…cego siÄ™ na pakiet bÄ™dzie miaÅ‚ numer 1124, jeÅ›li segment ten ma dÅ‚ugoÅ›Ä‡ 125 bajtÃ³w, to jego 
+numerem sekwencyjnym jest 1248. Koniec strumienia oznacza siÄ™ przez ustawienie flagi bitowej FIN w nagÅ‚Ã³wku 
 ostatniego segmentu.
 
-TCP wymaga potwierdzeñ odbioru ka¿dego przes³anego segmentu. S³u¿y do tego pole \emph{numer potwierdzenia}. Je¶li 
-znów rozpatrywaæ przesy³anie danych w jedn± tylko stronê, to po odebraniu segmentu o numerze sekwencyjnym 1123 
-klient wysy³a (pozbawiony danych) segment TCP z ustawion± flag± bitow± ACK i warto¶ci± numeru potwierdzenia 1124 
-(jest to numer kolejny oczekiwanego bajtu). Aby zapewniæ niezale¿ne przesy³anie danych w obydwu kierunkach, 
-ka¿da ze stron pamiêta numery sekwencyjne wymienianych segmentów. Opisany powy¿ej segment potwierdzenia posiada 
-wiêc ustalany przez jego nadawcê numer sekwencyjny (np. 136), który serwer musi potwierdziæ ustawiaj±c flagê ACK 
-i umieszczaj±c w polu Numer sekwencyjny odpowiedni± warto¶æ (tutaj 137). Konsekwencj± takiej strategii wymiany 
-potwierdzeñ jest fakt, ¿e w trakcie wymiany danych flaga ACK jest ci±gle ustawiona (ma warto¶æ logiczn± 1).
-Pole D³ugo¶æ nag³ówka zawiera liczbê 32--bitowych s³ów sk³adaj±cych siê na nag³ówek, nastêpuje po nim 6 
-zarezerwowanych bitów i kolejno 6 flag bitowych. Istotn± flag± jest SYN, która jest ustawiona podczas wymiany 
-segmentów nawi±zuj±cych po³±czenie i ustalania pocz±tkowych numerów sekwencyjnych. 
+TCP wymaga potwierdzeÅ„ odbioru kaÅ¼dego przesÅ‚anego segmentu. SÅ‚uÅ¼y do tego pole \emph{numer potwierdzenia}. JeÅ›li 
+znÃ³w rozpatrywaÄ‡ przesyÅ‚anie danych w jednÄ… tylko stronÄ™, to po odebraniu segmentu o numerze sekwencyjnym 1123 
+klient wysyÅ‚a (pozbawiony danych) segment TCP z ustawionÄ… flagÄ… bitowÄ… ACK i wartoÅ›ciÄ… numeru potwierdzenia 1124 
+(jest to numer kolejny oczekiwanego bajtu). Aby zapewniÄ‡ niezaleÅ¼ne przesyÅ‚anie danych w obydwu kierunkach, 
+kaÅ¼da ze stron pamiÄ™ta numery sekwencyjne wymienianych segmentÃ³w. Opisany powyÅ¼ej segment potwierdzenia posiada 
+wiÄ™c ustalany przez jego nadawcÄ™ numer sekwencyjny (np. 136), ktÃ³ry serwer musi potwierdziÄ‡ ustawiajÄ…c flagÄ™ ACK 
+i umieszczajÄ…c w polu Numer sekwencyjny odpowiedniÄ… wartoÅ›Ä‡ (tutaj 137). KonsekwencjÄ… takiej strategii wymiany 
+potwierdzeÅ„ jest fakt, Å¼e w trakcie wymiany danych flaga ACK jest ciÄ…gle ustawiona (ma wartoÅ›Ä‡ logicznÄ… 1).
+Pole DÅ‚ugoÅ›Ä‡ nagÅ‚Ã³wka zawiera liczbÄ™ 32--bitowych sÅ‚Ã³w skÅ‚adajÄ…cych siÄ™ na nagÅ‚Ã³wek, nastÄ™puje po nim 6 
+zarezerwowanych bitÃ³w i kolejno 6 flag bitowych. IstotnÄ… flagÄ… jest SYN, ktÃ³ra jest ustawiona podczas wymiany 
+segmentÃ³w nawiÄ…zujÄ…cych poÅ‚Ä…czenie i ustalania poczÄ…tkowych numerÃ³w sekwencyjnych. 
 
-Pole \emph{rozmiar okna} zawiera warto¶æ ca³kowit±, przy pomocy której odbiorca deklaruje jak± ilo¶æ bajtów 
-nadawca mo¿e wys³aæ bez oczekiwania na potwierdzenie (inaczej -- jak± ilo¶æ bajtów odbiorca jest w stanie przyj±æ 
-jednorazowo). Pole ma zastosowanie w przypadku transmisji wg tzw. protoko³u przesuwnego okna, a jego warto¶æ 
-mo¿e siê zmieniaæ w trakcie  transmisji.
+Pole \emph{rozmiar okna} zawiera wartoÅ›Ä‡ caÅ‚kowitÄ…, przy pomocy ktÃ³rej odbiorca deklaruje jakÄ… iloÅ›Ä‡ bajtÃ³w 
+nadawca moÅ¼e wysÅ‚aÄ‡ bez oczekiwania na potwierdzenie (inaczej -- jakÄ… iloÅ›Ä‡ bajtÃ³w odbiorca jest w stanie przyjÄ…Ä‡ 
+jednorazowo). Pole ma zastosowanie w przypadku transmisji wg tzw. protokoÅ‚u przesuwnego okna, a jego wartoÅ›Ä‡ 
+moÅ¼e siÄ™ zmieniaÄ‡ w trakcie  transmisji.
 
-Wa¿n± rolê w trakcie nawi±zywania po³±czenia pe³ni pole \emph{opcje}. W polu tym uczestnicy po³±czenia wymieniaj± 
-siê informacj± jak du¿y jest pojedynczy segment, który s± w stanie przyj±æ. Ustalone w ten sposób maksymalne 
-wielko¶ci segmentu MSS (ang. \emph{Maximum Segment Size}) pozostaj± sta³e dla obydwu koñcówek po³±czenia przez ca³y 
+WaÅ¼nÄ… rolÄ™ w trakcie nawiÄ…zywania poÅ‚Ä…czenia peÅ‚ni pole \emph{opcje}. W polu tym uczestnicy poÅ‚Ä…czenia wymieniajÄ… 
+siÄ™ informacjÄ… jak duÅ¼y jest pojedynczy segment, ktÃ³ry sÄ… w stanie przyjÄ…Ä‡. Ustalone w ten sposÃ³b maksymalne 
+wielkoÅ›ci segmentu MSS (ang. \emph{Maximum Segment Size}) pozostajÄ… staÅ‚e dla obydwu koÅ„cÃ³wek poÅ‚Ä…czenia przez caÅ‚y 
 czas jego trwania. 
 
-Warto¶æ tê ustala siê z uwzglêdnieniem nak³adanego przez warstwê fizyczn± ograniczenia na maksymalny rozmiar 
+WartoÅ›Ä‡ tÄ™ ustala siÄ™ z uwzglÄ™dnieniem nakÅ‚adanego przez warstwÄ™ fizycznÄ… ograniczenia na maksymalny rozmiar 
 datagramu IP (MTU).
 
-Aby móc zarz±dzaæ po³±czeniami oprogramowanie protoko³u TCP utrzymuje tablicê po³±czeñ. Pojedynczy rekord takiej 
-tablicy opisuje jedno po³±czenie i zawiera pola: 
+Aby mÃ³c zarzÄ…dzaÄ‡ poÅ‚Ä…czeniami oprogramowanie protokoÅ‚u TCP utrzymuje tablicÄ™ poÅ‚Ä…czeÅ„. Pojedynczy rekord takiej 
+tablicy opisuje jedno poÅ‚Ä…czenie i zawiera pola: 
 \begin{itemize}
-\item Status (zamkniête, w trakcie zamykania, oczekiwanie na potwierdzenie itp.)
-\item Adres lokalny -- adres IP hosta ¼ród³owego (przechowuj±cego tablicê)
-\item Port lokalny -- numer portu hosta ¼ród³owego
+\item Status (zamkniÄ™te, w trakcie zamykania, oczekiwanie na potwierdzenie itp.)
+\item Adres lokalny -- adres IP hosta ÅºrÃ³dÅ‚owego (przechowujÄ…cego tablicÄ™)
+\item Port lokalny -- numer portu hosta ÅºrÃ³dÅ‚owego
 \item Adres zdalny -- adres IP hosta docelowego
 \item Port zdalny -- numer portu docelowego
 \end{itemize}
 
-Protokó³ TCP wykorzystywany jest przez wiele protoko³ów wy¿szych warstw, dla których najistotniejsz± spraw± jest 
-zapewnienie niezawodno¶ci transmisji. TCP u¿ywaj± m. in. HTTP, FTP czy SMTP, które zostan± krótko omówione w 
-dalszej czê¶ci tej pracy. System DNS korzysta z protoko³u TCP podczas wymiany danych pomiêdzy serwerami DNS w 
-trakcie uaktualniania ich tablic odwzorowañ.
+ProtokÃ³Å‚ TCP wykorzystywany jest przez wiele protokoÅ‚Ã³w wyÅ¼szych warstw, dla ktÃ³rych najistotniejszÄ… sprawÄ… jest 
+zapewnienie niezawodnoÅ›ci transmisji. TCP uÅ¼ywajÄ… m. in. HTTP, FTP czy SMTP, ktÃ³re zostanÄ… krÃ³tko omÃ³wione w 
+dalszej czÄ™Å›ci tej pracy. System DNS korzysta z protokoÅ‚u TCP podczas wymiany danych pomiÄ™dzy serwerami DNS w 
+trakcie uaktualniania ich tablic odwzorowaÅ„.
 
-\section{Protokó³ UDP}
+\section{ProtokÃ³Å‚ UDP}
 
-Protokó³ UDP (ang. \emph{User Datagram Protocol}) jest prostym, bezpo³±czeniowym protoko³em warstwy transportowej 
-wykorzystuj±cym datagramy. Z ka¿dego pakietu danych skierowanego do UDP przez warstwy górne formowany jest 
-jeden datagram UDP, z którego (inaczej ni¿ w przypadku TCP) tworzony jest dok³adnie jeden datagram IP. Aplikacja 
-wysy³aj±ca pakiet musi sama zadbaæ o to, by jego d³ugo¶æ nie przekroczy³a MTU. UDP (w przeciwieñstwie do TCP) 
-nie implementuje ¿adnych mechanizmów zapewniaj±cych niezawodno¶æ transmisji.  Nag³ówek datagramu UDP ma bardzo 
+ProtokÃ³Å‚ UDP (ang. \emph{User Datagram Protocol}) jest prostym, bezpoÅ‚Ä…czeniowym protokoÅ‚em warstwy transportowej 
+wykorzystujÄ…cym datagramy. Z kaÅ¼dego pakietu danych skierowanego do UDP przez warstwy gÃ³rne formowany jest 
+jeden datagram UDP, z ktÃ³rego (inaczej niÅ¼ w przypadku TCP) tworzony jest dokÅ‚adnie jeden datagram IP. Aplikacja 
+wysyÅ‚ajÄ…ca pakiet musi sama zadbaÄ‡ o to, by jego dÅ‚ugoÅ›Ä‡ nie przekroczyÅ‚a MTU. UDP (w przeciwieÅ„stwie do TCP) 
+nie implementuje Å¼adnych mechanizmÃ³w zapewniajÄ…cych niezawodnoÅ›Ä‡ transmisji.  NagÅ‚Ã³wek datagramu UDP ma bardzo 
 prosty format \cite{barylo2}.
 \begin{figure}[h]
 \centering
 \includegraphics[width=5in]{./rysunki/datagram_udp.eps}
-\caption{Datagram UDP z wyró¿nionym nag³ówkiem.}
+\caption{Datagram UDP z wyrÃ³Å¼nionym nagÅ‚Ã³wkiem.}
 \label{datagram_udp}
 \end{figure}
  
-\section{Protokó³ FTP}
+\section{ProtokÃ³Å‚ FTP}
 
-Protokó³ FTP (ang. \emph{File Transfer Protocol}) jest standardowym w Internecie protoko³em przesy³ania dowolnego 
-rodzaju plików. Jest to protokó³ warstw wy¿szych, i przez to jest czêsto b³êdnie uto¿samiany z aplikacjami 
-klienta FTP. FTP korzysta w warstwie transportowej z us³ug protoko³u TCP. Do obs³ugi transmisji FTP, w 
-przeciwieñstwie do wiêkszo¶ci protoko³ów, otwiera a¿ dwa po³±czenia TCP : po³±czenie steruj±ce o numerze portu 
-docelowego 21 i po³±czenie transmisji danych o numerze portu 20. Przez po³±czenie steruj±ce aplikacje FTP 
-wymieniaj± zdefiniowane w protokole polecenia i potwierdzenia. Po³±czenie transmisji u¿ywane jest do binarnego 
-przesy³ania danych. Schemat obs³ugi po³±czenia przez procesy klienta i serwera FTP przedstawia rysunek \ref{polaczenie_ftp}.
+ProtokÃ³Å‚ FTP (ang. \emph{File Transfer Protocol}) jest standardowym w Internecie protokoÅ‚em przesyÅ‚ania dowolnego 
+rodzaju plikÃ³w. Jest to protokÃ³Å‚ warstw wyÅ¼szych, i przez to jest czÄ™sto bÅ‚Ä™dnie utoÅ¼samiany z aplikacjami 
+klienta FTP. FTP korzysta w warstwie transportowej z usÅ‚ug protokoÅ‚u TCP. Do obsÅ‚ugi transmisji FTP, w 
+przeciwieÅ„stwie do wiÄ™kszoÅ›ci protokoÅ‚Ã³w, otwiera aÅ¼ dwa poÅ‚Ä…czenia TCP : poÅ‚Ä…czenie sterujÄ…ce o numerze portu 
+docelowego 21 i poÅ‚Ä…czenie transmisji danych o numerze portu 20. Przez poÅ‚Ä…czenie sterujÄ…ce aplikacje FTP 
+wymieniajÄ… zdefiniowane w protokole polecenia i potwierdzenia. PoÅ‚Ä…czenie transmisji uÅ¼ywane jest do binarnego 
+przesyÅ‚ania danych. Schemat obsÅ‚ugi poÅ‚Ä…czenia przez procesy klienta i serwera FTP przedstawia rysunek \ref{polaczenie_ftp}.
 \begin{figure}[h]
 \centering
 \includegraphics[width=5in]{./rysunki/obsluga_ftp.eps}
-\caption{Obs³uga po³±czenia ftp.}
+\caption{ObsÅ‚uga poÅ‚Ä…czenia ftp.}
 \label{polaczenie_ftp}
 \end{figure}
 
-Po³±czenie przesy³ania danych nawi±zywane jest dla ka¿dego przesy³anego pliku. FTP mo¿e przesy³aæ pliki w 
-jednym z trzech trybów: jako strumieñ bajtów, jako seriê bloków podzielonych nag³ówkami lub w rzadko stosowanym 
-trybie z kompresj± FTP (kompresji podlegaj± tylko ci±gi zerowych bajtów). FTP rozpoznaje formaty ASCII i EBCDIC 
--- przesy³ane s± one w postaci rekordów o sta³ej d³ugo¶ci, pozosta³e pliki traktowane s± jako pliki binarne i 
-przesy³ane jako strumieñ bajtów.
+PoÅ‚Ä…czenie przesyÅ‚ania danych nawiÄ…zywane jest dla kaÅ¼dego przesyÅ‚anego pliku. FTP moÅ¼e przesyÅ‚aÄ‡ pliki w 
+jednym z trzech trybÃ³w: jako strumieÅ„ bajtÃ³w, jako seriÄ™ blokÃ³w podzielonych nagÅ‚Ã³wkami lub w rzadko stosowanym 
+trybie z kompresjÄ… FTP (kompresji podlegajÄ… tylko ciÄ…gi zerowych bajtÃ³w). FTP rozpoznaje formaty ASCII i EBCDIC 
+-- przesyÅ‚ane sÄ… one w postaci rekordÃ³w o staÅ‚ej dÅ‚ugoÅ›ci, pozostaÅ‚e pliki traktowane sÄ… jako pliki binarne i 
+przesyÅ‚ane jako strumieÅ„ bajtÃ³w.
 
-Polecenia FTP wymieniane przez po³±czenie steruj±ce maj± postaæ ci±gów wielkich liter ASCII o d³ugo¶ci 3 
-lub 4 bajtów. Ka¿de nawi±zanie po³±czenia z serwerem FTP wymaga podania nazwy u¿ytkownika i has³a, jest to 
-prosty mechanizm zapewniaj±cy kontrolê dostêpu do zasobów serwera. O tym, jakie pliki udostêpniaæ konkretnym 
-u¿ytkownikom decyduje administrator serwera FTP.
-Wed³ug badañ prowadzonych w szkieletowej sieci NSFNET dane FTP stale stanowi± ok. 20\% pakietów 
+Polecenia FTP wymieniane przez poÅ‚Ä…czenie sterujÄ…ce majÄ… postaÄ‡ ciÄ…gÃ³w wielkich liter ASCII o dÅ‚ugoÅ›ci 3 
+lub 4 bajtÃ³w. KaÅ¼de nawiÄ…zanie poÅ‚Ä…czenia z serwerem FTP wymaga podania nazwy uÅ¼ytkownika i hasÅ‚a, jest to 
+prosty mechanizm zapewniajÄ…cy kontrolÄ™ dostÄ™pu do zasobÃ³w serwera. O tym, jakie pliki udostÄ™pniaÄ‡ konkretnym 
+uÅ¼ytkownikom decyduje administrator serwera FTP.
+WedÅ‚ug badaÅ„ prowadzonych w szkieletowej sieci NSFNET dane FTP stale stanowiÄ… ok. 20\% pakietÃ³w 
 transmitowanych w tej sieci. 
 
-\section{Protokó³ SNMP}
+\section{ProtokÃ³Å‚ SNMP}
 
-Protokó³ SNMP (ang. \emph{Simple Network Management Protocol}) pierwotnie zaprojektowano jako uniwersalne narzêdzie, 
-które umo¿liwi zdalne nadzorowanie ¶luz (ang. \emph{gateway})  i routerów w sieciach rozleg³ych. W miarê jego rozwoju 
-protokó³ uzupe³niono o mo¿liwo¶æ zarz±dzania wszelkim typem urz±dzeñ sieciowych w sieciach TCP/IP. SNMP ka¿dej 
-sieci opiera siê o trzy sk³adniki:
+ProtokÃ³Å‚ SNMP (ang. \emph{Simple Network Management Protocol}) pierwotnie zaprojektowano jako uniwersalne narzÄ™dzie, 
+ktÃ³re umoÅ¼liwi zdalne nadzorowanie Å›luz (ang. \emph{gateway})  i routerÃ³w w sieciach rozlegÅ‚ych. W miarÄ™ jego rozwoju 
+protokÃ³Å‚ uzupeÅ‚niono o moÅ¼liwoÅ›Ä‡ zarzÄ…dzania wszelkim typem urzÄ…dzeÅ„ sieciowych w sieciach TCP/IP. SNMP kaÅ¼dej 
+sieci opiera siÄ™ o trzy skÅ‚adniki:
 \begin{itemize}
-\item MIB (ang. \emph{Management Information Base}) jest to baza danych opisuj±ca stan danego urz±dzenia;
+\item MIB (ang. \emph{Management Information Base}) jest to baza danych opisujÄ…ca stan danego urzÄ…dzenia;
 \item SMI (ang. \emph{Structure and Identification of Management Information}) jest zestawem powszechnie stosowanych 
-schematów s³u¿±cych odwo³ywaniu siê do zmiennych MIB;
-\item SNMP okre¶la zasady komunikowania siê pomiêdzy aplikacj± zarz±dzaj±c± sieci± (serwerem SNMP), a procesem 
-steruj±cym urz±dzeniem (agentem).
+schematÃ³w sÅ‚uÅ¼Ä…cych odwoÅ‚ywaniu siÄ™ do zmiennych MIB;
+\item SNMP okreÅ›la zasady komunikowania siÄ™ pomiÄ™dzy aplikacjÄ… zarzÄ…dzajÄ…cÄ… sieciÄ… (serwerem SNMP), a procesem 
+sterujÄ…cym urzÄ…dzeniem (agentem).
 \end{itemize}
 
-Ka¿dy element sieci, który ma byæ zarz±dzany przez SNMP, musi przechowywaæ informacjê o parametrach okre¶laj±cych
-stan danego elementu, a maj±cych wp³yw na pracê sieci. Baza danych zawieraj±ca te parametry to w³a¶nie MIB. W 
-przypadku urz±dzenia takiego jak router rekord MIB mo¿e np. zawieraæ informacjê o stopniu zape³nienia jego 
-buforów pamiêci. MIB nie musi dotyczyæ elementów ¶ci¶le sprzêtowych istniej± np. MIB systemów operacyjnych. 
-Sposób odwo³ywania siê do elementów MIB okre¶laj± schematy SMI.
+KaÅ¼dy element sieci, ktÃ³ry ma byÄ‡ zarzÄ…dzany przez SNMP, musi przechowywaÄ‡ informacjÄ™ o parametrach okreÅ›lajÄ…cych
+stan danego elementu, a majÄ…cych wpÅ‚yw na pracÄ™ sieci. Baza danych zawierajÄ…ca te parametry to wÅ‚aÅ›nie MIB. W 
+przypadku urzÄ…dzenia takiego jak router rekord MIB moÅ¼e np. zawieraÄ‡ informacjÄ™ o stopniu zapeÅ‚nienia jego 
+buforÃ³w pamiÄ™ci. MIB nie musi dotyczyÄ‡ elementÃ³w Å›ciÅ›le sprzÄ™towych istniejÄ… np. MIB systemÃ³w operacyjnych. 
+SposÃ³b odwoÅ‚ywania siÄ™ do elementÃ³w MIB okreÅ›lajÄ… schematy SMI.
 
-W ka¿dej sieci, której elementy zarz±dzane s± wed³ug standardów SNMP istnieje wydzielony host, na którym 
-pracuje specjalistyczna aplikacja (serwer SNMP) s³u¿±ca monitorowaniu i zarz±dzaniu prac± sieci. Proces, który 
-dzia³a w zarz±dzanym elemencie i  aktualizuje MIB oraz udostêpnia serwerowi jej zmienne lub ustawia je na zadane 
-przez serwer warto¶ci nazywany jest agentem SNMP.
+W kaÅ¼dej sieci, ktÃ³rej elementy zarzÄ…dzane sÄ… wedÅ‚ug standardÃ³w SNMP istnieje wydzielony host, na ktÃ³rym 
+pracuje specjalistyczna aplikacja (serwer SNMP) sÅ‚uÅ¼Ä…ca monitorowaniu i zarzÄ…dzaniu pracÄ… sieci. Proces, ktÃ³ry 
+dziaÅ‚a w zarzÄ…dzanym elemencie i  aktualizuje MIB oraz udostÄ™pnia serwerowi jej zmienne lub ustawia je na zadane 
+przez serwer wartoÅ›ci nazywany jest agentem SNMP.
 
-W celu umo¿liwienia komunikacji pomiêdzy serwerem a agentami SNMP definiuje piêæ typów komunikatów. Trzy 
-z nich wysy³ane s± zawsze w kierunku serwer--klient i s³u¿± pobieraniu lub ustawianiu zmiennych MIB. Dwa typy 
-komunikatów wysy³ane s± w kierunku klient--serwer. Jeden z nich zwraca ¿±dan± lub nowo ustawion± warto¶æ 
-zmiennej MIB, drugi jest komunikatem alarmowym wysy³anym przez agenta w przypadku b³êdnej pracy urz±dzenia lub 
-przekroczenia krytycznej warto¶ci przez któr±¶ ze zmiennych MIB.
-Serwer SNMP musi utrzymywaæ w miarê aktualn± informacjê o stanie sieci, dlatego agenci SNMP przepytywani 
-s± w regularnych odstêpach czasu, posiadaj±c jednocze¶nie mo¿liwo¶æ raportowania o sytuacjach awaryjnych. Fakt, 
-¿e cztery z piêciu mo¿liwych rodzajów komunikacji pomiêdzy serwerem a agentem SNMP to pary typu pojedyncze 
-pytanie--pojedyncza odpowied¼ (wyj±tek stanowi± komunikaty alarmowe) oraz chêæ minimalizacji obci±¿enia sieci 
-powodowanego przez pakiety s³u¿±ce jej zarz±dzaniu spowodowa³y, ¿e SNMP w warstwie transportowej korzysta z 
-us³ug UDP. Zawodno¶æ tego protoko³u sprawia, ¿e serwery SNMP powinny (szczególnie w sytuacjach awaryjnych) 
-stosowaæ mechanizmy odmierzania czasu na odpowied¼ agenta i ewentualnej retransmisji komunikatów. Warto dodaæ, 
-¿e SNMP nie jest zale¿ny w warstwie sieciowej od IP, przy odpowiedniej konfiguracji rolê protoko³u sieciowego 
-mo¿e spe³niaæ np. IPX/SPX.
+W celu umoÅ¼liwienia komunikacji pomiÄ™dzy serwerem a agentami SNMP definiuje piÄ™Ä‡ typÃ³w komunikatÃ³w. Trzy 
+z nich wysyÅ‚ane sÄ… zawsze w kierunku serwer--klient i sÅ‚uÅ¼Ä… pobieraniu lub ustawianiu zmiennych MIB. Dwa typy 
+komunikatÃ³w wysyÅ‚ane sÄ… w kierunku klient--serwer. Jeden z nich zwraca Å¼Ä…danÄ… lub nowo ustawionÄ… wartoÅ›Ä‡ 
+zmiennej MIB, drugi jest komunikatem alarmowym wysyÅ‚anym przez agenta w przypadku bÅ‚Ä™dnej pracy urzÄ…dzenia lub 
+przekroczenia krytycznej wartoÅ›ci przez ktÃ³rÄ…Å› ze zmiennych MIB.
+Serwer SNMP musi utrzymywaÄ‡ w miarÄ™ aktualnÄ… informacjÄ™ o stanie sieci, dlatego agenci SNMP przepytywani 
+sÄ… w regularnych odstÄ™pach czasu, posiadajÄ…c jednoczeÅ›nie moÅ¼liwoÅ›Ä‡ raportowania o sytuacjach awaryjnych. Fakt, 
+Å¼e cztery z piÄ™ciu moÅ¼liwych rodzajÃ³w komunikacji pomiÄ™dzy serwerem a agentem SNMP to pary typu pojedyncze 
+pytanie--pojedyncza odpowiedÅº (wyjÄ…tek stanowiÄ… komunikaty alarmowe) oraz chÄ™Ä‡ minimalizacji obciÄ…Å¼enia sieci 
+powodowanego przez pakiety sÅ‚uÅ¼Ä…ce jej zarzÄ…dzaniu spowodowaÅ‚y, Å¼e SNMP w warstwie transportowej korzysta z 
+usÅ‚ug UDP. ZawodnoÅ›Ä‡ tego protokoÅ‚u sprawia, Å¼e serwery SNMP powinny (szczegÃ³lnie w sytuacjach awaryjnych) 
+stosowaÄ‡ mechanizmy odmierzania czasu na odpowiedÅº agenta i ewentualnej retransmisji komunikatÃ³w. Warto dodaÄ‡, 
+Å¼e SNMP nie jest zaleÅ¼ny w warstwie sieciowej od IP, przy odpowiedniej konfiguracji rolÄ™ protokoÅ‚u sieciowego 
+moÅ¼e speÅ‚niaÄ‡ np. IPX/SPX.
 
-\section{Protokó³ SMTP}
+\section{ProtokÃ³Å‚ SMTP}
 
-Protokó³ SMTP (ang. \emph{Simple Mail Transfer Protocol}) jest prostym protoko³em warstw górnych wykorzystywanym do 
-przesy³ania poczty elektronicznej w sieciach TCP/IP. W warstwie transportowej SMTP wykorzystuje protokó³ TCP i 
-posiada przydzielony numer portu 25. Nale¿y wyja¶niæ, ¿e programy pocztowe, z którymi kontaktuj± siê szeregowi 
-u¿ytkownicy Internetu stanowi± jedynie koñcowe narzêdzia, w terminologii fachowej nazywane agentami u¿ytkownika 
-UA (ang. \emph{User Agent}) s³u¿±ce do pobierania listów z elektronicznych skrzynek pocztowych lub umieszczania ich w 
-kolejce do najbli¿szego serwera pocztowego. Programy rzeczywi¶cie zajmuj±ce siê przesy³aniem wiadomo¶ci pomiêdzy 
-serwerami pocztowymi nazywane s± agentami przesy³ania komunikatów MTA (ang. \emph{Message Transfer Agent}). Przyk³adem 
-MTA jest unixowy Sendmail. Protokó³ SMTP s³u¿y w³a¶nie do komunikacji pomiêdzy poszczególnymi MTA. Schemat 
-przesy³ania poczty w Internecie przedstawia poni¿szy rysunek.
+ProtokÃ³Å‚ SMTP (ang. \emph{Simple Mail Transfer Protocol}) jest prostym protokoÅ‚em warstw gÃ³rnych wykorzystywanym do 
+przesyÅ‚ania poczty elektronicznej w sieciach TCP/IP. W warstwie transportowej SMTP wykorzystuje protokÃ³Å‚ TCP i 
+posiada przydzielony numer portu 25. NaleÅ¼y wyjaÅ›niÄ‡, Å¼e programy pocztowe, z ktÃ³rymi kontaktujÄ… siÄ™ szeregowi 
+uÅ¼ytkownicy Internetu stanowiÄ… jedynie koÅ„cowe narzÄ™dzia, w terminologii fachowej nazywane agentami uÅ¼ytkownika 
+UA (ang. \emph{User Agent}) sÅ‚uÅ¼Ä…ce do pobierania listÃ³w z elektronicznych skrzynek pocztowych lub umieszczania ich w 
+kolejce do najbliÅ¼szego serwera pocztowego. Programy rzeczywiÅ›cie zajmujÄ…ce siÄ™ przesyÅ‚aniem wiadomoÅ›ci pomiÄ™dzy 
+serwerami pocztowymi nazywane sÄ… agentami przesyÅ‚ania komunikatÃ³w MTA (ang. \emph{Message Transfer Agent}). PrzykÅ‚adem 
+MTA jest unixowy Sendmail. ProtokÃ³Å‚ SMTP sÅ‚uÅ¼y wÅ‚aÅ›nie do komunikacji pomiÄ™dzy poszczegÃ³lnymi MTA. Schemat 
+przesyÅ‚ania poczty w Internecie przedstawia poniÅ¼szy rysunek.
 \begin{figure}[h]
 \centering
 \includegraphics[width=5in]{./rysunki/obsluga_poczty.eps}
-\caption{Schemat przesy³ania poczty elektronicznej}
+\caption{Schemat przesyÅ‚ania poczty elektronicznej}
 \label{poczta}
 \end{figure}
 
-Komunikacja pomiêdzy MTA odbywa siê wed³ug modelu klient -- serwer, przy czym klientem nazywamy MTA, który inicjuje dane 
-po³±czenie. Po³±czenie rozpoczyna siê od przes³ania danych identyfikuj±cych nadawcê, a w odpowiedzi nadchodzi pakiet 
-identyfikuj±cy odbiorcê. Nastêpnie przesy³ana jest w³a¶ciwa wiadomo¶æ i po³±czenie jest zamykane. Do obs³ugi poczty 
-elektronicznej SMTP definiuje tylko 13 poleceñ (dla porównania FTP posiada 40 poleceñ), które s± czterobajtowymi ci±gami 
+Komunikacja pomiÄ™dzy MTA odbywa siÄ™ wedÅ‚ug modelu klient -- serwer, przy czym klientem nazywamy MTA, ktÃ³ry inicjuje dane 
+poÅ‚Ä…czenie. PoÅ‚Ä…czenie rozpoczyna siÄ™ od przesÅ‚ania danych identyfikujÄ…cych nadawcÄ™, a w odpowiedzi nadchodzi pakiet 
+identyfikujÄ…cy odbiorcÄ™. NastÄ™pnie przesyÅ‚ana jest wÅ‚aÅ›ciwa wiadomoÅ›Ä‡ i poÅ‚Ä…czenie jest zamykane. Do obsÅ‚ugi poczty 
+elektronicznej SMTP definiuje tylko 13 poleceÅ„ (dla porÃ³wnania FTP posiada 40 poleceÅ„), ktÃ³re sÄ… czterobajtowymi ciÄ…gami 
 wielkich liter ASCII.
 
-Wiadomo¶æ elektroniczna sk³ada siê w SMTP z trzech czê¶ci. Koperty czyli danych pozwalaj±cych MTA zidentyfikowaæ 
-nadawcê i odbiorcê wiadomo¶ci, nag³ówków czyli danych wykorzystywanych przez agentów u¿ytkownika (np. data 
-wys³ania wiadomo¶ci) i w³a¶ciwej wiadomo¶ci.
-Pakiety SMTP stanowi± od 8 do 13 procent pakietów transmitowanych w sieci szkieletowej NSFNET. 
+WiadomoÅ›Ä‡ elektroniczna skÅ‚ada siÄ™ w SMTP z trzech czÄ™Å›ci. Koperty czyli danych pozwalajÄ…cych MTA zidentyfikowaÄ‡ 
+nadawcÄ™ i odbiorcÄ™ wiadomoÅ›ci, nagÅ‚Ã³wkÃ³w czyli danych wykorzystywanych przez agentÃ³w uÅ¼ytkownika (np. data 
+wysÅ‚ania wiadomoÅ›ci) i wÅ‚aÅ›ciwej wiadomoÅ›ci.
+Pakiety SMTP stanowiÄ… od 8 do 13 procent pakietÃ³w transmitowanych w sieci szkieletowej NSFNET. 
 
-\section{Protokó³ POP3.}
+\section{ProtokÃ³Å‚ POP3.}
 
-Opisany powy¿ej protokó³ SMTP jest efektywnym narzêdziem umo¿liwiaj±cym przesy³anie poczty elektronicznej 
-pomiêdzy pracuj±cymi w sposób ci±g³y serwerami SMTP. Aby pojedynczy u¿ytkownik sieci móg³ odbieraæ pocztê 
-bezpo¶rednio przez SMTP w jego stacji roboczej musia³by ci±gle dzia³aæ proces typu MTA, co jest czêsto 
-niemo¿liwe ze wzglêdów czysto technicznych. Rozwi±zanie tego problemu jest bardzo proste. W pod³±czonych do 
-Internetu sieciach lokalnych wydziela siê dzia³aj±cy non--stop  serwer pocztowy wraz z oprogramowaniem 
-zachowuj±cym na dysku wiadomo¶ci nadchodz±ce do u¿ytkowników sieci. Protokó³ POP3 (ang. \emph{Post Office Protocol 
-version 3}) umo¿liwia dynamiczny dostêp do wiadomo¶ci przechowywanych na takim wydzielonym serwerze \cite{barylo9}. Protokó³ ten 
-korzysta z TCP i numeru portu 110. POP3 definiuje 13 poleceñ w postaci czterobajtowych ci±gów ASCII. 
+Opisany powyÅ¼ej protokÃ³Å‚ SMTP jest efektywnym narzÄ™dziem umoÅ¼liwiajÄ…cym przesyÅ‚anie poczty elektronicznej 
+pomiÄ™dzy pracujÄ…cymi w sposÃ³b ciÄ…gÅ‚y serwerami SMTP. Aby pojedynczy uÅ¼ytkownik sieci mÃ³gÅ‚ odbieraÄ‡ pocztÄ™ 
+bezpoÅ›rednio przez SMTP w jego stacji roboczej musiaÅ‚by ciÄ…gle dziaÅ‚aÄ‡ proces typu MTA, co jest czÄ™sto 
+niemoÅ¼liwe ze wzglÄ™dÃ³w czysto technicznych. RozwiÄ…zanie tego problemu jest bardzo proste. W podÅ‚Ä…czonych do 
+Internetu sieciach lokalnych wydziela siÄ™ dziaÅ‚ajÄ…cy non--stop  serwer pocztowy wraz z oprogramowaniem 
+zachowujÄ…cym na dysku wiadomoÅ›ci nadchodzÄ…ce do uÅ¼ytkownikÃ³w sieci. ProtokÃ³Å‚ POP3 (ang. \emph{Post Office Protocol 
+version 3}) umoÅ¼liwia dynamiczny dostÄ™p do wiadomoÅ›ci przechowywanych na takim wydzielonym serwerze \cite{barylo9}. ProtokÃ³Å‚ ten 
+korzysta z TCP i numeru portu 110. POP3 definiuje 13 poleceÅ„ w postaci czterobajtowych ciÄ…gÃ³w ASCII. 
 
-Po³±czenie POP3 rozpoczyna siê od identyfikacji u¿ytkownika i podania has³a nastêpnie serwer i klient wymieniaj± 
-dane po czym sesja koñczy siê.
+PoÅ‚Ä…czenie POP3 rozpoczyna siÄ™ od identyfikacji uÅ¼ytkownika i podania hasÅ‚a nastÄ™pnie serwer i klient wymieniajÄ… 
+dane po czym sesja koÅ„czy siÄ™.
 
-Producenci aplikacji pocztowych (UA) stosuj± dwa protoko³y, SMTP do bezpo¶redniego wysy³ania poczty i POP3 
+Producenci aplikacji pocztowych (UA) stosujÄ… dwa protokoÅ‚y, SMTP do bezpoÅ›redniego wysyÅ‚ania poczty i POP3 
 do odbierania jej z serwera pocztowego.
 
-Pakiety POP3 najczê¶ciej spotkaæ mo¿na w sieciach lokalnych, gdzie mog± stanowiæ znaczny procent 
+Pakiety POP3 najczÄ™Å›ciej spotkaÄ‡ moÅ¼na w sieciach lokalnych, gdzie mogÄ… stanowiÄ‡ znaczny procent 
 transmitowanych danych.
 
-\section{Protokó³ SSL}
+\section{ProtokÃ³Å‚ SSL}
 
-Protokó³ SSL (ang. \emph{Secure Socket Layer}) jest protoko³em rezyduj±cym bezpo¶rednio nad protoko³em TCP i 
-dostarczaj±cym dowolnemu protoko³owi wy¿szych warstw (np. HTTP) przezroczyste us³ugi maj±ce zapewniæ poufno¶æ 
-przesy³anych danych. SSL wykorzystuje port TCP o numerze 443. Bezpieczeñstwo po³±czenia oparte jest o trzy cechy 
-protoko³u SSL: symetryczne szyfrowanie danych w oparciu o np. algorytmy DES lub RC4; autoryzacjê hostów z 
-wykorzystaniem szyfrowania asymetrycznego lub z kluczem publicznym (RSA, DSS) i  kontrolê poprawno¶ci transmisji 
+ProtokÃ³Å‚ SSL (ang. \emph{Secure Socket Layer}) jest protokoÅ‚em rezydujÄ…cym bezpoÅ›rednio nad protokoÅ‚em TCP i 
+dostarczajÄ…cym dowolnemu protokoÅ‚owi wyÅ¼szych warstw (np. HTTP) przezroczyste usÅ‚ugi majÄ…ce zapewniÄ‡ poufnoÅ›Ä‡ 
+przesyÅ‚anych danych. SSL wykorzystuje port TCP o numerze 443. BezpieczeÅ„stwo poÅ‚Ä…czenia oparte jest o trzy cechy 
+protokoÅ‚u SSL: symetryczne szyfrowanie danych w oparciu o np. algorytmy DES lub RC4; autoryzacjÄ™ hostÃ³w z 
+wykorzystaniem szyfrowania asymetrycznego lub z kluczem publicznym (RSA, DSS) i  kontrolÄ™ poprawnoÅ›ci transmisji 
 poprzez zastosowanie szyfrowanych sum kontrolnych MAC (ang. \emph{Message Autenthication Codes}).
 
-W protokole SSL wyró¿niamy dwie warstwy: warstwê powitania i warstwê rekordów. Warstwa powitania (ang. \emph{Handshake Layer}) 
-inicjuje po³±czenie 
-pomiêdzy klientem a serwerem. Po wzajemnej identyfikacji hostów nastêpuje faza negocjacji algorytmów, które bêd± 
-u¿yte do szyfrowania transmisji (wybór ten zale¿y od mocy obliczeniowej hostów). Od momentu ustalenia sposobu 
-kodowania wszystkie dane s± szyfrowane.
+W protokole SSL wyrÃ³Å¼niamy dwie warstwy: warstwÄ™ powitania i warstwÄ™ rekordÃ³w. Warstwa powitania (ang. \emph{Handshake Layer}) 
+inicjuje poÅ‚Ä…czenie 
+pomiÄ™dzy klientem a serwerem. Po wzajemnej identyfikacji hostÃ³w nastÄ™puje faza negocjacji algorytmÃ³w, ktÃ³re bÄ™dÄ… 
+uÅ¼yte do szyfrowania transmisji (wybÃ³r ten zaleÅ¼y od mocy obliczeniowej hostÃ³w). Od momentu ustalenia sposobu 
+kodowania wszystkie dane sÄ… szyfrowane.
 
-Warstwa rekordów (ang. \emph{Record Layer}) rezyduje pomiêdzy warstw± powitania a TCP i jest odpowiedzialna za 
-enkapsulacjê danych nap³ywaj±cych z wy¿szych warstw do postaci rekordów o maksymalnej d³ugo¶ci 16384 bajtów, 
-szyfrowanie rekordów oraz do³±czanie MAC \cite{barylo10}.
+Warstwa rekordÃ³w (ang. \emph{Record Layer}) rezyduje pomiÄ™dzy warstwÄ… powitania a TCP i jest odpowiedzialna za 
+enkapsulacjÄ™ danych napÅ‚ywajÄ…cych z wyÅ¼szych warstw do postaci rekordÃ³w o maksymalnej dÅ‚ugoÅ›ci 16384 bajtÃ³w, 
+szyfrowanie rekordÃ³w oraz doÅ‚Ä…czanie MAC \cite{barylo10}.
 
-Poniewa¿ SSL nie interpretuje nap³ywaj±cych do niego danych istnieje mo¿liwo¶æ przesy³ania hipertekstu z 
-u¿yciem SSL. Tak skonfigurowany serwer WWW nazywamy serwerem HTTPS lub serwerem SSL. Szyfrowane s± wówczas 
-wszystkie elementy  transmisji tzn. zarówno dokumenty jak i same polecenia HTTP, co wymaga odpowiedniej 
-konfiguracji przegl±darki.
+PoniewaÅ¼ SSL nie interpretuje napÅ‚ywajÄ…cych do niego danych istnieje moÅ¼liwoÅ›Ä‡ przesyÅ‚ania hipertekstu z 
+uÅ¼yciem SSL. Tak skonfigurowany serwer WWW nazywamy serwerem HTTPS lub serwerem SSL. Szyfrowane sÄ… wÃ³wczas 
+wszystkie elementy  transmisji tzn. zarÃ³wno dokumenty jak i same polecenia HTTP, co wymaga odpowiedniej 
+konfiguracji przeglÄ…darki.
 
 \section{URL i DNS}
 	
-U¿ytkownik Intrenetu do identyfikacji zasobów sieciowych stosuje zazwyczaj adres URL (ang. \emph{Uniform Resource 
+UÅ¼ytkownik Intrenetu do identyfikacji zasobÃ³w sieciowych stosuje zazwyczaj adres URL (ang. \emph{Uniform Resource 
 Locator}). URL zapisujemy w postaci \cite{barylo5, barylo6}:\\
-\emph{typ\_us³ugi://nazwa\_serwera.nazwa\_domeny/¶cie¿ka\_dostêpu/nazwa\_zasobu}. 
-Na przyk³ad URL http://www.netscape.com/main.html jest wskazaniem na zapisany w postaci pliku HTML 
-dokument hipertekstowy main.html znajduj±cy siê na ¶cie¿ce dostêpu (mo¿e byæ to nazwa katalogu lub jej alias) 
-News/Sport w serwerze home umieszczonym w domenie netscape.com. Dokument ten dostêpny jest poprzez protokó³ 
+\emph{typ\_usÅ‚ugi://nazwa\_serwera.nazwa\_domeny/Å›cieÅ¼ka\_dostÄ™pu/nazwa\_zasobu}. 
+Na przykÅ‚ad URL http://www.netscape.com/main.html jest wskazaniem na zapisany w postaci pliku HTML 
+dokument hipertekstowy main.html znajdujÄ…cy siÄ™ na Å›cieÅ¼ce dostÄ™pu (moÅ¼e byÄ‡ to nazwa katalogu lub jej alias) 
+News/Sport w serwerze home umieszczonym w domenie netscape.com. Dokument ten dostÄ™pny jest poprzez protokÃ³Å‚ 
 HTTP.
 
-Czê¶æ URL okre¶laj±ca typ us³ugi interpretowana jest przez aplikacjê u¿ywan± do po³±czenia z Internetem 
-np. przegl±darkê WWW. ¦cie¿ka dostêpu i nazwa zasobu przesy³ane s± do serwera i interpretowane przez jego system 
-plików. Nazwa serwera i nazwa domeny s± tylko nazwami symbolicznymi i musz± byæ zamienione na adres IP zanim 
-zostanie nawi±zane po³±czenie z serwerem. Zamiana ta mo¿liwa jest dziêki systemowi DNS.
+CzÄ™Å›Ä‡ URL okreÅ›lajÄ…ca typ usÅ‚ugi interpretowana jest przez aplikacjÄ™ uÅ¼ywanÄ… do poÅ‚Ä…czenia z Internetem 
+np. przeglÄ…darkÄ™ WWW. ÅšcieÅ¼ka dostÄ™pu i nazwa zasobu przesyÅ‚ane sÄ… do serwera i interpretowane przez jego system 
+plikÃ³w. Nazwa serwera i nazwa domeny sÄ… tylko nazwami symbolicznymi i muszÄ… byÄ‡ zamienione na adres IP zanim 
+zostanie nawiÄ…zane poÅ‚Ä…czenie z serwerem. Zamiana ta moÅ¼liwa jest dziÄ™ki systemowi DNS.
 
-DNS (ang. \emph{Domain Name System}) jest rozproszon± baz± danych umieszczon± na wielu Internetowych hostach, 
-które nazywamy serwerami DNS. Ka¿dy komputer, który chce korzystaæ z DNS musi pamiêtaæ w swojej konfiguracji 
-adres IP najbli¿szego serwera DNS. Nazwa DNS mo¿e mieæ d³ugo¶æ do 63 znaków. Przestrzeñ nazw DNS ma strukturê 
-hierarchicznego, podzielonego na poziomy drzewa. Mówimy, ¿e domena wy¿szego poziomu com zawiera domenê ni¿szego 
-poziomu netscape. Rysunek \ref{dns} przedstawia hierarchiczn± organizacjê DNS \cite{barylo3}.
+DNS (ang. \emph{Domain Name System}) jest rozproszonÄ… bazÄ… danych umieszczonÄ… na wielu Internetowych hostach, 
+ktÃ³re nazywamy serwerami DNS. KaÅ¼dy komputer, ktÃ³ry chce korzystaÄ‡ z DNS musi pamiÄ™taÄ‡ w swojej konfiguracji 
+adres IP najbliÅ¼szego serwera DNS. Nazwa DNS moÅ¼e mieÄ‡ dÅ‚ugoÅ›Ä‡ do 63 znakÃ³w. PrzestrzeÅ„ nazw DNS ma strukturÄ™ 
+hierarchicznego, podzielonego na poziomy drzewa. MÃ³wimy, Å¼e domena wyÅ¼szego poziomu com zawiera domenÄ™ niÅ¼szego 
+poziomu netscape. Rysunek \ref{dns} przedstawia hierarchicznÄ… organizacjÄ™ DNS \cite{barylo3}.
 \begin{figure}[h]
 \centering
 \includegraphics[width=5in]{./rysunki/struktura_dns.eps}
@@ -475,68 +475,68 @@ poziomu netscape. Rysunek \ref{dns} przedstawia hierarchiczn± organizacjê DNS \c
 \label{dns}
 \end{figure}
 																
-Domeny arpa, com, edu, gov, int, mil, net, org i domeny pañstwowe takie jak pl nazywamy domenami podstawowymi. 
-Obejmuj± one nastêpuj±ce komputery: arpa -- sieæ ARPANET; com -- organizacje komercyjne; edu -- instytucje edukacyjne; 
-gov -- organizacje rz±dowe; int -- organizacje miêdzynarodowe; mil -- armia USA; net -- sieci; org -- pozosta³e 
-organizacje. Organizacje rz±dowe z krajów innych ni¿ USA grupowane mia³y byæ w dwuliterowych domenach pañstwowych
-np. ae -- Zjednoczone Emiraty Arabskie; pl -- Polska; zw -- Zimbabwe. Obecnie podzia³ ten nie jest ¶ci¶le 
-przestrzegany, wiele organizacji komercyjnych rejestruje siê w domenie podstawowej (np. empik.com), inne stosuj± 
-podzia³ w ramach domen pañstwowych (np. creamsoft.com.pl). spotyka siê równie¿ nazwy w ogóle nie mieszcz±ce siê 
+Domeny arpa, com, edu, gov, int, mil, net, org i domeny paÅ„stwowe takie jak pl nazywamy domenami podstawowymi. 
+ObejmujÄ… one nastÄ™pujÄ…ce komputery: arpa -- sieÄ‡ ARPANET; com -- organizacje komercyjne; edu -- instytucje edukacyjne; 
+gov -- organizacje rzÄ…dowe; int -- organizacje miÄ™dzynarodowe; mil -- armia USA; net -- sieci; org -- pozostaÅ‚e 
+organizacje. Organizacje rzÄ…dowe z krajÃ³w innych niÅ¼ USA grupowane miaÅ‚y byÄ‡ w dwuliterowych domenach paÅ„stwowych
+np. ae -- Zjednoczone Emiraty Arabskie; pl -- Polska; zw -- Zimbabwe. Obecnie podziaÅ‚ ten nie jest Å›ciÅ›le 
+przestrzegany, wiele organizacji komercyjnych rejestruje siÄ™ w domenie podstawowej (np. empik.com), inne stosujÄ… 
+podziaÅ‚ w ramach domen paÅ„stwowych (np. creamsoft.com.pl). spotyka siÄ™ rÃ³wnieÅ¼ nazwy w ogÃ³le nie mieszczÄ…ce siÄ™ 
 w opisanym schemacie np. www.rmf.fm.
 
-Obszarem nazywamy oddzielnie administrowan± czê¶æ drzewa DNS. Typowym obszarem jest domena drugiego lub 
-trzeciego poziomu  np. netscape.com lub pwr.wroc.pl. Je¶li w domenie zarejestrowanych jest wiele komputerów 
-zwykle (dla zwiêkszenia efektywno¶ci dzia³ania DNS) dzieli siê j± na kilka obszarów.
+Obszarem nazywamy oddzielnie administrowanÄ… czÄ™Å›Ä‡ drzewa DNS. Typowym obszarem jest domena drugiego lub 
+trzeciego poziomu  np. netscape.com lub pwr.wroc.pl. JeÅ›li w domenie zarejestrowanych jest wiele komputerÃ³w 
+zwykle (dla zwiÄ™kszenia efektywnoÅ›ci dziaÅ‚ania DNS) dzieli siÄ™ jÄ… na kilka obszarÃ³w.
 
-W ka¿dym obszarze musi znajdowaæ siê podstawowy serwer DNS, który w specjalnym zestawie plików przechowuje 
-odwzorowania wszystkich nazw komputerów z danego obszaru w ich adresy IP. Drugoplanowe serwery DNS informacje o 
-odwzorowaniach uzyskuj± z serwera podstawowego korzystaj±c z po³±czenia TCP o numerze portu 53. Serwery 
-drugoplanowe przechowuj± (na zasadzie pamiêci cache dla klientów, którzy zwracaj± siê do nich z zapytaniami) 
-odwzorowania obejmuj±ce tylko czê¶æ obszaru i odwzorowania o które klienci najczê¶ciej pytaj±. W sta³ych 
-odstêpach czasu (typowo co 3 godziny) serwery drugoplanowe DNS uaktualniaj± swe tablice odpytuj±c serwer 
-podstawowy. Odwzorowanie nazwy spoza obszaru nie musi byæ znane ani serwerowi podstawowemu, ani drugoplanowemu, 
-chyba ¿e przechowywane jest w pamiêci cache (jest czêsto poszukiwane). Je¶li serwer podstawowy nie zna ¿±danego 
-odwzorowania musi siê zwróciæ z zapytaniem (z wykorzystaniem portu 53 TCP) do jednego z serwerów g³ównych DNS 
-(w 1993 roku by³o ich w Internecie 8), których obowi±zkiem jest wskazanie serwera DNS bêd±cego w stanie zwróciæ 
+W kaÅ¼dym obszarze musi znajdowaÄ‡ siÄ™ podstawowy serwer DNS, ktÃ³ry w specjalnym zestawie plikÃ³w przechowuje 
+odwzorowania wszystkich nazw komputerÃ³w z danego obszaru w ich adresy IP. Drugoplanowe serwery DNS informacje o 
+odwzorowaniach uzyskujÄ… z serwera podstawowego korzystajÄ…c z poÅ‚Ä…czenia TCP o numerze portu 53. Serwery 
+drugoplanowe przechowujÄ… (na zasadzie pamiÄ™ci cache dla klientÃ³w, ktÃ³rzy zwracajÄ… siÄ™ do nich z zapytaniami) 
+odwzorowania obejmujÄ…ce tylko czÄ™Å›Ä‡ obszaru i odwzorowania o ktÃ³re klienci najczÄ™Å›ciej pytajÄ…. W staÅ‚ych 
+odstÄ™pach czasu (typowo co 3 godziny) serwery drugoplanowe DNS uaktualniajÄ… swe tablice odpytujÄ…c serwer 
+podstawowy. Odwzorowanie nazwy spoza obszaru nie musi byÄ‡ znane ani serwerowi podstawowemu, ani drugoplanowemu, 
+chyba Å¼e przechowywane jest w pamiÄ™ci cache (jest czÄ™sto poszukiwane). JeÅ›li serwer podstawowy nie zna Å¼Ä…danego 
+odwzorowania musi siÄ™ zwrÃ³ciÄ‡ z zapytaniem (z wykorzystaniem portu 53 TCP) do jednego z serwerÃ³w gÅ‚Ã³wnych DNS 
+(w 1993 roku byÅ‚o ich w Internecie 8), ktÃ³rych obowiÄ…zkiem jest wskazanie serwera DNS bÄ™dÄ…cego w stanie zwrÃ³ciÄ‡ 
 poprawne odwzorowanie.
 
 Proces odpowiedzialny za odwzorowanie nazw po stronie klienta nazywamy rezolwerem lub przelicznikiem nazw. 
-Zwykle jest on zintegrowany z aplikacj± (np. przegl±dark± WWW) i na zasadzie pamiêci cache przechowuje lokalnie 
-pewn± ilo¶æ odwzorowañ. Je¶li wywo³ywana przez u¿ytkownika nazwa nie jest znana lokalnie rezolwer korzystaj±c z 
-portu UDP 53 wysy³a zapytanie do najbli¿szego drugoplanowego serwera DNS. Je¶li odpowied¼ nie przekracza 512 
-bajtów zwracana jest w postaci datagramu UDP, w przeciwnym wypadku jako datagram UDP wysy³ane jest pierwsze 512 
-bajtów i w nag³ówku DNS ustawiana jest flaga informuj±ca o tym fakcie. Zazwyczaj rezolwer ponawia wtedy 
-zapytanie korzystaj±c z portu 53 TCP, co umo¿liwia przes³anie pe³nej odpowiedzi w jednym segmencie TCP. Rezolwer 
-mo¿e wys³aæ dwa typy zapytañ: zapytanie rekurencyjne umo¿liwia serwerowi DNS ,,konsultacje'' z serwerami wy¿szego 
-rzêdu przed zwróceniem odpowiedzi; zapytanie iteracyjne wymaga od niego natychmiastowej odpowiedzi, która je¶li 
-dany serwer nie zna odwzorowania, musi mieæ postaæ adresu IP serwera DNS bêd±cego (wedle ,,wiedzy'' zapytanego 
-serwera DNS) w stanie udzieliæ poprawnej odpowiedzi. Ze wskazanym serwerem DNS resolwer komunikuje siê 
-bezpo¶rednio. Poniewa¿ istnieje mo¿liwo¶æ, ¿e  nieprawid³owe zapytanie rekurencyjne nieskoñczenie bêdzie kr±¿yæ 
-pomiêdzy serwerami DNS w nag³ówku DNS zdefiniowano pole ograniczaj±ce liczbê rekurencji. Warto¶æ tego pola 
-zmniejszana jest o jeden przez ka¿dy serwer DNS, który przetwarza zapytanie. Zapytanie z zerow± warto¶ci± tego 
-pola jest odrzucane i serwer komunikuje b³±d. W takim wypadku rezolwer mo¿e u¿yæ zapytania iteracyjnego, ponowiæ 
-zapytanie rekurencyjne ze zwiêkszon± warto¶ci± pola ograniczaj±cego rekurencje lub zg³osiæ u¿ytkownikowi b³±d 
-DNS. Rysunki \ref{rekurencyjne} i \ref{iteracyjne} przedstawiaj± obs³ugê obydwu typów zapytañ \cite{barylo3}.
+Zwykle jest on zintegrowany z aplikacjÄ… (np. przeglÄ…darkÄ… WWW) i na zasadzie pamiÄ™ci cache przechowuje lokalnie 
+pewnÄ… iloÅ›Ä‡ odwzorowaÅ„. JeÅ›li wywoÅ‚ywana przez uÅ¼ytkownika nazwa nie jest znana lokalnie rezolwer korzystajÄ…c z 
+portu UDP 53 wysyÅ‚a zapytanie do najbliÅ¼szego drugoplanowego serwera DNS. JeÅ›li odpowiedÅº nie przekracza 512 
+bajtÃ³w zwracana jest w postaci datagramu UDP, w przeciwnym wypadku jako datagram UDP wysyÅ‚ane jest pierwsze 512 
+bajtÃ³w i w nagÅ‚Ã³wku DNS ustawiana jest flaga informujÄ…ca o tym fakcie. Zazwyczaj rezolwer ponawia wtedy 
+zapytanie korzystajÄ…c z portu 53 TCP, co umoÅ¼liwia przesÅ‚anie peÅ‚nej odpowiedzi w jednym segmencie TCP. Rezolwer 
+moÅ¼e wysÅ‚aÄ‡ dwa typy zapytaÅ„: zapytanie rekurencyjne umoÅ¼liwia serwerowi DNS ,,konsultacje'' z serwerami wyÅ¼szego 
+rzÄ™du przed zwrÃ³ceniem odpowiedzi; zapytanie iteracyjne wymaga od niego natychmiastowej odpowiedzi, ktÃ³ra jeÅ›li 
+dany serwer nie zna odwzorowania, musi mieÄ‡ postaÄ‡ adresu IP serwera DNS bÄ™dÄ…cego (wedle ,,wiedzy'' zapytanego 
+serwera DNS) w stanie udzieliÄ‡ poprawnej odpowiedzi. Ze wskazanym serwerem DNS resolwer komunikuje siÄ™ 
+bezpoÅ›rednio. PoniewaÅ¼ istnieje moÅ¼liwoÅ›Ä‡, Å¼e  nieprawidÅ‚owe zapytanie rekurencyjne nieskoÅ„czenie bÄ™dzie krÄ…Å¼yÄ‡ 
+pomiÄ™dzy serwerami DNS w nagÅ‚Ã³wku DNS zdefiniowano pole ograniczajÄ…ce liczbÄ™ rekurencji. WartoÅ›Ä‡ tego pola 
+zmniejszana jest o jeden przez kaÅ¼dy serwer DNS, ktÃ³ry przetwarza zapytanie. Zapytanie z zerowÄ… wartoÅ›ciÄ… tego 
+pola jest odrzucane i serwer komunikuje bÅ‚Ä…d. W takim wypadku rezolwer moÅ¼e uÅ¼yÄ‡ zapytania iteracyjnego, ponowiÄ‡ 
+zapytanie rekurencyjne ze zwiÄ™kszonÄ… wartoÅ›ciÄ… pola ograniczajÄ…cego rekurencje lub zgÅ‚osiÄ‡ uÅ¼ytkownikowi bÅ‚Ä…d 
+DNS. Rysunki \ref{rekurencyjne} i \ref{iteracyjne} przedstawiajÄ… obsÅ‚ugÄ™ obydwu typÃ³w zapytaÅ„ \cite{barylo3}.
 \begin{figure}[h]
 \centering
 \includegraphics[width=4in]{./rysunki/zapytanie_rekurencyjne.eps}
-\caption{Obs³uga zapytania rekurencyjnego}
+\caption{ObsÅ‚uga zapytania rekurencyjnego}
 \label{rekurencyjne}
 \end{figure}
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=4in]{./rysunki/zapytanie_iteracyjne.eps}
-\caption{Obs³uga zapytania iteracyjnego}
+\caption{ObsÅ‚uga zapytania iteracyjnego}
 \label{iteracyjne}
 \end{figure}
 
-Powy¿sze rysunki przedstawiaj± ,,najgorszy'' przypadek, gdy adres IP serwera www.netscape.com znany jest dopiero 
-przez podstawowy serwer DNS domeny (obszaru) netscape.com. W rzeczywisto¶ci istnieje du¿e prawdopodobieñstwo, ¿e 
-odwzorowanie nazwy przechowywane jest przez pamiêæ cache jednego z bli¿szych klientowi serwerów.
-Informacje o wzajemnych odwzorowaniach nazw w adresy IP serwery DNS przechowuj± w postaci rekordów zasobów 
-DNS--DNS RR (ang. \emph{DNS Resource Record}). Rekordy te przesy³ane s± do aplikacji klienta jako odpowied¼ na 
-zapytanie. Pojedynczy DNS RR ma przedstawion± na rys. \ref{dns_rr} strukturê \cite{barylo3}.
+PowyÅ¼sze rysunki przedstawiajÄ… ,,najgorszy'' przypadek, gdy adres IP serwera www.netscape.com znany jest dopiero 
+przez podstawowy serwer DNS domeny (obszaru) netscape.com. W rzeczywistoÅ›ci istnieje duÅ¼e prawdopodobieÅ„stwo, Å¼e 
+odwzorowanie nazwy przechowywane jest przez pamiÄ™Ä‡ cache jednego z bliÅ¼szych klientowi serwerÃ³w.
+Informacje o wzajemnych odwzorowaniach nazw w adresy IP serwery DNS przechowujÄ… w postaci rekordÃ³w zasobÃ³w 
+DNS--DNS RR (ang. \emph{DNS Resource Record}). Rekordy te przesyÅ‚ane sÄ… do aplikacji klienta jako odpowiedÅº na 
+zapytanie. Pojedynczy DNS RR ma przedstawionÄ… na rys. \ref{dns_rr} strukturÄ™ \cite{barylo3}.
 \begin{figure}[h]
 \centering
 \includegraphics[width=5in]{./rysunki/format_dns_rr.eps}
@@ -544,140 +544,140 @@ zapytanie. Pojedynczy DNS RR ma przedstawion± na rys. \ref{dns_rr} strukturê \ci
 \label{dns_rr}
 \end{figure}
 
-Pole Nazwa domeny okre¶la domenê do której odnosz± siê dane rekordu. Pole Typ okre¶la rodzaj danych np. czy 
-rekord przechowuje odwzorowanie nazwy w adres IP, adresu w nazwê, czy tylko dodatkowe informacje o ho¶cie. Pole 
-Klasa ma zwykle warto¶æ 1, co oznacza internetowy adres IP (niektóre serwery DNS udostêpniaj± równie¿ adresy 
-nale¿±ce do innych protoko³ów np. IPX/SPX). Pole Czas ¿ycia TTL jest liczb± sekund okre¶laj±c± maksymalny czas 
-przechowywania rekordu w pamiêci cache rezolwera, niestety wiele aplikacji ignoruje tê warto¶æ.
+Pole Nazwa domeny okreÅ›la domenÄ™ do ktÃ³rej odnoszÄ… siÄ™ dane rekordu. Pole Typ okreÅ›la rodzaj danych np. czy 
+rekord przechowuje odwzorowanie nazwy w adres IP, adresu w nazwÄ™, czy tylko dodatkowe informacje o hoÅ›cie. Pole 
+Klasa ma zwykle wartoÅ›Ä‡ 1, co oznacza internetowy adres IP (niektÃ³re serwery DNS udostÄ™pniajÄ… rÃ³wnieÅ¼ adresy 
+naleÅ¼Ä…ce do innych protokoÅ‚Ã³w np. IPX/SPX). Pole Czas Å¼ycia TTL jest liczbÄ… sekund okreÅ›lajÄ…cÄ… maksymalny czas 
+przechowywania rekordu w pamiÄ™ci cache rezolwera, niestety wiele aplikacji ignoruje tÄ™ wartoÅ›Ä‡.
 
-\section{Protokó³ HTTP}
+\section{ProtokÃ³Å‚ HTTP}
 
 W tym rozdziale 
-szczegó³owo omówiona jest specyfikacja protoko³u HTTP oraz te w³a¶ciwo¶ci protoko³u, które rzutuj± na wydajno¶æ WWW.
+szczegÃ³Å‚owo omÃ³wiona jest specyfikacja protokoÅ‚u HTTP oraz te wÅ‚aÅ›ciwoÅ›ci protokoÅ‚u, ktÃ³re rzutujÄ… na wydajnoÅ›Ä‡ WWW.
 
 \subsection{Specyfikacja HTTP}
  
-Protokó³ HTTP (ang. \emph{HyperText Transfer Protocol}) jest prostym protoko³em warstw górnych s³u¿±cym do przesy³ania 
-dokumentów hipertekstowych w sieciach opartych o protoko³y TCP/IP. W warstwie sieciowej HTTP korzysta z TCP i 
+ProtokÃ³Å‚ HTTP (ang. \emph{HyperText Transfer Protocol}) jest prostym protokoÅ‚em warstw gÃ³rnych sÅ‚uÅ¼Ä…cym do przesyÅ‚ania 
+dokumentÃ³w hipertekstowych w sieciach opartych o protokoÅ‚y TCP/IP. W warstwie sieciowej HTTP korzysta z TCP i 
 portu o numerze 80 \cite{barylo4}. 
 
-Jak wspomniano dokument hipertekstowy zawieraæ mo¿e obok tekstu równie¿ grafikê, animacje, d¼wiêki oraz 
-odsy³acze do innych dokumentów hipertekstowych, które mog± znajdowaæ siê na innych serwerach WWW, w konsekwencji 
-czêsto aby skompletowaæ ca³y dokument przegl±darka WWW musi otworzyæ wiele po³±czeñ z kilkoma serwerami WWW.
+Jak wspomniano dokument hipertekstowy zawieraÄ‡ moÅ¼e obok tekstu rÃ³wnieÅ¼ grafikÄ™, animacje, dÅºwiÄ™ki oraz 
+odsyÅ‚acze do innych dokumentÃ³w hipertekstowych, ktÃ³re mogÄ… znajdowaÄ‡ siÄ™ na innych serwerach WWW, w konsekwencji 
+czÄ™sto aby skompletowaÄ‡ caÅ‚y dokument przeglÄ…darka WWW musi otworzyÄ‡ wiele poÅ‚Ä…czeÅ„ z kilkoma serwerami WWW.
 
-HTTP wykonuje tylko przesy³anie plików sk³adaj±cych siê na dokument hipertekstowy. Jest to zazwyczaj plik 
-bêd±cy opisem dokumentu w jêzyku HTML, który zawiera tekst, informacjê o rozmieszczeniu elementów dokumentu oraz 
-pliki bêd±ce reprezentacj± takich elementów dokumentu jak grafika czy d¼wiêk. Poniewa¿ HTTP nie rozró¿nia typów 
-transmitowanych plików aplikacja serwera WWW jest do¶æ prosta w porównaniu do aplikacji przegl±darki, która musi 
-zinterpretowaæ tre¶æ pliku HTML i odpowiednio rozmie¶ciæ na ekranie elementy dokumentu.
+HTTP wykonuje tylko przesyÅ‚anie plikÃ³w skÅ‚adajÄ…cych siÄ™ na dokument hipertekstowy. Jest to zazwyczaj plik 
+bÄ™dÄ…cy opisem dokumentu w jÄ™zyku HTML, ktÃ³ry zawiera tekst, informacjÄ™ o rozmieszczeniu elementÃ³w dokumentu oraz 
+pliki bÄ™dÄ…ce reprezentacjÄ… takich elementÃ³w dokumentu jak grafika czy dÅºwiÄ™k. PoniewaÅ¼ HTTP nie rozrÃ³Å¼nia typÃ³w 
+transmitowanych plikÃ³w aplikacja serwera WWW jest doÅ›Ä‡ prosta w porÃ³wnaniu do aplikacji przeglÄ…darki, ktÃ³ra musi 
+zinterpretowaÄ‡ treÅ›Ä‡ pliku HTML i odpowiednio rozmieÅ›ciÄ‡ na ekranie elementy dokumentu.
 
-Istniej± dwa rodzaje komunikatów wymienianych pomiêdzy klientem a serwerem HTTP: ¿±dania i odpowiedzi. 
-Format ¿±dania HTTP ma nastêpuj±cy format:\\
+IstniejÄ… dwa rodzaje komunikatÃ³w wymienianych pomiÄ™dzy klientem a serwerem HTTP: Å¼Ä…dania i odpowiedzi. 
+Format Å¼Ä…dania HTTP ma nastÄ™pujÄ…cy format:\\
 	
-	Linia--¿±danie\\
-	Nag³ówki (0 lub wiêcej)\\
+	Linia--Å¼Ä…danie\\
+	NagÅ‚Ã³wki (0 lub wiÄ™cej)\\
 	<Linia pusta>\\
-	Korpus (tylko dla ¿±dania POST) \\
+	Korpus (tylko dla Å¼Ä…dania POST) \\
 
-Format linii--¿±dania jest natomiast taki:\\
+Format linii--Å¼Ä…dania jest natomiast taki:\\
 	
-Dostêpne s± trzy ró¿ne ¿±dania HTTP:
+DostÄ™pne sÄ… trzy rÃ³Å¼ne Å¼Ä…dania HTTP:
 \begin{itemize}
-\item ¿±danie GET, które zwraca dowoln± informacjê (dokument) okre¶lon± przez nastêpuj±cy po nim URL;
-\item ¿±danie HEAD, które zwraca tylko nag³ówek wskazanego dokumentu, ten typ ¿±dania wykorzystywany jest do sprawdzania 
-odsy³aczy pod k±tem aktualno¶ci lub dostêpno¶ci;
-\item ¿±danie POST u¿ywane do przesy³ania danych od klienta do serwera np. przesy³ania zawarto¶ci formularzy wype³nianych 
-interakcyjnie przez u¿ytkownika. Jest to jedyne ¿±danie wraz z którym przesy³any jest korpus komunikatu.
+\item Å¼Ä…danie GET, ktÃ³re zwraca dowolnÄ… informacjÄ™ (dokument) okreÅ›lonÄ… przez nastÄ™pujÄ…cy po nim URL;
+\item Å¼Ä…danie HEAD, ktÃ³re zwraca tylko nagÅ‚Ã³wek wskazanego dokumentu, ten typ Å¼Ä…dania wykorzystywany jest do sprawdzania 
+odsyÅ‚aczy pod kÄ…tem aktualnoÅ›ci lub dostÄ™pnoÅ›ci;
+\item Å¼Ä…danie POST uÅ¼ywane do przesyÅ‚ania danych od klienta do serwera np. przesyÅ‚ania zawartoÅ›ci formularzy wypeÅ‚nianych 
+interakcyjnie przez uÅ¼ytkownika. Jest to jedyne Å¼Ä…danie wraz z ktÃ³rym przesyÅ‚any jest korpus komunikatu.
 \end{itemize}
 
-Format odpowiedzi HTTP jest nastêpuj±cy:\\
+Format odpowiedzi HTTP jest nastÄ™pujÄ…cy:\\
 
 	Linia--stanu\\
-	Nag³ówki (0 lub wiêcej)\\
+	NagÅ‚Ã³wki (0 lub wiÄ™cej)\\
 	<Linia pusta>\\
 	Korpus\\
 
-Format linii--stanu (status--line) ma nastêpuj±cy format:\\
+Format linii--stanu (status--line) ma nastÄ™pujÄ…cy format:\\
 
 	Wersja--HTTP kod--odpowiedzi fraza--odpowiedzi.\\
 
-HTTP definiuje 17 ró¿nych nag³ówków, które dzielimy na 3 rodzaje: nag³ówki u¿ywane z ¿±daniami, nag³ówki u¿ywane 
-z odpowiedziami, nag³ówki okre¶laj±ce korpus (przesy³ane dane). Niektóre nag³ówki mog± byæ u¿ywane zarówno z 
-¿±daniami jak i odpowiedziami (np. nag³ówek DATE). Przyk³adowym nag³ówkiem wystêpuj±cym z ¿±daniem jest nag³ówek 
-IF-MODIFIED-SINCE, który wraz z nastêpuj±cym po nim nag³ówkiem DATE stanowi element tzw. warunkowego ¿±dania 
-GET. URL wystêpuj±cy w takim ¿±daniu jest otwierany tylko w przypadku je¶li by³ zmodyfikowany po wymienionej w 
-¿±daniu dacie. Jednym z nag³ówków u¿ywanym z odpowiedziami jest LOCATION. Jego korpus stanowi nowy URL 
-dokumentu, którego dotyczy³o poprzednie zapytanie. Przyk³adem nag³ówka okre¶laj±cego korpus jest LAST-MODIFIED. 
-Nastêpuje po nim nag³ówek DATE, który podaje datê ostatniej modyfikacji dokumentu.
+HTTP definiuje 17 rÃ³Å¼nych nagÅ‚Ã³wkÃ³w, ktÃ³re dzielimy na 3 rodzaje: nagÅ‚Ã³wki uÅ¼ywane z Å¼Ä…daniami, nagÅ‚Ã³wki uÅ¼ywane 
+z odpowiedziami, nagÅ‚Ã³wki okreÅ›lajÄ…ce korpus (przesyÅ‚ane dane). NiektÃ³re nagÅ‚Ã³wki mogÄ… byÄ‡ uÅ¼ywane zarÃ³wno z 
+Å¼Ä…daniami jak i odpowiedziami (np. nagÅ‚Ã³wek DATE). PrzykÅ‚adowym nagÅ‚Ã³wkiem wystÄ™pujÄ…cym z Å¼Ä…daniem jest nagÅ‚Ã³wek 
+IF-MODIFIED-SINCE, ktÃ³ry wraz z nastÄ™pujÄ…cym po nim nagÅ‚Ã³wkiem DATE stanowi element tzw. warunkowego Å¼Ä…dania 
+GET. URL wystÄ™pujÄ…cy w takim Å¼Ä…daniu jest otwierany tylko w przypadku jeÅ›li byÅ‚ zmodyfikowany po wymienionej w 
+Å¼Ä…daniu dacie. Jednym z nagÅ‚Ã³wkÃ³w uÅ¼ywanym z odpowiedziami jest LOCATION. Jego korpus stanowi nowy URL 
+dokumentu, ktÃ³rego dotyczyÅ‚o poprzednie zapytanie. PrzykÅ‚adem nagÅ‚Ã³wka okreÅ›lajÄ…cego korpus jest LAST-MODIFIED. 
+NastÄ™puje po nim nagÅ‚Ã³wek DATE, ktÃ³ry podaje datÄ™ ostatniej modyfikacji dokumentu.
 \begin{figure}[h]
 \centering
 \includegraphics[width=5in]{./rysunki/polaczenia_w_sieci_www.eps}
-\caption{Schemat po³±czeñ w sieci WWW}
+\caption{Schemat poÅ‚Ä…czeÅ„ w sieci WWW}
 \label{polaczenia_www}
 \end{figure}
 
-Pierwsza linia odpowiedzi serwera nazywana jest lini± stanu. Rozpoczyna j± okre¶lenie wersji HTTP, nastêpnie 
-podana jest trzycyfrowa liczba okre¶laj±ca kod odpowiedzi, a na koñcu czytelne dla u¿ytkownika wyra¿enie. 
-Poni¿sza tabela przedstawia znaczenie poszczególnych kodów odpowiedzi.
+Pierwsza linia odpowiedzi serwera nazywana jest liniÄ… stanu. Rozpoczyna jÄ… okreÅ›lenie wersji HTTP, nastÄ™pnie 
+podana jest trzycyfrowa liczba okreÅ›lajÄ…ca kod odpowiedzi, a na koÅ„cu czytelne dla uÅ¼ytkownika wyraÅ¼enie. 
+PoniÅ¼sza tabela przedstawia znaczenie poszczegÃ³lnych kodÃ³w odpowiedzi.
 
-Starsze specyfikacje protoko³u (HTTP 0.9 i HTTP 1.0) u¿ywa³y osobnego po³±czenia TCP do pobrania ka¿dego 
-elementu (pliku) wchodz±cego w sk³ad dokumentu. Najnowsza wersja HTTP 1.1 umo¿liwia stosowanie sta³ego, 
-podzielonego na sesje po³±czenia TCP do pobrania ca³ego dokumentu.
+Starsze specyfikacje protokoÅ‚u (HTTP 0.9 i HTTP 1.0) uÅ¼ywaÅ‚y osobnego poÅ‚Ä…czenia TCP do pobrania kaÅ¼dego 
+elementu (pliku) wchodzÄ…cego w skÅ‚ad dokumentu. Najnowsza wersja HTTP 1.1 umoÅ¼liwia stosowanie staÅ‚ego, 
+podzielonego na sesje poÅ‚Ä…czenia TCP do pobrania caÅ‚ego dokumentu.
 
-Poni¿ej omówiono istotne ze wzglêdu na wydajno¶æ WWW cechy protoko³u HTTP.
+PoniÅ¼ej omÃ³wiono istotne ze wzglÄ™du na wydajnoÅ›Ä‡ WWW cechy protokoÅ‚u HTTP.
 
-\subsection{W³a¶ciwo¶ci ruchu generowanego przez HTTP, a wydajno¶æ WWW}
+\subsection{WÅ‚aÅ›ciwoÅ›ci ruchu generowanego przez HTTP, a wydajnoÅ›Ä‡ WWW}
 
-W okresie od stycznia 1994 do kwietnia 1995 udzia³ komunikatów HTTP w¶ród wszystkich pakietów przesy³anych 
-w szkieletowej sieci NSFNET wzrós³ z 3\% do 36\% i warto¶æ ta wykazywa³a sta³± tendencjê wzrostow±. 
+W okresie od stycznia 1994 do kwietnia 1995 udziaÅ‚ komunikatÃ³w HTTP wÅ›rÃ³d wszystkich pakietÃ³w przesyÅ‚anych 
+w szkieletowej sieci NSFNET wzrÃ³sÅ‚ z 3\% do 36\% i wartoÅ›Ä‡ ta wykazywaÅ‚a staÅ‚Ä… tendencjÄ™ wzrostowÄ…. 
 
-Badania prowadzone w USA wykaza³y niezale¿n± od stopnia obci±¿enia serwera proporcjê pomiêdzy 
-poszczególnymi typami ¿±dañ klienta. ¯±dania typu GET stanowi± ok. 99\% ogó³u komunikatów przetwarzanych przez 
-serwer. 0,85\% komunikatów to ¿±dania typu HEAD. Pozosta³e 0,15\% stanowi± ¿±dania POST. 
+Badania prowadzone w USA wykazaÅ‚y niezaleÅ¼nÄ… od stopnia obciÄ…Å¼enia serwera proporcjÄ™ pomiÄ™dzy 
+poszczegÃ³lnymi typami Å¼Ä…daÅ„ klienta. Å»Ä…dania typu GET stanowiÄ… ok. 99\% ogÃ³Å‚u komunikatÃ³w przetwarzanych przez 
+serwer. 0,85\% komunikatÃ³w to Å¼Ä…dania typu HEAD. PozostaÅ‚e 0,15\% stanowiÄ… Å¼Ä…dania POST. 
 
-Je¶li chodzi o odpowiedzi to 78\% do 92\% stanowi± odpowiedzi typu 20x (odpowiedzi typu ,,sukces''). Odpowied¼ typu 
-304 obejmuj± 4\% do 14\% wysy³anych przez serwer komunikatów. £±cznie odpowiedzi typu 20x i 304 stanowi± 92\% do 
-97\% ogó³u odpowiedzi. W przypadku pozosta³ych typów odpowiedzi ró¿nice s± ju¿ znaczne w zale¿no¶ci od rodzaju 
-informacji na serwerze i jego popularno¶ci. Np. odpowiedzi 301 i 302 mog± mieæ 0,3\% udzia³ w odpowiedziach 
-popularnego serwera publikuj±cego informacje naukowe NCSA (ang. \emph{National Center for Supercomputer Applications}) 
-do nawet 4,2\% w przypadku niewielkiego serwera uniwersyteckiego w Calgary. Odpowiedzi typu 40x i 50x stanowi± 
+JeÅ›li chodzi o odpowiedzi to 78\% do 92\% stanowiÄ… odpowiedzi typu 20x (odpowiedzi typu ,,sukces''). OdpowiedÅº typu 
+304 obejmujÄ… 4\% do 14\% wysyÅ‚anych przez serwer komunikatÃ³w. ÅÄ…cznie odpowiedzi typu 20x i 304 stanowiÄ… 92\% do 
+97\% ogÃ³Å‚u odpowiedzi. W przypadku pozostaÅ‚ych typÃ³w odpowiedzi rÃ³Å¼nice sÄ… juÅ¼ znaczne w zaleÅ¼noÅ›ci od rodzaju 
+informacji na serwerze i jego popularnoÅ›ci. Np. odpowiedzi 301 i 302 mogÄ… mieÄ‡ 0,3\% udziaÅ‚ w odpowiedziach 
+popularnego serwera publikujÄ…cego informacje naukowe NCSA (ang. \emph{National Center for Supercomputer Applications}) 
+do nawet 4,2\% w przypadku niewielkiego serwera uniwersyteckiego w Calgary. Odpowiedzi typu 40x i 50x stanowiÄ… 
 zwykle od 1\% do 4\%. 
 
-Typowo ilo¶æ danych przesy³anych w po³±czeniu HTTP jest niewielka. ¯±dania klienta nie przekraczaj± kilkuset 
-bajtów, a pojedyncza odpowied¼ serwera rzadko kiedy przekracza 10 kB.
+Typowo iloÅ›Ä‡ danych przesyÅ‚anych w poÅ‚Ä…czeniu HTTP jest niewielka. Å»Ä…dania klienta nie przekraczajÄ… kilkuset 
+bajtÃ³w, a pojedyncza odpowiedÅº serwera rzadko kiedy przekracza 10 kB.
 
-Ciekawych informacji dostarczyæ mo¿e analiza pomiaru czasu RTT (ang. \emph{Round Trip Time}), czyli ³±cznego czasu 
-wymiany pakietu na drodze serwer -- klient -- serwer. Warto¶æ ta jest u¿ywana przez TCP do wyznaczenia czasu 
-retransmisji segmentu w przypadku braku potwierdzenia odbioru. Przybli¿enie tego czasu mo¿na uzyskaæ dokonuj±c 
-pomiaru czasu trwania fazy zamykania po³±czenia TCP. Przytoczone tu wyniki otrzymano mierz±c ten czas dla 19 
-ty¶. po³±czeñ wykonanych przez 810 ró¿nych klientów na terenie USA. Najmniejsza warto¶æ wynios³a 0 sekund dla 
-hosta lokalnego a najwiêksza 12,3 sekundy. Warto¶æ ¶rednia by³a równa 0,445 sekundy a mediana 0,187 sekundy. 
-Wyniki te s± zadziwiaj±ce je¶li wzi±æ pod uwagê, ¿e teoretyczny RTT pomiêdzy wschodnim i zachodnim wybrze¿em USA 
-wynosi 0,06 sekundy. Odpowiedzialno¶æ za ten fakt ponosiæ mo¿e znaczna ilo¶æ klientów pod³±czonych poprzez modem 
-(najszybszy nawet modem wprowadza ok. 0.2 sekundy opó¼nienia do ka¿dego pojedynczego pomiaru warto¶ci RTT). 
+Ciekawych informacji dostarczyÄ‡ moÅ¼e analiza pomiaru czasu RTT (ang. \emph{Round Trip Time}), czyli Å‚Ä…cznego czasu 
+wymiany pakietu na drodze serwer -- klient -- serwer. WartoÅ›Ä‡ ta jest uÅ¼ywana przez TCP do wyznaczenia czasu 
+retransmisji segmentu w przypadku braku potwierdzenia odbioru. PrzybliÅ¼enie tego czasu moÅ¼na uzyskaÄ‡ dokonujÄ…c 
+pomiaru czasu trwania fazy zamykania poÅ‚Ä…czenia TCP. Przytoczone tu wyniki otrzymano mierzÄ…c ten czas dla 19 
+tyÅ›. poÅ‚Ä…czeÅ„ wykonanych przez 810 rÃ³Å¼nych klientÃ³w na terenie USA. Najmniejsza wartoÅ›Ä‡ wyniosÅ‚a 0 sekund dla 
+hosta lokalnego a najwiÄ™ksza 12,3 sekundy. WartoÅ›Ä‡ Å›rednia byÅ‚a rÃ³wna 0,445 sekundy a mediana 0,187 sekundy. 
+Wyniki te sÄ… zadziwiajÄ…ce jeÅ›li wziÄ…Ä‡ pod uwagÄ™, Å¼e teoretyczny RTT pomiÄ™dzy wschodnim i zachodnim wybrzeÅ¼em USA 
+wynosi 0,06 sekundy. OdpowiedzialnoÅ›Ä‡ za ten fakt ponosiÄ‡ moÅ¼e znaczna iloÅ›Ä‡ klientÃ³w podÅ‚Ä…czonych poprzez modem 
+(najszybszy nawet modem wprowadza ok. 0.2 sekundy opÃ³Åºnienia do kaÅ¼dego pojedynczego pomiaru wartoÅ›ci RTT). 
 
-Cech± bardzo niekorzystnie wp³ywaj±c± na wydajno¶æ HTTP w jego starszych wersjach by³a konieczno¶æ otwierania 
-osobnego po³±czenia TCP dla ka¿dego elementu dokumentu. Wiele zale¿a³o tutaj od konstrukcji przegl±darki. Je¶li 
-nie otwiera³a ona po³±czeñ równoczesnych to pobranie ca³ego dokumentu wyd³u¿a³o siê o czas konieczny na kolejne 
-nawi±zywanie i zamykanie po³±czeñ. Je¶li z drugiej strony przegl±darka ,,agresywnie'' otwiera³a zbyt wiele 
-po³±czeñ równoczesnych, to barier± stawa³a siê przepustowo¶æ po³±czenia z Internetem i wielko¶æ MSS oferowana 
-przez serwer. Znany jest przyk³ad przegl±darki NCSA Mosaic, która potrafi³a otworzyæ kilkana¶cie równoczesnych 
-po³±czeñ TCP dla pobrania pojedynczego dokumentu, powoduj±c tym zarówno zatory w sieci lokalnej jak i 
-niepotrzebne obci±¿enie serwera. 
+CechÄ… bardzo niekorzystnie wpÅ‚ywajÄ…cÄ… na wydajnoÅ›Ä‡ HTTP w jego starszych wersjach byÅ‚a koniecznoÅ›Ä‡ otwierania 
+osobnego poÅ‚Ä…czenia TCP dla kaÅ¼dego elementu dokumentu. Wiele zaleÅ¼aÅ‚o tutaj od konstrukcji przeglÄ…darki. JeÅ›li 
+nie otwieraÅ‚a ona poÅ‚Ä…czeÅ„ rÃ³wnoczesnych to pobranie caÅ‚ego dokumentu wydÅ‚uÅ¼aÅ‚o siÄ™ o czas konieczny na kolejne 
+nawiÄ…zywanie i zamykanie poÅ‚Ä…czeÅ„. JeÅ›li z drugiej strony przeglÄ…darka ,,agresywnie'' otwieraÅ‚a zbyt wiele 
+poÅ‚Ä…czeÅ„ rÃ³wnoczesnych, to barierÄ… stawaÅ‚a siÄ™ przepustowoÅ›Ä‡ poÅ‚Ä…czenia z Internetem i wielkoÅ›Ä‡ MSS oferowana 
+przez serwer. Znany jest przykÅ‚ad przeglÄ…darki NCSA Mosaic, ktÃ³ra potrafiÅ‚a otworzyÄ‡ kilkanaÅ›cie rÃ³wnoczesnych 
+poÅ‚Ä…czeÅ„ TCP dla pobrania pojedynczego dokumentu, powodujÄ…c tym zarÃ³wno zatory w sieci lokalnej jak i 
+niepotrzebne obciÄ…Å¼enie serwera. 
 
-Otwieranie zbyt wielu po³±czeñ równoczesnych nie przynosi spodziewanych korzy¶ci. Podstawowym 
-problemem wydajno¶ci HTTP wydaje siê byæ niedopasowanie protoko³u TCP -- zorientowanego na przesy³anie strumienia 
-bajtów i us³ugi WWW zorientowanej na przesy³anie wyodrêbnionych komunikatów. Nale¿y pamiêtaæ ¿e HTTP, który jest 
-w rzeczywisto¶ci protoko³em przesy³ania plików, mia³ w swych za³o¿eniach zapewniaæ wydajno¶æ wiêksz± ni¿ 
-protokó³ FTP. Chciano uzyskaæ to eliminuj±c wystêpuj±ce w FTP dodatkowe po³±czenie steruj±ce (port 21) i 
-konieczno¶æ nawi±zywania po³±czenia TCP na dwóch portach. 
+Otwieranie zbyt wielu poÅ‚Ä…czeÅ„ rÃ³wnoczesnych nie przynosi spodziewanych korzyÅ›ci. Podstawowym 
+problemem wydajnoÅ›ci HTTP wydaje siÄ™ byÄ‡ niedopasowanie protokoÅ‚u TCP -- zorientowanego na przesyÅ‚anie strumienia 
+bajtÃ³w i usÅ‚ugi WWW zorientowanej na przesyÅ‚anie wyodrÄ™bnionych komunikatÃ³w. NaleÅ¼y pamiÄ™taÄ‡ Å¼e HTTP, ktÃ³ry jest 
+w rzeczywistoÅ›ci protokoÅ‚em przesyÅ‚ania plikÃ³w, miaÅ‚ w swych zaÅ‚oÅ¼eniach zapewniaÄ‡ wydajnoÅ›Ä‡ wiÄ™kszÄ… niÅ¼ 
+protokÃ³Å‚ FTP. Chciano uzyskaÄ‡ to eliminujÄ…c wystÄ™pujÄ…ce w FTP dodatkowe poÅ‚Ä…czenie sterujÄ…ce (port 21) i 
+koniecznoÅ›Ä‡ nawiÄ…zywania poÅ‚Ä…czenia TCP na dwÃ³ch portach. 
 
-Niestety TCP wymaga zestawienia po³±czenia przed faktycznym rozpoczêciem transmisji. Wprowadza to opó¼nienie o 
-warto¶ci ok. 1 RTT przed przes³aniem pliku. Dodatkowo w starszych wersjach HTTP pobranie dokumentu wymaga³o 
-otwieranie nowego po³±czenia TCP dla ka¿dego pliku sk³adowego, co oznacza, ¿e nale¿a³o zamykaæ po³±czenia przez 
-które wys³ano wcze¶niejsze elementy dokumentu. Ka¿dorazowe zamykanie i otwieranie po³±czeñ wprowadza opó¼nienie 
-rzêdu 3RTT dla ka¿dego pliku sk³adowego. HTTP 1.1 u¿ywa sta³ego ³±cza TCP dla dokumentu, co zredukowa³o 
-opó¼nienie przed rozpoczêciem transferu kolejnego elementu dokumentu do 1RTT. Dodatkowo HTTP 1.1 umo¿liwia 
-wysy³anie ¿±dañ potokowych tzn. wysy³anie ¿±dañ o kolejne pliki przed rozpoczêciem odbierania poprzednio 
-¿±danych elementów dokumentu. Niestety w przypadku plików dynamicznych np. plików wynikowych skryptu CGI potok 
+Niestety TCP wymaga zestawienia poÅ‚Ä…czenia przed faktycznym rozpoczÄ™ciem transmisji. Wprowadza to opÃ³Åºnienie o 
+wartoÅ›ci ok. 1 RTT przed przesÅ‚aniem pliku. Dodatkowo w starszych wersjach HTTP pobranie dokumentu wymagaÅ‚o 
+otwieranie nowego poÅ‚Ä…czenia TCP dla kaÅ¼dego pliku skÅ‚adowego, co oznacza, Å¼e naleÅ¼aÅ‚o zamykaÄ‡ poÅ‚Ä…czenia przez 
+ktÃ³re wysÅ‚ano wczeÅ›niejsze elementy dokumentu. KaÅ¼dorazowe zamykanie i otwieranie poÅ‚Ä…czeÅ„ wprowadza opÃ³Åºnienie 
+rzÄ™du 3RTT dla kaÅ¼dego pliku skÅ‚adowego. HTTP 1.1 uÅ¼ywa staÅ‚ego Å‚Ä…cza TCP dla dokumentu, co zredukowaÅ‚o 
+opÃ³Åºnienie przed rozpoczÄ™ciem transferu kolejnego elementu dokumentu do 1RTT. Dodatkowo HTTP 1.1 umoÅ¼liwia 
+wysyÅ‚anie Å¼Ä…daÅ„ potokowych tzn. wysyÅ‚anie Å¼Ä…daÅ„ o kolejne pliki przed rozpoczÄ™ciem odbierania poprzednio 
+Å¼Ä…danych elementÃ³w dokumentu. Niestety w przypadku plikÃ³w dynamicznych np. plikÃ³w wynikowych skryptu CGI potok 
 taki jest wstrzymywany. 

@@ -1,77 +1,77 @@
 \chapter{Rozproszone serwery WWW}
 \label{r03}
-Rozdzia³ ten przybli¿y architekturê najczê¶ciej wykorzystywan± w komunikacji tak pomiêdzy programami jak i
-urz±dzeniami sieciowymi: architekturê klient--serwer. Nastêpnie zostanie przedstawiona budowa i dzia³anie serwera
-WWW oraz wspó³pracuj±cego z nim klienta -- przegl±darki. Kolejnym punktem tego rozdzia³u bêdzie klasyfikacja
-serwerów WWW ze wzglêdu na wielko¶æ obs³ugiwanego ruchu jak i na charakterystykê budowy i wymagania oraz
-zwi±zane z tym definicje. W ostatnim punkcie tego rozdzia³u bêdzie przedstawiony sposób testowania serwerów webowych.
+RozdziaÅ‚ ten przybliÅ¼y architekturÄ™ najczÄ™Å›ciej wykorzystywanÄ… w komunikacji tak pomiÄ™dzy programami jak i
+urzÄ…dzeniami sieciowymi: architekturÄ™ klient--serwer. NastÄ™pnie zostanie przedstawiona budowa i dziaÅ‚anie serwera
+WWW oraz wspÃ³Å‚pracujÄ…cego z nim klienta -- przeglÄ…darki. Kolejnym punktem tego rozdziaÅ‚u bÄ™dzie klasyfikacja
+serwerÃ³w WWW ze wzglÄ™du na wielkoÅ›Ä‡ obsÅ‚ugiwanego ruchu jak i na charakterystykÄ™ budowy i wymagania oraz
+zwiÄ…zane z tym definicje. W ostatnim punkcie tego rozdziaÅ‚u bÄ™dzie przedstawiony sposÃ³b testowania serwerÃ³w webowych.
 
 \section{Wprowadzenie}
-Czêsto¶æ i wydajno¶æ dostarczania us³ug WWW, przy stale zwiêkszaj±cej siê ich popularno¶ci, 
-stanowi nie lada problem dla tradycyjnych rozwi±zañ klient--serwer. Zwiêkszenie dostêpno¶ci
-serwisów mo¿na osiagn±æ modyfikuj±c poszczególne elementy na drodze od klienta do serwera 
-i/lub dodaj±c nowe. Na rys. \ref{www} przedstawiono czê¶æ elementów, które wp³ywaj± na wydajno¶æ 
+CzÄ™stoÅ›Ä‡ i wydajnoÅ›Ä‡ dostarczania usÅ‚ug WWW, przy stale zwiÄ™kszajÄ…cej siÄ™ ich popularnoÅ›ci, 
+stanowi nie lada problem dla tradycyjnych rozwiÄ…zaÅ„ klient--serwer. ZwiÄ™kszenie dostÄ™pnoÅ›ci
+serwisÃ³w moÅ¼na osiagnÄ…Ä‡ modyfikujÄ…c poszczegÃ³lne elementy na drodze od klienta do serwera 
+i/lub dodajÄ…c nowe. Na rys. \ref{www} przedstawiono czÄ™Å›Ä‡ elementÃ³w, ktÃ³re wpÅ‚ywajÄ… na wydajnoÅ›Ä‡ 
 sieci Web.
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{./rysunki/www.eps}
-\caption{Przyk³adowe elementy stanowi±ce o wydajno¶ci WWW}
+\caption{PrzykÅ‚adowe elementy stanowiÄ…ce o wydajnoÅ›ci WWW}
 \label{www}
 \end{figure}
 
-Najprostszymi s± \emph{cache} przegl±darki lub proxy serwer zainstalowany
-po stronie klienta. Takie rozwi±zanie ma wiele zalet: prostota instalacji i konfiguracji, a przy
-odpowiednich dokumentach (statyczny HTML) efektywno¶æ takiego rozwi±zania jest bardzo du¿a. 
-Wad± tych rozwi±zañ jest g³ównie s³aba wydajno¶æ przy dokumentach generowanych dynamicznie
-(a takich obecnie zdarza siê coraz wiêcej). Podobne rozwi±zanie mo¿na zastosowaæ po stronie 
-serwera WWW, tzn. proxy, które keszuje strony po stronie serwera(ów) -- nazywa siê ono 
+Najprostszymi sÄ… \emph{cache} przeglÄ…darki lub proxy serwer zainstalowany
+po stronie klienta. Takie rozwiÄ…zanie ma wiele zalet: prostota instalacji i konfiguracji, a przy
+odpowiednich dokumentach (statyczny HTML) efektywnoÅ›Ä‡ takiego rozwiÄ…zania jest bardzo duÅ¼a. 
+WadÄ… tych rozwiÄ…zaÅ„ jest gÅ‚Ã³wnie sÅ‚aba wydajnoÅ›Ä‡ przy dokumentach generowanych dynamicznie
+(a takich obecnie zdarza siÄ™ coraz wiÄ™cej). Podobne rozwiÄ…zanie moÅ¼na zastosowaÄ‡ po stronie 
+serwera WWW, tzn. proxy, ktÃ³re keszuje strony po stronie serwera(Ã³w) -- nazywa siÄ™ ono 
 \emph{reverse proxy}. 
 
-Mo¿na tak¿e skorzystaæ z us³ug ró¿nych dostawców (\emph{providerów})
-i przenie¶æ czê¶æ witryny WWW na ich komputery. Efektem bêdzie zwiêkszenie dostêpno¶ci 
-(oraz wydajno¶ci) witryny, jednak¿e za cenê mniejszego bezpieczeñstwa i zmniejszenia 
-funkcjonalno¶ci sajtu.
+MoÅ¼na takÅ¼e skorzystaÄ‡ z usÅ‚ug rÃ³Å¼nych dostawcÃ³w (\emph{providerÃ³w})
+i przenieÅ›Ä‡ czÄ™Å›Ä‡ witryny WWW na ich komputery. Efektem bÄ™dzie zwiÄ™kszenie dostÄ™pnoÅ›ci 
+(oraz wydajnoÅ›ci) witryny, jednakÅ¼e za cenÄ™ mniejszego bezpieczeÅ„stwa i zmniejszenia 
+funkcjonalnoÅ›ci sajtu.
 
-Mo¿na zwiêkszaæ wydajno¶æ w najprostszy sposób --
-poprzez dodawanie kolejnych procesorów, pamiêci, dysków czy te¿ urz±dzeñ sieciowych. Jest to 
-mo¿liwe tylko w bardzo ograniczonym zakresie. 
+MoÅ¼na zwiÄ™kszaÄ‡ wydajnoÅ›Ä‡ w najprostszy sposÃ³b --
+poprzez dodawanie kolejnych procesorÃ³w, pamiÄ™ci, dyskÃ³w czy teÅ¼ urzÄ…dzeÅ„ sieciowych. Jest to 
+moÅ¼liwe tylko w bardzo ograniczonym zakresie. 
 
-Wydaje siê, ¿e najciekawszym rozwi±zaniem
-jest wielokomputerowy serwer WWW. Zalet± wykorzystania wielokomputerowego serwera WWW
-jest praktycznie nieograniczona skalowalno¶æ i wysoka dostepno¶æ, wad± natomiast -- 
-propagowanie ruchu na poszególne jego sk³adowe (nody). Zarz±dzanie ruchem mo¿na realizowaæ na
-szereg sposobów: poprzez \emph{reverse proxy}, na poziomie serwera DNS, poprzez osobny wêze³
-równowa¿±cy obci±¿enie, modyfikuj±c us³ugi po stronie klienta (opisane dalej applety Java), lub
-serwera (metody te zosta³y opisane w rozdziale \ref{r03}). Wraz z architektur± takiego systemu zarz±dzaj±cego serwerem WWW
-nale¿y zaprojektowaæ algorytmy umo¿liwiaj±ce rozpraszanie ruchu sieciowego (Rozdzia³ \ref{r04}).
-Czê¶æ wy¿ej wymienionych rozwi±zañ mo¿e byæ tak iprogramowa jak i sprzêtowa.
+Wydaje siÄ™, Å¼e najciekawszym rozwiÄ…zaniem
+jest wielokomputerowy serwer WWW. ZaletÄ… wykorzystania wielokomputerowego serwera WWW
+jest praktycznie nieograniczona skalowalnoÅ›Ä‡ i wysoka dostepnoÅ›Ä‡, wadÄ… natomiast -- 
+propagowanie ruchu na poszegÃ³lne jego skÅ‚adowe (nody). ZarzÄ…dzanie ruchem moÅ¼na realizowaÄ‡ na
+szereg sposobÃ³w: poprzez \emph{reverse proxy}, na poziomie serwera DNS, poprzez osobny wÄ™zeÅ‚
+rÃ³wnowaÅ¼Ä…cy obciÄ…Å¼enie, modyfikujÄ…c usÅ‚ugi po stronie klienta (opisane dalej applety Java), lub
+serwera (metody te zostaÅ‚y opisane w rozdziale \ref{r03}). Wraz z architekturÄ… takiego systemu zarzÄ…dzajÄ…cego serwerem WWW
+naleÅ¼y zaprojektowaÄ‡ algorytmy umoÅ¼liwiajÄ…ce rozpraszanie ruchu sieciowego (RozdziaÅ‚ \ref{r04}).
+CzÄ™Å›Ä‡ wyÅ¼ej wymienionych rozwiÄ…zaÅ„ moÅ¼e byÄ‡ tak iprogramowa jak i sprzÄ™towa.
 
 \section{Model klient--serwer}
 
-\hspace{0.63cm}Model wspó³pracy klient--serwer to taki model, w którym jeden program czeka pasywnie na ¿±danie komunikacji
-wysy³ane przez inne programy. Okre¶lenia klient i serwer odpowiadaj± dwóm programom zaanga¿owanym w wymianê informacji.
-Program inicjuj±cy po³±czenie nazywany jest klientem, a program biernie czekaj±cy na ¿±danie po³±czenia -- serwerem. Charakterystyka modelu \cite{siecikomputerowe}:
+\hspace{0.63cm}Model wspÃ³Å‚pracy klient--serwer to taki model, w ktÃ³rym jeden program czeka pasywnie na Å¼Ä…danie komunikacji
+wysyÅ‚ane przez inne programy. OkreÅ›lenia klient i serwer odpowiadajÄ… dwÃ³m programom zaangaÅ¼owanym w wymianÄ™ informacji.
+Program inicjujÄ…cy poÅ‚Ä…czenie nazywany jest klientem, a program biernie czekajÄ…cy na Å¼Ä…danie poÅ‚Ä…czenia -- serwerem. Charakterystyka modelu \cite{siecikomputerowe}:
 
 \begin{description}
 \item[Oprogramowanie klienta]\
 \begin{itemize}
-\item dowolny program u¿ytkowy, który staje siê klientem tymczasowo (w trakcie komunikacji), ale wykonuje równie¿ obliczenia
+\item dowolny program uÅ¼ytkowy, ktÃ³ry staje siÄ™ klientem tymczasowo (w trakcie komunikacji), ale wykonuje rÃ³wnieÅ¼ obliczenia
 lokalnie;
-\item jest wywo³ywane bezpo¶rednio przez u¿ytkownika na czas obejmuj±cy jedn± sesjê;
-\item dzia³a lokalnie na urz±dzeniu osobistym u¿ytkownika;
-\item aktywnie inicjuje po³±czenie z serwerem;
-\item w razie potrzeby mo¿e komunikowaæ siê z wieloma serwerami, jednak naraz aktywnie komunikuje siê tylko z jednym;
-\item nie wymaga specjalnego sprzêtu, ani spesjalizowanego systemu operacyjnego.
+\item jest wywoÅ‚ywane bezpoÅ›rednio przez uÅ¼ytkownika na czas obejmujÄ…cy jednÄ… sesjÄ™;
+\item dziaÅ‚a lokalnie na urzÄ…dzeniu osobistym uÅ¼ytkownika;
+\item aktywnie inicjuje poÅ‚Ä…czenie z serwerem;
+\item w razie potrzeby moÅ¼e komunikowaÄ‡ siÄ™ z wieloma serwerami, jednak naraz aktywnie komunikuje siÄ™ tylko z jednym;
+\item nie wymaga specjalnego sprzÄ™tu, ani spesjalizowanego systemu operacyjnego.
 \end{itemize}
 \item[Oprogramowanie serwera]\
 \begin{itemize}
-\item jest specjalizowanym programem, którego zadaniem jest ¶wiadczenie konkretnej us³ugi -- mo¿e obs³ugiwaæ naraz wielu
-klientów;
-\item jest programem uruchamianym podczas startu systemu i dzia³a przez wiele kolejnych sesji;
-\item dzia³a na publicznie dostêpnym komputerze;
-\item czeka na zg³aszanie siê programów klienckich;
-\item pe³ni konkretn± us³ugê, ale po³±czenia przyjmuje od dowolnych odleg³ych klientów;
-\item wymaga specjalnego sprzêtu i wyrafinowanego systemu operacyjnego.
+\item jest specjalizowanym programem, ktÃ³rego zadaniem jest Å›wiadczenie konkretnej usÅ‚ugi -- moÅ¼e obsÅ‚ugiwaÄ‡ naraz wielu
+klientÃ³w;
+\item jest programem uruchamianym podczas startu systemu i dziaÅ‚a przez wiele kolejnych sesji;
+\item dziaÅ‚a na publicznie dostÄ™pnym komputerze;
+\item czeka na zgÅ‚aszanie siÄ™ programÃ³w klienckich;
+\item peÅ‚ni konkretnÄ… usÅ‚ugÄ™, ale poÅ‚Ä…czenia przyjmuje od dowolnych odlegÅ‚ych klientÃ³w;
+\item wymaga specjalnego sprzÄ™tu i wyrafinowanego systemu operacyjnego.
 \end{itemize}
 \end{description}
 
@@ -79,679 +79,679 @@ klientów;
 
 \subsection{Serwer WWW}
 
-\hspace{0.63cm}Najpro¶ciej opisaæ serwer WWW jako program wykonuj±cy w pêtli prost± operacjê: czekanie na otwarcie po³±czenia przez klienta
-(przegl±darkê) czyli na wysy³anie przez niego ¿±dania dostêpu do okre¶lonej strony. W odpowiedzi serwer wysy³a ¿±dany dokument 
-(lub komunikat o b³êdzie w razie jego braku) albo przekazuje po³±czenie do realizacji modu³owi (np. odpowiedzialnemu za obs³ugê
-CGI) lub innemu serwerowi (np.: baz danych). nastêpnie serwer zamyka po³±czenie i czeka na nastêpne. 
+\hspace{0.63cm}NajproÅ›ciej opisaÄ‡ serwer WWW jako program wykonujÄ…cy w pÄ™tli prostÄ… operacjÄ™: czekanie na otwarcie poÅ‚Ä…czenia przez klienta
+(przeglÄ…darkÄ™) czyli na wysyÅ‚anie przez niego Å¼Ä…dania dostÄ™pu do okreÅ›lonej strony. W odpowiedzi serwer wysyÅ‚a Å¼Ä…dany dokument 
+(lub komunikat o bÅ‚Ä™dzie w razie jego braku) albo przekazuje poÅ‚Ä…czenie do realizacji moduÅ‚owi (np. odpowiedzialnemu za obsÅ‚ugÄ™
+CGI) lub innemu serwerowi (np.: baz danych). nastÄ™pnie serwer zamyka poÅ‚Ä…czenie i czeka na nastÄ™pne. 
 
-\subsection{Klient WWW -- przegl±darka}
+\subsection{Klient WWW -- przeglÄ…darka}
 
-\hspace{0.63cm}Przegl±darki WWW maj± bardziej z³o¿on± budowê ni¿ serwery WWW. Obs³uguje ona wiêkszo¶æ zagadnieñ zwi±zanych
-z dostêpem do dokumentów i ich pokazywaniem u¿ytkownikowi. W zwi±zku z tym sk³ada siê ona z szeregu du¿ych modu³ów, które
-ze sob± wspó³dzia³aj± \cite{siecikomputerowe}.
+\hspace{0.63cm}PrzeglÄ…darki WWW majÄ… bardziej zÅ‚oÅ¼onÄ… budowÄ™ niÅ¼ serwery WWW. ObsÅ‚uguje ona wiÄ™kszoÅ›Ä‡ zagadnieÅ„ zwiÄ…zanych
+z dostÄ™pem do dokumentÃ³w i ich pokazywaniem uÅ¼ytkownikowi. W zwiÄ…zku z tym skÅ‚ada siÄ™ ona z szeregu duÅ¼ych moduÅ‚Ã³w, ktÃ³re
+ze sobÄ… wspÃ³Å‚dziaÅ‚ajÄ… \cite{siecikomputerowe}.
 
-Koncepcyjnie przegl±darka sk³ada siê z zestawu klientów, interpreterów i modu³u, który tym wszystkim zarz±dza. Modu³
-centralny -- zarz±dzaj±cy jest odpowiedzialny za interpretacjê danych z klawiatury i myszki oraz za wywo³ania pozosta³ych
-modu³ów w celu wykonania operacji ¿±danych przez u¿ytkownika.
+Koncepcyjnie przeglÄ…darka skÅ‚ada siÄ™ z zestawu klientÃ³w, interpreterÃ³w i moduÅ‚u, ktÃ³ry tym wszystkim zarzÄ…dza. ModuÅ‚
+centralny -- zarzÄ…dzajÄ…cy jest odpowiedzialny za interpretacjÄ™ danych z klawiatury i myszki oraz za wywoÅ‚ania pozostaÅ‚ych
+moduÅ‚Ã³w w celu wykonania operacji Å¼Ä…danych przez uÅ¼ytkownika.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=4in]{./rysunki/przeg.eps}
-\caption{G³ówne sk³adniki przegl±darki WWW}
-\label{przegl±darka}
+\caption{GÅ‚Ã³wne skÅ‚adniki przeglÄ…darki WWW}
+\label{przeglÄ…darka}
 \end{figure}
 
-Ka¿da przegl±darka musi zawieraæ interpreter jêzyka HTML, ¿eby w ogóle mog³a interpretowaæ dokumenty WWW. Inne interpretery
-s± opcjonalne, jednak¿e powoli staj± siê równie¿ niezbêdne -- takie jak interpreter Javy, czy XML. Dane dla interpretera
-HTML stanowi dokument o zawarto¶ci zgodnej ze sk³adni± tego jêzyka; wynikiem jego dzia³ania jest sformatowana postaæ
-dokumentu przez zamianê znaczników formatuj±cych na polecenia steruj±ce sprzêtem wy¶wietlaj±cym informacje.
+KaÅ¼da przeglÄ…darka musi zawieraÄ‡ interpreter jÄ™zyka HTML, Å¼eby w ogÃ³le mogÅ‚a interpretowaÄ‡ dokumenty WWW. Inne interpretery
+sÄ… opcjonalne, jednakÅ¼e powoli stajÄ… siÄ™ rÃ³wnieÅ¼ niezbÄ™dne -- takie jak interpreter Javy, czy XML. Dane dla interpretera
+HTML stanowi dokument o zawartoÅ›ci zgodnej ze skÅ‚adniÄ… tego jÄ™zyka; wynikiem jego dziaÅ‚ania jest sformatowana postaÄ‡
+dokumentu przez zamianÄ™ znacznikÃ³w formatujÄ…cych na polecenia sterujÄ…ce sprzÄ™tem wyÅ›wietlajÄ…cym informacje.
 
-Jedn± z najwa¿niejszych funkcji interpretera HTML jest obs³uga fragmentów dokumentu wybieralnych przez u¿ytkownika.
-Interpreter musi przechowywaæ informacje o zwi±zku miêdzy pozycjami na ekranie, a odsy³aczami w dokumencie HTML. Gdy
-u¿ytkownik wskazuje za pomoc± myszki pozycjê w dokumencie, interpreter HTML na podstawie bie¿±cej pozycji kursora i
-zapamiêtanych informacji ustala, który odsy³acz wskaza³ u¿ytkownik.
+JednÄ… z najwaÅ¼niejszych funkcji interpretera HTML jest obsÅ‚uga fragmentÃ³w dokumentu wybieralnych przez uÅ¼ytkownika.
+Interpreter musi przechowywaÄ‡ informacje o zwiÄ…zku miÄ™dzy pozycjami na ekranie, a odsyÅ‚aczami w dokumencie HTML. Gdy
+uÅ¼ytkownik wskazuje za pomocÄ… myszki pozycjÄ™ w dokumencie, interpreter HTML na podstawie bieÅ¼Ä…cej pozycji kursora i
+zapamiÄ™tanych informacji ustala, ktÃ³ry odsyÅ‚acz wskazaÅ‚ uÅ¼ytkownik.
 
-\subsection{Podzia³ serwerów WWW}
+\subsection{PodziaÅ‚ serwerÃ³w WWW}
 
-\hspace{0.63cm}Serwery WWW mo¿na scharakteryzowaæ g³ównie poprzez wielko¶æ (ilo¶æ realizacji ¿±dañ) \cite{wybraneelementy}:
+\hspace{0.63cm}Serwery WWW moÅ¼na scharakteryzowaÄ‡ gÅ‚Ã³wnie poprzez wielkoÅ›Ä‡ (iloÅ›Ä‡ realizacji Å¼Ä…daÅ„) \cite{wybraneelementy}:
 \begin{description}
-\item[ma³e] -- uruchamiane na stacjach roboczych, zdolne do obs³u¿enia do 5000 zapytañ dziennie, np.: prezentuj±ce dane jakiej¶
+\item[maÅ‚e] -- uruchamiane na stacjach roboczych, zdolne do obsÅ‚uÅ¼enia do 5000 zapytaÅ„ dziennie, np.: prezentujÄ…ce dane jakiejÅ›
 niewielkiej firmy;
-\item[¶rednie] -- uruchamiane na du¿ych serwerach posiadaj±cych zabezpieczenia na poziomie urz±dzeñ wewnêtrznych. Obs³uguj±
-kilkadziesi±t tysiêcy ¿±dañ dziennie. Prezentuj± dane (tysi±ce stron) ¶redniej firmy;
-\item[du¿e] -- uruchamiane na serwerach o du¿ej mocy obliczeniowej (zwykle kilku) posiadaj±cych techniki zabezpieczenia
-danych i pracy serwerów. S± w stanie obs³u¿yæ kilkaset tysiêcy zapytañ dziennie (prezentuj± kilkaset tysiêcy stron);
-\item[globalne] -- s± w stanie obs³u¿yæ milion ¿±dañ klienckich dziennie, prawie zawsze zbudowane z wielu du¿ych serwerów, 
-posiadaj±ce kilka kopii dokumentu. S± wstanie udostêpniaæ ogromne ilo¶ci danych , równie¿ multimedialnych.
+\item[Å›rednie] -- uruchamiane na duÅ¼ych serwerach posiadajÄ…cych zabezpieczenia na poziomie urzÄ…dzeÅ„ wewnÄ™trznych. ObsÅ‚ugujÄ…
+kilkadziesiÄ…t tysiÄ™cy Å¼Ä…daÅ„ dziennie. PrezentujÄ… dane (tysiÄ…ce stron) Å›redniej firmy;
+\item[duÅ¼e] -- uruchamiane na serwerach o duÅ¼ej mocy obliczeniowej (zwykle kilku) posiadajÄ…cych techniki zabezpieczenia
+danych i pracy serwerÃ³w. SÄ… w stanie obsÅ‚uÅ¼yÄ‡ kilkaset tysiÄ™cy zapytaÅ„ dziennie (prezentujÄ… kilkaset tysiÄ™cy stron);
+\item[globalne] -- sÄ… w stanie obsÅ‚uÅ¼yÄ‡ milion Å¼Ä…daÅ„ klienckich dziennie, prawie zawsze zbudowane z wielu duÅ¼ych serwerÃ³w, 
+posiadajÄ…ce kilka kopii dokumentu. SÄ… wstanie udostÄ™pniaÄ‡ ogromne iloÅ›ci danych , rÃ³wnieÅ¼ multimedialnych.
 \end{description}
-W zale¿no¶ci od zawarto¶ci witryn definiuje siê trzy klasy obci±¿alno¶ci serwerów WWW \cite{ScalableWebClusters}. Mamy zatem 
+W zaleÅ¼noÅ›ci od zawartoÅ›ci witryn definiuje siÄ™ trzy klasy obciÄ…Å¼alnoÅ›ci serwerÃ³w WWW \cite{ScalableWebClusters}. Mamy zatem 
 witryny typu:
 \begin{description}
-\item[web publishing] -- witryny zawieraj±ce statyczne i w niewiekiej ilo¶ci dynamiczne dokumenty. Dokumenty statyczne s± 
-sk³adowane na dyskach serwera webowego i nie podlegaj± modyfikacjom przez relatywnie d³ugi czas i zawsze s± przechowywane w 
-pamiêci podrêcznej. Pamiêæ podrêczna ka¿dego nodu klastra jest zwykle ustawiona na 15\% ca³kowitego drzewa dokumentów witryny.
-Strony w niewielkim stopniu dynamiczne s± przechowywane w pamiêci podrêcznej (cache) z pradopodobieñstwem 0,3.
-\item[web transaction (light)] -- s± to witryny zawieraj±ce oko³o 60\% dokumentów statycznych i oko³o 40\% stworzonych 
-dynamicznie dokumentów. Zapytania bazodanowe do serwerów \emph{back--endowych} wymagaj± intensywanego korzystania z dysków i 
-st±d rezultaty zapytañ nie s± przechowywane w keszu.
-\item[web transaction (heavy)] -- witryny zawieraj±ce 30\% statycznych dokumentów, 30\% niewiele zdynamizowanych dokumentów
-oraz ró¿ne kombinacje (dla pozosta³ych 40\%) dokumentów, zwykle zawieraj±cych elementy wymagaj±ce sporych mocy obliczeniowych 
+\item[web publishing] -- witryny zawierajÄ…ce statyczne i w niewiekiej iloÅ›ci dynamiczne dokumenty. Dokumenty statyczne sÄ… 
+skÅ‚adowane na dyskach serwera webowego i nie podlegajÄ… modyfikacjom przez relatywnie dÅ‚ugi czas i zawsze sÄ… przechowywane w 
+pamiÄ™ci podrÄ™cznej. PamiÄ™Ä‡ podrÄ™czna kaÅ¼dego nodu klastra jest zwykle ustawiona na 15\% caÅ‚kowitego drzewa dokumentÃ³w witryny.
+Strony w niewielkim stopniu dynamiczne sÄ… przechowywane w pamiÄ™ci podrÄ™cznej (cache) z pradopodobieÅ„stwem 0,3.
+\item[web transaction (light)] -- sÄ… to witryny zawierajÄ…ce okoÅ‚o 60\% dokumentÃ³w statycznych i okoÅ‚o 40\% stworzonych 
+dynamicznie dokumentÃ³w. Zapytania bazodanowe do serwerÃ³w \emph{back--endowych} wymagajÄ… intensywanego korzystania z dyskÃ³w i 
+stÄ…d rezultaty zapytaÅ„ nie sÄ… przechowywane w keszu.
+\item[web transaction (heavy)] -- witryny zawierajÄ…ce 30\% statycznych dokumentÃ³w, 30\% niewiele zdynamizowanych dokumentÃ³w
+oraz rÃ³Å¼ne kombinacje (dla pozostaÅ‚ych 40\%) dokumentÃ³w, zwykle zawierajÄ…cych elementy wymagajÄ…ce sporych mocy obliczeniowych 
 CPU i/lub dysku.
 \end{description}
 
-\section{Charakterystyka wydajno¶ci serwera WWW}
+\section{Charakterystyka wydajnoÅ›ci serwera WWW}
 
-Podstawow± miar± obci±¿enia serwera WWW jest ilo¶æ ¿±dañ HTTP, które docieraj± do niego w ci±gu sekundy. 
-Za miarê wydajno¶ci serwera mo¿na przyj±æ widziany od strony klienta czas odpowiedzi na ¿±danie lub czas 
-ukoñczenia transferu dokumentu, który zale¿ny jest jednak od przepustowo¶ci po³±czenia klienta z Internetem. 
-Przeprowadzone w USA symulacje z u¿yciem prostego modelu serwera WWW, który oparto o teoriê kolejek i za³o¿enie, 
-¿e istotne s± tylko ¿±dania typu GET, s± podstaw± do przedstawienia poni¿szych charakterystyk.
-Typowo czas odpowiedzi na ¿±danie ro¶nie wraz ze wzrostem liczby ¿±dañ na sekundê. Wzrost ten jest 
-pocz±tkowo bardzo powolny, niemal niezauwa¿alny a¿ do momentu, w którym ilo¶æ równocze¶nie otwartych po³±czeñ 
-TCP przekracza mo¿liwo¶ci obs³ugi ich przez serwer. Przedstawia rysunek \ref{zapytania}[26].
+PodstawowÄ… miarÄ… obciÄ…Å¼enia serwera WWW jest iloÅ›Ä‡ Å¼Ä…daÅ„ HTTP, ktÃ³re docierajÄ… do niego w ciÄ…gu sekundy. 
+Za miarÄ™ wydajnoÅ›ci serwera moÅ¼na przyjÄ…Ä‡ widziany od strony klienta czas odpowiedzi na Å¼Ä…danie lub czas 
+ukoÅ„czenia transferu dokumentu, ktÃ³ry zaleÅ¼ny jest jednak od przepustowoÅ›ci poÅ‚Ä…czenia klienta z Internetem. 
+Przeprowadzone w USA symulacje z uÅ¼yciem prostego modelu serwera WWW, ktÃ³ry oparto o teoriÄ™ kolejek i zaÅ‚oÅ¼enie, 
+Å¼e istotne sÄ… tylko Å¼Ä…dania typu GET, sÄ… podstawÄ… do przedstawienia poniÅ¼szych charakterystyk.
+Typowo czas odpowiedzi na Å¼Ä…danie roÅ›nie wraz ze wzrostem liczby Å¼Ä…daÅ„ na sekundÄ™. Wzrost ten jest 
+poczÄ…tkowo bardzo powolny, niemal niezauwaÅ¼alny aÅ¼ do momentu, w ktÃ³rym iloÅ›Ä‡ rÃ³wnoczeÅ›nie otwartych poÅ‚Ä…czeÅ„ 
+TCP przekracza moÅ¼liwoÅ›ci obsÅ‚ugi ich przez serwer. Przedstawia rysunek \ref{zapytania}[26].
 \begin{figure}[h]
 \centering
 \includegraphics[width=3in]{./rysunki/zapytania.eps}
-\caption{Czas odpowiedzi a ilo¶æ zapytañ na sekundê.}
+\caption{Czas odpowiedzi a iloÅ›Ä‡ zapytaÅ„ na sekundÄ™.}
 \label{zapytania}
 \end{figure}
 
-Obci±¿enie przy którym serwer za³amuje siê zale¿y oczywi¶cie od 
-sprzêtowych w³asno¶ci serwera i zastosowanego oprogramowania. Oprócz cech samego serwera najistotniejsze dla 
-czasu odpowiedzi s± przepustowo¶æ po³±czenia z Internetem oraz ¶redni rozmiar plików wysy³anych przez serwer. 
-¦redni rozmiar pliku zale¿y w g³ównej mierze od rodzaju informacji publikowanych na serwerze (bêdzie on np. du¿y 
-na serwerze oferuj±cym wiele plików video). Po¿±dane jest jednak ,,oszczêdne'' projektowanie stron WWW, gdy¿ 
-wzrost ¶redniego rozmiaru pliku powoduje szybki spadek ilo¶ci zapytañ na sekundê mo¿liwych do obs³u¿enia. 
+ObciÄ…Å¼enie przy ktÃ³rym serwer zaÅ‚amuje siÄ™ zaleÅ¼y oczywiÅ›cie od 
+sprzÄ™towych wÅ‚asnoÅ›ci serwera i zastosowanego oprogramowania. OprÃ³cz cech samego serwera najistotniejsze dla 
+czasu odpowiedzi sÄ… przepustowoÅ›Ä‡ poÅ‚Ä…czenia z Internetem oraz Å›redni rozmiar plikÃ³w wysyÅ‚anych przez serwer. 
+Åšredni rozmiar pliku zaleÅ¼y w gÅ‚Ã³wnej mierze od rodzaju informacji publikowanych na serwerze (bÄ™dzie on np. duÅ¼y 
+na serwerze oferujÄ…cym wiele plikÃ³w video). PoÅ¼Ä…dane jest jednak ,,oszczÄ™dne'' projektowanie stron WWW, gdyÅ¼ 
+wzrost Å›redniego rozmiaru pliku powoduje szybki spadek iloÅ›ci zapytaÅ„ na sekundÄ™ moÅ¼liwych do obsÅ‚uÅ¼enia. 
 Opisane zachowanie 
-serwera powoduj±ce za³amanie siê jego wydajno¶ci po przekroczeniu maksymalnej liczby zapytañ na sekundê jest 
-typowe dla implementacji nie posiadaj±cych ograniczenia na maksymaln± liczbê jednoczesnych po³±czeñ TCP. Dotyczy 
-to wiêkszo¶ci systemów UNIX--owych, w których procesy serwerów WWW wykonuj± standardow± akcjê fork--and--exec dla 
-ka¿dego nowego ¿±dania HTTP. Prostym rozwi±zaniem tego problemu wydaje siê wprowadzenie ograniczenia na liczbê 
-po³±czeñ TCP. Wymaga³oby to jednak zmian w protokole HTTP (np. wprowadzenie odpowiedzi typu ,,serwer zajêty --
-spróbuj pó¼niej'') oraz odpowiednich zmian w przegl±darkach.
+serwera powodujÄ…ce zaÅ‚amanie siÄ™ jego wydajnoÅ›ci po przekroczeniu maksymalnej liczby zapytaÅ„ na sekundÄ™ jest 
+typowe dla implementacji nie posiadajÄ…cych ograniczenia na maksymalnÄ… liczbÄ™ jednoczesnych poÅ‚Ä…czeÅ„ TCP. Dotyczy 
+to wiÄ™kszoÅ›ci systemÃ³w UNIX--owych, w ktÃ³rych procesy serwerÃ³w WWW wykonujÄ… standardowÄ… akcjÄ™ fork--and--exec dla 
+kaÅ¼dego nowego Å¼Ä…dania HTTP. Prostym rozwiÄ…zaniem tego problemu wydaje siÄ™ wprowadzenie ograniczenia na liczbÄ™ 
+poÅ‚Ä…czeÅ„ TCP. WymagaÅ‚oby to jednak zmian w protokole HTTP (np. wprowadzenie odpowiedzi typu ,,serwer zajÄ™ty --
+sprÃ³buj pÃ³Åºniej'') oraz odpowiednich zmian w przeglÄ…darkach.
 
-Powy¿sze rozwa¿ania dotycz± wydajno¶ci serwera widzianej od strony klienta. W przypadku laboratoryjnych 
-badañ wydajno¶ci ³atwiej ni¿ czas odpowiedzi mo¿na zmierzyæ ilo¶æ zapytañ na sekundê obs³ugiwan± przez serwer. 
-Jest to miara wydajno¶ci bezpo¶rednio koresponduj±ca z czasem odpowiedzi serwera (im wiêcej zapytañ serwer mo¿e 
-obs³u¿yæ, tym mniejszy jest jego czas reakcji) i wolna od wp³ywu takich czynników jak wydajno¶æ przy³±cza po 
+PowyÅ¼sze rozwaÅ¼ania dotyczÄ… wydajnoÅ›ci serwera widzianej od strony klienta. W przypadku laboratoryjnych 
+badaÅ„ wydajnoÅ›ci Å‚atwiej niÅ¼ czas odpowiedzi moÅ¼na zmierzyÄ‡ iloÅ›Ä‡ zapytaÅ„ na sekundÄ™ obsÅ‚ugiwanÄ… przez serwer. 
+Jest to miara wydajnoÅ›ci bezpoÅ›rednio korespondujÄ…ca z czasem odpowiedzi serwera (im wiÄ™cej zapytaÅ„ serwer moÅ¼e 
+obsÅ‚uÅ¼yÄ‡, tym mniejszy jest jego czas reakcji) i wolna od wpÅ‚ywu takich czynnikÃ³w jak wydajnoÅ›Ä‡ przyÅ‚Ä…cza po 
 stronie klienta.
-Ci±g³y wzrost liczby u¿ytkowników Internetu stawia coraz wiêksze wymagania co do wydajno¶ci serwerów WWW. Do tego faktu dochodzi jeszcze jeden - charakterystyka ruchu WWW - oprócz serwowania stron statycznych, dochodz± dynamiczne i obs³uga po³±czeñ szyfrowanych. 
-W jaki sposób zmienia siê wtedy wykorzystanie poszczególnych elementów widaæ na rys.\ref{charakterystyka}
+CiÄ…gÅ‚y wzrost liczby uÅ¼ytkownikÃ³w Internetu stawia coraz wiÄ™ksze wymagania co do wydajnoÅ›ci serwerÃ³w WWW. Do tego faktu dochodzi jeszcze jeden - charakterystyka ruchu WWW - oprÃ³cz serwowania stron statycznych, dochodzÄ… dynamiczne i obsÅ‚uga poÅ‚Ä…czeÅ„ szyfrowanych. 
+W jaki sposÃ³b zmienia siÄ™ wtedy wykorzystanie poszczegÃ³lnych elementÃ³w widaÄ‡ na rys.\ref{charakterystyka}
 \begin{figure}[h]
 \centering
 \includegraphics[width=3in]{./rysunki/charakterystyka_ruchu.eps}
-\caption{Obci±¿enie poszczególnych elementów serwera WWW w zale¿no¶ci od typu po³±czenia.}
+\caption{ObciÄ…Å¼enie poszczegÃ³lnych elementÃ³w serwera WWW w zaleÅ¼noÅ›ci od typu poÅ‚Ä…czenia.}
 \label{charakterystyka}
 \end{figure}
 
-Prêdzej czy pó¼niej ka¿dy administrator takiego serwera stanie przed problemem znalezienia sposobu na 
-zwiêkszenie jego wydajno¶ci. Zwykle ze wzglêdu na specyfikê publikowanych informacji niewiele mo¿na zrobiæ ze 
-¶rednim rozmiarem przesy³anego pliku. Podstawow± metod± zwiêkszenia wydajno¶ci serwera jest zwiêkszenie 
-przepustowo¶ci przy³±cza. Sprzêtowa modernizacja samego serwera nie przyniesie rezultatów w przypadku gdy 
-,,w±skim gard³emi'' jest przy³±cze. Je¶li jednak dysponujemy odpowiednio wydajnym przy³±czem (np. lini± ATM) 
-,,w±skim gard³em'' jest na pewno serwer. 
+PrÄ™dzej czy pÃ³Åºniej kaÅ¼dy administrator takiego serwera stanie przed problemem znalezienia sposobu na 
+zwiÄ™kszenie jego wydajnoÅ›ci. Zwykle ze wzglÄ™du na specyfikÄ™ publikowanych informacji niewiele moÅ¼na zrobiÄ‡ ze 
+Å›rednim rozmiarem przesyÅ‚anego pliku. PodstawowÄ… metodÄ… zwiÄ™kszenia wydajnoÅ›ci serwera jest zwiÄ™kszenie 
+przepustowoÅ›ci przyÅ‚Ä…cza. SprzÄ™towa modernizacja samego serwera nie przyniesie rezultatÃ³w w przypadku gdy 
+,,wÄ…skim gardÅ‚emi'' jest przyÅ‚Ä…cze. JeÅ›li jednak dysponujemy odpowiednio wydajnym przyÅ‚Ä…czem (np. liniÄ… ATM) 
+,,wÄ…skim gardÅ‚em'' jest na pewno serwer. 
 
-Wydajno¶æ ka¿dego komputera zwiêkszyæ mo¿na dokupuj±c wiêksz± ilo¶æ pamiêci RAM i szybsze dyski twarde. 
-W przypadku serwerów WWW jest to jednak rozwi±zanie prowizoryczne. Lepsze efekty przynosi instalacja maszyny 
-wieloprocesorowej. Niestety obecne implementacje TCP/IP nie wykorzystuj± wielow±tkowo¶ci w stopniu, który 
-umo¿liwia³by pe³ne wykorzystanie cech technologii wieloprocesorowej. Nale¿y siê spodziewaæ, ¿e otwartych 
-po³±czeñ TCP bêdzie typowo wiêcej ni¿ procesorów w serwerze. Gdyby obs³ugê stosu TCP/IP podzieliæ mo¿na by³o na 
-niezale¿ne w±tki, których wykonanie przebiegaæ by mog³o z podzia³em czasu, to efektywno¶æ wieloprocesorowych 
-serwerów WWW by³aby znacznie wiêksza ni¿ obecnie. Wspó³cze¶nie stosowanie serwerów wieloprocesorowych nie 
-przynosi korzy¶ci tak du¿ych jak spodziewane. 
-Dobr± metod± zwiêkszenia wydajno¶ci WWW jest stosowanie serwerów proxy, które na zasadzie pamiêci cache 
-przechowuj± czê¶æ dokumentów serwisu i w ten sposób czê¶ciowo wyrêczaj± serwer g³ówny. 
-Najbardziej efektywn± i jednocze¶nie najbardziej zaawansowan± technologicznie metod± zwiêkszenia 
-wydajno¶ci serwera WWW jest powielenie jego zawarto¶ci na jeden lub kilka dodatkowych serwerów i udostêpnienie 
-tej grupy pod jednym adresem IP. Rozwi±zanie takie wymaga sprzêtu lub oprogramowania, które z jednej strony 
-ukrywa³oby przed u¿ytkownikami istnienie kilku serwerów o jednakowej zawarto¶ci a z drugiej dokonywa³oby 
-dystrybucji obci±¿enia pomiêdzy te serwery w sposób maksymalizuj±cy ich ³±czn± wydajno¶æ.
+WydajnoÅ›Ä‡ kaÅ¼dego komputera zwiÄ™kszyÄ‡ moÅ¼na dokupujÄ…c wiÄ™kszÄ… iloÅ›Ä‡ pamiÄ™ci RAM i szybsze dyski twarde. 
+W przypadku serwerÃ³w WWW jest to jednak rozwiÄ…zanie prowizoryczne. Lepsze efekty przynosi instalacja maszyny 
+wieloprocesorowej. Niestety obecne implementacje TCP/IP nie wykorzystujÄ… wielowÄ…tkowoÅ›ci w stopniu, ktÃ³ry 
+umoÅ¼liwiaÅ‚by peÅ‚ne wykorzystanie cech technologii wieloprocesorowej. NaleÅ¼y siÄ™ spodziewaÄ‡, Å¼e otwartych 
+poÅ‚Ä…czeÅ„ TCP bÄ™dzie typowo wiÄ™cej niÅ¼ procesorÃ³w w serwerze. Gdyby obsÅ‚ugÄ™ stosu TCP/IP podzieliÄ‡ moÅ¼na byÅ‚o na 
+niezaleÅ¼ne wÄ…tki, ktÃ³rych wykonanie przebiegaÄ‡ by mogÅ‚o z podziaÅ‚em czasu, to efektywnoÅ›Ä‡ wieloprocesorowych 
+serwerÃ³w WWW byÅ‚aby znacznie wiÄ™ksza niÅ¼ obecnie. WspÃ³Å‚czeÅ›nie stosowanie serwerÃ³w wieloprocesorowych nie 
+przynosi korzyÅ›ci tak duÅ¼ych jak spodziewane. 
+DobrÄ… metodÄ… zwiÄ™kszenia wydajnoÅ›ci WWW jest stosowanie serwerÃ³w proxy, ktÃ³re na zasadzie pamiÄ™ci cache 
+przechowujÄ… czÄ™Å›Ä‡ dokumentÃ³w serwisu i w ten sposÃ³b czÄ™Å›ciowo wyrÄ™czajÄ… serwer gÅ‚Ã³wny. 
+Najbardziej efektywnÄ… i jednoczeÅ›nie najbardziej zaawansowanÄ… technologicznie metodÄ… zwiÄ™kszenia 
+wydajnoÅ›ci serwera WWW jest powielenie jego zawartoÅ›ci na jeden lub kilka dodatkowych serwerÃ³w i udostÄ™pnienie 
+tej grupy pod jednym adresem IP. RozwiÄ…zanie takie wymaga sprzÄ™tu lub oprogramowania, ktÃ³re z jednej strony 
+ukrywaÅ‚oby przed uÅ¼ytkownikami istnienie kilku serwerÃ³w o jednakowej zawartoÅ›ci a z drugiej dokonywaÅ‚oby 
+dystrybucji obciÄ…Å¼enia pomiÄ™dzy te serwery w sposÃ³b maksymalizujÄ…cy ich Å‚Ä…cznÄ… wydajnoÅ›Ä‡.
 
 \subsection{Serwery wielokomputerowe -- rozproszone}
 
-\hspace{0.63cm}¯eby serwery WWW by³y wydajne oraz mog³y pracowaæ bez przerwy przez 365 dni w roku 24 godz. 
-na dobê -- nie mog± pracowaæ na jednym komputerze; wydajno¶æ, skalowalno¶æ a przede wszystkim odporno¶æ na 
-awarie mo¿e zostaæ zrealizowana jedynie poprzez rozproszone serwery WWW, w których zapytania od klientów s±
-w odpowiedni sposób dystrybuowane do poszczególnych serwerów \cite{metodyalgorytmy}. 
+\hspace{0.63cm}Å»eby serwery WWW byÅ‚y wydajne oraz mogÅ‚y pracowaÄ‡ bez przerwy przez 365 dni w roku 24 godz. 
+na dobÄ™ -- nie mogÄ… pracowaÄ‡ na jednym komputerze; wydajnoÅ›Ä‡, skalowalnoÅ›Ä‡ a przede wszystkim odpornoÅ›Ä‡ na 
+awarie moÅ¼e zostaÄ‡ zrealizowana jedynie poprzez rozproszone serwery WWW, w ktÃ³rych zapytania od klientÃ³w sÄ…
+w odpowiedni sposÃ³b dystrybuowane do poszczegÃ³lnych serwerÃ³w \cite{metodyalgorytmy}. 
 
-¦wiatowy trend w wykorzystywaniu na ró¿ne sposoby technologii World Wide Web jest coraz wiêkszy.
-Znakomite darmowe serwery WWW (Apache, NCSA itp.), spora ilo¶æ przegl±darek internetowych
-oraz olbrzymi rozwój internetu \cite{siecikomputerowe}, a tak¿e ogrone mo¿liwo¶ci tej us³ugi spowodowa³y zwiêkszone 
-zainteresowanie t± technologi±.
-Jednym z ostatnich nies³ychanie modnych technologii internetowych wykorzystuj±cych WWW jest handel 
-elektroniczny skierowany tak do pojedynczego odbiorcy (\emph{Business to Customer-- B2C}) jak i wspó³pracuj±cych
-firm (\emph{Business to Business}-- B2B). Poza tym równie¿ bardzo interesuj±cym celem s± serwery aplikacyjne.
-Powoduje to jednak¿e konieczno¶æ utrzymania w sprawno¶ci serwisu przez ca³y rok -- bez 
-przerwy. Nie oznacza to wy³±cznie mo¿liwo¶ci korzystania z tych serwerów, czyli bezawaryjnej pracy, ale równie¿
-uzyskanie jak najlepszego komfortu pracy z tymi systemami. Poza tym jeszcze jedn± nies³ychanie istotn± rzecz±
-przemawiaj±c± za wielokomputerowymi serwerami WWW jest ich znakomita skalowalno¶æ (du¿o tañsza od skalowalno¶ci
-pojedynczych maszyn, które nie zawsze dadz± siê rozbudowywaæ). Takich zalet nie posiada pojedyncza maszyna. Jej koszt zakupu, 
-a tak¿e koszt rozbudowy -- przy zapewnieniu bezpieczeñstwa i odporno¶ci na uszkodzenia jest olbrzymi. Fakt, ¿e pojedyncz±
-maszyn± ³atwiej siê administruje nie rekompensuje w pe³ni u³omno¶ci architektury von Neumanna. Wielokomputerowe serwery
-(nie tylko WWW, ale tak¿e serwery obliczeniowe) mog± osi±gaæ zawrotne wydajno¶ci, s± praktycznie w nieskoñczono¶æ skalowalne,
-nadmiarowo¶æ tanich elementów (zamiast kupowaæ trzy maszyny klasy mainframe -- mo¿na kupiæ sto komputerów klasy PC) decyduje
-o ich odporno¶ci na uszkodzenia. Najlepszym przyk³adem jako¶ci tej technologii jest najpotê¿niejsza z wyszukiwarek sieciowych --
-GOOGLE\footnote{\emph{www.google.com}} pracuj±ca na kilku tysi±cach komputerow klasy PC, a zawieraj±ca w swojej bazie informacje 
-o ponad miliardzie trzystu milionach stron WWW (jest wykorzystywana przez wiêkszo¶æ serwisów webowych). Wad±
-systemów klastrowych jest administracja i sposób wspó³dzielenia obci±¿enia pomiêdzy poszczególnymi nodami (istnieje jednak¿e
-oprogramowanie darmowe umo¿liwiaj±ce równowa¿enie obci±¿enia serwerów WWW\footnote{\emph{www.linuxvirtualserver.org}}, a 
-tak¿e serwerów obliczeniowych\footnote{\emph{www.mosix.org}}).
+Åšwiatowy trend w wykorzystywaniu na rÃ³Å¼ne sposoby technologii World Wide Web jest coraz wiÄ™kszy.
+Znakomite darmowe serwery WWW (Apache, NCSA itp.), spora iloÅ›Ä‡ przeglÄ…darek internetowych
+oraz olbrzymi rozwÃ³j internetu \cite{siecikomputerowe}, a takÅ¼e ogrone moÅ¼liwoÅ›ci tej usÅ‚ugi spowodowaÅ‚y zwiÄ™kszone 
+zainteresowanie tÄ… technologiÄ….
+Jednym z ostatnich niesÅ‚ychanie modnych technologii internetowych wykorzystujÄ…cych WWW jest handel 
+elektroniczny skierowany tak do pojedynczego odbiorcy (\emph{Business to Customer-- B2C}) jak i wspÃ³Å‚pracujÄ…cych
+firm (\emph{Business to Business}-- B2B). Poza tym rÃ³wnieÅ¼ bardzo interesujÄ…cym celem sÄ… serwery aplikacyjne.
+Powoduje to jednakÅ¼e koniecznoÅ›Ä‡ utrzymania w sprawnoÅ›ci serwisu przez caÅ‚y rok -- bez 
+przerwy. Nie oznacza to wyÅ‚Ä…cznie moÅ¼liwoÅ›ci korzystania z tych serwerÃ³w, czyli bezawaryjnej pracy, ale rÃ³wnieÅ¼
+uzyskanie jak najlepszego komfortu pracy z tymi systemami. Poza tym jeszcze jednÄ… niesÅ‚ychanie istotnÄ… rzeczÄ…
+przemawiajÄ…cÄ… za wielokomputerowymi serwerami WWW jest ich znakomita skalowalnoÅ›Ä‡ (duÅ¼o taÅ„sza od skalowalnoÅ›ci
+pojedynczych maszyn, ktÃ³re nie zawsze dadzÄ… siÄ™ rozbudowywaÄ‡). Takich zalet nie posiada pojedyncza maszyna. Jej koszt zakupu, 
+a takÅ¼e koszt rozbudowy -- przy zapewnieniu bezpieczeÅ„stwa i odpornoÅ›ci na uszkodzenia jest olbrzymi. Fakt, Å¼e pojedynczÄ…
+maszynÄ… Å‚atwiej siÄ™ administruje nie rekompensuje w peÅ‚ni uÅ‚omnoÅ›ci architektury von Neumanna. Wielokomputerowe serwery
+(nie tylko WWW, ale takÅ¼e serwery obliczeniowe) mogÄ… osiÄ…gaÄ‡ zawrotne wydajnoÅ›ci, sÄ… praktycznie w nieskoÅ„czonoÅ›Ä‡ skalowalne,
+nadmiarowoÅ›Ä‡ tanich elementÃ³w (zamiast kupowaÄ‡ trzy maszyny klasy mainframe -- moÅ¼na kupiÄ‡ sto komputerÃ³w klasy PC) decyduje
+o ich odpornoÅ›ci na uszkodzenia. Najlepszym przykÅ‚adem jakoÅ›ci tej technologii jest najpotÄ™Å¼niejsza z wyszukiwarek sieciowych --
+GOOGLE\footnote{\emph{www.google.com}} pracujÄ…ca na kilku tysiÄ…cach komputerow klasy PC, a zawierajÄ…ca w swojej bazie informacje 
+o ponad miliardzie trzystu milionach stron WWW (jest wykorzystywana przez wiÄ™kszoÅ›Ä‡ serwisÃ³w webowych). WadÄ…
+systemÃ³w klastrowych jest administracja i sposÃ³b wspÃ³Å‚dzielenia obciÄ…Å¼enia pomiÄ™dzy poszczegÃ³lnymi nodami (istnieje jednakÅ¼e
+oprogramowanie darmowe umoÅ¼liwiajÄ…ce rÃ³wnowaÅ¼enie obciÄ…Å¼enia serwerÃ³w WWW\footnote{\emph{www.linuxvirtualserver.org}}, a 
+takÅ¼e serwerÃ³w obliczeniowych\footnote{\emph{www.mosix.org}}).
 
 Trend ten nie znajduje odzwierciedlenia tylko w serwerach webowych. Konstrukcja wielokomputerowa pozwala na znacznie 
-efektywniejsze zarz±dzanie zasobami i przydzieleniem zadañ do zasobów. Pozwala tak¿e uzyskaæ ,,prawdziwe'' zrównoleglenie
-obliczeñ -- brak jest tu ,,kombinowanych'' metod uwspólniania zasobów i rozdzia³u ¿±dañ do magistral i pamiêci obecnych
-w typowych architekturach. Kolejn± zalet± systemów nieneumanowskich jest mo¿liwo¶æ zapewnienia bezpieczeñstwa ci±g³o¶ci
-pracy w sposób dot±d niewykonalny. Przyk³adem spe³nienia wszystkich tych cech s± wspó³czesne superkomputery i mainframy, 
-z których do¶wiadczeñ korzystali wspó³cze¶ni twórcy nowoczesnych, skalowalnych technik webowych. Ka¿dy superkomputer (SGI,
-Hitachi, NEC, Intel, IBM) oraz system mainframowy (g³ównie IBM) sk³ada siê z szeregu (nawet kilkudziesiêciu) nodów 
-skonsolidowanych zwykle w jednej obudowie, a po³±czonych wysokoprzepustow± sieci± transmisyjn±. St±d wiele pomys³ów zosta³o
-zaczerpniêtych i wykorzystanych przy tworzeniu rozposzonych architektur webowych.
+efektywniejsze zarzÄ…dzanie zasobami i przydzieleniem zadaÅ„ do zasobÃ³w. Pozwala takÅ¼e uzyskaÄ‡ ,,prawdziwe'' zrÃ³wnoleglenie
+obliczeÅ„ -- brak jest tu ,,kombinowanych'' metod uwspÃ³lniania zasobÃ³w i rozdziaÅ‚u Å¼Ä…daÅ„ do magistral i pamiÄ™ci obecnych
+w typowych architekturach. KolejnÄ… zaletÄ… systemÃ³w nieneumanowskich jest moÅ¼liwoÅ›Ä‡ zapewnienia bezpieczeÅ„stwa ciÄ…gÅ‚oÅ›ci
+pracy w sposÃ³b dotÄ…d niewykonalny. PrzykÅ‚adem speÅ‚nienia wszystkich tych cech sÄ… wspÃ³Å‚czesne superkomputery i mainframy, 
+z ktÃ³rych doÅ›wiadczeÅ„ korzystali wspÃ³Å‚czeÅ›ni twÃ³rcy nowoczesnych, skalowalnych technik webowych. KaÅ¼dy superkomputer (SGI,
+Hitachi, NEC, Intel, IBM) oraz system mainframowy (gÅ‚Ã³wnie IBM) skÅ‚ada siÄ™ z szeregu (nawet kilkudziesiÄ™ciu) nodÃ³w 
+skonsolidowanych zwykle w jednej obudowie, a poÅ‚Ä…czonych wysokoprzepustowÄ… sieciÄ… transmisyjnÄ…. StÄ…d wiele pomysÅ‚Ã³w zostaÅ‚o
+zaczerpniÄ™tych i wykorzystanych przy tworzeniu rozposzonych architektur webowych.
 
-Klasyczny system komputerowy obs³uguj±cy serwer webowy jest obs³ugiwany niskopoziomowo -- system operacyjny obs³uguj±cy
-serwer webowy. W architekturze rozproszonego webu pomiêdzy systemem operacyjnym poszczególnych nodów, a serwerem WWW (równie¿
-poszczególnych nodów) znajduje siê logiczny uk³ad koordynuj±cy dzia³ania poszczególnych serwerów WWW tak aby dzia³a³y jako
-jeden rozproszony serwis. Ten system zarz±dzaj±cy odpowiada za: 
+Klasyczny system komputerowy obsÅ‚ugujÄ…cy serwer webowy jest obsÅ‚ugiwany niskopoziomowo -- system operacyjny obsÅ‚ugujÄ…cy
+serwer webowy. W architekturze rozproszonego webu pomiÄ™dzy systemem operacyjnym poszczegÃ³lnych nodÃ³w, a serwerem WWW (rÃ³wnieÅ¼
+poszczegÃ³lnych nodÃ³w) znajduje siÄ™ logiczny ukÅ‚ad koordynujÄ…cy dziaÅ‚ania poszczegÃ³lnych serwerÃ³w WWW tak aby dziaÅ‚aÅ‚y jako
+jeden rozproszony serwis. Ten system zarzÄ…dzajÄ…cy odpowiada za: 
 \begin{itemize}
-\item rozdysponowywanie ¿±dañ przychodz±cych od klientów na poszczególne nody w taki sposób aby zapewniæ zrównowa¿enie 
-obci±¿enia poszczególnych maszyn, 
-\item zapewnienie spójno¶ci danych na drodze klient--serwer www--klient, 
-\item oraz sprawowanie kontroli nad poszczególnymi elementami klastra w ten sposób, aby zawsze, i odpowiednio szybko, by³o 
-wiadomo, który komputer nale¿y omijaæ ze wzglêdu na awariê.
+\item rozdysponowywanie Å¼Ä…daÅ„ przychodzÄ…cych od klientÃ³w na poszczegÃ³lne nody w taki sposÃ³b aby zapewniÄ‡ zrÃ³wnowaÅ¼enie 
+obciÄ…Å¼enia poszczegÃ³lnych maszyn, 
+\item zapewnienie spÃ³jnoÅ›ci danych na drodze klient--serwer www--klient, 
+\item oraz sprawowanie kontroli nad poszczegÃ³lnymi elementami klastra w ten sposÃ³b, aby zawsze, i odpowiednio szybko, byÅ‚o 
+wiadomo, ktÃ³ry komputer naleÅ¼y omijaÄ‡ ze wzglÄ™du na awariÄ™.
 \end{itemize}
 
-Poni¿ej znajduje siê opis i charakterystyka poszczególnych systemów równowa¿±cych obci±¿enia w rozproszonych serwerach 
+PoniÅ¼ej znajduje siÄ™ opis i charakterystyka poszczegÃ³lnych systemÃ³w rÃ³wnowaÅ¼Ä…cych obciÄ…Å¼enia w rozproszonych serwerach 
 webowych. 
 
-\section{Przegl±d skalowalnych systemów serwerów webowych}
+\section{PrzeglÄ…d skalowalnych systemÃ³w serwerÃ³w webowych}
 
-Na rysunku \ref{proste_modele} przedstawiono wszystkie proste modele funkcjonalne systemów do równowa¿enia obci±¿eñ w serwisach WWW. 
-Ich charakterystyczn± cech± jest to, i¿ w ka¿dym wykorzystywany jest jeden mechanizm szeregowania. Mo¿na je traktowaæ jak 
-swego rodzaju klocki, z których budowane s± rzeczywiste systemy. Cze¶æ z nich odpowiada rzeczywistym systemom bez dodatkowych 
-modyfikacji, czê¶æ odzwierciedla rzeczywiste systemy dopiero we wzajemnych kombinacjach. Wyodrêbnienie prostych modeli 
-umo¿liwia zbudowanie przejrzystej taksonomii skalowalnych systemów serwerów webowych.
+Na rysunku \ref{proste_modele} przedstawiono wszystkie proste modele funkcjonalne systemÃ³w do rÃ³wnowaÅ¼enia obciÄ…Å¼eÅ„ w serwisach WWW. 
+Ich charakterystycznÄ… cechÄ… jest to, iÅ¼ w kaÅ¼dym wykorzystywany jest jeden mechanizm szeregowania. MoÅ¼na je traktowaÄ‡ jak 
+swego rodzaju klocki, z ktÃ³rych budowane sÄ… rzeczywiste systemy. CzeÅ›Ä‡ z nich odpowiada rzeczywistym systemom bez dodatkowych 
+modyfikacji, czÄ™Å›Ä‡ odzwierciedla rzeczywiste systemy dopiero we wzajemnych kombinacjach. WyodrÄ™bnienie prostych modeli 
+umoÅ¼liwia zbudowanie przejrzystej taksonomii skalowalnych systemÃ³w serwerÃ³w webowych.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=4.9in]{./rysunki/modele_podstawowe.eps}
-\caption{Podstawowe modele systemów do równowa¿enia obci±¿eñ}
+\caption{Podstawowe modele systemÃ³w do rÃ³wnowaÅ¼enia obciÄ…Å¼eÅ„}
 \label{proste_modele}
 \end{figure}
 
-\subsection{Podzia³ ze wzglêdu na rozmieszczenie serwerów webowych}
-Podzia³ ten kszta³tuje siê nastêpuj±co:
+\subsection{PodziaÅ‚ ze wzglÄ™du na rozmieszczenie serwerÃ³w webowych}
+PodziaÅ‚ ten ksztaÅ‚tuje siÄ™ nastÄ™pujÄ…co:
 \begin{itemize}
-\item Klaster webowy. Je¶li serwery webowe s± rozproszone lokalnie (skupione geograficznie), to mówi siê o tzw. klastrze 
-webowym (web--cluster). Z technicznego punktu widzenia klaster webowy funkcjonuje w obrêbie sieci lokalnej. Ka¿dy z prostych 
-modeli przedstawionych na rys.\ref{proste_modele} mo¿e byæ implementowany w klastrze webowym. W przypadku modelu {\bf G}, ze wzglêdu na uwarunkowania 
-techniczne transmisji ¿±dañ, mo¿e zaj¶æ potrzeba umiejscowienia klastra w obrêbie podsieci sieci 
+\item Klaster webowy. JeÅ›li serwery webowe sÄ… rozproszone lokalnie (skupione geograficznie), to mÃ³wi siÄ™ o tzw. klastrze 
+webowym (web--cluster). Z technicznego punktu widzenia klaster webowy funkcjonuje w obrÄ™bie sieci lokalnej. KaÅ¼dy z prostych 
+modeli przedstawionych na rys.\ref{proste_modele} moÅ¼e byÄ‡ implementowany w klastrze webowym. W przypadku modelu {\bf G}, ze wzglÄ™du na uwarunkowania 
+techniczne transmisji Å¼Ä…daÅ„, moÅ¼e zajÅ›Ä‡ potrzeba umiejscowienia klastra w obrÄ™bie podsieci sieci 
 lokalnej \cite{modele15,modele20,LoadBalancingWithND}.
-\item Rozproszone serwery webowe. Je¶li miêdzy rozproszonymi globalnie (rozproszonymi geograficznie) serwerami webowymi 
-stosowany jest jakikolwiek mechanizm szeregowania, mówi siê o rozproszonych serwerach webowych (distributed web--servers), w 
-przeciwnym przypadku -- o lustrzanych serwerach webowych (mirror web--servers). Teoretycznie ka¿dy model przedstawiony na rys.\ref{proste_modele}
-mo¿e byæ implementowany w¶ród rozproszonych serwerów webowych, jednak ze wzglêdu na powstawanie dodatkowych opó¼nieñ podczas 
-transmisji zwrotnej w modelu {\bf F} oraz uwarunkowania techniczne transmisji ¿±dañ w modelu {\bf G}, oba wymienione modele maj± 
-zastosowanie g³ównie klastrach webowych.
-\item Rozproszone klastry webowe. Szczególnym przypadkiem rozmieszczenia serwerów webowych jest kombinacja globalnego i 
-lokalnego rozproszenia. Je¶li miedzy klastrami webowymi stosowany jest jakikolwiek mechanizm szeregowania, mówi siê o 
+\item Rozproszone serwery webowe. JeÅ›li miÄ™dzy rozproszonymi globalnie (rozproszonymi geograficznie) serwerami webowymi 
+stosowany jest jakikolwiek mechanizm szeregowania, mÃ³wi siÄ™ o rozproszonych serwerach webowych (distributed web--servers), w 
+przeciwnym przypadku -- o lustrzanych serwerach webowych (mirror web--servers). Teoretycznie kaÅ¼dy model przedstawiony na rys.\ref{proste_modele}
+moÅ¼e byÄ‡ implementowany wÅ›rÃ³d rozproszonych serwerÃ³w webowych, jednak ze wzglÄ™du na powstawanie dodatkowych opÃ³ÅºnieÅ„ podczas 
+transmisji zwrotnej w modelu {\bf F} oraz uwarunkowania techniczne transmisji Å¼Ä…daÅ„ w modelu {\bf G}, oba wymienione modele majÄ… 
+zastosowanie gÅ‚Ã³wnie klastrach webowych.
+\item Rozproszone klastry webowe. SzczegÃ³lnym przypadkiem rozmieszczenia serwerÃ³w webowych jest kombinacja globalnego i 
+lokalnego rozproszenia. JeÅ›li miedzy klastrami webowymi stosowany jest jakikolwiek mechanizm szeregowania, mÃ³wi siÄ™ o 
 rozproszonych klastrach webowych (distributed web--clusters). W przeciwnym przypadku -- o lustrzanych klastrach webowych (mirror 
-web--clusters). Rozproszone klastry webowe mo¿na przedstawiaæ za pomoc± kombinacji prostych modeli funkcjonalnych (rys.\ref{complex_modele} {\bf J, K}). 
+web--clusters). Rozproszone klastry webowe moÅ¼na przedstawiaÄ‡ za pomocÄ… kombinacji prostych modeli funkcjonalnych (rys.\ref{complex_modele} {\bf J, K}). 
 \end{itemize}
 
-\subsection{Podzia³ i charakterystyka ze wzglêdu na umiejscowienie mechanizmu szeregowania}
+\subsection{PodziaÅ‚ i charakterystyka ze wzglÄ™du na umiejscowienie mechanizmu szeregowania}
 
-Mechanizm szeregowania mo¿e byæ umiejscowiony: po stronie klienta, po stronie serwera, oraz jako osobny uk³adu (serwer DNS,
+Mechanizm szeregowania moÅ¼e byÄ‡ umiejscowiony: po stronie klienta, po stronie serwera, oraz jako osobny ukÅ‚adu (serwer DNS,
 dystrybutor).
 
-\subsubsection{Podej¶cie od strony klienta}
+\subsubsection{PodejÅ›cie od strony klienta}
 
-G³ówn± zalet± stosowania mechanizmów rozpraszania obci±¿enia po stronie klienta jest ca³kowita niezale¿no¶æ od architektury 
-serwera(ów), a przede wszystkim od miejsca ich rozmieszczenia (mog± byæ nie tyle geograficznie rozproszone, co wrêcz 
-nieskoordynowane jako ca³o¶æ). 
+GÅ‚Ã³wnÄ… zaletÄ… stosowania mechanizmÃ³w rozpraszania obciÄ…Å¼enia po stronie klienta jest caÅ‚kowita niezaleÅ¼noÅ›Ä‡ od architektury 
+serwera(Ã³w), a przede wszystkim od miejsca ich rozmieszczenia (mogÄ… byÄ‡ nie tyle geograficznie rozproszone, co wrÄ™cz 
+nieskoordynowane jako caÅ‚oÅ›Ä‡). 
 
-Rozwi±zania w tym zakresie mo¿emy podzieliæ na dwie podgrupy:
+RozwiÄ…zania w tym zakresie moÅ¼emy podzieliÄ‡ na dwie podgrupy:
 \begin{itemize}
-\item mechanizmy równowa¿enia obci±¿enia implementowane w przegl±darkach i jako applety Java:
+\item mechanizmy rÃ³wnowaÅ¼enia obciÄ…Å¼enia implementowane w przeglÄ…darkach i jako applety Java:
 \begin{itemize}
-\item w przegl±darkach poprzez API. Przegl±darka mo¿e aktywnie pe³niæ roleê w dystrybucji zapytañ, pod warunkiem posiadania
-informacji na temat adresów serwerów WWW. Wtedy, na podstawie zapytania otrzymanego od u¿ytkownika, przegl±darka wybiera
-serwer do przed³o¿enia zapytania. Klasycznym przyk³adem takiego rozwi±zania jest mechanizm LB implementowany w przegl±darkach
-firmy Netscape \cite{gliwice16,gliwice17}. Po wygenerowaniu zapytania przez u¿ytkownika (tylko do serwera 
-www.netscape.com), przegl±darka wybiera liczbê z zakresu od 1 do liczby znanych jej serwerów i kieruje zapytanie do wêz³a
-o adresie www\emph{liczba}.netscape.com. Nie jest to rozwi±zanie interesuj±ce, gdy¿ liczba serwerów i adresów jest na sta³e 
-zakodowana w przegl±darce. Poza tym taki sposób rozdysponowywania ruchu (losowy) nie zapewnia równowa¿enia obci±¿enia pomiêdzy
+\item w przeglÄ…darkach poprzez API. PrzeglÄ…darka moÅ¼e aktywnie peÅ‚niÄ‡ roleÄ™ w dystrybucji zapytaÅ„, pod warunkiem posiadania
+informacji na temat adresÃ³w serwerÃ³w WWW. Wtedy, na podstawie zapytania otrzymanego od uÅ¼ytkownika, przeglÄ…darka wybiera
+serwer do przedÅ‚oÅ¼enia zapytania. Klasycznym przykÅ‚adem takiego rozwiÄ…zania jest mechanizm LB implementowany w przeglÄ…darkach
+firmy Netscape \cite{gliwice16,gliwice17}. Po wygenerowaniu zapytania przez uÅ¼ytkownika (tylko do serwera 
+www.netscape.com), przeglÄ…darka wybiera liczbÄ™ z zakresu od 1 do liczby znanych jej serwerÃ³w i kieruje zapytanie do wÄ™zÅ‚a
+o adresie www\emph{liczba}.netscape.com. Nie jest to rozwiÄ…zanie interesujÄ…ce, gdyÅ¼ liczba serwerÃ³w i adresÃ³w jest na staÅ‚e 
+zakodowana w przeglÄ…darce. Poza tym taki sposÃ³b rozdysponowywania ruchu (losowy) nie zapewnia rÃ³wnowaÅ¼enia obciÄ…Å¼enia pomiÄ™dzy
 serwerami;
-\item applety Java. O wiele ciekawszym od powy¿szego rozwi±zaniem, jest implementacja specyficznych appletów Java. Gdy
-u¿ytkownik wysy³a ¿±danie do serwisu, zamiast dokumentu HTML, pobiera applet Java. Applet ten zawiera adresy IP maszyn 
-dostarczaj±cych ten serwis WWW \cite{gliwice18,gliwice19}. Applet mo¿e byæ modyfikowany przez program zbieraj±cy informacje o 
-stanie serwerów (o ich obci±¿eniu) oraz o jako¶ci po³±czenia sieciowego. Informacje te mo¿e wykorzystywaæ applet do
-wyboru najbardziej odpowiedniego serwera do realizacji ¿±dania. G³ówn± wad± tego rozwi±zanie jest generowanie 
-dodatkowego ruchu w sieci (zwi±zanej z pobieraniem informacji o stanie obci±¿enia serwerów. Naturalnie jest ono równie¿ 
-bezu¿yteczne gdy przegl±darka nie potrafi interpretowaæ kodu Javy.
+\item applety Java. O wiele ciekawszym od powyÅ¼szego rozwiÄ…zaniem, jest implementacja specyficznych appletÃ³w Java. Gdy
+uÅ¼ytkownik wysyÅ‚a Å¼Ä…danie do serwisu, zamiast dokumentu HTML, pobiera applet Java. Applet ten zawiera adresy IP maszyn 
+dostarczajÄ…cych ten serwis WWW \cite{gliwice18,gliwice19}. Applet moÅ¼e byÄ‡ modyfikowany przez program zbierajÄ…cy informacje o 
+stanie serwerÃ³w (o ich obciÄ…Å¼eniu) oraz o jakoÅ›ci poÅ‚Ä…czenia sieciowego. Informacje te moÅ¼e wykorzystywaÄ‡ applet do
+wyboru najbardziej odpowiedniego serwera do realizacji Å¼Ä…dania. GÅ‚Ã³wnÄ… wadÄ… tego rozwiÄ…zanie jest generowanie 
+dodatkowego ruchu w sieci (zwiÄ…zanej z pobieraniem informacji o stanie obciÄ…Å¼enia serwerÃ³w. Naturalnie jest ono rÃ³wnieÅ¼ 
+bezuÅ¼yteczne gdy przeglÄ…darka nie potrafi interpretowaÄ‡ kodu Javy.
 \end{itemize}
-\item serwery Proxy. Jest to oparte na pomy¶le po raz pierwszy wykorzystanym przez badaczy z Cambridge 
-University \cite{gliwice20}. Mechanizm, który zosta³ zaimplementowany w serwer proxy, bazuje na informacji o 
-osi±gniêtej wydajno¶ci podczas dotychczasowych transmisji. Klient otrzymuje listê zreplikowanych serwerów postrzeganych przez
-u¿ytkownika pod jednym adresem. Ka¿dej pozycji na li¶cie jest przypisana informacja o wydajno¶ci serwera. Za ka¿dym razem, 
-gdy klient utworzy po³±czenie z serwerem jest ona aktualizowana. Wybierany jest mirror na podstawie znajomo¶ci
-najlepszej ze ¶rednich wydajno¶ci serwera w ci±gu ostatnich transmisji. Decyzja jest podejmowana z zastrze¿eniami: je¶li 
-wydajno¶æ ostatniej transmisji spad³a poni¿ej pewnego progu, serwer jest uwa¿any za nieosi±galny. Wybór serwera proxy
-wynika³ z kilku wa¿nych powodów: ukrycie przed u¿ytkownikiem faktu wyboru dokumentu miêdzy zreplikowanymi serwerami, brak
-konieczno¶ci ingerencji w kod przegl±darki, oraz korzy¶æ w postaci wspó³dzielenia informacji o wydajno¶ci zreplikowanych 
-serwerów miêdzy u¿ytkownikami przegl±darek. Kilku klientów generuje wiêksz± liczbê zapytañ, poprawiaj±c w ten sposób wydajno¶æ
-algorytmu równowa¿enia obci±¿enia \cite{gliwice20}. 
+\item serwery Proxy. Jest to oparte na pomyÅ›le po raz pierwszy wykorzystanym przez badaczy z Cambridge 
+University \cite{gliwice20}. Mechanizm, ktÃ³ry zostaÅ‚ zaimplementowany w serwer proxy, bazuje na informacji o 
+osiÄ…gniÄ™tej wydajnoÅ›ci podczas dotychczasowych transmisji. Klient otrzymuje listÄ™ zreplikowanych serwerÃ³w postrzeganych przez
+uÅ¼ytkownika pod jednym adresem. KaÅ¼dej pozycji na liÅ›cie jest przypisana informacja o wydajnoÅ›ci serwera. Za kaÅ¼dym razem, 
+gdy klient utworzy poÅ‚Ä…czenie z serwerem jest ona aktualizowana. Wybierany jest mirror na podstawie znajomoÅ›ci
+najlepszej ze Å›rednich wydajnoÅ›ci serwera w ciÄ…gu ostatnich transmisji. Decyzja jest podejmowana z zastrzeÅ¼eniami: jeÅ›li 
+wydajnoÅ›Ä‡ ostatniej transmisji spadÅ‚a poniÅ¼ej pewnego progu, serwer jest uwaÅ¼any za nieosiÄ…galny. WybÃ³r serwera proxy
+wynikaÅ‚ z kilku waÅ¼nych powodÃ³w: ukrycie przed uÅ¼ytkownikiem faktu wyboru dokumentu miÄ™dzy zreplikowanymi serwerami, brak
+koniecznoÅ›ci ingerencji w kod przeglÄ…darki, oraz korzyÅ›Ä‡ w postaci wspÃ³Å‚dzielenia informacji o wydajnoÅ›ci zreplikowanych 
+serwerÃ³w miÄ™dzy uÅ¼ytkownikami przeglÄ…darek. Kilku klientÃ³w generuje wiÄ™kszÄ… liczbÄ™ zapytaÅ„, poprawiajÄ…c w ten sposÃ³b wydajnoÅ›Ä‡
+algorytmu rÃ³wnowaÅ¼enia obciÄ…Å¼enia \cite{gliwice20}. 
 \end{itemize}
 
-\subsubsection{Podej¶cie od strony serwera}
+\subsubsection{PodejÅ›cie od strony serwera}
 
-Techniki równowa¿±ce obci±¿enie w oparciu o serwery wykorzystuj± dwupoziomowy mechanizm dystrybucji. Najpierw zapytania
-klienta s± przydzielane serwerom webowy w klastrze poprzez DNS. Nastêpnie ka¿dy serwer mo¿e przekazaæ otrzymane zapytanie
-do innego serwera w klastrze. Rozwi±zanie w oparciu o rozproszone szeregowanie pozwala wszystkim serwerom braæ udzia³
-w równowa¿eniu obci±¿enia w klastrze poprzez mechanizm przekazywania zapytañ. Po³±czenie podej¶cia w oparciu o DNS oraz z
-technikami przekierowywania zapytañ poprzez serwery webowe prowadzi do rozwi±zania wiêkszo¶ci problemów wynikaj±cych z polityki
-szeregowania np.: niejednolita dystrybucja zapytañ wewn±trz domeny, czy ograniczona kontrola nad zapytaniami.
+Techniki rÃ³wnowaÅ¼Ä…ce obciÄ…Å¼enie w oparciu o serwery wykorzystujÄ… dwupoziomowy mechanizm dystrybucji. Najpierw zapytania
+klienta sÄ… przydzielane serwerom webowy w klastrze poprzez DNS. NastÄ™pnie kaÅ¼dy serwer moÅ¼e przekazaÄ‡ otrzymane zapytanie
+do innego serwera w klastrze. RozwiÄ…zanie w oparciu o rozproszone szeregowanie pozwala wszystkim serwerom braÄ‡ udziaÅ‚
+w rÃ³wnowaÅ¼eniu obciÄ…Å¼enia w klastrze poprzez mechanizm przekazywania zapytaÅ„. PoÅ‚Ä…czenie podejÅ›cia w oparciu o DNS oraz z
+technikami przekierowywania zapytaÅ„ poprzez serwery webowe prowadzi do rozwiÄ…zania wiÄ™kszoÅ›ci problemÃ³w wynikajÄ…cych z polityki
+szeregowania np.: niejednolita dystrybucja zapytaÅ„ wewnÄ…trz domeny, czy ograniczona kontrola nad zapytaniami.
 
-Propozycje oparte na przekierowaniach serwerów ró¿ni± siê w sposobie podejmowania decyzji. W nastêpnym rozdziale s± 
-przedstawione dwie g³ówne klasy rozwi±zañ: wykorzystuj±ce funkcje redirekcji na poziomie protoko³u HTTP oraz w oparciu o
-mechanizm przepisywania pakietów. 
+Propozycje oparte na przekierowaniach serwerÃ³w rÃ³Å¼niÄ… siÄ™ w sposobie podejmowania decyzji. W nastÄ™pnym rozdziale sÄ… 
+przedstawione dwie gÅ‚Ã³wne klasy rozwiÄ…zaÅ„: wykorzystujÄ…ce funkcje redirekcji na poziomie protokoÅ‚u HTTP oraz w oparciu o
+mechanizm przepisywania pakietÃ³w. 
 
-\subsubsection{Podej¶cie od strony niezale¿nego wêz³a dystrybuuj±cego zapytania}
+\subsubsection{PodejÅ›cie od strony niezaleÅ¼nego wÄ™zÅ‚a dystrybuujÄ…cego zapytania}
 
-W wyniku zapytania klienta o dane z serwera WWW -- w pierwszej kolejno¶ci nastêpuje rozwiniêcie nazwy domenowej serwera na
-jego adres IP. Nastêpnie adres IP mo¿e byæ reprezentowany przez wirtualny adres IP przypisany do klastra serwerów. Samo
-rozwiniêcie IP w adres serwera mo¿e byæ realizowane na ró¿nych poziomach. Mo¿e to byæ przekierowanie do konkretnych zasobów na 
-poziomie protoko³u HTTP \cite{modele2} lub na poziomie protoko³u IP oraz adresu URL przy zastosowaniu 
+W wyniku zapytania klienta o dane z serwera WWW -- w pierwszej kolejnoÅ›ci nastÄ™puje rozwiniÄ™cie nazwy domenowej serwera na
+jego adres IP. NastÄ™pnie adres IP moÅ¼e byÄ‡ reprezentowany przez wirtualny adres IP przypisany do klastra serwerÃ³w. Samo
+rozwiniÄ™cie IP w adres serwera moÅ¼e byÄ‡ realizowane na rÃ³Å¼nych poziomach. MoÅ¼e to byÄ‡ przekierowanie do konkretnych zasobÃ³w na 
+poziomie protokoÅ‚u HTTP \cite{modele2} lub na poziomie protokoÅ‚u IP oraz adresu URL przy zastosowaniu 
 dystrybutora \cite{modele1,gliwice3}.
 
-Na pocz±tku skupiano siê na rozwi±zaniach dotycz±cych podmiany nazwy serwisu na jego adres IP \cite{gliwice4}. Jednak¿e w 
-zwi±zku z faktem ograniczeñ takiego rozwi±zania coraz wiêksz± uwagê po¶wiêca siê implementacji mechanizmów podmiany 
-wirtualnego adresu IP na adres konkretnego hosta. Przyk³adami takiego podej¶cia s±: Berkeley MagicRouter \cite{modele1}, 
+Na poczÄ…tku skupiano siÄ™ na rozwiÄ…zaniach dotyczÄ…cych podmiany nazwy serwisu na jego adres IP \cite{gliwice4}. JednakÅ¼e w 
+zwiÄ…zku z faktem ograniczeÅ„ takiego rozwiÄ…zania coraz wiÄ™kszÄ… uwagÄ™ poÅ›wiÄ™ca siÄ™ implementacji mechanizmÃ³w podmiany 
+wirtualnego adresu IP na adres konkretnego hosta. PrzykÅ‚adami takiego podejÅ›cia sÄ…: Berkeley MagicRouter \cite{modele1}, 
 CISCO Local Director \cite{gliwice13}, VirtualServer \cite{virtualserver} oraz IBM SecureWay Network Dispatcher \cite{GettingStarted}.
 
 \begin{itemize}
 \item Wykorzystanie serwera DNS -- 
-egzekutorem jest serwer DNS lub inne urz±dzenie wspomagaj±ce albo przejmuj±ce rolê serwera DNS. Nale¿y u¶ci¶liæ, 
-¿e chodzi tu o tzw. g³ówny serwer DNS bêd±cy autorytatywnym ¼ród³em informacji o okre¶lonej domenie (\emph{authoritative DNS}).
-Jak opisano w Rozdziale 2 system DNS s³u¿y do odwzorowania symbolicznych nazw komputerów w Internecie na ich 
-adresy IP. Funkcja ta, w niejako naturalny sposób, czyni serwer DNS dobrym miejscem na implementacjê mechanizmu 
-równowa¿enia obci±¿eñ. Pierwsz± instalacj± wykorzystuj±c±  DNS do równowa¿enia obci±¿eñ by³ serwis WWW NCSA 
-(ang. \emph{National Center for Supercomputing Applications}). Zestawiono tam klaster dziewiêciu serwerów WWW, który 
-stanowi³ odrêbny obszar DNS i by³ udostêpniany pod nazw± www.ncsa.ninc.edu \cite{barylo28,barylo29}. Na podstawowym serwerze 
-DNS  domeny (obszaru) ncsa.ninc.edu skonfigurowano oprogramowanie, które na zapytania o odwzorowanie nazwy 
-www.ncsa.ninc.edu odpowiada³o podaj±c cyklicznie adresy kolejnych serwerów z klastera. Ten statyczny algorytm 
+egzekutorem jest serwer DNS lub inne urzÄ…dzenie wspomagajÄ…ce albo przejmujÄ…ce rolÄ™ serwera DNS. NaleÅ¼y uÅ›ciÅ›liÄ‡, 
+Å¼e chodzi tu o tzw. gÅ‚Ã³wny serwer DNS bÄ™dÄ…cy autorytatywnym ÅºrÃ³dÅ‚em informacji o okreÅ›lonej domenie (\emph{authoritative DNS}).
+Jak opisano w Rozdziale 2 system DNS sÅ‚uÅ¼y do odwzorowania symbolicznych nazw komputerÃ³w w Internecie na ich 
+adresy IP. Funkcja ta, w niejako naturalny sposÃ³b, czyni serwer DNS dobrym miejscem na implementacjÄ™ mechanizmu 
+rÃ³wnowaÅ¼enia obciÄ…Å¼eÅ„. PierwszÄ… instalacjÄ… wykorzystujÄ…cÄ…  DNS do rÃ³wnowaÅ¼enia obciÄ…Å¼eÅ„ byÅ‚ serwis WWW NCSA 
+(ang. \emph{National Center for Supercomputing Applications}). Zestawiono tam klaster dziewiÄ™ciu serwerÃ³w WWW, ktÃ³ry 
+stanowiÅ‚ odrÄ™bny obszar DNS i byÅ‚ udostÄ™pniany pod nazwÄ… www.ncsa.ninc.edu \cite{barylo28,barylo29}. Na podstawowym serwerze 
+DNS  domeny (obszaru) ncsa.ninc.edu skonfigurowano oprogramowanie, ktÃ³re na zapytania o odwzorowanie nazwy 
+www.ncsa.ninc.edu odpowiadaÅ‚o podajÄ…c cyklicznie adresy kolejnych serwerÃ³w z klastera. Ten statyczny algorytm 
 nazywany jest cyklicznym DNS lub RR--DNS (ang. \emph{Round--Robin DNS}). 
 
-Podej¶cie to jednak bardziej realizuje rozproszenie strumienia zapytañ klientów ni¿ równowa¿enie obci±¿enia serwerów WWW. W
-rzeczywisto¶ci w Internecie jest wiele serwerów DNA i maj± one uk³ad hierarchiczny tzn. nie zawsze trzeba sprawdzaæ adres IP
-w docelowym serwerze DNS. Oznacza to, ¿e nie mamy wp³ywu na czê¶æ zapytañ, jakie s± kierowane do serwera. W pewnym stopniu
-poprawia sytuacjê zastosowanie sygna³ów zwrotnych od serwera WWW do serwera DNS o przeci±¿eniu. Efekt jest odczuwalny dopiero 
-po up³ywie czasu TTL (np. w momencie uszkodzenia maszyny i wy³±czenia jej adresu z puli adresów serwera DNS). Aby efektywno¶æ
-tego typu rozwi±zañ by³a jak najwiêksza, wa¿ne jest prawid³owe oszacowanie tzw. ukrytego obci±¿enia, czyli wielko¶ci zapytañ
-nap³ywaj±cego w czasie TTL. Do estymowania tej wielko¶ci mo¿na zastosowaæ funkcje heurystyczne \cite{gliwice4}.
+PodejÅ›cie to jednak bardziej realizuje rozproszenie strumienia zapytaÅ„ klientÃ³w niÅ¼ rÃ³wnowaÅ¼enie obciÄ…Å¼enia serwerÃ³w WWW. W
+rzeczywistoÅ›ci w Internecie jest wiele serwerÃ³w DNA i majÄ… one ukÅ‚ad hierarchiczny tzn. nie zawsze trzeba sprawdzaÄ‡ adres IP
+w docelowym serwerze DNS. Oznacza to, Å¼e nie mamy wpÅ‚ywu na czÄ™Å›Ä‡ zapytaÅ„, jakie sÄ… kierowane do serwera. W pewnym stopniu
+poprawia sytuacjÄ™ zastosowanie sygnaÅ‚Ã³w zwrotnych od serwera WWW do serwera DNS o przeciÄ…Å¼eniu. Efekt jest odczuwalny dopiero 
+po upÅ‚ywie czasu TTL (np. w momencie uszkodzenia maszyny i wyÅ‚Ä…czenia jej adresu z puli adresÃ³w serwera DNS). Aby efektywnoÅ›Ä‡
+tego typu rozwiÄ…zaÅ„ byÅ‚a jak najwiÄ™ksza, waÅ¼ne jest prawidÅ‚owe oszacowanie tzw. ukrytego obciÄ…Å¼enia, czyli wielkoÅ›ci zapytaÅ„
+napÅ‚ywajÄ…cego w czasie TTL. Do estymowania tej wielkoÅ›ci moÅ¼na zastosowaÄ‡ funkcje heurystyczne \cite{gliwice4}.
 
 \item Reverse proxy serwer
 
-Typowe forward proxy (tak¿e transparent) zwykle u¿ywane przez prowajderów internetu przechowuj± strony najczê¶ciej pobierane 
-przez u¿ytkowników. Z reverse proxy firmy mog± przechowywaæ specyficzn± zawarto¶æ na 
-serwerach podobnie jak prowajderzy i przekierowywaæ ¿±dania (od klientów) do danych sk³adowanych na tych serwerach poprzez 
+Typowe forward proxy (takÅ¼e transparent) zwykle uÅ¼ywane przez prowajderÃ³w internetu przechowujÄ… strony najczÄ™Å›ciej pobierane 
+przez uÅ¼ytkownikÃ³w. Z reverse proxy firmy mogÄ… przechowywaÄ‡ specyficznÄ… zawartoÅ›Ä‡ na 
+serwerach podobnie jak prowajderzy i przekierowywaÄ‡ Å¼Ä…dania (od klientÃ³w) do danych skÅ‚adowanych na tych serwerach poprzez 
 proxy. Serwery 
-proxy przechowuj± (keszuj±) informacje przychodz±ce od lokalnych serwerów. Zatem osi±ganie stron jest o wiele szybsze -- jest 
-pobierane (o ile istnieje) z keszu serwera proxy (st±d nazwa reverse -- poniewa¿ jego dzia³anie jest dok³adnie przeciwne do 
-dzia³ania ,,zwyk³ego'' proxy serwera). 
+proxy przechowujÄ… (keszujÄ…) informacje przychodzÄ…ce od lokalnych serwerÃ³w. Zatem osiÄ…ganie stron jest o wiele szybsze -- jest 
+pobierane (o ile istnieje) z keszu serwera proxy (stÄ…d nazwa reverse -- poniewaÅ¼ jego dziaÅ‚anie jest dokÅ‚adnie przeciwne do 
+dziaÅ‚ania ,,zwykÅ‚ego'' proxy serwera). 
 
-Z technicznego punktu widzenia reverse proxy ró¿ni siê od forward proxy jednym dodatkiem -- tym dodatkiem jest odpowiedni modu³ 
-t³umacz±cy adresy URL backendowych serwerów WWW tak jakby by³y to jego w³asne. Taki sposób dzia³ania ma jeszcze jedn± ciekaw± 
-w³asno¶æ -- serwery backendowe mog± byæ specjalizowane, np. niektóre z nich mog± odpowiadaæ wy³±cznie za przetwarzanie stron 
-dynamicznych, inne statycznych, a jeszcze inne tylko stron zawieraj±cych sporo grafik. Wystarczy w module przeadresowañ 
-umie¶ciæ odpowiedni± informacjê (tzn. jaki adres URL w sieci wewnêtrznej ,,t³umaczyæ'' na adres URL serwera proxy).
+Z technicznego punktu widzenia reverse proxy rÃ³Å¼ni siÄ™ od forward proxy jednym dodatkiem -- tym dodatkiem jest odpowiedni moduÅ‚ 
+tÅ‚umaczÄ…cy adresy URL backendowych serwerÃ³w WWW tak jakby byÅ‚y to jego wÅ‚asne. Taki sposÃ³b dziaÅ‚ania ma jeszcze jednÄ… ciekawÄ… 
+wÅ‚asnoÅ›Ä‡ -- serwery backendowe mogÄ… byÄ‡ specjalizowane, np. niektÃ³re z nich mogÄ… odpowiadaÄ‡ wyÅ‚Ä…cznie za przetwarzanie stron 
+dynamicznych, inne statycznych, a jeszcze inne tylko stron zawierajÄ…cych sporo grafik. Wystarczy w module przeadresowaÅ„ 
+umieÅ›ciÄ‡ odpowiedniÄ… informacjÄ™ (tzn. jaki adres URL w sieci wewnÄ™trznej ,,tÅ‚umaczyÄ‡'' na adres URL serwera proxy).
 
-W zwi±zku z prostot± dzia³ania takiego systemu (znakomicie wykorzystywanego jako systemu zarz±dzaj±cego wielokomputerow± 
-witryn± WWW -- mo¿na równowa¿yæ obci±¿enia, specjalizowaæ serwery, oraz w dowolny sposób propagowaæ ruch webowy) jest on czêsto 
+W zwiÄ…zku z prostotÄ… dziaÅ‚ania takiego systemu (znakomicie wykorzystywanego jako systemu zarzÄ…dzajÄ…cego wielokomputerowÄ… 
+witrynÄ… WWW -- moÅ¼na rÃ³wnowaÅ¼yÄ‡ obciÄ…Å¼enia, specjalizowaÄ‡ serwery, oraz w dowolny sposÃ³b propagowaÄ‡ ruch webowy) jest on czÄ™sto 
 wykorzystywany. 
 
-Oferta ró¿norakich produktów pe³ni±cych rolê reverse proxy serwerów jest bardzo bogata. Rozpo¶ciera siê od produktów 
-komercyjnych, takich jak Intel NetStructure, IBM Web Traffic Express (bed±cy elementem WebSphere Edge Server), po produkty 
-niekomercyjne takie jak: Apache (najpopularniejszy serwer WWW -- mo¿e byæ równie¿ forward, transparent oraz reverse proxy 
-serwerem, niestety na razie obs³uguje jedynie protokó³ HTTP do wersji 1.0), oraz bardzo wydajne narzêdzie: SQUID Web Proxy 
-Cache\footnote{http://www.squid--cache.org} (obs³uguj±cy wszystkie wersje protoko³u HTTP, maj±cy te¿ niezliczon± ilo¶æ funkcji 
-dotycz±cych korzystania z tego systemu i bezpieczeñstwa).
+Oferta rÃ³Å¼norakich produktÃ³w peÅ‚niÄ…cych rolÄ™ reverse proxy serwerÃ³w jest bardzo bogata. RozpoÅ›ciera siÄ™ od produktÃ³w 
+komercyjnych, takich jak Intel NetStructure, IBM Web Traffic Express (bedÄ…cy elementem WebSphere Edge Server), po produkty 
+niekomercyjne takie jak: Apache (najpopularniejszy serwer WWW -- moÅ¼e byÄ‡ rÃ³wnieÅ¼ forward, transparent oraz reverse proxy 
+serwerem, niestety na razie obsÅ‚uguje jedynie protokÃ³Å‚ HTTP do wersji 1.0), oraz bardzo wydajne narzÄ™dzie: SQUID Web Proxy 
+Cache\footnote{http://www.squid--cache.org} (obsÅ‚ugujÄ…cy wszystkie wersje protokoÅ‚u HTTP, majÄ…cy teÅ¼ niezliczonÄ… iloÅ›Ä‡ funkcji 
+dotyczÄ…cych korzystania z tego systemu i bezpieczeÅ„stwa).
 
-\item Wykorzystanie dystrybutora -- wyspecjalizowanego urz±dzenia.
-Alternatywnym rozwi±zaniem do DNS'a, pozwalaj±cym na pe³n± kontrolê ilo¶ci zapytañ nadchodz±cych do serwerów, jest 
-zastosowanie dystrybutora. Rozszerza to wirtualizacjê adresu nie tylko na poziom URL, ale równie¿ na poziom protoko³u IP. 
-Dziêki temu mo¿na zastosowaæ jeden wirtualny adres IP (single virtual IP address) IP--SVA dla klastra serwerów. Pozwala to na 
-pe³n± kontrolê nad strumieniem zapytañ kierowanych do serwerów.
+\item Wykorzystanie dystrybutora -- wyspecjalizowanego urzÄ…dzenia.
+Alternatywnym rozwiÄ…zaniem do DNS'a, pozwalajÄ…cym na peÅ‚nÄ… kontrolÄ™ iloÅ›ci zapytaÅ„ nadchodzÄ…cych do serwerÃ³w, jest 
+zastosowanie dystrybutora. Rozszerza to wirtualizacjÄ™ adresu nie tylko na poziom URL, ale rÃ³wnieÅ¼ na poziom protokoÅ‚u IP. 
+DziÄ™ki temu moÅ¼na zastosowaÄ‡ jeden wirtualny adres IP (single virtual IP address) IP--SVA dla klastra serwerÃ³w. Pozwala to na 
+peÅ‚nÄ… kontrolÄ™ nad strumieniem zapytaÅ„ kierowanych do serwerÃ³w.
 
-Takie podej¶cie ma jednak swoje wady. W systemie powstaje jeden wêze³ obs³uguj±cy transmisjê pakietów. W pewnych przypadkach 
-wydajno¶æ ca³ego systemu mo¿e zale¿eæ od wydajno¶ci tego w³a¶nie wêz³a. Wykorzystywane tutaj algorytmy s± najprostsze, 
-poniewa¿ dystrybutor obs³uguje wszystkie nadchodz±ce pakiety i konieczne jest zminimalizowanie czasu po¶wiêcanego na ich 
-obs³ugê. Przyk³adem takiego rozwi±zania jest SITA-V algorytm  \cite{gliwice10}.
+Takie podejÅ›cie ma jednak swoje wady. W systemie powstaje jeden wÄ™zeÅ‚ obsÅ‚ugujÄ…cy transmisjÄ™ pakietÃ³w. W pewnych przypadkach 
+wydajnoÅ›Ä‡ caÅ‚ego systemu moÅ¼e zaleÅ¼eÄ‡ od wydajnoÅ›ci tego wÅ‚aÅ›nie wÄ™zÅ‚a. Wykorzystywane tutaj algorytmy sÄ… najprostsze, 
+poniewaÅ¼ dystrybutor obsÅ‚uguje wszystkie nadchodzÄ…ce pakiety i konieczne jest zminimalizowanie czasu poÅ›wiÄ™canego na ich 
+obsÅ‚ugÄ™. PrzykÅ‚adem takiego rozwiÄ…zania jest SITA-V algorytm  \cite{gliwice10}.
 
-Rozwi±zania oparte na dystrybutorze ze wzglêdu na zastosowany mechanizm obs³ugi pakietów mo¿emy podzieliæ na:
+RozwiÄ…zania oparte na dystrybutorze ze wzglÄ™du na zastosowany mechanizm obsÅ‚ugi pakietÃ³w moÅ¼emy podzieliÄ‡ na:
 \begin{itemize}
-\item metodê packet single--rewriting; rozwi±zanie to polega na przekierowywaniu pakietów nadchodz±cych od klientów przez 
-dystrybutor poprzez przepisanie docelowego adresu IP. Przyk³adem takiego rozwi±zania jest mechanizm routera TCP opisany 
-w  \cite{gliwice11}. Klaster serwerów WWW sk³ada siê z kilku wêz³ów oraz routera TCP, który pe³ni rolê dystrybutora.
-Adres \emph{i} jest prywatnym adresem wêz³a, na którym uruchomiony jest serwer WWW. Wszystkie zapytania HTTP przychodz± do 
-dystrybutora, poniewa¿ tylko IP--SVA jest adresem znanym publicznie (krok 1). Wybór serwera WWW dokonywany jest przez 
+\item metodÄ™ packet single--rewriting; rozwiÄ…zanie to polega na przekierowywaniu pakietÃ³w nadchodzÄ…cych od klientÃ³w przez 
+dystrybutor poprzez przepisanie docelowego adresu IP. PrzykÅ‚adem takiego rozwiÄ…zania jest mechanizm routera TCP opisany 
+w  \cite{gliwice11}. Klaster serwerÃ³w WWW skÅ‚ada siÄ™ z kilku wÄ™zÅ‚Ã³w oraz routera TCP, ktÃ³ry peÅ‚ni rolÄ™ dystrybutora.
+Adres \emph{i} jest prywatnym adresem wÄ™zÅ‚a, na ktÃ³rym uruchomiony jest serwer WWW. Wszystkie zapytania HTTP przychodzÄ… do 
+dystrybutora, poniewaÅ¼ tylko IP--SVA jest adresem znanym publicznie (krok 1). WybÃ³r serwera WWW dokonywany jest przez 
 dystrybutor na podstawie algorytmu round--robin (krok 2). Przekierowanie pakietu do odpowiedniego serwera realizowane jest
-dziêki przepisaniu adresu docelowego w pakiecie z IP--SVA na prywatny adres \emph{i} serwera w klastrze. Przepisywana jest 
-równie¿ suma kontrolna w pakiecie, poniewa¿ zale¿y ona od adresu docelowego (krok 3). W zwi±zku z tym, ¿e jedno ¿±danie sk³ada 
-siê z kilku pakietów, dystrybutor przechowuje tablicê z³o¿on± z par: adres ¼ród³owy -- adres prywatny serwera WWW. Dziêki temu 
-wszystkie pakiety pochodz±ce od jednego nadawcy mog± byæ kierowane do tego samego serwera WWW (krok 4). W nastêpnym kroku 
-serwer odsy³a ¿±dane dane do klienta (krok 6). Przed odes³aniem danych w pakiecie konieczne jest wpisanie w polu adresu 
+dziÄ™ki przepisaniu adresu docelowego w pakiecie z IP--SVA na prywatny adres \emph{i} serwera w klastrze. Przepisywana jest 
+rÃ³wnieÅ¼ suma kontrolna w pakiecie, poniewaÅ¼ zaleÅ¼y ona od adresu docelowego (krok 3). W zwiÄ…zku z tym, Å¼e jedno Å¼Ä…danie skÅ‚ada 
+siÄ™ z kilku pakietÃ³w, dystrybutor przechowuje tablicÄ™ zÅ‚oÅ¼onÄ… z par: adres ÅºrÃ³dÅ‚owy -- adres prywatny serwera WWW. DziÄ™ki temu 
+wszystkie pakiety pochodzÄ…ce od jednego nadawcy mogÄ… byÄ‡ kierowane do tego samego serwera WWW (krok 4). W nastÄ™pnym kroku 
+serwer odsyÅ‚a Å¼Ä…dane dane do klienta (krok 6). Przed odesÅ‚aniem danych w pakiecie konieczne jest wpisanie w polu adresu 
 nadawcy, adresu IP-SVA (krok 5).
 
-Jakkolwiek rozwi±zanie to jest przezroczyste dla klienta, to wymaga ono du¿ych zmian w kodzie routera oraz systemie 
-operacyjnym serwera. Zwi±zane jest to z tym, ¿e nastêpuje podmiana adresów na poziomie TCP/IP. Z drugiej jednak strony 
-rozwi±zanie to jest bardzo odporne na uszkodzenia. W przypadku awarii serwera WWW jest on usuwany z tablicy routera i nie 
-uwzglêdniany przy rozdziale pakietów a¿ do momentu naprawy. Architektura ta mo¿e byæ po³±czona z wykorzystaniem DNS'a. Pozwala 
-to na skalowanie klastra nie tylko w sieci LAN, ale równie¿ sieci WAN.
-\item metodê packet double--rewriting; architektura ta w swoim za³o¿eniu jest bardzo podobna do przedstawionej powy¿ej. 
-Mechanizm polega na przepisywaniu adresów docelowych w pakietach nadchodz±cych od klientów. Dystrybutor nastêpnie przesy³a 
-pakiety do odpowiedniego wêz³a obs³uguj±cego serwer WWW. W tym przypadku jednak wszystkie pakiety wracaj± z powrotem do 
-dystrybutora. Mechanizm ten opiera siê na architekturze NAT (Network Address Translation) opisanej w  \cite{modele17}.
-W momencie odebrania nadchodz±cego pakietu dystrybutor wybiera serwer WWW (krok 2), a nastêpnie modyfikuje adres ¼ród³owy oraz 
-docelowy w nag³ówku pakietu (krok 3). W drodze powrotnej pakietu dystrybutor ponownie zmienia adresy IP w nag³ówku i przesy³a 
+Jakkolwiek rozwiÄ…zanie to jest przezroczyste dla klienta, to wymaga ono duÅ¼ych zmian w kodzie routera oraz systemie 
+operacyjnym serwera. ZwiÄ…zane jest to z tym, Å¼e nastÄ™puje podmiana adresÃ³w na poziomie TCP/IP. Z drugiej jednak strony 
+rozwiÄ…zanie to jest bardzo odporne na uszkodzenia. W przypadku awarii serwera WWW jest on usuwany z tablicy routera i nie 
+uwzglÄ™dniany przy rozdziale pakietÃ³w aÅ¼ do momentu naprawy. Architektura ta moÅ¼e byÄ‡ poÅ‚Ä…czona z wykorzystaniem DNS'a. Pozwala 
+to na skalowanie klastra nie tylko w sieci LAN, ale rÃ³wnieÅ¼ sieci WAN.
+\item metodÄ™ packet double--rewriting; architektura ta w swoim zaÅ‚oÅ¼eniu jest bardzo podobna do przedstawionej powyÅ¼ej. 
+Mechanizm polega na przepisywaniu adresÃ³w docelowych w pakietach nadchodzÄ…cych od klientÃ³w. Dystrybutor nastÄ™pnie przesyÅ‚a 
+pakiety do odpowiedniego wÄ™zÅ‚a obsÅ‚ugujÄ…cego serwer WWW. W tym przypadku jednak wszystkie pakiety wracajÄ… z powrotem do 
+dystrybutora. Mechanizm ten opiera siÄ™ na architekturze NAT (Network Address Translation) opisanej w  \cite{modele17}.
+W momencie odebrania nadchodzÄ…cego pakietu dystrybutor wybiera serwer WWW (krok 2), a nastÄ™pnie modyfikuje adres ÅºrÃ³dÅ‚owy oraz 
+docelowy w nagÅ‚Ã³wku pakietu (krok 3). W drodze powrotnej pakietu dystrybutor ponownie zmienia adresy IP w nagÅ‚Ã³wku i przesyÅ‚a 
 dalej dane do klienta (krok 6). 
 
-Znane s± dwa rozwi±zania oparte na tej architekturze. CISCO LocalDirector  \cite{gliwice13} oraz Magicrouter  \cite{modele1}
-\item metodê packet forwarding by the dispatcher.
-Packet forwarding jest podej¶ciem odmiennym w stosunku do prezentowanych powy¿ej. Dzia³anie jego polega na przesy³aniu 
-pakietów do serwera w niezmienionej postaci zamiast przepisywaniu adresów w nag³ówku. Podej¶cie to pozwala na wykorzystanie 
-tego samego rozwi±zania w sieci LAN i WAN. Zarówno sama metoda jak i pakiet zosta³y opisane w dalszej czê¶ci tej pracy.
+Znane sÄ… dwa rozwiÄ…zania oparte na tej architekturze. CISCO LocalDirector  \cite{gliwice13} oraz Magicrouter  \cite{modele1}
+\item metodÄ™ packet forwarding by the dispatcher.
+Packet forwarding jest podejÅ›ciem odmiennym w stosunku do prezentowanych powyÅ¼ej. DziaÅ‚anie jego polega na przesyÅ‚aniu 
+pakietÃ³w do serwera w niezmienionej postaci zamiast przepisywaniu adresÃ³w w nagÅ‚Ã³wku. PodejÅ›cie to pozwala na wykorzystanie 
+tego samego rozwiÄ…zania w sieci LAN i WAN. ZarÃ³wno sama metoda jak i pakiet zostaÅ‚y opisane w dalszej czÄ™Å›ci tej pracy.
 \end{itemize}
 \end{itemize}
 
-\subsection{Podzia³ ze wzglêdu na strategiê rozmieszczenia mechanizmów szeregowania}
-Z tej perspektywy rysuje siê podzia³ na dwie grupy modeli: z centralnym mechanizmem szeregowania i z rozproszonymi 
+\subsection{PodziaÅ‚ ze wzglÄ™du na strategiÄ™ rozmieszczenia mechanizmÃ³w szeregowania}
+Z tej perspektywy rysuje siÄ™ podziaÅ‚ na dwie grupy modeli: z centralnym mechanizmem szeregowania i z rozproszonymi 
 mechanizmami szeregowania.
 \begin{itemize}
-\item Centralny mechanizm szeregowania. Do tej grupy nale¿± modele {\bf A, E, F, G} (rys.\ref{proste_modele}). W przypadku {\bf A} decyzja o przydzieleniu 
+\item Centralny mechanizm szeregowania. Do tej grupy naleÅ¼Ä… modele {\bf A, E, F, G} (rys.\ref{proste_modele}). W przypadku {\bf A} decyzja o przydzieleniu 
 nazwie domenowej adresu IP najlepszego serwera webowego zapada centralnie, po stronie serwera DNS. Mimo scentralizowanego 
-zarz±dzania, ze wzglêdu na specyfikê funkcjonowania DNS, skuteczno¶æ tego modelu jest 
+zarzÄ…dzania, ze wzglÄ™du na specyfikÄ™ funkcjonowania DNS, skutecznoÅ›Ä‡ tego modelu jest 
 niewielka \cite{modele14,ModeleFunkcjonalne}. W modelach  
-decyzja o przekierowaniu ¿±dania klienta zapada centralnie, w dedykowanym urz±dzeniu. W odró¿nieniu od modelu, centralne 
-zarz±dzanie oznacza stuprocentow± kontrolê nad szeregowaniem.
-\item Rozproszone mechanizmy szeregowania. W tej grupie decyzja o przekierowaniu ¿±dania mo¿e zapa¶æ na ka¿dym serwerze, w 
-którym zaimplementowano oprogramowanie egzekutora. Ideê rozproszonego szeregowania ukazuj± modele {\bf B, D, C} (rys.\ref{proste_modele}). Rozwi±zanie takie zapobiega 
-efektowi w±skiego gard³a, na które w szczególno¶ci nara¿ony jest model {\bf F}. Modele {\bf B} oraz {\bf D}
-stosowane s± g³ównie w celu poprawy skuteczno¶ci szeregowania w modelu {\bf A} (rys.\ref{complex_modele} {\bf H, I}).
+decyzja o przekierowaniu Å¼Ä…dania klienta zapada centralnie, w dedykowanym urzÄ…dzeniu. W odrÃ³Å¼nieniu od modelu, centralne 
+zarzÄ…dzanie oznacza stuprocentowÄ… kontrolÄ™ nad szeregowaniem.
+\item Rozproszone mechanizmy szeregowania. W tej grupie decyzja o przekierowaniu Å¼Ä…dania moÅ¼e zapaÅ›Ä‡ na kaÅ¼dym serwerze, w 
+ktÃ³rym zaimplementowano oprogramowanie egzekutora. IdeÄ™ rozproszonego szeregowania ukazujÄ… modele {\bf B, D, C} (rys.\ref{proste_modele}). RozwiÄ…zanie takie zapobiega 
+efektowi wÄ…skiego gardÅ‚a, na ktÃ³re w szczegÃ³lnoÅ›ci naraÅ¼ony jest model {\bf F}. Modele {\bf B} oraz {\bf D}
+stosowane sÄ… gÅ‚Ã³wnie w celu poprawy skutecznoÅ›ci szeregowania w modelu {\bf A} (rys.\ref{complex_modele} {\bf H, I}).
 \end{itemize}
 
-\subsection{Podzia³ ze wzglêdu na liczbê stopni szeregowania}
-Systemy serwerów webowych mog± jednocze¶nie wykorzystywaæ jeden lub wiêcej mechanizmów szeregowania. Mówi siê wówczas o 
-skalowalnych systemach serwerów webowych z szeregowaniem jednostopniowym, dwustopniowym lub trójstopniowym. Nie spotyka siê 
-systemów o wiêkszej ilo¶ci stopni szeregowania. Modele systemów z szeregowaniem wielostopniowym mo¿na budowaæ poprzez z³o¿enie 
-modeli prostych. Przyk³adowe modele z³o¿one zosta³y przedstawione na rys.\ref{complex_modele}.
+\subsection{PodziaÅ‚ ze wzglÄ™du na liczbÄ™ stopni szeregowania}
+Systemy serwerÃ³w webowych mogÄ… jednoczeÅ›nie wykorzystywaÄ‡ jeden lub wiÄ™cej mechanizmÃ³w szeregowania. MÃ³wi siÄ™ wÃ³wczas o 
+skalowalnych systemach serwerÃ³w webowych z szeregowaniem jednostopniowym, dwustopniowym lub trÃ³jstopniowym. Nie spotyka siÄ™ 
+systemÃ³w o wiÄ™kszej iloÅ›ci stopni szeregowania. Modele systemÃ³w z szeregowaniem wielostopniowym moÅ¼na budowaÄ‡ poprzez zÅ‚oÅ¼enie 
+modeli prostych. PrzykÅ‚adowe modele zÅ‚oÅ¼one zostaÅ‚y przedstawione na rys.\ref{complex_modele}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=4.9in]{./rysunki/complex_models.eps}
-\caption{Z³o¿one modele systemów do równowa¿enia obci±¿eñ}
+\caption{ZÅ‚oÅ¼one modele systemÃ³w do rÃ³wnowaÅ¼enia obciÄ…Å¼eÅ„}
 \label{complex_modele}
 \end{figure}
 
 \begin{itemize}
-\item Systemy z szeregowaniem jednostopniowym. Systemy z szeregowaniem jednostopniowym odzwierciedlaj± modele: {\bf A, E, F, G} (rys.\ref{proste_modele}). 
-W modelu {\bf A} egzekutor zintegrowany jest z serwerem DNS, natomiast w modelach{\bf E, F, G} rolê egzekutora pe³ni dystrybutor 
-lub prze³±cznik webowy.
-\item Systemy z szeregowaniem dwustopniowym. Przyk³adowe systemy z szeregowaniem dwustopniowym obrazuj± modele {\bf H, I, J} (rys.\ref{complex_modele}).
+\item Systemy z szeregowaniem jednostopniowym. Systemy z szeregowaniem jednostopniowym odzwierciedlajÄ… modele: {\bf A, E, F, G} (rys.\ref{proste_modele}). 
+W modelu {\bf A} egzekutor zintegrowany jest z serwerem DNS, natomiast w modelach{\bf E, F, G} rolÄ™ egzekutora peÅ‚ni dystrybutor 
+lub przeÅ‚Ä…cznik webowy.
+\item Systemy z szeregowaniem dwustopniowym. PrzykÅ‚adowe systemy z szeregowaniem dwustopniowym obrazujÄ… modele {\bf H, I, J} (rys.\ref{complex_modele}).
 W przypadku {\bf H} oraz {\bf I} \cite{modele2,modele10,modele23,modele3} na pierwszym stopniu wykorzystywany jest model {\bf A}, natomiast na drugim, odpowiednio 
-model {\bf B} lub {\bf D}. W obu przypadkach na pierwszym stopniu egzekutor zintegrowany jest serwerem DNS, natomiast na drugim rolê 
-egzekutora pe³ni ten z serwerów webowych, który zosta³ wytypowany na poziomie serwera DNS. Przypadek {\bf J} ukazuje kaskadowe 
-z³o¿enie modeli {\bf G} (rys.\ref{complex_modele}) w celu szeregowania ¿±dañ w systemie rozproszonych klastrów webowych \cite{NDUsersGuide}. Na obu stopniach rolê egzekutora 
-mo¿e pe³niæ dystrybutor lub prze³±cznik webowy. Model ten charakteryzuje siê krótk± drog± zapytañ, jednak awaria pierwszego 
-stopnia szeregowania unieruchamia ca³y system rozproszonych klastrów.
-\item Systemy z szeregowaniem trójstopniowym. Przyk³ad systemu z szeregowaniem trójstopniowym pokazuje model {\bf K} \cite{modele9}. Jest to 
-system rozproszonych klastrów webowych, gdzie ka¿dy z serwerów w klastrze ma wbudowany mechanizm szeregowania. Na pierwszym 
+model {\bf B} lub {\bf D}. W obu przypadkach na pierwszym stopniu egzekutor zintegrowany jest serwerem DNS, natomiast na drugim rolÄ™ 
+egzekutora peÅ‚ni ten z serwerÃ³w webowych, ktÃ³ry zostaÅ‚ wytypowany na poziomie serwera DNS. Przypadek {\bf J} ukazuje kaskadowe 
+zÅ‚oÅ¼enie modeli {\bf G} (rys.\ref{complex_modele}) w celu szeregowania Å¼Ä…daÅ„ w systemie rozproszonych klastrÃ³w webowych \cite{NDUsersGuide}. Na obu stopniach rolÄ™ egzekutora 
+moÅ¼e peÅ‚niÄ‡ dystrybutor lub przeÅ‚Ä…cznik webowy. Model ten charakteryzuje siÄ™ krÃ³tkÄ… drogÄ… zapytaÅ„, jednak awaria pierwszego 
+stopnia szeregowania unieruchamia caÅ‚y system rozproszonych klastrÃ³w.
+\item Systemy z szeregowaniem trÃ³jstopniowym. PrzykÅ‚ad systemu z szeregowaniem trÃ³jstopniowym pokazuje model {\bf K} \cite{modele9}. Jest to 
+system rozproszonych klastrÃ³w webowych, gdzie kaÅ¼dy z serwerÃ³w w klastrze ma wbudowany mechanizm szeregowania. Na pierwszym 
 stopniu szeregowania wykorzystywany jest model {\bf A}, na drugim model {\bf G}, a na trzecim model {\bf B}, czyli na pierwszym stopniu 
-egzekutor zintegrowany jest z serwerem DNS, na drugim role egzekutora pe³ni dystrybutor lub prze³±cznik webowy, natomiast na 
-trzecim ten serwer webowy, który zosta³ wytypowany przez egzekutor na drugim stopniu. Ka¿dorazowe zadzia³anie trzeciego 
-stopnia szeregowania, mo¿e powodowaæ znaczne opó¼nienia, jednak model ten jest bardzo odporny na przeci±¿enia i awarie. 
+egzekutor zintegrowany jest z serwerem DNS, na drugim role egzekutora peÅ‚ni dystrybutor lub przeÅ‚Ä…cznik webowy, natomiast na 
+trzecim ten serwer webowy, ktÃ³ry zostaÅ‚ wytypowany przez egzekutor na drugim stopniu. KaÅ¼dorazowe zadziaÅ‚anie trzeciego 
+stopnia szeregowania, moÅ¼e powodowaÄ‡ znaczne opÃ³Åºnienia, jednak model ten jest bardzo odporny na przeciÄ…Å¼enia i awarie. 
 \end{itemize}
 
-\subsection{Podzia³ ze wzglêdu na poziom szczegó³owo¶ci szeregowania}
+\subsection{PodziaÅ‚ ze wzglÄ™du na poziom szczegÃ³Å‚owoÅ›ci szeregowania}
 
-\subsubsection{Szeregowanie na poziomie serii ¿±dañ o strony}
-Aby zrealizowaæ ¿±danie klienta o stronê umiejscowion± pod pewn± nazw± domenow±, mechanizm szeregowania, który jest 
-zintegrowany z serwerem DNS, musi przydzieliæ tej nazwie adres IP najlepszego serwera webowego (hostname resolution). Ze 
-wzglêdu na du¿± bezw³adno¶æ DNS kolejne ¿±dania klienta o strony umiejscowione pod t± nazw± domenow± bêd± przez pewien czas 
-kierowane do tego samego serwera webowego. Przypadek, w którym szeregowanie ¿±dañ klientów odbywa siê na poziomie serii ¿±dañ 
+\subsubsection{Szeregowanie na poziomie serii Å¼Ä…daÅ„ o strony}
+Aby zrealizowaÄ‡ Å¼Ä…danie klienta o stronÄ™ umiejscowionÄ… pod pewnÄ… nazwÄ… domenowÄ…, mechanizm szeregowania, ktÃ³ry jest 
+zintegrowany z serwerem DNS, musi przydzieliÄ‡ tej nazwie adres IP najlepszego serwera webowego (hostname resolution). Ze 
+wzglÄ™du na duÅ¼Ä… bezwÅ‚adnoÅ›Ä‡ DNS kolejne Å¼Ä…dania klienta o strony umiejscowione pod tÄ… nazwÄ… domenowÄ… bÄ™dÄ… przez pewien czas 
+kierowane do tego samego serwera webowego. Przypadek, w ktÃ³rym szeregowanie Å¼Ä…daÅ„ klientÃ³w odbywa siÄ™ na poziomie serii Å¼Ä…daÅ„ 
 o strony, przedstawia model {\bf A}. 
 
-\subsubsection{Szeregowanie na poziomie ¿±dania o stronê}
-W sk³ad strony webowej wchodzi zwykle wiele obiektów. Na tym poziomie przekierowanie ¿±dania o stronê poci±ga za sob± 
-przekierowanie serii ¿±dañ o jej elementy sk³adowe. Mechanizm szeregowania wykorzystuje w tym celu w³a¶ciwo¶ci protoko³u HTTP 
-(HTTP redirection \cite{modele18}). Przypadki, w których wystêpuje tego typu szeregowanie, ukazuje model {\bf B} oraz {\bf E}. W przypadku modelu {\bf B}, gdy jeden 
-z serwerów webowych otrzymuje od klienta ¿±danie o stronê, je¶li nie decyduje siê sam zrealizowaæ zlecenia, 
-odsy³a klientowi adres IP lub nazwê domenow± lepszego od siebie serwera \cite{modele23}. W przypadku modelu {\bf E}, gdy prze³±cznik otrzymuje 
-od klienta ¿±danie o stronê, odsy³a mu adres IP lub nazwê domenow± najlepszego serwera \cite{modele19}. 
-Nale¿y zaznaczyæ, ¿e mo¿e wyst±piæ tu zjawisko buforowania przez klienta adresu IP serwera, do którego nast±pi³o 
-przekierowanie. Mo¿na wówczas mówiæ o szeregowaniu na poziomie serii ¿±dañ o strony.
+\subsubsection{Szeregowanie na poziomie Å¼Ä…dania o stronÄ™}
+W skÅ‚ad strony webowej wchodzi zwykle wiele obiektÃ³w. Na tym poziomie przekierowanie Å¼Ä…dania o stronÄ™ pociÄ…ga za sobÄ… 
+przekierowanie serii Å¼Ä…daÅ„ o jej elementy skÅ‚adowe. Mechanizm szeregowania wykorzystuje w tym celu wÅ‚aÅ›ciwoÅ›ci protokoÅ‚u HTTP 
+(HTTP redirection \cite{modele18}). Przypadki, w ktÃ³rych wystÄ™puje tego typu szeregowanie, ukazuje model {\bf B} oraz {\bf E}. W przypadku modelu {\bf B}, gdy jeden 
+z serwerÃ³w webowych otrzymuje od klienta Å¼Ä…danie o stronÄ™, jeÅ›li nie decyduje siÄ™ sam zrealizowaÄ‡ zlecenia, 
+odsyÅ‚a klientowi adres IP lub nazwÄ™ domenowÄ… lepszego od siebie serwera \cite{modele23}. W przypadku modelu {\bf E}, gdy przeÅ‚Ä…cznik otrzymuje 
+od klienta Å¼Ä…danie o stronÄ™, odsyÅ‚a mu adres IP lub nazwÄ™ domenowÄ… najlepszego serwera \cite{modele19}. 
+NaleÅ¼y zaznaczyÄ‡, Å¼e moÅ¼e wystÄ…piÄ‡ tu zjawisko buforowania przez klienta adresu IP serwera, do ktÃ³rego nastÄ…piÅ‚o 
+przekierowanie. MoÅ¼na wÃ³wczas mÃ³wiÄ‡ o szeregowaniu na poziomie serii Å¼Ä…daÅ„ o strony.
 
-\subsubsection{Szeregowanie na poziomie ¿±dania o obiekt}
-Przypadki, w których szeregowanie odbywa siê na poziomie ¿±dania o obiekt, przedstawiaj± modele {\bf C, D, F} oraz {\bf G}. W tej grupie 
-mechanizm szeregowania zajmuje siê przekierowywaniem pakietów (packet redirection). Pakiety zawieraj±ce ¿±danie o obiekt musz±
-w komplecie trafiæ do wybranego przez egzekutor serwera. Jednym ze sposobów realizuj±cych ten cel jest zapisywanie wyników 
-decyzji egzekutora w tzw. tablicy powi±zañ (binding table).
-Poniewa¿ w modelu {\bf D} ruch pakietów powracaj±cych (znacznie 
-wiêkszy ni¿ w przypadku pakietów z ¿±daniami) jest kierowany do klienta z pominiêciem serwera-egzekutora, model ten jest z 
-powodzeniem implementowany. Charakterystyczn± cech± modeli {\bf F, G} jest to, ¿e egzekutor maskuje serwery webowe za pomoc± 
-jednego, wirtualnego adresu IP-SVA (single virtual IP address). Aby przekazaæ ¿±danie do konkretnego serwera, stosuje ró¿ne, 
-niekiedy wyrafinowane techniki. Gdy egzekutor przekierowuje pakiety z ¿±daniami bez ¶wiadomo¶ci ich tre¶ci (content 
+\subsubsection{Szeregowanie na poziomie Å¼Ä…dania o obiekt}
+Przypadki, w ktÃ³rych szeregowanie odbywa siÄ™ na poziomie Å¼Ä…dania o obiekt, przedstawiajÄ… modele {\bf C, D, F} oraz {\bf G}. W tej grupie 
+mechanizm szeregowania zajmuje siÄ™ przekierowywaniem pakietÃ³w (packet redirection). Pakiety zawierajÄ…ce Å¼Ä…danie o obiekt muszÄ…
+w komplecie trafiÄ‡ do wybranego przez egzekutor serwera. Jednym ze sposobÃ³w realizujÄ…cych ten cel jest zapisywanie wynikÃ³w 
+decyzji egzekutora w tzw. tablicy powiÄ…zaÅ„ (binding table).
+PoniewaÅ¼ w modelu {\bf D} ruch pakietÃ³w powracajÄ…cych (znacznie 
+wiÄ™kszy niÅ¼ w przypadku pakietÃ³w z Å¼Ä…daniami) jest kierowany do klienta z pominiÄ™ciem serwera-egzekutora, model ten jest z 
+powodzeniem implementowany. CharakterystycznÄ… cechÄ… modeli {\bf F, G} jest to, Å¼e egzekutor maskuje serwery webowe za pomocÄ… 
+jednego, wirtualnego adresu IP-SVA (single virtual IP address). Aby przekazaÄ‡ Å¼Ä…danie do konkretnego serwera, stosuje rÃ³Å¼ne, 
+niekiedy wyrafinowane techniki. Gdy egzekutor przekierowuje pakiety z Å¼Ä…daniami bez Å›wiadomoÅ›ci ich treÅ›ci (content 
 information blind), nazywany jest dystrybutorem (dispatcher, level 4 web-switch). Gdy egzekutor podczas podejmowania decyzji o 
-przekierowaniu wykorzystuje informacjê zawart± w ¿±daniu (content information aware), nazywany jest prze³±cznikiem webowym 
+przekierowaniu wykorzystuje informacjÄ™ zawartÄ… w Å¼Ä…daniu (content information aware), nazywany jest przeÅ‚Ä…cznikiem webowym 
 (content switch, level 7 web-switch).
-Nale¿y podkre¶liæ, ¿e niniejszy podzia³ dotyczy wariantu, gdzie w modelach {\bf F, G} rolê egzekutora pe³ni dystrybutor. 
-W przypadku gdy egzekutorem jest prze³±cznik webowy, szeregowanie mo¿e odbywaæ siê na poziomie ¿±dania o obiekt, stronê oraz 
-(dziêki umiejêtno¶ci rozpoznawania znaczników cookie) serii ¿±dañ o strony.
+NaleÅ¼y podkreÅ›liÄ‡, Å¼e niniejszy podziaÅ‚ dotyczy wariantu, gdzie w modelach {\bf F, G} rolÄ™ egzekutora peÅ‚ni dystrybutor. 
+W przypadku gdy egzekutorem jest przeÅ‚Ä…cznik webowy, szeregowanie moÅ¼e odbywaÄ‡ siÄ™ na poziomie Å¼Ä…dania o obiekt, stronÄ™ oraz 
+(dziÄ™ki umiejÄ™tnoÅ›ci rozpoznawania znacznikÃ³w cookie) serii Å¼Ä…daÅ„ o strony.
 
-\subsection{Podzia³ ze wzglêdu na poziom kontroli zapytañ}
-Jest to podzia³ wyodrêbniaj±cy modele, w których egzekutory maj± pe³na kontrolê nad zapytaniami kierowanymi do systemu 
-serwerów webowych.
+\subsection{PodziaÅ‚ ze wzglÄ™du na poziom kontroli zapytaÅ„}
+Jest to podziaÅ‚ wyodrÄ™bniajÄ…cy modele, w ktÃ³rych egzekutory majÄ… peÅ‚na kontrolÄ™ nad zapytaniami kierowanymi do systemu 
+serwerÃ³w webowych.
 \begin{itemize}
-\item Pe³na kontrola zapytañ. Teoretycznie do tej grupy nale¿± modele {\bf B, C, D, E, F} i {\bf G}. Klient, po otrzymaniu od 
-serwera DNS adresu IP egzekutora, wszystkie zapytania kieruje tylko i wy³±cznie do niego. W ten sposób egzekutor ma 
-stuprocentow± kontrolê nad zapytaniami. W rzeczywisto¶ci sytuacja taka zachodzi w przypadku modeli {\bf F} oraz {\bf G}. Warto zwróciæ 
-uwagê, ¿e awaria lub zapchanie siê egzekutora powoduje unieruchomienie ca³ego systemu serwerów webowych. 
-\item Czê¶ciowa kontrola zapytañ. Typowym przypadkiem, w którym egzekutor sprawuje czê¶ciow± kontrolê nad zapytaniami, jest 
-model {\bf A}. Czê¶ciowa kontrola wynika ze specyfiki funkcjonowania systemu DNS. Równie¿ modele {\bf B, E} nale¿y zaliczyæ do tej 
-grupy ze wzglêdu na mo¿liwo¶æ wystêpowania zjawiska buforowania przez klienta adresu IP serwera, do którego nast±pi³o 
-przekierowanie. Je¶li modele {\bf C} i {\bf D} by³yby implementowane samodzielnie, egzekutor, którego adres IP rozg³asza³by serwer 
-DNS, sprawowa³by pe³n± kontrole nad zapytaniami. Jednak w przypadku modelu {\bf D} typowym rozwi±zaniem jest jego z³o¿enie z 
-modelem {\bf A} (model {\bf I} rys.\ref{complex_modele}). W takim przypadku ka¿dy z egzekutorów implementowanych w serwerach webowych sprawuje czê¶ciow± 
-kontrolê nad zapytaniami kierowanymi do systemu serwerów webowych.
+\item PeÅ‚na kontrola zapytaÅ„. Teoretycznie do tej grupy naleÅ¼Ä… modele {\bf B, C, D, E, F} i {\bf G}. Klient, po otrzymaniu od 
+serwera DNS adresu IP egzekutora, wszystkie zapytania kieruje tylko i wyÅ‚Ä…cznie do niego. W ten sposÃ³b egzekutor ma 
+stuprocentowÄ… kontrolÄ™ nad zapytaniami. W rzeczywistoÅ›ci sytuacja taka zachodzi w przypadku modeli {\bf F} oraz {\bf G}. Warto zwrÃ³ciÄ‡ 
+uwagÄ™, Å¼e awaria lub zapchanie siÄ™ egzekutora powoduje unieruchomienie caÅ‚ego systemu serwerÃ³w webowych. 
+\item CzÄ™Å›ciowa kontrola zapytaÅ„. Typowym przypadkiem, w ktÃ³rym egzekutor sprawuje czÄ™Å›ciowÄ… kontrolÄ™ nad zapytaniami, jest 
+model {\bf A}. CzÄ™Å›ciowa kontrola wynika ze specyfiki funkcjonowania systemu DNS. RÃ³wnieÅ¼ modele {\bf B, E} naleÅ¼y zaliczyÄ‡ do tej 
+grupy ze wzglÄ™du na moÅ¼liwoÅ›Ä‡ wystÄ™powania zjawiska buforowania przez klienta adresu IP serwera, do ktÃ³rego nastÄ…piÅ‚o 
+przekierowanie. JeÅ›li modele {\bf C} i {\bf D} byÅ‚yby implementowane samodzielnie, egzekutor, ktÃ³rego adres IP rozgÅ‚aszaÅ‚by serwer 
+DNS, sprawowaÅ‚by peÅ‚nÄ… kontrole nad zapytaniami. Jednak w przypadku modelu {\bf D} typowym rozwiÄ…zaniem jest jego zÅ‚oÅ¼enie z 
+modelem {\bf A} (model {\bf I} rys.\ref{complex_modele}). W takim przypadku kaÅ¼dy z egzekutorÃ³w implementowanych w serwerach webowych sprawuje czÄ™Å›ciowÄ… 
+kontrolÄ™ nad zapytaniami kierowanymi do systemu serwerÃ³w webowych.
 \end{itemize}
 
-\subsection{Podzia³ ze wzglêdu na poziom zaanga¿owania egzekutora} 
-Egzekutor mo¿e byæ w ró¿nym stopniu zaanga¿owany w przekierowywanie zapytañ klienta. Mo¿e byæ równie¿ zaanga¿owany w proces 
-przekazywania odpowiedzi. Rysuj± siê tu cztery grupy modeli: bierne, zwrotne, jednokierunkowe oraz dwukierunkowe:
+\subsection{PodziaÅ‚ ze wzglÄ™du na poziom zaangaÅ¼owania egzekutora} 
+Egzekutor moÅ¼e byÄ‡ w rÃ³Å¼nym stopniu zaangaÅ¼owany w przekierowywanie zapytaÅ„ klienta. MoÅ¼e byÄ‡ rÃ³wnieÅ¼ zaangaÅ¼owany w proces 
+przekazywania odpowiedzi. RysujÄ… siÄ™ tu cztery grupy modeli: bierne, zwrotne, jednokierunkowe oraz dwukierunkowe:
 \begin{itemize}
-\item Model bierny. Jest to model {\bf A}, w którym do egzekutora w ogóle nie trafiaj± ¿±dania klienta o strony czy obiekty. 
-Egzekutor odpowiada tylko na ¿±dania o prze³o¿enie nazwy domenowej na adres IP najlepszego serwera (klastra) webowego, nie 
-bior±c bezpo¶redniego udzia³u w szeregowaniu zapytañ klienta.
-\item Modele zwrotne. Nale¿± do nich modele {\bf B, E} (rys.\ref{proste_modele}). Egzekutor, po otrzymaniu ¿±dania, zwraca klientowi adres IP lub nazwê 
-domenow± najlepszego serwera, aby ten móg³ ponowiæ ¿±danie. W modelu {\bf B} mo¿e dodatkowo zapa¶æ decyzja o obs³u¿eniu ¿±dania 
-przez bie¿±cy serwer. Zaanga¿owanie egzekutora w proces przekierowywania jest w tym przypadku minimalne.
-\item Modele jednokierunkowe. Nale¿± do nich modele {\bf D} oraz {\bf G}\cite{modele15,modele20,NDUsersGuide}. ¯±dania, które osi±gaj± egzekutor, przekierowywane 
-s± bezpo¶rednio do serwerów webowych. W modelu {\bf D} mo¿e dodatkowo zapa¶æ decyzja o obs³u¿eniu ¿±dania przez bie¿±cy serwer. 
-Dziêki odpowiednim zabiegom technicznym serwery kieruj± odpowiedzi bezpo¶rednio do klienta. Zaanga¿owanie egzekutora w proces 
-przekierowywania jest w tym przypadku ¶rednie.
-\item Modele dwukierunkowe. Nale¿± do nich modele {\bf C} i {\bf F} \cite{modele1,modele11,modele17} . Wszystkie ¿±dania, które osi±gaj± egzekutor, 
-przekierowywane s± bezpo¶rednio do serwerów webowych. W modelu {\bf D} mo¿e dodatkowo zapa¶æ decyzja o obs³u¿eniu ¿±dania przez 
-bie¿±cy serwer. Serwery webowe wszystkie odpowiedzi przesy³aj± do egzekutora, który musi je przekierowywaæ do klienta. 
+\item Model bierny. Jest to model {\bf A}, w ktÃ³rym do egzekutora w ogÃ³le nie trafiajÄ… Å¼Ä…dania klienta o strony czy obiekty. 
+Egzekutor odpowiada tylko na Å¼Ä…dania o przeÅ‚oÅ¼enie nazwy domenowej na adres IP najlepszego serwera (klastra) webowego, nie 
+biorÄ…c bezpoÅ›redniego udziaÅ‚u w szeregowaniu zapytaÅ„ klienta.
+\item Modele zwrotne. NaleÅ¼Ä… do nich modele {\bf B, E} (rys.\ref{proste_modele}). Egzekutor, po otrzymaniu Å¼Ä…dania, zwraca klientowi adres IP lub nazwÄ™ 
+domenowÄ… najlepszego serwera, aby ten mÃ³gÅ‚ ponowiÄ‡ Å¼Ä…danie. W modelu {\bf B} moÅ¼e dodatkowo zapaÅ›Ä‡ decyzja o obsÅ‚uÅ¼eniu Å¼Ä…dania 
+przez bieÅ¼Ä…cy serwer. ZaangaÅ¼owanie egzekutora w proces przekierowywania jest w tym przypadku minimalne.
+\item Modele jednokierunkowe. NaleÅ¼Ä… do nich modele {\bf D} oraz {\bf G}\cite{modele15,modele20,NDUsersGuide}. Å»Ä…dania, ktÃ³re osiÄ…gajÄ… egzekutor, przekierowywane 
+sÄ… bezpoÅ›rednio do serwerÃ³w webowych. W modelu {\bf D} moÅ¼e dodatkowo zapaÅ›Ä‡ decyzja o obsÅ‚uÅ¼eniu Å¼Ä…dania przez bieÅ¼Ä…cy serwer. 
+DziÄ™ki odpowiednim zabiegom technicznym serwery kierujÄ… odpowiedzi bezpoÅ›rednio do klienta. ZaangaÅ¼owanie egzekutora w proces 
+przekierowywania jest w tym przypadku Å›rednie.
+\item Modele dwukierunkowe. NaleÅ¼Ä… do nich modele {\bf C} i {\bf F} \cite{modele1,modele11,modele17} . Wszystkie Å¼Ä…dania, ktÃ³re osiÄ…gajÄ… egzekutor, 
+przekierowywane sÄ… bezpoÅ›rednio do serwerÃ³w webowych. W modelu {\bf D} moÅ¼e dodatkowo zapaÅ›Ä‡ decyzja o obsÅ‚uÅ¼eniu Å¼Ä…dania przez 
+bieÅ¼Ä…cy serwer. Serwery webowe wszystkie odpowiedzi przesyÅ‚ajÄ… do egzekutora, ktÃ³ry musi je przekierowywaÄ‡ do klienta. 
 \end{itemize}
 
 \section{Witryny dynamiczne}
 
-\hspace{0.63cm}Ju¿ nawet kilkudziesiêcioma dokumentami World Wide Web, czyli bardzo niewielkim serwisem, trudno jest zarz±dzaæ, 
-zmieniaæ i dodawaæ nowe fragmenty, czuwaæ nad poprawno¶ci± dostêpnych w nim danych. Z drugiej jednak strony oprogramowanie 
+\hspace{0.63cm}JuÅ¼ nawet kilkudziesiÄ™cioma dokumentami World Wide Web, czyli bardzo niewielkim serwisem, trudno jest zarzÄ…dzaÄ‡, 
+zmieniaÄ‡ i dodawaÄ‡ nowe fragmenty, czuwaÄ‡ nad poprawnoÅ›ciÄ… dostÄ™pnych w nim danych. Z drugiej jednak strony oprogramowanie 
 stosowane do korzystania z World Wide Web jest bardzo proste, szeroko znane i szybko uaktualniane.
 
-Wiêkszo¶æ informacji zapisanych na komputerach i wykorzystywanych w biznesie czy przez ¶rodki przekazu zgromadzona jest w 
-bazach danych, w tym najcze¶ciej w relacyjnych bazach danych. Bazy danych pozwalaj± na kontrolê nad danymi, analizowanie ich, 
-ogranizacjê i prezentacjê u¿ytkownikowi w jak najbardziej prosty i skuteczny sposób. Potrzebny jest jednak do nich dostep 
-przez wyspecjalizowane oprogramowanie. W systemach klient/serwer jest to klient bazy danych; kolejny program, który musi 
-poznawaæ u¿ytkownik, program nie zawsze prezentuj±cy najwy¿szy poziom mo¿liwo¶ci technicznych czy ³atwo¶ci komunikacji z 
-u¿ytkownikiem.
+WiÄ™kszoÅ›Ä‡ informacji zapisanych na komputerach i wykorzystywanych w biznesie czy przez Å›rodki przekazu zgromadzona jest w 
+bazach danych, w tym najczeÅ›ciej w relacyjnych bazach danych. Bazy danych pozwalajÄ… na kontrolÄ™ nad danymi, analizowanie ich, 
+ogranizacjÄ™ i prezentacjÄ™ uÅ¼ytkownikowi w jak najbardziej prosty i skuteczny sposÃ³b. Potrzebny jest jednak do nich dostep 
+przez wyspecjalizowane oprogramowanie. W systemach klient/serwer jest to klient bazy danych; kolejny program, ktÃ³ry musi 
+poznawaÄ‡ uÅ¼ytkownik, program nie zawsze prezentujÄ…cy najwyÅ¼szy poziom moÅ¼liwoÅ›ci technicznych czy Å‚atwoÅ›ci komunikacji z 
+uÅ¼ytkownikiem.
 
-Oba te systemy, World Wide Web i bazy danych, stworzone s± w tym samym celu -- efektywnego dostêpu do informacji. Ju¿ po kilku 
-latach rozwoju World Wide Web zorientowano siê, ¿e mo¿na je po³±czyæ, bior±c z ka¿dego, co najlepsze. Po³±czyæ ³atwo¶æ dostêpu,
-jak± niesie przegl±darka World Wide Web z wysokim stopniem organizacji oferowanym przez relacyjn± bazê danych.
+Oba te systemy, World Wide Web i bazy danych, stworzone sÄ… w tym samym celu -- efektywnego dostÄ™pu do informacji. JuÅ¼ po kilku 
+latach rozwoju World Wide Web zorientowano siÄ™, Å¼e moÅ¼na je poÅ‚Ä…czyÄ‡, biorÄ…c z kaÅ¼dego, co najlepsze. PoÅ‚Ä…czyÄ‡ Å‚atwoÅ›Ä‡ dostÄ™pu,
+jakÄ… niesie przeglÄ…darka World Wide Web z wysokim stopniem organizacji oferowanym przez relacyjnÄ… bazÄ™ danych.
 
-Sam serwer HTTP nie potrafi siê jednak bezpo¶rednio porozumiewaæ z baz±; potrzebuje dodatkowego oprogramowania. Dawniej 
-najlepsz± metod± nawi±zania kontaktu miêdzy serwerem HTTP a baz± by³o napisanie programu w standardzie CGI 
+Sam serwer HTTP nie potrafi siÄ™ jednak bezpoÅ›rednio porozumiewaÄ‡ z bazÄ…; potrzebuje dodatkowego oprogramowania. Dawniej 
+najlepszÄ… metodÄ… nawiÄ…zania kontaktu miÄ™dzy serwerem HTTP a bazÄ… byÅ‚o napisanie programu w standardzie CGI 
 \footnote{ang. \emph{Common Gateway Interface}}. Program CGI przyjmuje informacje od serwera HTTP, przetwarza je i 
-wysy³a do bazy danych, baza 
-danych wykonuje zlecane jej zadanie, wysy³a efekt do programu CGI, który z kolei zwraca go przez serwer HTTP do klienta HTTP. 
-Rezultatem jest najczê¶ciej plik HTML. Dzi¶ mechanizm porozumiewania siê pozostaje taki sam, ale w miejsce programu CGI 
-wchodzi program napisany w API serwera HTTP, na przyk³ad ISAPI dla Microsoft Internet Information Server. To drugie 
-rozwi±zanie jest bardziej efektywne i pozwala na mniejsze obci±¿enie komputera, na którym dzia³a serwer, ni¿ w przypadku 
-u¿ycia programu CGI.
+wysyÅ‚a do bazy danych, baza 
+danych wykonuje zlecane jej zadanie, wysyÅ‚a efekt do programu CGI, ktÃ³ry z kolei zwraca go przez serwer HTTP do klienta HTTP. 
+Rezultatem jest najczÄ™Å›ciej plik HTML. DziÅ› mechanizm porozumiewania siÄ™ pozostaje taki sam, ale w miejsce programu CGI 
+wchodzi program napisany w API serwera HTTP, na przykÅ‚ad ISAPI dla Microsoft Internet Information Server. To drugie 
+rozwiÄ…zanie jest bardziej efektywne i pozwala na mniejsze obciÄ…Å¼enie komputera, na ktÃ³rym dziaÅ‚a serwer, niÅ¼ w przypadku 
+uÅ¼ycia programu CGI.
 
-Mo¿na stworzyæ serwis World Wide Web, który porozumiewa siê z baz± danych. Mo¿na wpisywaæ do bazy nowe informacje, na przyk³ad 
-wype³niaj±c ankietê marketingow±, mo¿na przegl±daæ istniej±ce informacje, poprawiaæ je o ile mamy do tego prawo a tak¿e 
-wyszukwiaæ potrzebne informacje.
+MoÅ¼na stworzyÄ‡ serwis World Wide Web, ktÃ³ry porozumiewa siÄ™ z bazÄ… danych. MoÅ¼na wpisywaÄ‡ do bazy nowe informacje, na przykÅ‚ad 
+wypeÅ‚niajÄ…c ankietÄ™ marketingowÄ…, moÅ¼na przeglÄ…daÄ‡ istniejÄ…ce informacje, poprawiaÄ‡ je o ile mamy do tego prawo a takÅ¼e 
+wyszukwiaÄ‡ potrzebne informacje.
 
-Dok³adnie takie same mo¿liwo¶ci ma serwis wewnêtrzny firmy -- intranetowy. Mo¿e on s³u¿yæ do porozumiewania siê z firm± 
-oddzia³ów terenowych czy pracowników w podró¿ach s³u¿bowych, a tak¿e do zwyk³ej, codziennej komunikacji z baz± danych. 
-Przegl±darka World Wide Web jest ³atwiejszym w obs³udze i bardziej znanym u¿ytkownikom oprogramowaniem ni¿ specjalny klient 
+DokÅ‚adnie takie same moÅ¼liwoÅ›ci ma serwis wewnÄ™trzny firmy -- intranetowy. MoÅ¼e on sÅ‚uÅ¼yÄ‡ do porozumiewania siÄ™ z firmÄ… 
+oddziaÅ‚Ã³w terenowych czy pracownikÃ³w w podrÃ³Å¼ach sÅ‚uÅ¼bowych, a takÅ¼e do zwykÅ‚ej, codziennej komunikacji z bazÄ… danych. 
+PrzeglÄ…darka World Wide Web jest Å‚atwiejszym w obsÅ‚udze i bardziej znanym uÅ¼ytkownikom oprogramowaniem niÅ¼ specjalny klient 
 bazy danych.
 
-Do stworzenia takiego systemu potrzebny jest serwer HTTP i baza danych, a pomiêdzy nimi program po¶rednicz±cy. Mo¿na napisaæ 
-w³asne oprogramowanie po¶rednicz±ce, ale równie¿ skorzystaæ z gotowych produktów.
+Do stworzenia takiego systemu potrzebny jest serwer HTTP i baza danych, a pomiÄ™dzy nimi program poÅ›redniczÄ…cy. MoÅ¼na napisaÄ‡ 
+wÅ‚asne oprogramowanie poÅ›redniczÄ…ce, ale rÃ³wnieÅ¼ skorzystaÄ‡ z gotowych produktÃ³w.
 
-\section{Testowanie serwerów WWW}
+\section{Testowanie serwerÃ³w WWW}
 
 
-Jak wiadomo s³aba wydajno¶æ wprost przek³ada siê 
-na niezadowolenia klientów, a niezadowolony klient opu¶ci witrynê Web i
-mo¿e nigdy ju¿ na ni± nie wróciæ \cite{savoia1,savoia2,savoia3}.
+Jak wiadomo sÅ‚aba wydajnoÅ›Ä‡ wprost przekÅ‚ada siÄ™ 
+na niezadowolenia klientÃ³w, a niezadowolony klient opuÅ›ci witrynÄ™ Web i
+moÅ¼e nigdy juÅ¼ na niÄ… nie wrÃ³ciÄ‡ \cite{savoia1,savoia2,savoia3}.
 
-Przewidywanie jak witryna WWW bêdzie odpowiadaæ na specyficzne obci±¿enie
-jest wielkim wyzwaniem. Od czasu jak sajty webowe stanowi± kompleksowe
-systemy zawieraj±ce elementy sprzêtowe, programowe i sieciowe pochodz±cymi od
-ró¿nych producentów, oraz posiadaj± bardzo ró¿ne profile wydajno¶ciowe -- 
-jest praktycznie niemo¿liwa predykcja, jak dany system zachowa siê podczas
-obci±¿enia. Jedynym pewnym sposobem sprawdzenia skalowalno¶ci systemu
-jest przeprowadzenie testów wydajno¶ciowych, w których natê¿enie i 
+Przewidywanie jak witryna WWW bÄ™dzie odpowiadaÄ‡ na specyficzne obciÄ…Å¼enie
+jest wielkim wyzwaniem. Od czasu jak sajty webowe stanowiÄ… kompleksowe
+systemy zawierajÄ…ce elementy sprzÄ™towe, programowe i sieciowe pochodzÄ…cymi od
+rÃ³Å¼nych producentÃ³w, oraz posiadajÄ… bardzo rÃ³Å¼ne profile wydajnoÅ›ciowe -- 
+jest praktycznie niemoÅ¼liwa predykcja, jak dany system zachowa siÄ™ podczas
+obciÄ…Å¼enia. Jedynym pewnym sposobem sprawdzenia skalowalnoÅ›ci systemu
+jest przeprowadzenie testÃ³w wydajnoÅ›ciowych, w ktÃ³rych natÄ™Å¼enie i 
 charakterystyka przewidywanego ruchu jest symulowana tak realistycznie jak
-to jest mo¿liwe. 
+to jest moÅ¼liwe. 
 
-Testowanie obci±¿enia witryn webowych stanowi priorytet dla firm robi±cych interesy online. Jak wielu u¿ytkowników z 
-akceptowalnymi czasami odpowiedzi mo¿e obs³u¿yæ strona ? Jest to niezwykle wa¿na informacja wykorzystywana do planowania 
-kampanii reklamowych, estymacji bud¿etów bran¿y IT a nawet do zwyk³ego dostarczania us³ug. I pomimo wagi tego problemu 
-praktycznie wiêkszo¶æ testów obci±¿eniowych jest wykonywana niepoprawnie, poniewa¿ nie odpowiadaj± one rzeczywistym warunkom. 
+Testowanie obciÄ…Å¼enia witryn webowych stanowi priorytet dla firm robiÄ…cych interesy online. Jak wielu uÅ¼ytkownikÃ³w z 
+akceptowalnymi czasami odpowiedzi moÅ¼e obsÅ‚uÅ¼yÄ‡ strona ? Jest to niezwykle waÅ¼na informacja wykorzystywana do planowania 
+kampanii reklamowych, estymacji budÅ¼etÃ³w branÅ¼y IT a nawet do zwykÅ‚ego dostarczania usÅ‚ug. I pomimo wagi tego problemu 
+praktycznie wiÄ™kszoÅ›Ä‡ testÃ³w obciÄ…Å¼eniowych jest wykonywana niepoprawnie, poniewaÅ¼ nie odpowiadajÄ… one rzeczywistym warunkom. 
 
-Poni¿ej zostan± opisane elementy, niezbêdne podczas konstrukcji
-wysoce realistycznych i dok³adnych testów wydajno¶ciowych sajtów webowych (znajduj± siê równie¿ najczê¶ciej pope³niane w
-typowych testach obci±¿eniowych b³êdy oraz sposób radzenia sobie z nimi):
+PoniÅ¼ej zostanÄ… opisane elementy, niezbÄ™dne podczas konstrukcji
+wysoce realistycznych i dokÅ‚adnych testÃ³w wydajnoÅ›ciowych sajtÃ³w webowych (znajdujÄ… siÄ™ rÃ³wnieÅ¼ najczÄ™Å›ciej popeÅ‚niane w
+typowych testach obciÄ…Å¼eniowych bÅ‚Ä™dy oraz sposÃ³b radzenia sobie z nimi):
 \begin{enumerate}
-\item Zrozumienie natury obci±¿enia
+\item Zrozumienie natury obciÄ…Å¼enia
 
-Pierwszym krokiem jest dok³adne i obiektywne zrozumienie
-natury obci±¿enia, jakie musi zostaæ wygenerowane, podczas symulacji ruchu na witrynie.
+Pierwszym krokiem jest dokÅ‚adne i obiektywne zrozumienie
+natury obciÄ…Å¼enia, jakie musi zostaÄ‡ wygenerowane, podczas symulacji ruchu na witrynie.
 
-Niestety, testowanie obci±¿enia sajtów webowych jest dziedzin± ralatywnie
-now± (tote¿ s³abo zrozumian± i udokumentowan±), a do tego jest bardzo ezoteryczn±
-dziedzin± testów. ¯eby odpowiednio zrozumieæ naturê obci±¿eñ nale¿y mo¿liwie
-czêsto korzystaæ z narzêdzia dokonuj±cego analizy logów naszego web serwera.
-Daje to mo¿liwo¶æ obserwacji detali odwiedzin ka¿dego u¿ytkownika: jego adresu IP, daty i czasu odwiedzin; jakie, 
-ile i o jakiej wielko¶ci dane pobiera³, czy pobranie by³o zakoñczone sukcesem, czy nie oraz inne dane o sesji u¿ytkownika, 
-jego systemie operacyjnym i narzêdziu z jakiego korzysta³. 
+Niestety, testowanie obciÄ…Å¼enia sajtÃ³w webowych jest dziedzinÄ… ralatywnie
+nowÄ… (toteÅ¼ sÅ‚abo zrozumianÄ… i udokumentowanÄ…), a do tego jest bardzo ezoterycznÄ…
+dziedzinÄ… testÃ³w. Å»eby odpowiednio zrozumieÄ‡ naturÄ™ obciÄ…Å¼eÅ„ naleÅ¼y moÅ¼liwie
+czÄ™sto korzystaÄ‡ z narzÄ™dzia dokonujÄ…cego analizy logÃ³w naszego web serwera.
+Daje to moÅ¼liwoÅ›Ä‡ obserwacji detali odwiedzin kaÅ¼dego uÅ¼ytkownika: jego adresu IP, daty i czasu odwiedzin; jakie, 
+ile i o jakiej wielkoÅ›ci dane pobieraÅ‚, czy pobranie byÅ‚o zakoÅ„czone sukcesem, czy nie oraz inne dane o sesji uÅ¼ytkownika, 
+jego systemie operacyjnym i narzÄ™dziu z jakiego korzystaÅ‚. 
 
     \begin{description}
-    \item[Sesja u¿ytkownika -- niezbêdne informacje]\
+    \item[Sesja uÅ¼ytkownika -- niezbÄ™dne informacje]\
 
-Wiêkszo¶æ potrzebnych informacji jakie nale¿y wyekstrahowaæ podczas analizy logów s± informacje zwi±zane z sesjami 
-u¿ytkowników\footnote{ang. \emph{user sessions}}. Testy obci±¿eniowe najbardziej zwi±zane s± w³a¶nie z sesjami u¿ytkownika. 
-Sesjê u¿ytkownika definiuje siê jako sekwencjê pobrañ stron zwi±zan± z unikatowym (pojedynczym, identyfikowalnym) u¿ytkownikiem.
+WiÄ™kszoÅ›Ä‡ potrzebnych informacji jakie naleÅ¼y wyekstrahowaÄ‡ podczas analizy logÃ³w sÄ… informacje zwiÄ…zane z sesjami 
+uÅ¼ytkownikÃ³w\footnote{ang. \emph{user sessions}}. Testy obciÄ…Å¼eniowe najbardziej zwiÄ…zane sÄ… wÅ‚aÅ›nie z sesjami uÅ¼ytkownika. 
+SesjÄ™ uÅ¼ytkownika definiuje siÄ™ jako sekwencjÄ™ pobraÅ„ stron zwiÄ…zanÄ… z unikatowym (pojedynczym, identyfikowalnym) uÅ¼ytkownikiem.
 
-Typowa witryna webowa jest wizytowana przez szerok± gamê u¿ytkowników z szerok± gam± dzia³añ. Np. u¿ytkownicy stron zwi±zanych 
-z szeroko rozumianym e--commersem: niektórzy z nich przyszli poogl±daæ (\emph{browse}), niektórzy kupiæ, jeszcze inni 
-sprawdziæ status
-zamówieñ. Nawet je¶li grupa klientów dokonuje pojedynczego dzia³ania, takiego jak kupowanie ksi±¿ki, ka¿dy z tej grupy mo¿e to 
-realizowaæ na szereg sposobów. Niektórzy bêd± poruszaæ siê ze strony na stronê bardzo szybko, raczej nie dbaj±c o dok³adne 
-przeczytanie znajduj±cych siê tam informacji, inni przeciwnie -- poruszaj± siê powoli czytaj±c ka¿d± stronê bardzo uwa¿nie. 
-Niektórzy bêd± wyszukiwaæ czytaj±c fragmenty wielu ksi±¿ek zanim zdecyduj± siê na kupno jednej, inni skieruj± siê od razu do 
-miejsca zamówienia \emph{(purchase page)}.
+Typowa witryna webowa jest wizytowana przez szerokÄ… gamÄ™ uÅ¼ytkownikÃ³w z szerokÄ… gamÄ… dziaÅ‚aÅ„. Np. uÅ¼ytkownicy stron zwiÄ…zanych 
+z szeroko rozumianym e--commersem: niektÃ³rzy z nich przyszli pooglÄ…daÄ‡ (\emph{browse}), niektÃ³rzy kupiÄ‡, jeszcze inni 
+sprawdziÄ‡ status
+zamÃ³wieÅ„. Nawet jeÅ›li grupa klientÃ³w dokonuje pojedynczego dziaÅ‚ania, takiego jak kupowanie ksiÄ…Å¼ki, kaÅ¼dy z tej grupy moÅ¼e to 
+realizowaÄ‡ na szereg sposobÃ³w. NiektÃ³rzy bÄ™dÄ… poruszaÄ‡ siÄ™ ze strony na stronÄ™ bardzo szybko, raczej nie dbajÄ…c o dokÅ‚adne 
+przeczytanie znajdujÄ…cych siÄ™ tam informacji, inni przeciwnie -- poruszajÄ… siÄ™ powoli czytajÄ…c kaÅ¼dÄ… stronÄ™ bardzo uwaÅ¼nie. 
+NiektÃ³rzy bÄ™dÄ… wyszukiwaÄ‡ czytajÄ…c fragmenty wielu ksiÄ…Å¼ek zanim zdecydujÄ… siÄ™ na kupno jednej, inni skierujÄ… siÄ™ od razu do 
+miejsca zamÃ³wienia \emph{(purchase page)}.
 
-Zrozumienie tej szerokiej gamy akcji, dzia³añ i zachowañ jest niezbêdne (krytyczne) dla zaprojektowania testów obci±¿eniowych, 
-poniewa¿ dobrze zaprojektowany test powinien odzwierciedlaæ zachowania u¿ytkowników tak precyzyjnie jak to tylko mo¿liwe. 
-Najlepsz± metod± jest u¿ywanie analizatorów logów (podczas pracy witryny) oraz wydobycie kluczowej grupy zmiennych zachowania 
-klientów najczê¶ciej spotykanych na danym sajcie, adekwatnych do ruchu webowego. Niektóre ze zmiennych, na które zawsze 
-powinno zwróciæ siê uwagê to:
+Zrozumienie tej szerokiej gamy akcji, dziaÅ‚aÅ„ i zachowaÅ„ jest niezbÄ™dne (krytyczne) dla zaprojektowania testÃ³w obciÄ…Å¼eniowych, 
+poniewaÅ¼ dobrze zaprojektowany test powinien odzwierciedlaÄ‡ zachowania uÅ¼ytkownikÃ³w tak precyzyjnie jak to tylko moÅ¼liwe. 
+NajlepszÄ… metodÄ… jest uÅ¼ywanie analizatorÃ³w logÃ³w (podczas pracy witryny) oraz wydobycie kluczowej grupy zmiennych zachowania 
+klientÃ³w najczÄ™Å›ciej spotykanych na danym sajcie, adekwatnych do ruchu webowego. NiektÃ³re ze zmiennych, na ktÃ³re zawsze 
+powinno zwrÃ³ciÄ‡ siÄ™ uwagÄ™ to:
 	\begin{itemize}
-	\item d³ugo¶æ trwania sesji (mierzona w stronach);
+	\item dÅ‚ugoÅ›Ä‡ trwania sesji (mierzona w stronach);
 	\item czas trwania sesji (duration) (mierzona w minutach i sekundach);
 	\item typ stron wizytowanych podczas trwania sesji (strona domowa, strona informacji o produkcjie, strona informacji o kartach 
 	kredytowych).
 	\end{itemize}
 
-Naturalnie nie s± to wszystkie zmienne maj±ce wp³yw na charakterystykê obci±¿eniow± sajtu -- oprócz nich nale¿y wybraæ jeszcze 
-jakie¶ zmienne które o specyfice danej witryny decyduj±.
+Naturalnie nie sÄ… to wszystkie zmienne majÄ…ce wpÅ‚yw na charakterystykÄ™ obciÄ…Å¼eniowÄ… sajtu -- oprÃ³cz nich naleÅ¼y wybraÄ‡ jeszcze 
+jakieÅ› zmienne ktÃ³re o specyfice danej witryny decydujÄ….
 
-Tak± specyfikê mo¿na zauwa¿yæ na przyk³adzie: siedmio--stronicowa sesja, której rezultatem jest zamówienie artyku³u znacznie 
-bardziej obci±¿a system ni¿ siedmiostronicowa sesja, której wynikiem jest tylko przegl±danie dokumentów. Przegl±danie 
-dokumentów jest zwykle zwi±zane z dokumentami statycznymi, za¶ na sesjê, której efektem jest dokonanie zakupu artyku³u sk³ada 
-siê ca³y szereg czynników takich jak: przeszukiwanie bazy danych zasobów witryny, u¿ytkownika, transakcji kart kredytowych z 
-weryfikacj± (osobne systemy), a tak¿e wys³anie potwierdzaj±cego zamówienie e--maila. Statystycznie rzecz bior±c pojedyncza 
-sesja zakupu mo¿e poch³on±æ zasoby sajtu tak jak dwadzie¶cia sesji statycznych \emph{(browsing)}. 
+TakÄ… specyfikÄ™ moÅ¼na zauwaÅ¼yÄ‡ na przykÅ‚adzie: siedmio--stronicowa sesja, ktÃ³rej rezultatem jest zamÃ³wienie artykuÅ‚u znacznie 
+bardziej obciÄ…Å¼a system niÅ¼ siedmiostronicowa sesja, ktÃ³rej wynikiem jest tylko przeglÄ…danie dokumentÃ³w. PrzeglÄ…danie 
+dokumentÃ³w jest zwykle zwiÄ…zane z dokumentami statycznymi, zaÅ› na sesjÄ™, ktÃ³rej efektem jest dokonanie zakupu artykuÅ‚u skÅ‚ada 
+siÄ™ caÅ‚y szereg czynnikÃ³w takich jak: przeszukiwanie bazy danych zasobÃ³w witryny, uÅ¼ytkownika, transakcji kart kredytowych z 
+weryfikacjÄ… (osobne systemy), a takÅ¼e wysÅ‚anie potwierdzajÄ…cego zamÃ³wienie e--maila. Statystycznie rzecz biorÄ…c pojedyncza 
+sesja zakupu moÅ¼e pochÅ‚onÄ…Ä‡ zasoby sajtu tak jak dwadzieÅ›cia sesji statycznych \emph{(browsing)}. 
 
-W podobny sposób mo¿na porównaæ zakupy dokonywane przez nowych i sta³ych klientów. Nowy u¿ytkownik potrzebuje dokonaæ 
-rejestracji, potwierdzenia i weryfikacji swoich danych, za¶ sta³y ju¿ nie. Zwi±zane z baz± danych zak³adanie u¿ytkownika mo¿e 
-byæ równe obci±¿eniu generowanemu przez piêciu sta³ych u¿ytkowników, dlatego trzeba wyró¿niæ co najmniej dwa typy 
-wykorzystania zasobów przy realizacji zakupów.
+W podobny sposÃ³b moÅ¼na porÃ³wnaÄ‡ zakupy dokonywane przez nowych i staÅ‚ych klientÃ³w. Nowy uÅ¼ytkownik potrzebuje dokonaÄ‡ 
+rejestracji, potwierdzenia i weryfikacji swoich danych, zaÅ› staÅ‚y juÅ¼ nie. ZwiÄ…zane z bazÄ… danych zakÅ‚adanie uÅ¼ytkownika moÅ¼e 
+byÄ‡ rÃ³wne obciÄ…Å¼eniu generowanemu przez piÄ™ciu staÅ‚ych uÅ¼ytkownikÃ³w, dlatego trzeba wyrÃ³Å¼niÄ‡ co najmniej dwa typy 
+wykorzystania zasobÃ³w przy realizacji zakupÃ³w.
 
-Gdy zostan± ju¿ zdeterminowane wszystkie zmienne zwi±zane z sesj± u¿ytkownika -- nale¿y nastêpnie znale¼æ (zwykle równie¿ w 
-logach) rangê i dystrybucjê warto¶ci tych zmiennych np. procentowa (w ca³o¶ci ¿±dañ) ilo¶æ ¿±danych stron podczas sesji.  Do 
-takich celów mo¿na u¿ywaæ narzêdzi statystycznych takich jak: odchylenie standardowe, jednak¿e najlepszym sposobem 
-charakteryzowania wiêkszo¶ci zmiennych webowych testów obci±¿eniowych jest u¿ycie rozproszenia jako warto¶ci dyskretnej.
+Gdy zostanÄ… juÅ¼ zdeterminowane wszystkie zmienne zwiÄ…zane z sesjÄ… uÅ¼ytkownika -- naleÅ¼y nastÄ™pnie znaleÅºÄ‡ (zwykle rÃ³wnieÅ¼ w 
+logach) rangÄ™ i dystrybucjÄ™ wartoÅ›ci tych zmiennych np. procentowa (w caÅ‚oÅ›ci Å¼Ä…daÅ„) iloÅ›Ä‡ Å¼Ä…danych stron podczas sesji.  Do 
+takich celÃ³w moÅ¼na uÅ¼ywaÄ‡ narzÄ™dzi statystycznych takich jak: odchylenie standardowe, jednakÅ¼e najlepszym sposobem 
+charakteryzowania wiÄ™kszoÅ›ci zmiennych webowych testÃ³w obciÄ…Å¼eniowych jest uÅ¼ycie rozproszenia jako wartoÅ›ci dyskretnej.
 
-Wielko¶æ detali i precyzjê z jak± nale¿y analizowaæ te zmienne zale¿y od struktury sajtu (i jej komplikacji), czasu testów, 
-oraz analizy wyników. 
+WielkoÅ›Ä‡ detali i precyzjÄ™ z jakÄ… naleÅ¼y analizowaÄ‡ te zmienne zaleÅ¼y od struktury sajtu (i jej komplikacji), czasu testÃ³w, 
+oraz analizy wynikÃ³w. 
 
-    \item[Wspó³bie¿ni u¿ytkownicy]\
+    \item[WspÃ³Å‚bieÅ¼ni uÅ¼ytkownicy]\
 
-Zazwyczaj w testach obci±¿eniowych witryn webowych podaje siê warto¶ci obci±¿enia 
-spowodowanego naraz wspó³u¿ytkuj±cymi zasoby u¿ytkownikami. Jednak¿e wspó³bie¿ni u¿ytkownicy nie powinni byæ widziani 
-jako zmienna wej¶ciowa w te¶cie, ale jako rezultat wielu ró¿nych czynników. A zwkle podaje siê np. strona 
-zosta³a przetestowana z obci±¿eniem 1000 wspó³bie¿nymi u¿ytkownikami. Liczba wspó³bie¿nych u¿ytkowników nie jest miernikiem 
-obci±¿enia. Warto¶æ ta jest rezultatem wydajno¶ci (zdolno¶ci do przyjêcia obci±¿enia) witryny. Efektem pracy na wolniejszym 
-sajcie bêdzie wiêksza liczba wspó³bie¿nych u¿ytkowników. Mo¿na to pokazaæ na przyk³adzie -- je¶li na stronê loguje siê trzech 
-u¿ytkowników w odstêpnie czasowym 1min i pracuj± po 1 min (np. dokonuj± zakupów) -- to tylko i wy³±cznie w zale¿no¶ci od 
-wydajno¶ci witryny oraz jej obci±¿enia bêdzie 0, 2 i 3 naraz pracuj±cych u¿ytkowników. Zatem je¶li wydajno¶æ witryny webowej z 
-jakiego¶ powodu spada to wzrastaæ bêdzie liczba wspó³bie¿nych u¿ytkowników. Trzeba jednak¿e dodaæ jeszcze jeden element -- 
-je¶li wydajno¶æ sajtu spada (ro¶nie liczba wspó³bie¿nych u¿ytkowników) ro¶nie tak¿e ilo¶æ u¿ytkowników, którzy rezygnuj± z 
-korzystania z jego zasobów. Je¶li witryna jest bardzo szybka to mog± siê zdarzyæ sytuacje, ¿e ilo¶æ wspó³bie¿nych u¿ytkowników 
-bêdzie oscylowaæ wokó³ zera (nawet przy ich du¿ej ilo¶ci). 
+Zazwyczaj w testach obciÄ…Å¼eniowych witryn webowych podaje siÄ™ wartoÅ›ci obciÄ…Å¼enia 
+spowodowanego naraz wspÃ³Å‚uÅ¼ytkujÄ…cymi zasoby uÅ¼ytkownikami. JednakÅ¼e wspÃ³Å‚bieÅ¼ni uÅ¼ytkownicy nie powinni byÄ‡ widziani 
+jako zmienna wejÅ›ciowa w teÅ›cie, ale jako rezultat wielu rÃ³Å¼nych czynnikÃ³w. A zwkle podaje siÄ™ np. strona 
+zostaÅ‚a przetestowana z obciÄ…Å¼eniem 1000 wspÃ³Å‚bieÅ¼nymi uÅ¼ytkownikami. Liczba wspÃ³Å‚bieÅ¼nych uÅ¼ytkownikÃ³w nie jest miernikiem 
+obciÄ…Å¼enia. WartoÅ›Ä‡ ta jest rezultatem wydajnoÅ›ci (zdolnoÅ›ci do przyjÄ™cia obciÄ…Å¼enia) witryny. Efektem pracy na wolniejszym 
+sajcie bÄ™dzie wiÄ™ksza liczba wspÃ³Å‚bieÅ¼nych uÅ¼ytkownikÃ³w. MoÅ¼na to pokazaÄ‡ na przykÅ‚adzie -- jeÅ›li na stronÄ™ loguje siÄ™ trzech 
+uÅ¼ytkownikÃ³w w odstÄ™pnie czasowym 1min i pracujÄ… po 1 min (np. dokonujÄ… zakupÃ³w) -- to tylko i wyÅ‚Ä…cznie w zaleÅ¼noÅ›ci od 
+wydajnoÅ›ci witryny oraz jej obciÄ…Å¼enia bÄ™dzie 0, 2 i 3 naraz pracujÄ…cych uÅ¼ytkownikÃ³w. Zatem jeÅ›li wydajnoÅ›Ä‡ witryny webowej z 
+jakiegoÅ› powodu spada to wzrastaÄ‡ bÄ™dzie liczba wspÃ³Å‚bieÅ¼nych uÅ¼ytkownikÃ³w. Trzeba jednakÅ¼e dodaÄ‡ jeszcze jeden element -- 
+jeÅ›li wydajnoÅ›Ä‡ sajtu spada (roÅ›nie liczba wspÃ³Å‚bieÅ¼nych uÅ¼ytkownikÃ³w) roÅ›nie takÅ¼e iloÅ›Ä‡ uÅ¼ytkownikÃ³w, ktÃ³rzy rezygnujÄ… z 
+korzystania z jego zasobÃ³w. JeÅ›li witryna jest bardzo szybka to mogÄ… siÄ™ zdarzyÄ‡ sytuacje, Å¼e iloÅ›Ä‡ wspÃ³Å‚bieÅ¼nych uÅ¼ytkownikÃ³w 
+bÄ™dzie oscylowaÄ‡ wokÃ³Å‚ zera (nawet przy ich duÅ¼ej iloÅ›ci). 
 
-Z tych powodów u¿ywanie jako miernika obci±¿enia strony ilo¶ci wspó³pracuj±cych naraz u¿ytkowników jest (je¶li ma byæ 
-realistyczne) bardzo trudne, a wyniki zawsze odbiegaj± od rzeczywistych. Znacznie lepszym wska¼nikiem obci±¿enia witryny jest 
-liczba sesji u¿ytkownika wystartowana na godzinê. Ma to wa¿n± zaletê -- jest to warto¶æ sta³a, niezmienna w zale¿no¶ci od 
-wydajno¶ci witryny w te¶cie. Daje wska¼nik ilu u¿ytkowników otrzyma stronê pierwsz± witryny -- to czy ci u¿ytkownicy ukoñcz± 
-swoj± sesjê, czy nie zale¿y ju¿ od zdolno¶ci strony do uniesienia danego obci±¿enia. I jest to w³a¶nie ta warto¶æ, któr± siê 
-poszukuje podczas wykonywania testów.
+Z tych powodÃ³w uÅ¼ywanie jako miernika obciÄ…Å¼enia strony iloÅ›ci wspÃ³Å‚pracujÄ…cych naraz uÅ¼ytkownikÃ³w jest (jeÅ›li ma byÄ‡ 
+realistyczne) bardzo trudne, a wyniki zawsze odbiegajÄ… od rzeczywistych. Znacznie lepszym wskaÅºnikiem obciÄ…Å¼enia witryny jest 
+liczba sesji uÅ¼ytkownika wystartowana na godzinÄ™. Ma to waÅ¼nÄ… zaletÄ™ -- jest to wartoÅ›Ä‡ staÅ‚a, niezmienna w zaleÅ¼noÅ›ci od 
+wydajnoÅ›ci witryny w teÅ›cie. Daje wskaÅºnik ilu uÅ¼ytkownikÃ³w otrzyma stronÄ™ pierwszÄ… witryny -- to czy ci uÅ¼ytkownicy ukoÅ„czÄ… 
+swojÄ… sesjÄ™, czy nie zaleÅ¼y juÅ¼ od zdolnoÅ›ci strony do uniesienia danego obciÄ…Å¼enia. I jest to wÅ‚aÅ›nie ta wartoÅ›Ä‡, ktÃ³rÄ… siÄ™ 
+poszukuje podczas wykonywania testÃ³w.
 
-    \item[Rezygnacja klientów]\
+    \item[Rezygnacja klientÃ³w]\
 
-Kolejn± wa¿n± wielko¶ci±, niejednokrotnie ¼le szacowan± w testach, a maj±c± znaczny wp³yw na testy obci±¿eniowe 
-witryny jest rezygnacja klientów w trakcie sesji. U¿ytkownicy czêsto rezygnuj± podczas sesji np. zakupów z powodu bardzo 
-d³ugich odpowiedzi serwera. Zmienn± t± nale¿y równie¿ braæ pod uwagê podczas wykonywania testów obci±¿eniowych na 
+KolejnÄ… waÅ¼nÄ… wielkoÅ›ciÄ…, niejednokrotnie Åºle szacowanÄ… w testach, a majÄ…cÄ… znaczny wpÅ‚yw na testy obciÄ…Å¼eniowe 
+witryny jest rezygnacja klientÃ³w w trakcie sesji. UÅ¼ytkownicy czÄ™sto rezygnujÄ… podczas sesji np. zakupÃ³w z powodu bardzo 
+dÅ‚ugich odpowiedzi serwera. ZmiennÄ… tÄ… naleÅ¼y rÃ³wnieÅ¼ braÄ‡ pod uwagÄ™ podczas wykonywania testÃ³w obciÄ…Å¼eniowych na 
 przygotowywanym 
-sajcie. Symulacja porzucania przez u¿ytkowników sesji powinna byæ dokonana tak rzeczywi¶cie jak to tylko mo¿liwe. Je¶li nie, 
-podczas testów bêdzie siê symulowaæ obci±¿enie tak wielkie jakie mo¿e nigdy nie nast±piæ, lub w±skie gard³a, które w 
-rzeczywisto¶ci nigdy siê nie pojawi±. Pominie siê zatem najbardziej istotne wyniki testów obci±¿eniowych: czyli 
-u¿ytkowników, którzy mog± porzuciæ sesjê z powodu s³abej wydajno¶ci. Zatem testy stan± siê nieu¿yteczne. W poni¿szej 
-tabelce znajduj± siê przyk³adowe zale¿no¶ci pomiêdzy liczb± opuszczaj±cych witrynê u¿ytkowników, a czasem oczekiwania na 
-okre¶lon± stronê.
+sajcie. Symulacja porzucania przez uÅ¼ytkownikÃ³w sesji powinna byÄ‡ dokonana tak rzeczywiÅ›cie jak to tylko moÅ¼liwe. JeÅ›li nie, 
+podczas testÃ³w bÄ™dzie siÄ™ symulowaÄ‡ obciÄ…Å¼enie tak wielkie jakie moÅ¼e nigdy nie nastÄ…piÄ‡, lub wÄ…skie gardÅ‚a, ktÃ³re w 
+rzeczywistoÅ›ci nigdy siÄ™ nie pojawiÄ…. Pominie siÄ™ zatem najbardziej istotne wyniki testÃ³w obciÄ…Å¼eniowych: czyli 
+uÅ¼ytkownikÃ³w, ktÃ³rzy mogÄ… porzuciÄ‡ sesjÄ™ z powodu sÅ‚abej wydajnoÅ›ci. Zatem testy stanÄ… siÄ™ nieuÅ¼yteczne. W poniÅ¼szej 
+tabelce znajdujÄ… siÄ™ przykÅ‚adowe zaleÅ¼noÅ›ci pomiÄ™dzy liczbÄ… opuszczajÄ…cych witrynÄ™ uÅ¼ytkownikÃ³w, a czasem oczekiwania na 
+okreÅ›lonÄ… stronÄ™.
 \begin{table}[h]
 \centering
 \begin{scriptsize}
 \begin{tt}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
-{Typ strony}&{\% opuszczaj±cych}&{\% opuszczaj±cych}&{\% opuszczaj±cych}&{\% opuszczaj±cych}\\
+{Typ strony}&{\% opuszczajÄ…cych}&{\% opuszczajÄ…cych}&{\% opuszczajÄ…cych}&{\% opuszczajÄ…cych}\\
 {}&{ 0--5 s }&{ 5--10 s }&{ 10--15 s }&{ 10--20 s }\\
 \hline\hline
 {Strona domowa}&{0\%}&{30\%}&{45\%}&{75\%}\\
@@ -764,108 +764,108 @@ okre¶lon± stronê.
 \hline
 \end{tabular}
 \end{tt}
-\caption{¦redni stopieñ porzucania witryny w \% dla ró¿nych typów stron}
+\caption{Åšredni stopieÅ„ porzucania witryny w \% dla rÃ³Å¼nych typÃ³w stron}
 \label{porzucanie}
 \end{scriptsize}
 \end{table}
-Je¶li zatem odpowied¼ oczekiwania na stronê domow± wynosi 5 sek. lub mniej nie obserwuje siê ucieczki klientów. Jednak¿e 
-powy¿ej tego czasu rezygnacja z oczekiwania staje siê coraz wyra¼niejsza, by w czasie 15--20 sek. $3/4$ obecnych na witrynie 
-klientów ju¿ zrezygnowa³o. Jednak¿e nale¿y zwróciæ uwagê na jeszcze jeden zwi±zany z tym szczegó³. Rezygnacja u¿ytkowników 
-zmniejsza obci±¿enie, zatem wydajno¶æ zaczyna siê zwiêkszaæ, mniej u¿ytkowników rezygnuje -- a¿ w koñcu obci±¿enie z powrotem 
-powoduje oczekiwania na realizacjê ¿±dañ o strony i cykl siê powtarza. Jest to oczywi¶cie przyk³ad. Rezygnacja u¿ytkowników z 
-us³ug witryny jest bardzo wa¿n± zmienn± pokazuj±c±, ¿e dany sajt nie jest w stanie satysfakcjonuj±co zapewniaæ us³ug przy 
-obci±¿eniu. Najczê¶ciej oprogramowanie do testowania potrafi symulowaæ rezygnacjê u¿ytkowników, ale z ekstremalnych powodów -- 
-zwykle 60--120sek. Jednak¿e takie warto¶ci s± nie do przyjêcia gdy¿ praktycznie nikt nie czeka tyle czasu. Aby móc wykonaæ 
-testy obci±¿eniowe tak prawdopodobne jak to tylko mo¿liwe, mo¿na skonfigurowaæ testowan± witrynê w taki sposób, aby 
-przekierowywaæ czê¶æ u¿ytkowników na wolniejszy mirror tej witryny. Mo¿na np. w ten sposób: 90\% ruchu jest kierowane na 
-zwyk³y serwer, za¶ 10\% na wolniejszy mirror, na którym np. strona domowa bêdzie serwowana pó¼niej o 5 sek. W takiej 
-konfiguracji nale¿y ten dwuserwerowy system uruchomiæ na kilka godzin lub dni, do czasu otrzymania znacz±cych wyników. Po tym 
-czasie nale¿y dokonaæ analizy porzucaj±cych transakcje webowe klientów. Je¶li na zwyk³ym serwerze opuszczanie sesji po stronie 
-domowej siêga 6\%, za¶ na tym wolniejszym 20\%, trzeba siê liczyæ z opuszczaniem witryny przez 14\% klientów, którzy nie bêd± 
-zbyt cierpliwi by poczekaæ kolejne 5 sek.
+JeÅ›li zatem odpowiedÅº oczekiwania na stronÄ™ domowÄ… wynosi 5 sek. lub mniej nie obserwuje siÄ™ ucieczki klientÃ³w. JednakÅ¼e 
+powyÅ¼ej tego czasu rezygnacja z oczekiwania staje siÄ™ coraz wyraÅºniejsza, by w czasie 15--20 sek. $3/4$ obecnych na witrynie 
+klientÃ³w juÅ¼ zrezygnowaÅ‚o. JednakÅ¼e naleÅ¼y zwrÃ³ciÄ‡ uwagÄ™ na jeszcze jeden zwiÄ…zany z tym szczegÃ³Å‚. Rezygnacja uÅ¼ytkownikÃ³w 
+zmniejsza obciÄ…Å¼enie, zatem wydajnoÅ›Ä‡ zaczyna siÄ™ zwiÄ™kszaÄ‡, mniej uÅ¼ytkownikÃ³w rezygnuje -- aÅ¼ w koÅ„cu obciÄ…Å¼enie z powrotem 
+powoduje oczekiwania na realizacjÄ™ Å¼Ä…daÅ„ o strony i cykl siÄ™ powtarza. Jest to oczywiÅ›cie przykÅ‚ad. Rezygnacja uÅ¼ytkownikÃ³w z 
+usÅ‚ug witryny jest bardzo waÅ¼nÄ… zmiennÄ… pokazujÄ…cÄ…, Å¼e dany sajt nie jest w stanie satysfakcjonujÄ…co zapewniaÄ‡ usÅ‚ug przy 
+obciÄ…Å¼eniu. NajczÄ™Å›ciej oprogramowanie do testowania potrafi symulowaÄ‡ rezygnacjÄ™ uÅ¼ytkownikÃ³w, ale z ekstremalnych powodÃ³w -- 
+zwykle 60--120sek. JednakÅ¼e takie wartoÅ›ci sÄ… nie do przyjÄ™cia gdyÅ¼ praktycznie nikt nie czeka tyle czasu. Aby mÃ³c wykonaÄ‡ 
+testy obciÄ…Å¼eniowe tak prawdopodobne jak to tylko moÅ¼liwe, moÅ¼na skonfigurowaÄ‡ testowanÄ… witrynÄ™ w taki sposÃ³b, aby 
+przekierowywaÄ‡ czÄ™Å›Ä‡ uÅ¼ytkownikÃ³w na wolniejszy mirror tej witryny. MoÅ¼na np. w ten sposÃ³b: 90\% ruchu jest kierowane na 
+zwykÅ‚y serwer, zaÅ› 10\% na wolniejszy mirror, na ktÃ³rym np. strona domowa bÄ™dzie serwowana pÃ³Åºniej o 5 sek. W takiej 
+konfiguracji naleÅ¼y ten dwuserwerowy system uruchomiÄ‡ na kilka godzin lub dni, do czasu otrzymania znaczÄ…cych wynikÃ³w. Po tym 
+czasie naleÅ¼y dokonaÄ‡ analizy porzucajÄ…cych transakcje webowe klientÃ³w. JeÅ›li na zwykÅ‚ym serwerze opuszczanie sesji po stronie 
+domowej siÄ™ga 6\%, zaÅ› na tym wolniejszym 20\%, trzeba siÄ™ liczyÄ‡ z opuszczaniem witryny przez 14\% klientÃ³w, ktÃ³rzy nie bÄ™dÄ… 
+zbyt cierpliwi by poczekaÄ‡ kolejne 5 sek.
 
-Porzucanie operacji webowych przez klientów nie jest interesuj±cym wynikiem, samym w sobie -- daje pogl±d na to jakie czê¶ci 
-sajtu s± najbardziej obci±¿one w warunkach pracy. Je¶li np. strona domowa jest wyj±tkowo wolna, wiêkszo¶æ u¿ytkowników nawet 
-nie rozpocznie sesji. Widaæ zatem, ¿e odpowiednie symulowanie tego parametru jest bardzo istotne dla stworzenia wydajnego 
+Porzucanie operacji webowych przez klientÃ³w nie jest interesujÄ…cym wynikiem, samym w sobie -- daje poglÄ…d na to jakie czÄ™Å›ci 
+sajtu sÄ… najbardziej obciÄ…Å¼one w warunkach pracy. JeÅ›li np. strona domowa jest wyjÄ…tkowo wolna, wiÄ™kszoÅ›Ä‡ uÅ¼ytkownikÃ³w nawet 
+nie rozpocznie sesji. WidaÄ‡ zatem, Å¼e odpowiednie symulowanie tego parametru jest bardzo istotne dla stworzenia wydajnego 
 sajtu.
 
-    \item[Dystrybucja zapytañ o stronê]\
+    \item[Dystrybucja zapytaÅ„ o stronÄ™]\
 
-Kolejn± wa¿n± zmienn±, której warto po¶wiêæ uwagê jest dystrybucja zapytañ o  stronê. Ta wa¿na warto¶æ okre¶la o jakie strony 
-s± zapytania i w jakich proporcjach. Procedura zbierania tej danej jest dwustopniowa: najpierw nale¿y zdefiniowaæ 
-skategoryzowane grupy stron, a nastêpnie obliczyæ udzia³ procentowy ¿±dañ o strony w ka¿dej grupie. 
+KolejnÄ… waÅ¼nÄ… zmiennÄ…, ktÃ³rej warto poÅ›wiÄ™Ä‡ uwagÄ™ jest dystrybucja zapytaÅ„ o  stronÄ™. Ta waÅ¼na wartoÅ›Ä‡ okreÅ›la o jakie strony 
+sÄ… zapytania i w jakich proporcjach. Procedura zbierania tej danej jest dwustopniowa: najpierw naleÅ¼y zdefiniowaÄ‡ 
+skategoryzowane grupy stron, a nastÄ™pnie obliczyÄ‡ udziaÅ‚ procentowy Å¼Ä…daÅ„ o strony w kaÅ¼dej grupie. 
 
     \end{description}
 
 \item Estymacja wzrostu ruchu na witrynie
 
-Kolejnym krokiem przy projektowaniu testów obci±¿eniowych jest zrozumienie pewnych kluczowych zmiennych -- niezbêdnych do 
-estymowania docelowego poziomu obci±¿enia:
+Kolejnym krokiem przy projektowaniu testÃ³w obciÄ…Å¼eniowych jest zrozumienie pewnych kluczowych zmiennych -- niezbÄ™dnych do 
+estymowania docelowego poziomu obciÄ…Å¼enia:
     \begin{itemize}
-    \item jak wzrasta ca³kowite obci±¿enie ruchu na sajcie;
-    \item jaki jest poziom obci±¿enia pojedynczych pików, maj±cych wp³yw w ca³kowitym obci±¿eniu;
-    \item jak szybko liczba u¿ytkowników mo¿e wp³yn±æ na osi±gniêcie maksimum piku obci±¿eniowego;
-    \item jak d³ugo trwaj± poszczególne piki.
+    \item jak wzrasta caÅ‚kowite obciÄ…Å¼enie ruchu na sajcie;
+    \item jaki jest poziom obciÄ…Å¼enia pojedynczych pikÃ³w, majÄ…cych wpÅ‚yw w caÅ‚kowitym obciÄ…Å¼eniu;
+    \item jak szybko liczba uÅ¼ytkownikÃ³w moÅ¼e wpÅ‚ynÄ…Ä‡ na osiÄ…gniÄ™cie maksimum piku obciÄ…Å¼eniowego;
+    \item jak dÅ‚ugo trwajÄ… poszczegÃ³lne piki.
     \end{itemize}
 
-Przy pomiarze poziomu obci±¿enia mo¿na u¿ywaæ zmiennej: liczba sesji u¿ytkowników na jednostkê czasu. Taki wybór wynika z jego 
-prostoty w zrozumieniu i ³atwo¶ci analizy.
+Przy pomiarze poziomu obciÄ…Å¼enia moÅ¼na uÅ¼ywaÄ‡ zmiennej: liczba sesji uÅ¼ytkownikÃ³w na jednostkÄ™ czasu. Taki wybÃ³r wynika z jego 
+prostoty w zrozumieniu i Å‚atwoÅ›ci analizy.
 
     \begin{description}
-    \item[Estymacja przysz³ego ruchu webowego]\
+    \item[Estymacja przyszÅ‚ego ruchu webowego]\
 
-Ocena szybko¶ci wzrostu ca³kowitego obci±¿enia ruchu jest istotna, poniewa¿ rozmiar poziomu pików jest 
-proporcjonalny do amplitudy ca³kowitego ruchu. Je¶li ca³kowity ruch wynosi np. 100000 sesji na tydzieñ, oznacza to piki o 
-wielko¶ci 1500 sesji na godzinê, zatem przy obci±¿eniu rzêdu 200000 sesji na tydzieñ piki (chwilowe obci±¿enia) mog± siêgaæ 
-3000 sesji na godzinê. 
+Ocena szybkoÅ›ci wzrostu caÅ‚kowitego obciÄ…Å¼enia ruchu jest istotna, poniewaÅ¼ rozmiar poziomu pikÃ³w jest 
+proporcjonalny do amplitudy caÅ‚kowitego ruchu. JeÅ›li caÅ‚kowity ruch wynosi np. 100000 sesji na tydzieÅ„, oznacza to piki o 
+wielkoÅ›ci 1500 sesji na godzinÄ™, zatem przy obciÄ…Å¼eniu rzÄ™du 200000 sesji na tydzieÅ„ piki (chwilowe obciÄ…Å¼enia) mogÄ… siÄ™gaÄ‡ 
+3000 sesji na godzinÄ™. 
 
-Ca³kowity wzrost wielko¶ci ruchu wynika z dwóch czynników: danych historycznych (o wzro¶cie) oraz szacunków 
-sprzeda¿y/marketingu. Aby estymowaæ te warto¶ci, nale¿y dokonaæ analizy tygodniowego ruchu oraz dowiedzieæ siê od odpowiednich 
-ludzi w firmie jak mo¿e siê zmieniaæ ruch z miesi±ca na miesi±c, oraz jak mo¿e wygl±daæ zainteresowanie na witrynie po 
-specjalnych ofertach marketingowych. Z takich informacji mo¿na oszacowaæ warto¶æ obci±¿enia w czasie -- czyli przysz³e 
-mo¿liwo¶ci sajtu. 
+CaÅ‚kowity wzrost wielkoÅ›ci ruchu wynika z dwÃ³ch czynnikÃ³w: danych historycznych (o wzroÅ›cie) oraz szacunkÃ³w 
+sprzedaÅ¼y/marketingu. Aby estymowaÄ‡ te wartoÅ›ci, naleÅ¼y dokonaÄ‡ analizy tygodniowego ruchu oraz dowiedzieÄ‡ siÄ™ od odpowiednich 
+ludzi w firmie jak moÅ¼e siÄ™ zmieniaÄ‡ ruch z miesiÄ…ca na miesiÄ…c, oraz jak moÅ¼e wyglÄ…daÄ‡ zainteresowanie na witrynie po 
+specjalnych ofertach marketingowych. Z takich informacji moÅ¼na oszacowaÄ‡ wartoÅ›Ä‡ obciÄ…Å¼enia w czasie -- czyli przyszÅ‚e 
+moÅ¼liwoÅ›ci sajtu. 
 
     \item[Estymacja ruchu chwilowego]\
 
-Po dokonaniu analizy wzrostu ca³kowitego obci±¿enia, nale¿y estymowaæ poziom natê¿enia ruchu chwilowego. Jest to niezbêdne 
-poniewa¿ ruch webowy jest raczej nierównomierny, a wiele sajtów do¶wiadcza znacz±cych chwilowych obci±¿eñ. Zwykle zdarza siê 
-to tylko kilka razy (raz, lub dwa w tygodniu lub kilka godzin dziennie). Gdy ruch webowy jest najwy¿szy. Przyk³adem s± witryny 
-pogodowe, na których nasilenie ruchu odbywa siê w pi±tek i sobotê, poniewa¿ u¿ytkownicy potrzebuj± danych pogodowych z powodu 
-planów weekendowych. Natomiast (trading) handel sieciowy zwykle do¶wiadcza najwiêkszych obci±¿eñ w okolicach czasu otwarcia i 
-zamkniêcia sklepu. 
+Po dokonaniu analizy wzrostu caÅ‚kowitego obciÄ…Å¼enia, naleÅ¼y estymowaÄ‡ poziom natÄ™Å¼enia ruchu chwilowego. Jest to niezbÄ™dne 
+poniewaÅ¼ ruch webowy jest raczej nierÃ³wnomierny, a wiele sajtÃ³w doÅ›wiadcza znaczÄ…cych chwilowych obciÄ…Å¼eÅ„. Zwykle zdarza siÄ™ 
+to tylko kilka razy (raz, lub dwa w tygodniu lub kilka godzin dziennie). Gdy ruch webowy jest najwyÅ¼szy. PrzykÅ‚adem sÄ… witryny 
+pogodowe, na ktÃ³rych nasilenie ruchu odbywa siÄ™ w piÄ…tek i sobotÄ™, poniewaÅ¼ uÅ¼ytkownicy potrzebujÄ… danych pogodowych z powodu 
+planÃ³w weekendowych. Natomiast (trading) handel sieciowy zwykle doÅ›wiadcza najwiÄ™kszych obciÄ…Å¼eÅ„ w okolicach czasu otwarcia i 
+zamkniÄ™cia sklepu. 
 
     \item[Szacowanie przebiegu ruchu chwilowego]\
 
-Estymowanie jak szybko osi±gane jest docelowe chwilowe obci±¿enie, oraz przez jak d³ugi czas jest utrzymywane jest tak wa¿ne 
-jak estymacja amplitudy chwilowych obci±¿eñ. Mo¿na to pokazaæ na przyk³adach:
+Estymowanie jak szybko osiÄ…gane jest docelowe chwilowe obciÄ…Å¼enie, oraz przez jak dÅ‚ugi czas jest utrzymywane jest tak waÅ¼ne 
+jak estymacja amplitudy chwilowych obciÄ…Å¼eÅ„. MoÅ¼na to pokazaÄ‡ na przykÅ‚adach:
 
-Sprzeda¿ online (stock) do¶wiadcza zwykle ekstremalnie ostrych chwilowych natê¿eñ ruchu (pików) w ró¿nym czasie jak np. 
-otwarcie sklepu. W ci±gu kilku minut witryna przechodzi od nie przyjmowania zg³oszeñ po przyjmowanie ich tysiêcy naraz. Test 
-obci±¿eniowy powinien dla tego typu sajtów generowaæ tak specyficzne wysokie chwilowe obci±¿enia zwykle w czasie od piêciu do 
-dziesiêciu minut. 
+SprzedaÅ¼ online (stock) doÅ›wiadcza zwykle ekstremalnie ostrych chwilowych natÄ™Å¼eÅ„ ruchu (pikÃ³w) w rÃ³Å¼nym czasie jak np. 
+otwarcie sklepu. W ciÄ…gu kilku minut witryna przechodzi od nie przyjmowania zgÅ‚oszeÅ„ po przyjmowanie ich tysiÄ™cy naraz. Test 
+obciÄ…Å¼eniowy powinien dla tego typu sajtÃ³w generowaÄ‡ tak specyficzne wysokie chwilowe obciÄ…Å¼enia zwykle w czasie od piÄ™ciu do 
+dziesiÄ™ciu minut. 
 
-Sprzeda¿ ubrañ online, mo¿e do¶wiadczaæ innej charakterystyki obci±¿eniowej. Tutaj testy obci±¿eniowe powinny generowaæ wzrost 
-obci±¿enia (do docelowego maksymalnego) w czasie rzêdu jedna dwie godziny. Szybszy wzrost mo¿e odbiegaæ od sytuacji 
+SprzedaÅ¼ ubraÅ„ online, moÅ¼e doÅ›wiadczaÄ‡ innej charakterystyki obciÄ…Å¼eniowej. Tutaj testy obciÄ…Å¼eniowe powinny generowaÄ‡ wzrost 
+obciÄ…Å¼enia (do docelowego maksymalnego) w czasie rzÄ™du jedna dwie godziny. Szybszy wzrost moÅ¼e odbiegaÄ‡ od sytuacji 
 rzeczywistej. 
 
-Czas trwania pików obci±¿eniowych jest równie¿ bardzo wa¿ny -- witryna radz±ca sobie z wysokim obci±¿eniem trwaj±cym piêæ do 
-dziesiêciu minut mo¿e siê zupe³nie za³amaæ podczas d³u¿ej trwaj±cego wysokiego ruchu. 
+Czas trwania pikÃ³w obciÄ…Å¼eniowych jest rÃ³wnieÅ¼ bardzo waÅ¼ny -- witryna radzÄ…ca sobie z wysokim obciÄ…Å¼eniem trwajÄ…cym piÄ™Ä‡ do 
+dziesiÄ™ciu minut moÅ¼e siÄ™ zupeÅ‚nie zaÅ‚amaÄ‡ podczas dÅ‚uÅ¼ej trwajÄ…cego wysokiego ruchu. 
     \end{description}
 
 \item Dokumentowanie i projekt
 
-Gdy wszystkie powy¿ej wymienione informacje zostan± zebrane mo¿na zaprojektowaæ odpowiedni do danych warunków test 
-obci±¿eniowy.
+Gdy wszystkie powyÅ¼ej wymienione informacje zostanÄ… zebrane moÅ¼na zaprojektowaÄ‡ odpowiedni do danych warunkÃ³w test 
+obciÄ…Å¼eniowy.
 
-Kluczowymi elementami takiego testu s±:
+Kluczowymi elementami takiego testu sÄ…:
     \begin{itemize}
-    \item cele testu: zdeterminowanie jakiemu obci±¿eniu oraz w jaki sposób bêdzie poddawana witryna, a tak¿e czy wraz z 
-    wzrastaj±cym ruchem jest w stanie mu podo³aæ;
-    \item kryteria jakie bêd± spe³nione podczas trwania klienckiego ¿±dania -- tzn. np. maksymalny czas oczekiwania na stronê lub 
-    nawet czas po jakim ¿±danie mo¿e zostaæ odrzucone;
-    \item opis skryptów testowych i ich typy: np. scrypt opisuj±cy trójstronicowe ¿±danie (strona domowa >> informacja o produkcie 
-    >> zamowienie) oraz procentowe wykorzystanie tych typów skryptów;
-    \item opis scenariusza czyli u¿ycie skryptów testowych, czas ich uruchamiania oraz ich udzia³ procentowy w ca³o¶ci testu, a 
-    tak¿e czas i szybko¶æ narastania obci±¿enia (piki obci±¿eniowe).
+    \item cele testu: zdeterminowanie jakiemu obciÄ…Å¼eniu oraz w jaki sposÃ³b bÄ™dzie poddawana witryna, a takÅ¼e czy wraz z 
+    wzrastajÄ…cym ruchem jest w stanie mu podoÅ‚aÄ‡;
+    \item kryteria jakie bÄ™dÄ… speÅ‚nione podczas trwania klienckiego Å¼Ä…dania -- tzn. np. maksymalny czas oczekiwania na stronÄ™ lub 
+    nawet czas po jakim Å¼Ä…danie moÅ¼e zostaÄ‡ odrzucone;
+    \item opis skryptÃ³w testowych i ich typy: np. scrypt opisujÄ…cy trÃ³jstronicowe Å¼Ä…danie (strona domowa >> informacja o produkcie 
+    >> zamowienie) oraz procentowe wykorzystanie tych typÃ³w skryptÃ³w;
+    \item opis scenariusza czyli uÅ¼ycie skryptÃ³w testowych, czas ich uruchamiania oraz ich udziaÅ‚ procentowy w caÅ‚oÅ›ci testu, a 
+    takÅ¼e czas i szybkoÅ›Ä‡ narastania obciÄ…Å¼enia (piki obciÄ…Å¼eniowe).
     \end{itemize}
 \end{enumerate}

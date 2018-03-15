@@ -1,194 +1,194 @@
-\chapter{Zarz±dzanie wielokomputerowym serwisem WWW}
+\chapter{ZarzÄ…dzanie wielokomputerowym serwisem WWW}
 \label{r04}
-W rozdziale tym znajdzie siê próba odpowiedzi na pytanie co to jest kiedy i po co stosuje siê zarz±dzanie serwerem 
-WWW (jakie s± parametry charakterystyczne oceny wydajno¶ci i dostêpno¶ci). Nastêpnie zostanie przedstawiona szczegó³owa 
-taksonomia serwerów WWW. Ostatnim punktem tego rozdzia³u 
-bêdzie porównanie us³ug zapewnianych przez witryny statyczne i dynamiczne, opis zastosowañ i mo¿liwo¶ci obu 
-typów tworzenia witryn oraz wymagania stawiane systemom WWW wraz z pogl±dowym przyk³adem.
+W rozdziale tym znajdzie siÄ™ prÃ³ba odpowiedzi na pytanie co to jest kiedy i po co stosuje siÄ™ zarzÄ…dzanie serwerem 
+WWW (jakie sÄ… parametry charakterystyczne oceny wydajnoÅ›ci i dostÄ™pnoÅ›ci). NastÄ™pnie zostanie przedstawiona szczegÃ³Å‚owa 
+taksonomia serwerÃ³w WWW. Ostatnim punktem tego rozdziaÅ‚u 
+bÄ™dzie porÃ³wnanie usÅ‚ug zapewnianych przez witryny statyczne i dynamiczne, opis zastosowaÅ„ i moÅ¼liwoÅ›ci obu 
+typÃ³w tworzenia witryn oraz wymagania stawiane systemom WWW wraz z poglÄ…dowym przykÅ‚adem.
 
 \section{Wprowadzenie}
 
-Jak zauwa¿ono wcze¶niej -- przysz³o¶æ serwisów WWW nale¿y do platform wieloserwerowych. Wynika to z mo¿liwo¶ci 
-teoretycznie niograniczonej rozbudowy wraz ze wzrostem liczby u¿ytkowników oraz ich wymagañ. Kolejn± zalet± jest 
-równie¿ spe³nianie bezpieczeñstwa przez takie wielokomputerowe systemy -- w dowolnym elemencie takiego systemu -- nodzie --
-mo¿e nast±piæ praktycznie dowolnego rodzaju uszkodzenie -- tak dysk, jak pamiêæ operacyjna czy procesor -- wtedy poszczególne
-procesy s± transportowane na inne nody, nawet w przypadku uszkodzenia jednej maszyny, nie spowoduje to przestoju. Jednak¿e aby
-taki system spe³nia³ dobrze swoje zadania potrzebne jest oprogramowanie lub urz±dzenie pozwaj±ce nim zarz±dzaæ czyli 
-odpowiednio rozdysponowaæ ¿±dania klienckie oraz wykrywaæ uszkodzenia poszczególnych elementów uk³adu. W literaturze
-przyjê³o siê takie rozdysponowanie zapytañ pomiêdzy poszczególne nody nazywaæ równowa¿eniem obci±¿enia systemu\footnote{ang. 
+Jak zauwaÅ¼ono wczeÅ›niej -- przyszÅ‚oÅ›Ä‡ serwisÃ³w WWW naleÅ¼y do platform wieloserwerowych. Wynika to z moÅ¼liwoÅ›ci 
+teoretycznie niograniczonej rozbudowy wraz ze wzrostem liczby uÅ¼ytkownikÃ³w oraz ich wymagaÅ„. KolejnÄ… zaletÄ… jest 
+rÃ³wnieÅ¼ speÅ‚nianie bezpieczeÅ„stwa przez takie wielokomputerowe systemy -- w dowolnym elemencie takiego systemu -- nodzie --
+moÅ¼e nastÄ…piÄ‡ praktycznie dowolnego rodzaju uszkodzenie -- tak dysk, jak pamiÄ™Ä‡ operacyjna czy procesor -- wtedy poszczegÃ³lne
+procesy sÄ… transportowane na inne nody, nawet w przypadku uszkodzenia jednej maszyny, nie spowoduje to przestoju. JednakÅ¼e aby
+taki system speÅ‚niaÅ‚ dobrze swoje zadania potrzebne jest oprogramowanie lub urzÄ…dzenie pozwajÄ…ce nim zarzÄ…dzaÄ‡ czyli 
+odpowiednio rozdysponowaÄ‡ Å¼Ä…dania klienckie oraz wykrywaÄ‡ uszkodzenia poszczegÃ³lnych elementÃ³w ukÅ‚adu. W literaturze
+przyjÄ™Å‚o siÄ™ takie rozdysponowanie zapytaÅ„ pomiÄ™dzy poszczegÃ³lne nody nazywaÄ‡ rÃ³wnowaÅ¼eniem obciÄ…Å¼enia systemu\footnote{ang. 
 \emph{load balancing, LB}}. 
 
-\section{Równowa¿enie obci±¿enia -- metody}
+\section{RÃ³wnowaÅ¼enie obciÄ…Å¼enia -- metody}
 
-Równowa¿enie obci±¿eñ (ang. \emph{load balancing}) w systemach rozproszonych, to zagadnienie z dziedziny 
-rozdzia³u zadañ polegaj±ce na dystrybucji pomiêdzy wêz³y systemu nap³ywaj±cych do niego zleceñ tak, aby  
-maksymalizowaæ jego ³±czn± wydajno¶æ. Oznacza to, ¿e dzia³alno¶æ zwi±zana z rozdzia³em zadañ nie mo¿e powodowaæ 
-obci±¿enia systemu w stopniu, który niwelowa³by korzy¶ci wynikaj±ce z faktu zrównowa¿enia obci±¿eñ jego wêz³ów. 
-Angielski termin load balancing w rzeczywisto¶ci funkcjonuje jako reprezentant tej problematyki, gdy¿ traktowany 
-¶ci¶le oznacza doprowadzenie systemu rozproszonego do stanu w którym wszystkie jego wêz³y obci±¿one s± w 
-dok³adnie równym stopniu, nawet je¿eli oznacza³oby to odebranie zadañ jednemu z nich. W stosunku do wiêkszo¶ci 
-rozwi±zañ przemys³owych z tego zakresu nale¿a³oby poprawnie u¿ywaæ okre¶lenia wspó³dzielenie obci±¿eñ (ang. \emph{
-load sharing}) lub bardziej ogólnie, rozdzia³ obci±¿eñ (ang load distribution). Realizacja ¶cis³ego równowa¿enia 
-obci±¿eñ wi±¿e siê z konieczno¶ci± implementacji metod odbierania zadañ wêz³om, powoduje to wzrost z³o¿ono¶ci 
-realizacji algorytmu, a sam proces odbierania zadania jest do¶æ kosztowny. Wzrost wydajno¶ci uzyskiwany dziêki 
-idealnemu zrównowa¿eniu obci±¿eñ w systemie w porównaniu do wydajno¶ci uzyskiwanej przy zastosowaniu 
-wspó³dzielenia obci±¿eñ nie jest zwykle na tyle du¿y, by usprawiedliwia³ ponoszenie kosztów zwi±zanych z 
-pokonaniem z³o¿ono¶ci realizacji ¶cis³ego równowa¿enia obci±¿eñ \cite{barylo13,barylo16,barylo17}. W tej pracy, tak jak w 
-literaturze angielskojêzycznej, u¿ywany jest termin równowa¿enie obci±¿eñ, chyba ¿e zaznaczono inaczej.
-Wydaje siê, ¿e najskuteczniejsz± metod± zwiêkszenia wydajno¶ci serwera WWW jest powielenie (lub podzia³) danych, które 
+RÃ³wnowaÅ¼enie obciÄ…Å¼eÅ„ (ang. \emph{load balancing}) w systemach rozproszonych, to zagadnienie z dziedziny 
+rozdziaÅ‚u zadaÅ„ polegajÄ…ce na dystrybucji pomiÄ™dzy wÄ™zÅ‚y systemu napÅ‚ywajÄ…cych do niego zleceÅ„ tak, aby  
+maksymalizowaÄ‡ jego Å‚Ä…cznÄ… wydajnoÅ›Ä‡. Oznacza to, Å¼e dziaÅ‚alnoÅ›Ä‡ zwiÄ…zana z rozdziaÅ‚em zadaÅ„ nie moÅ¼e powodowaÄ‡ 
+obciÄ…Å¼enia systemu w stopniu, ktÃ³ry niwelowaÅ‚by korzyÅ›ci wynikajÄ…ce z faktu zrÃ³wnowaÅ¼enia obciÄ…Å¼eÅ„ jego wÄ™zÅ‚Ã³w. 
+Angielski termin load balancing w rzeczywistoÅ›ci funkcjonuje jako reprezentant tej problematyki, gdyÅ¼ traktowany 
+Å›ciÅ›le oznacza doprowadzenie systemu rozproszonego do stanu w ktÃ³rym wszystkie jego wÄ™zÅ‚y obciÄ…Å¼one sÄ… w 
+dokÅ‚adnie rÃ³wnym stopniu, nawet jeÅ¼eli oznaczaÅ‚oby to odebranie zadaÅ„ jednemu z nich. W stosunku do wiÄ™kszoÅ›ci 
+rozwiÄ…zaÅ„ przemysÅ‚owych z tego zakresu naleÅ¼aÅ‚oby poprawnie uÅ¼ywaÄ‡ okreÅ›lenia wspÃ³Å‚dzielenie obciÄ…Å¼eÅ„ (ang. \emph{
+load sharing}) lub bardziej ogÃ³lnie, rozdziaÅ‚ obciÄ…Å¼eÅ„ (ang load distribution). Realizacja Å›cisÅ‚ego rÃ³wnowaÅ¼enia 
+obciÄ…Å¼eÅ„ wiÄ…Å¼e siÄ™ z koniecznoÅ›ciÄ… implementacji metod odbierania zadaÅ„ wÄ™zÅ‚om, powoduje to wzrost zÅ‚oÅ¼onoÅ›ci 
+realizacji algorytmu, a sam proces odbierania zadania jest doÅ›Ä‡ kosztowny. Wzrost wydajnoÅ›ci uzyskiwany dziÄ™ki 
+idealnemu zrÃ³wnowaÅ¼eniu obciÄ…Å¼eÅ„ w systemie w porÃ³wnaniu do wydajnoÅ›ci uzyskiwanej przy zastosowaniu 
+wspÃ³Å‚dzielenia obciÄ…Å¼eÅ„ nie jest zwykle na tyle duÅ¼y, by usprawiedliwiaÅ‚ ponoszenie kosztÃ³w zwiÄ…zanych z 
+pokonaniem zÅ‚oÅ¼onoÅ›ci realizacji Å›cisÅ‚ego rÃ³wnowaÅ¼enia obciÄ…Å¼eÅ„ \cite{barylo13,barylo16,barylo17}. W tej pracy, tak jak w 
+literaturze angielskojÄ™zycznej, uÅ¼ywany jest termin rÃ³wnowaÅ¼enie obciÄ…Å¼eÅ„, chyba Å¼e zaznaczono inaczej.
+Wydaje siÄ™, Å¼e najskuteczniejszÄ… metodÄ… zwiÄ™kszenia wydajnoÅ›ci serwera WWW jest powielenie (lub podziaÅ‚) danych, ktÃ³re 
 serwer 
-udostêpnia, pomiêdzy grupê po³±czonych sieci± komputerów (dodatkowych serwerów WWW) i zapewnienie dostêpu do 
-tej grupy tak jak do pojedynczego serwera z uwzglêdnieniem transparentnego dla u¿ytkownika i maksymalizuj±cego 
-wydajno¶æ podzia³u ¿±dañ HTTP pomiêdzy poszczególne elementy grupy. Taka grupa nazywana klastrem lub farm± 
-serwerów stanowi swoisty system rozproszony, którego wydajno¶æ mo¿na maksymalizowaæ stosuj±c równowa¿enie 
-obci±¿eñ. Nale¿y zaznaczyæ, ¿e chocia¿ termin klaster oznacza serwery po³±czone w ca³o¶æ logiczn± (dostêpne pod 
-jedn± nazw± lub adresem IP), nie implikuj±c ¿adnych ograniczeñ na geograficzne rozproszenie serwerów, to wiele 
-rozwi±zañ komercyjnych wymaga, by serwery nale¿±ce do klastra znajdowa³y siê w obszarze jednej sieci lokalnej 
-(mia³y jednakow± czê¶æ globaln± adresu IP).
+udostÄ™pnia, pomiÄ™dzy grupÄ™ poÅ‚Ä…czonych sieciÄ… komputerÃ³w (dodatkowych serwerÃ³w WWW) i zapewnienie dostÄ™pu do 
+tej grupy tak jak do pojedynczego serwera z uwzglÄ™dnieniem transparentnego dla uÅ¼ytkownika i maksymalizujÄ…cego 
+wydajnoÅ›Ä‡ podziaÅ‚u Å¼Ä…daÅ„ HTTP pomiÄ™dzy poszczegÃ³lne elementy grupy. Taka grupa nazywana klastrem lub farmÄ… 
+serwerÃ³w stanowi swoisty system rozproszony, ktÃ³rego wydajnoÅ›Ä‡ moÅ¼na maksymalizowaÄ‡ stosujÄ…c rÃ³wnowaÅ¼enie 
+obciÄ…Å¼eÅ„. NaleÅ¼y zaznaczyÄ‡, Å¼e chociaÅ¼ termin klaster oznacza serwery poÅ‚Ä…czone w caÅ‚oÅ›Ä‡ logicznÄ… (dostÄ™pne pod 
+jednÄ… nazwÄ… lub adresem IP), nie implikujÄ…c Å¼adnych ograniczeÅ„ na geograficzne rozproszenie serwerÃ³w, to wiele 
+rozwiÄ…zaÅ„ komercyjnych wymaga, by serwery naleÅ¼Ä…ce do klastra znajdowaÅ‚y siÄ™ w obszarze jednej sieci lokalnej 
+(miaÅ‚y jednakowÄ… czÄ™Å›Ä‡ globalnÄ… adresu IP).
 
-\section{Przegl±d i podzia³ webowych algorytmów szeregowania}
+\section{PrzeglÄ…d i podziaÅ‚ webowych algorytmÃ³w szeregowania}
 
-Wszystkie mechanizmy realizuj±ce zarz±dzanie dostêpem do rozproszonych serwerów WWW musz± mieæ zaimplementowany konkretny 
-algorytm, na podstawie którego bêd± mog³y podejmowaæ decyzjê o przes³aniu zapytania do najlepszego serwera. W zale¿no¶ci od 
-stopnia skomplikowania systemu i mo¿liwo¶ci implementacyjnych wykorzystywane algorytmy mog± mieæ ró¿n± z³o¿ono¶æ obliczeniow±. 
-Zastosowane strategie zale¿ne s± równie¿ od informacji, jakie posiada system na temat ilo¶ci zapytañ generowanych przez 
-klientów oraz informacji o stanie serwerów wchodz±cych w sk³ad rozproszonego systemu WWW. Mo¿na je podzieliæ na kilka 
-kategorii w zale¿no¶ci od ilo¶ci informacji, jaka wykorzystywana jest przy podejmowaniu decyzji. 
+Wszystkie mechanizmy realizujÄ…ce zarzÄ…dzanie dostÄ™pem do rozproszonych serwerÃ³w WWW muszÄ… mieÄ‡ zaimplementowany konkretny 
+algorytm, na podstawie ktÃ³rego bÄ™dÄ… mogÅ‚y podejmowaÄ‡ decyzjÄ™ o przesÅ‚aniu zapytania do najlepszego serwera. W zaleÅ¼noÅ›ci od 
+stopnia skomplikowania systemu i moÅ¼liwoÅ›ci implementacyjnych wykorzystywane algorytmy mogÄ… mieÄ‡ rÃ³Å¼nÄ… zÅ‚oÅ¼onoÅ›Ä‡ obliczeniowÄ…. 
+Zastosowane strategie zaleÅ¼ne sÄ… rÃ³wnieÅ¼ od informacji, jakie posiada system na temat iloÅ›ci zapytaÅ„ generowanych przez 
+klientÃ³w oraz informacji o stanie serwerÃ³w wchodzÄ…cych w skÅ‚ad rozproszonego systemu WWW. MoÅ¼na je podzieliÄ‡ na kilka 
+kategorii w zaleÅ¼noÅ›ci od iloÅ›ci informacji, jaka wykorzystywana jest przy podejmowaniu decyzji. 
 
-\subsection{Algorytmy statyczne (nie wykorzystuj±ce informacji zewnêtrznych)}
-Je¿eli w procesie szeregowania nie s± wykorzystywane ¿adne informacje o stanie serwerów lub strumieniu zapytañ, mówi siê o 
-algorytmach statycznych. Te mechanizmy, to najprostsze rozwi±zania gwarantuj±ce w niewielkim stopniu roz³o¿enie obci±¿enia 
-pomiêdzy serwery. Rozk³ad ten jest bardzo przypadkowy i nie gwarantuje równomiernego wykorzystania zasobów ani wysokiej 
-dostêpno¶ci systemu, jednak¿e s± one najszybszymi, gdy¿ wymagaj± najmniej mocy obliczeniowej. Do takich algorytmów nale¿±:
+\subsection{Algorytmy statyczne (nie wykorzystujÄ…ce informacji zewnÄ™trznych)}
+JeÅ¼eli w procesie szeregowania nie sÄ… wykorzystywane Å¼adne informacje o stanie serwerÃ³w lub strumieniu zapytaÅ„, mÃ³wi siÄ™ o 
+algorytmach statycznych. Te mechanizmy, to najprostsze rozwiÄ…zania gwarantujÄ…ce w niewielkim stopniu rozÅ‚oÅ¼enie obciÄ…Å¼enia 
+pomiÄ™dzy serwery. RozkÅ‚ad ten jest bardzo przypadkowy i nie gwarantuje rÃ³wnomiernego wykorzystania zasobÃ³w ani wysokiej 
+dostÄ™pnoÅ›ci systemu, jednakÅ¼e sÄ… one najszybszymi, gdyÅ¼ wymagajÄ… najmniej mocy obliczeniowej. Do takich algorytmÃ³w naleÅ¼Ä…:
 \begin{itemize}
-\item Random -- system nie posiada ¿adnych informacji o stanie serwerów WWW, jak równie¿ nie posiada informacji o tym, do 
-którego serwera ostatnio skierowane zosta³o zapytanie;
-\item Round--robin -- system nie posiada ¿adnych informacji o stanie serwerów WWW, posiada jednak informacjê historyczn± o tym, 
-do którego serwera skierowane zosta³o ostatnio nades³ane zapytanie.
+\item Random -- system nie posiada Å¼adnych informacji o stanie serwerÃ³w WWW, jak rÃ³wnieÅ¼ nie posiada informacji o tym, do 
+ktÃ³rego serwera ostatnio skierowane zostaÅ‚o zapytanie;
+\item Round--robin -- system nie posiada Å¼adnych informacji o stanie serwerÃ³w WWW, posiada jednak informacjÄ™ historycznÄ… o tym, 
+do ktÃ³rego serwera skierowane zostaÅ‚o ostatnio nadesÅ‚ane zapytanie.
 \end{itemize}
 
-\subsection{Algorytmy dynamiczne (wykorzystuj±ce informacjê zewnêtrzn±)}
-W procesie szeregowania mo¿na stosowaæ bardziej rozbudowane mechanizmy zarz±dzania. Aby zwiêkszyæ efektywno¶æ szeregowania, 
-mo¿na stosowaæ strategie wykorzystuj±ce informacje o kliencie. Wybór najlepszego serwera mo¿e odbywaæ siê na podstawie adresu 
-IP lub numer portu TCP wykorzystywanego przez klienta. Mo¿liwe jest równie¿ wykorzystywanie tzw. alarmów generowanych przez 
-serwery. Do mechanizmu decyduj±cego o wyborze serwera w okre¶lonych odstêpach czasowych przekazywana jest informacja zwrotna o 
-obci±¿eniu serwera lub informacja o przekroczeniu jakiego¶ okre¶lonego parametru. Szeregowanie mo¿e odbywaæ siê na podstawie 
-jednej z metryk okre¶laj±cych obci±¿enie:
+\subsection{Algorytmy dynamiczne (wykorzystujÄ…ce informacjÄ™ zewnÄ™trznÄ…)}
+W procesie szeregowania moÅ¼na stosowaÄ‡ bardziej rozbudowane mechanizmy zarzÄ…dzania. Aby zwiÄ™kszyÄ‡ efektywnoÅ›Ä‡ szeregowania, 
+moÅ¼na stosowaÄ‡ strategie wykorzystujÄ…ce informacje o kliencie. WybÃ³r najlepszego serwera moÅ¼e odbywaÄ‡ siÄ™ na podstawie adresu 
+IP lub numer portu TCP wykorzystywanego przez klienta. MoÅ¼liwe jest rÃ³wnieÅ¼ wykorzystywanie tzw. alarmÃ³w generowanych przez 
+serwery. Do mechanizmu decydujÄ…cego o wyborze serwera w okreÅ›lonych odstÄ™pach czasowych przekazywana jest informacja zwrotna o 
+obciÄ…Å¼eniu serwera lub informacja o przekroczeniu jakiegoÅ› okreÅ›lonego parametru. Szeregowanie moÅ¼e odbywaÄ‡ siÄ™ na podstawie 
+jednej z metryk okreÅ›lajÄ…cych obciÄ…Å¼enie:
 \begin{itemize}
-\item ilo¶ci aktywnych po³±czeñ z serwerem,
+\item iloÅ›ci aktywnych poÅ‚Ä…czeÅ„ z serwerem,
 \item wykorzystania dysku i/lub procesora serwera,
-\item przewidywanego strumienia zapytañ w okre¶lonym czasie.
+\item przewidywanego strumienia zapytaÅ„ w okreÅ›lonym czasie.
 \end{itemize}
 
-W przypadku modeli, gdzie mechanizmy szeregowania w ca³o¶ci kontroluj± strumieñ zapytañ, mog± byæ stosowane algorytmy 
-dystrybuuj±ce zapytania w zale¿no¶ci od wielko¶ci nap³ywaj±cego strumienia oraz obci±¿enia serwerów obs³uguj±cych te 
-zapytania. Dziêki informacjom zbieranym od serwerów mo¿liwe jest szacowanie parametrów maj±cych wp³yw na szybko¶æ ich 
-odpowiedzi. Mog± to byæ:
+W przypadku modeli, gdzie mechanizmy szeregowania w caÅ‚oÅ›ci kontrolujÄ… strumieÅ„ zapytaÅ„, mogÄ… byÄ‡ stosowane algorytmy 
+dystrybuujÄ…ce zapytania w zaleÅ¼noÅ›ci od wielkoÅ›ci napÅ‚ywajÄ…cego strumienia oraz obciÄ…Å¼enia serwerÃ³w obsÅ‚ugujÄ…cych te 
+zapytania. DziÄ™ki informacjom zbieranym od serwerÃ³w moÅ¼liwe jest szacowanie parametrÃ³w majÄ…cych wpÅ‚yw na szybkoÅ›Ä‡ ich 
+odpowiedzi. MogÄ… to byÄ‡:
 \begin{itemize}
-\item ilo¶æ zapytañ zrealizowana w okre¶lonym czasie,
-\item obci±¿enie procesora w danym momencie,
-\item poziom wykorzystania dysków w serwerze.
+\item iloÅ›Ä‡ zapytaÅ„ zrealizowana w okreÅ›lonym czasie,
+\item obciÄ…Å¼enie procesora w danym momencie,
+\item poziom wykorzystania dyskÃ³w w serwerze.
 \end{itemize}
-Takie rozwi±zania umo¿liwiaj± wyeliminowanie przeci±¿onych serwerów. W znacznym stopniu zwiêksza to dostêpno¶æ klientów do 
-danych oraz wp³ywa na lepsze wykorzystanie zasobów. 
+Takie rozwiÄ…zania umoÅ¼liwiajÄ… wyeliminowanie przeciÄ…Å¼onych serwerÃ³w. W znacznym stopniu zwiÄ™ksza to dostÄ™pnoÅ›Ä‡ klientÃ³w do 
+danych oraz wpÅ‚ywa na lepsze wykorzystanie zasobÃ³w. 
 
-Algorytmy dynamiczne mo¿emy w zale¿no¶ci od miejsca analizy podzieliæ na:
+Algorytmy dynamiczne moÅ¼emy w zaleÅ¼noÅ›ci od miejsca analizy podzieliÄ‡ na:
 \begin{itemize}
-\item \emph{Server Info Aware} -- czyli wykorzystuj±ce informacje o stanie serwera;
-\item \emph{Client Info Aware} -- czyli wykorzystuj±ce specyfikê ¿±dañ klienckich -- przekierowuj±ce ¿±dania w zale¿no¶ci
-od typu zapytania klienckiego (dane z serwera baz danych, wykorzystuj±ce skrypty CGI, zawieraj±ce pliki multimedialne itp.)
+\item \emph{Server Info Aware} -- czyli wykorzystujÄ…ce informacje o stanie serwera;
+\item \emph{Client Info Aware} -- czyli wykorzystujÄ…ce specyfikÄ™ Å¼Ä…daÅ„ klienckich -- przekierowujÄ…ce Å¼Ä…dania w zaleÅ¼noÅ›ci
+od typu zapytania klienckiego (dane z serwera baz danych, wykorzystujÄ…ce skrypty CGI, zawierajÄ…ce pliki multimedialne itp.)
 \end{itemize}
 
 \subsection{Algorytmy szeregowania wykorzystywane po stronie serwera DNS}
 
-\subsubsection{Algorytmy nie wykorzystuj±ce informacji o stanie systemu -- statyczne}
+\subsubsection{Algorytmy nie wykorzystujÄ…ce informacji o stanie systemu -- statyczne}
 
 \begin{itemize}
 \item Round--robin DNS\\
-Podej¶cie to zosta³o zastosowane jako pierwsze przy budowie skalowalnego systemu serwerów webowych przez NCSA \cite{modele22}. Kod 
-serwera DNS (np. Unixowy BIND) bez ¿adnych modyfikacji mo¿e wykorzystywaæ algorytm Round--robin. Obci±¿enie serwerów nie jest 
+PodejÅ›cie to zostaÅ‚o zastosowane jako pierwsze przy budowie skalowalnego systemu serwerÃ³w webowych przez NCSA \cite{modele22}. Kod 
+serwera DNS (np. Unixowy BIND) bez Å¼adnych modyfikacji moÅ¼e wykorzystywaÄ‡ algorytm Round--robin. ObciÄ…Å¼enie serwerÃ³w nie jest 
 zbyt dobrze 
-równowa¿one ze wzglêdu na mechanizm cache dla powi±zañ nazwa domenowa - adres IP. Stosuj±c takie podej¶cie, nie ma siê równie¿ 
-kontroli nad dostêpno¶ci± serwerów oraz nie uwzglêdnia siê mo¿liwo¶ci zastosowania serwerów o ró¿nej wydajno¶ci.
-Jest to algorytm bardzo prosty zarówno w dzia³aniu jak i implementacji (w stadardowym serwerze DNS mo¿na go zastosowaæ, bez
-konieczno¶ci modyfikacji kodu serwera). Jego dzia³anie polega na cyklicznym rozsy³aniu pakietów do kolejnego na li¶cie serwera.
-Oczywi¶cie najlepsze wyniki osi±ga siê dla komputerów symetrycznych sprzêtowo. Modyfikacj± tego algorytmu jest 
-Weighted Round--Robin, w którym to algorytmie mo¿na statycznie nadaæ wagi poszczególnym serwerom w zale¿no¶ci od ich 
-wydolno¶ci;
+rÃ³wnowaÅ¼one ze wzglÄ™du na mechanizm cache dla powiÄ…zaÅ„ nazwa domenowa - adres IP. StosujÄ…c takie podejÅ›cie, nie ma siÄ™ rÃ³wnieÅ¼ 
+kontroli nad dostÄ™pnoÅ›ciÄ… serwerÃ³w oraz nie uwzglÄ™dnia siÄ™ moÅ¼liwoÅ›ci zastosowania serwerÃ³w o rÃ³Å¼nej wydajnoÅ›ci.
+Jest to algorytm bardzo prosty zarÃ³wno w dziaÅ‚aniu jak i implementacji (w stadardowym serwerze DNS moÅ¼na go zastosowaÄ‡, bez
+koniecznoÅ›ci modyfikacji kodu serwera). Jego dziaÅ‚anie polega na cyklicznym rozsyÅ‚aniu pakietÃ³w do kolejnego na liÅ›cie serwera.
+OczywiÅ›cie najlepsze wyniki osiÄ…ga siÄ™ dla komputerÃ³w symetrycznych sprzÄ™towo. ModyfikacjÄ… tego algorytmu jest 
+Weighted Round--Robin, w ktÃ³rym to algorytmie moÅ¼na statycznie nadaÄ‡ wagi poszczegÃ³lnym serwerom w zaleÅ¼noÅ›ci od ich 
+wydolnoÅ›ci;
 \item Random\\
 \end{itemize}
 
-\subsubsection{Algorytmy wykorzystuj±ce informacje o stanie systemu}
+\subsubsection{Algorytmy wykorzystujÄ…ce informacje o stanie systemu}
 
-Alternatyw± dla algorytmu Round--robin najczê¶ciej stosowanego w przypadku serwera DNS s± algorytmy wykorzystuj±ce informacje o 
-stanie systemu (wielko¶ci przewidywanego strumienia zapytañ, aktualnego obci±¿enia serwerów). Okazuje siê, ¿e regu³y bazuj±ce 
-wy³±cznie na stanie obci±¿enia serwerów WWW s± nieefektywne. W rzeczywisto¶ci, w zwi±zku z hierarchicznym buforowaniem danych 
-przez serwery DNS, pojedyncze zapytanie od klienta mo¿e spowodowaæ nap³yw wielu innych zapytañ. Wynika z tego, ¿e informacja o 
-aktualnym obci±¿eniu nie jest w ¿aden sposób zwi±zana z przysz³ym obci±¿eniem \cite{ModeleFunkcjonalne}.
-Podej¶cie pozwalaj±ce oszacowaæ nadchodz±cy strumieñ zapytañ (\emph{hidden load weight}) w czasie TTL (\emph{Time To Live}) jest najbardziej 
-efektywne. Dziêki tym informacjom mo¿na przypisaæ ró¿ne warto¶ci TTL dla ró¿nych domen i estymowaæ wielko¶æ ukrytego, czyli 
-niekontrolowanego przez serwer DNS strumienia zapytañ. Przyk³adami tego typu algorytmów s± \cite{modele14}:
+AlternatywÄ… dla algorytmu Round--robin najczÄ™Å›ciej stosowanego w przypadku serwera DNS sÄ… algorytmy wykorzystujÄ…ce informacje o 
+stanie systemu (wielkoÅ›ci przewidywanego strumienia zapytaÅ„, aktualnego obciÄ…Å¼enia serwerÃ³w). Okazuje siÄ™, Å¼e reguÅ‚y bazujÄ…ce 
+wyÅ‚Ä…cznie na stanie obciÄ…Å¼enia serwerÃ³w WWW sÄ… nieefektywne. W rzeczywistoÅ›ci, w zwiÄ…zku z hierarchicznym buforowaniem danych 
+przez serwery DNS, pojedyncze zapytanie od klienta moÅ¼e spowodowaÄ‡ napÅ‚yw wielu innych zapytaÅ„. Wynika z tego, Å¼e informacja o 
+aktualnym obciÄ…Å¼eniu nie jest w Å¼aden sposÃ³b zwiÄ…zana z przyszÅ‚ym obciÄ…Å¼eniem \cite{ModeleFunkcjonalne}.
+PodejÅ›cie pozwalajÄ…ce oszacowaÄ‡ nadchodzÄ…cy strumieÅ„ zapytaÅ„ (\emph{hidden load weight}) w czasie TTL (\emph{Time To Live}) jest najbardziej 
+efektywne. DziÄ™ki tym informacjom moÅ¼na przypisaÄ‡ rÃ³Å¼ne wartoÅ›ci TTL dla rÃ³Å¼nych domen i estymowaÄ‡ wielkoÅ›Ä‡ ukrytego, czyli 
+niekontrolowanego przez serwer DNS strumienia zapytaÅ„. PrzykÅ‚adami tego typu algorytmÃ³w sÄ… \cite{modele14}:
 \begin{itemize}
-\item Multi tie round--robin -- dla ka¿dej domeny lub ich okre¶lonych zbiorów przypisywane s± ró¿ne warto¶ci TTL, pozwalaj±ce na
-zrównowa¿enie strumieni zapytañ do ka¿dego serwera WWW.
-\item Dynamically accumulated load (DAL) -- rozbudowana wersja algorytmu Multi tie Round--robin polegaj±ca na zbieraniu 
-informacji o estymowanej wielko¶ci obci±¿enia serwerów i zmianie ³añcucha przypisañ adresów w serwerze DNS w zale¿no¶ci od 
-zak³adanego obci±¿enia.
-\item Minimum residual load -- modyfikacja algorytmu DAL polegaj±ca na estymowaniu wielko¶ci ukrytego obci±¿enia i warto¶ci TTL.
-Po up³ywie TTL serwer WWW odpytywany jest o rzeczywist± wielko¶æ strumienia zapytañ, jaka zosta³a do niego skierowana. Dziêki 
-temu algorytm ma informacjê o stanie serwera. Powoduje to równie¿ zmianê kolejno¶ci przypisañ w serwerze DNS;
+\item Multi tie round--robin -- dla kaÅ¼dej domeny lub ich okreÅ›lonych zbiorÃ³w przypisywane sÄ… rÃ³Å¼ne wartoÅ›ci TTL, pozwalajÄ…ce na
+zrÃ³wnowaÅ¼enie strumieni zapytaÅ„ do kaÅ¼dego serwera WWW.
+\item Dynamically accumulated load (DAL) -- rozbudowana wersja algorytmu Multi tie Round--robin polegajÄ…ca na zbieraniu 
+informacji o estymowanej wielkoÅ›ci obciÄ…Å¼enia serwerÃ³w i zmianie Å‚aÅ„cucha przypisaÅ„ adresÃ³w w serwerze DNS w zaleÅ¼noÅ›ci od 
+zakÅ‚adanego obciÄ…Å¼enia.
+\item Minimum residual load -- modyfikacja algorytmu DAL polegajÄ…ca na estymowaniu wielkoÅ›ci ukrytego obciÄ…Å¼enia i wartoÅ›ci TTL.
+Po upÅ‚ywie TTL serwer WWW odpytywany jest o rzeczywistÄ… wielkoÅ›Ä‡ strumienia zapytaÅ„, jaka zostaÅ‚a do niego skierowana. DziÄ™ki 
+temu algorytm ma informacjÄ™ o stanie serwera. Powoduje to rÃ³wnieÅ¼ zmianÄ™ kolejnoÅ›ci przypisaÅ„ w serwerze DNS;
 \end{itemize}
 
 \subsubsection{Algorytmy adaptacyjne}
 
-Algorytmy równowa¿enia bazuj±ce na oszacowaniu hidden load weight oraz alarmach z krytycznie przeci±¿onych serwerów pozwalaj± 
-na du¿o bardziej efektywne, w porównaniu z algorytmami Round--robin, równowa¿enie serwerów WWW. Niestety, s± one efektywne 
-tylko w przypadku rozproszenia serwerów homogenicznych. Inn± grup± algorytmów przeznaczonych do równowa¿enia obci±¿enia 
-serwerów heterogenicznych s± algorytmy adaptacyjne. W przypadku algorytmów adaptacyjnych warto¶æ TTL przypisywana jest 
-dynamicznie do ka¿dego ¿±dania na podstawie przewidywanego hidden load weight oraz wydajno¶ci serwera, do którego zapytanie 
-zosta³o przypisane. Idea tego podej¶cia polega na uwzglêdnieniu pewnej warto¶ci $\xi_i$ opisuj±cej moc obliczeniow± serwera $S_i$. 
+Algorytmy rÃ³wnowaÅ¼enia bazujÄ…ce na oszacowaniu hidden load weight oraz alarmach z krytycznie przeciÄ…Å¼onych serwerÃ³w pozwalajÄ… 
+na duÅ¼o bardziej efektywne, w porÃ³wnaniu z algorytmami Round--robin, rÃ³wnowaÅ¼enie serwerÃ³w WWW. Niestety, sÄ… one efektywne 
+tylko w przypadku rozproszenia serwerÃ³w homogenicznych. InnÄ… grupÄ… algorytmÃ³w przeznaczonych do rÃ³wnowaÅ¼enia obciÄ…Å¼enia 
+serwerÃ³w heterogenicznych sÄ… algorytmy adaptacyjne. W przypadku algorytmÃ³w adaptacyjnych wartoÅ›Ä‡ TTL przypisywana jest 
+dynamicznie do kaÅ¼dego Å¼Ä…dania na podstawie przewidywanego hidden load weight oraz wydajnoÅ›ci serwera, do ktÃ³rego zapytanie 
+zostaÅ‚o przypisane. Idea tego podejÅ›cia polega na uwzglÄ™dnieniu pewnej wartoÅ›ci $\xi_i$ opisujÄ…cej moc obliczeniowÄ… serwera $S_i$. 
 
-Algorytmy te podzielone zosta³y na dwie grupy \cite{modele25}:
+Algorytmy te podzielone zostaÅ‚y na dwie grupy \cite{modele25}:
 \begin{itemize}
-\item probabilistyczne -- realizacja metody bazuje na algorytmie Round--robin. Za ka¿dym razem losowo generujemy liczbê 
-$\gamma(0\leq\gamma\leq1)$. Je¿eli zapytania przypisane s± aktualnie do serwera $S_i$, to jako nastêpny zostanie 
+\item probabilistyczne -- realizacja metody bazuje na algorytmie Round--robin. Za kaÅ¼dym razem losowo generujemy liczbÄ™ 
+$\gamma(0\leq\gamma\leq1)$. JeÅ¼eli zapytania przypisane sÄ… aktualnie do serwera $S_i$, to jako nastÄ™pny zostanie 
 wybrany $S_{i+1}$ tylko wtedy,
 gdy $\gamma\leq\xi_i$, w przeciwnym przypadku warunek zostaje rozpatrzony dla kolejnego serwera. 
-Warto¶æ TTL oblicza siê ze wzoru:
+WartoÅ›Ä‡ TTL oblicza siÄ™ ze wzoru:
 \begin{equation}
 TTL_i = \frac{\eta}{\xi_i}
 \end{equation}
-\item deterministyczne -- ide± algorytmu jest takie dostosowanie czasu TTL, aby bardziej wydajne serwery obs³ugiwa³y wiêcej 
-zapytañ, a mniej wydajne nie by³y przeci±¿ane. Dla ka¿dej domeny $i$ obs³ugiwanej przez system serwerów webowych zostaje 
-przypisana warto¶æ TTL z  uwzglêdnieniem wydajno¶ci serwera $j$ wed³ug wzoru:
+\item deterministyczne -- ideÄ… algorytmu jest takie dostosowanie czasu TTL, aby bardziej wydajne serwery obsÅ‚ugiwaÅ‚y wiÄ™cej 
+zapytaÅ„, a mniej wydajne nie byÅ‚y przeciÄ…Å¼ane. Dla kaÅ¼dej domeny $i$ obsÅ‚ugiwanej przez system serwerÃ³w webowych zostaje 
+przypisana wartoÅ›Ä‡ TTL z  uwzglÄ™dnieniem wydajnoÅ›ci serwera $j$ wedÅ‚ug wzoru:
 \begin{equation}
 TTL_{ij} = \frac{\eta * c_i}{\xi_i}
 \end{equation}
-gdzie $\eta$ jest warto¶ci± sta³±, zale¿n± od liczby zdefiniowanych domen generuj±cych zapytania.
+gdzie $\eta$ jest wartoÅ›ciÄ… staÅ‚Ä…, zaleÅ¼nÄ… od liczby zdefiniowanych domen generujÄ…cych zapytania.
 \end{itemize}
 
 \subsection{Algorytmy szeregowania wykorzystywane w dystrybutorach}
 
-Stosowane tutaj algorytmy  \cite{modele13} s± najprostsze, poniewa¿ dystrybutor obs³uguje wszystkie nadchodz±ce pakiety i konieczne jest 
-zminimalizowanie czasu po¶wiêcanego na ich obs³ugê. Rekompensat± za konieczno¶æ obs³ugi wszystkich pakietów jest pe³na 
-kontrola nap³ywaj±cego strumienia zapytañ. Stosowane w tym przypadku algorytmy mo¿na podzieliæ na trzy podstawowe grupy:
+Stosowane tutaj algorytmy  \cite{modele13} sÄ… najprostsze, poniewaÅ¼ dystrybutor obsÅ‚uguje wszystkie nadchodzÄ…ce pakiety i konieczne jest 
+zminimalizowanie czasu poÅ›wiÄ™canego na ich obsÅ‚ugÄ™. RekompensatÄ… za koniecznoÅ›Ä‡ obsÅ‚ugi wszystkich pakietÃ³w jest peÅ‚na 
+kontrola napÅ‚ywajÄ…cego strumienia zapytaÅ„. Stosowane w tym przypadku algorytmy moÅ¼na podzieliÄ‡ na trzy podstawowe grupy:
 \begin{itemize}
-\item Information less -- nie wykorzystuj±ce ¿adnych informacji o stanie systemu,
-\item Client info aware -- wykorzystuj±ce informacje o adresie IP klienta lub numerze portu, przez który komunikuje siê z 
+\item Information less -- nie wykorzystujÄ…ce Å¼adnych informacji o stanie systemu,
+\item Client info aware -- wykorzystujÄ…ce informacje o adresie IP klienta lub numerze portu, przez ktÃ³ry komunikuje siÄ™ z 
 serwerem,
-\item Server state aware -- wykorzystuj±ce informacje o stanie serwera, do którego przekazuj± zapytanie.
+\item Server state aware -- wykorzystujÄ…ce informacje o stanie serwera, do ktÃ³rego przekazujÄ… zapytanie.
 \end{itemize}
 
-Tak jak w przypadku algorytmów stosowanych w serwerze DNS, najmniej efektywne s± algorytmy nie wykorzystuj±ce ¿adnych 
+Tak jak w przypadku algorytmÃ³w stosowanych w serwerze DNS, najmniej efektywne sÄ… algorytmy nie wykorzystujÄ…ce Å¼adnych 
 dodatkowych informacji, czyli Random i Round--robin.
 
-Wykorzystuj±c informacje o kliencie, np. jego adres IP, mo¿na zastosowaæ bardziej efektywne rozwi±zania. Przyk³adem takiego 
+WykorzystujÄ…c informacje o kliencie, np. jego adres IP, moÅ¼na zastosowaÄ‡ bardziej efektywne rozwiÄ…zania. PrzykÅ‚adem takiego 
 algorytmu jest Client partition.
 
-W zwi±zku z zarz±dzaniem strumieniem zapytañ na poziomie pakietów, odwo³ania nadchodz±ce z tego samego adresu, dotycz±ce 
-pojedynczej sesji, musz± byæ przekierowywane do tego samego serwera. Dopiero ¿±dania nowego obiektu mog± byæ przes³ane na inny 
-serwer. Wymaga to utrzymywania w systemie tablicy aktywnych po³±czeñ. Dziêki temu mo¿na oszacowaæ, który z serwerów obci±¿ony 
-bêdzie dodatkowymi zapytaniami w najbli¿szym czasie i na tej podstawie wybraæ najlepszy, do którego skierowane zostanie 
+W zwiÄ…zku z zarzÄ…dzaniem strumieniem zapytaÅ„ na poziomie pakietÃ³w, odwoÅ‚ania nadchodzÄ…ce z tego samego adresu, dotyczÄ…ce 
+pojedynczej sesji, muszÄ… byÄ‡ przekierowywane do tego samego serwera. Dopiero Å¼Ä…dania nowego obiektu mogÄ… byÄ‡ przesÅ‚ane na inny 
+serwer. Wymaga to utrzymywania w systemie tablicy aktywnych poÅ‚Ä…czeÅ„. DziÄ™ki temu moÅ¼na oszacowaÄ‡, ktÃ³ry z serwerÃ³w obciÄ…Å¼ony 
+bÄ™dzie dodatkowymi zapytaniami w najbliÅ¼szym czasie i na tej podstawie wybraÄ‡ najlepszy, do ktÃ³rego skierowane zostanie 
 kolejne zapytanie. Realizowane jest to na podstawie algorytmu Least loaded server. 
 \begin{figure}[h]
 \centering
@@ -197,81 +197,81 @@ kolejne zapytanie. Realizowane jest to na podstawie algorytmu Least loaded serve
 \label{level_4_alg}
 \end{figure}
 
-Oprócz informacji o tym, kto przesy³a zapytania do systemu webowego, mo¿na równie¿ uzyskaæ dane na temat pracy poszczególnych 
-serwerów w systemie. Aby poprawiæ jako¶æ szeregowania zapytañ, w algorytmie dokonuj±cym wyboru najlepszego serwera stosuje siê 
-ró¿nego rodzaju metryki okre¶laj±ce aktualne obci±¿enie serwerów. Najczê¶ciej stosowanymi algorytmami w tym przypadku s± Least 
+OprÃ³cz informacji o tym, kto przesyÅ‚a zapytania do systemu webowego, moÅ¼na rÃ³wnieÅ¼ uzyskaÄ‡ dane na temat pracy poszczegÃ³lnych 
+serwerÃ³w w systemie. Aby poprawiÄ‡ jakoÅ›Ä‡ szeregowania zapytaÅ„, w algorytmie dokonujÄ…cym wyboru najlepszego serwera stosuje siÄ™ 
+rÃ³Å¼nego rodzaju metryki okreÅ›lajÄ…ce aktualne obciÄ…Å¼enie serwerÃ³w. NajczÄ™Å›ciej stosowanymi algorytmami w tym przypadku sÄ… Least 
 loaded server oraz Weighted Round--robin. 
 \begin{itemize}
-\item W przypadku algorytmu Least loaded server dziêki wybranemu kryterium (okre¶lonej metryce) wiemy, który z serwerów 
-powinien przyj±æ kolejne zapytanie. Odbywa siê to na zasadzie: najmniej obci±¿ony serwer przyjmuje kolejne zlecenie. 
-\item Stosuj±c algorytm Weighted Round--robin, przy wyborze kolejnego serwera mo¿na uwzglêdniaæ metrykê jako parametr funkcji 
+\item W przypadku algorytmu Least loaded server dziÄ™ki wybranemu kryterium (okreÅ›lonej metryce) wiemy, ktÃ³ry z serwerÃ³w 
+powinien przyjÄ…Ä‡ kolejne zapytanie. Odbywa siÄ™ to na zasadzie: najmniej obciÄ…Å¼ony serwer przyjmuje kolejne zlecenie. 
+\item StosujÄ…c algorytm Weighted Round--robin, przy wyborze kolejnego serwera moÅ¼na uwzglÄ™dniaÄ‡ metrykÄ™ jako parametr funkcji 
 wyboru najlepszego serwera.
 
-Wa¿nym wiêc elementem funkcjonowania tego rozwi±zania jest dobór metryki bêd±cej powy¿szym parametrem. Istnieje 
-mo¿liwo¶æ kontrolowania nastêpuj±cych parametrów:
+WaÅ¼nym wiÄ™c elementem funkcjonowania tego rozwiÄ…zania jest dobÃ³r metryki bÄ™dÄ…cej powyÅ¼szym parametrem. Istnieje 
+moÅ¼liwoÅ›Ä‡ kontrolowania nastÄ™pujÄ…cych parametrÃ³w:
 \begin{itemize}
-\item input metric -- informacja pozyskiwana jest przez dystrybutor bez wspó³prcy z serwerami, np. liczba aktywnych po³±czeñ 
-miedzy dystrybutorem a poszczególnymi serwerami,
+\item input metric -- informacja pozyskiwana jest przez dystrybutor bez wspÃ³Å‚prcy z serwerami, np. liczba aktywnych poÅ‚Ä…czeÅ„ 
+miedzy dystrybutorem a poszczegÃ³lnymi serwerami,
 \item server metric -- informacja pozyskiwana jest przez serwery i dostarczana dystrybutorowi, np. wykorzystanie procesora lub 
-dysku, czas miedzy otrzymaniem zapytania a wys³aniem odpowiedzi,
-\item forward metric -- informacja pozyskiwana jest bezpo¶rednio przez dystrybutor, np. emulacja zapytañ do serwerów webowych.
+dysku, czas miedzy otrzymaniem zapytania a wysÅ‚aniem odpowiedzi,
+\item forward metric -- informacja pozyskiwana jest bezpoÅ›rednio przez dystrybutor, np. emulacja zapytaÅ„ do serwerÃ³w webowych.
 \end{itemize}
 \end{itemize}
 
-\subsection{Algorytmy szeregowania wykorzystywane w prze³±cznikach webowych}
-Prze³±czniki webowe maj± równie¿ mo¿liwo¶æ kontrolowania 100\% ruchu do serwerów. Zatem i tu konieczne jest wykorzystanie jak 
-najprostszych mechanizmów zarz±dzania. W przypadku prostych rozwi±zañ wystarczaj±co wydajne s± algorytmy statyczne. Sytuacja 
-taka wystêpuje, gdy czasy realizacji zleceñ przez serwery WWW s± bardzo zbli¿one do siebie i nie wychodz± poza okre¶lony 
-przedzia³ warto¶ci.
+\subsection{Algorytmy szeregowania wykorzystywane w przeÅ‚Ä…cznikach webowych}
+PrzeÅ‚Ä…czniki webowe majÄ… rÃ³wnieÅ¼ moÅ¼liwoÅ›Ä‡ kontrolowania 100\% ruchu do serwerÃ³w. Zatem i tu konieczne jest wykorzystanie jak 
+najprostszych mechanizmÃ³w zarzÄ…dzania. W przypadku prostych rozwiÄ…zaÅ„ wystarczajÄ…co wydajne sÄ… algorytmy statyczne. Sytuacja 
+taka wystÄ™puje, gdy czasy realizacji zleceÅ„ przez serwery WWW sÄ… bardzo zbliÅ¼one do siebie i nie wychodzÄ… poza okreÅ›lony 
+przedziaÅ‚ wartoÅ›ci.
 
-W przypadku gdy w systemie wystêpuj± wiêcej ni¿ dwa ograniczenia czasu obs³ugi zlecenia, nale¿y stosowaæ algorytmy dynamiczne 
-wykorzystuj±ce informacje o kliencie lub stanie serwera (client info or server state aware). Maj±c do dyspozycji 
-heterogeniczne ¶rodowisko serwerów trudno jest wybraæ najlepszy, wspólny dla wszystkich parametr okre¶laj±cy metrykê 
-obci±¿enia serwera. W takim przypadku preferowane s± algorytmy wykorzystuj±ce informacje pochodz±ce od klientów.
+W przypadku gdy w systemie wystÄ™pujÄ… wiÄ™cej niÅ¼ dwa ograniczenia czasu obsÅ‚ugi zlecenia, naleÅ¼y stosowaÄ‡ algorytmy dynamiczne 
+wykorzystujÄ…ce informacje o kliencie lub stanie serwera (client info or server state aware). MajÄ…c do dyspozycji 
+heterogeniczne Å›rodowisko serwerÃ³w trudno jest wybraÄ‡ najlepszy, wspÃ³lny dla wszystkich parametr okreÅ›lajÄ…cy metrykÄ™ 
+obciÄ…Å¼enia serwera. W takim przypadku preferowane sÄ… algorytmy wykorzystujÄ…ce informacje pochodzÄ…ce od klientÃ³w.
 \begin{figure}[h]
 \centering
 \includegraphics[width=4.9in]{./rysunki/level_7_alg.eps}
-\caption{Algorytmy stosowane w prze³±cznikach webowych.}
+\caption{Algorytmy stosowane w przeÅ‚Ä…cznikach webowych.}
 \label{level_7_alg}
 \end{figure}
 
-Jak wynika z rysunku \ref{level_7_alg}, istniej± trzy rodzaje algorytmów opartych na informacjach o kliencie:
+Jak wynika z rysunku \ref{level_7_alg}, istniejÄ… trzy rodzaje algorytmÃ³w opartych na informacjach o kliencie:
 \begin{itemize}
-\item Session identifiers -- odwo³ania HTTP, maj±ce ten sam identyfikator SSL lub ten sam znacznik cookie przypisywane s± do 
-tego samego serwera -- zmniejsza to czas konieczny na ponown± identyfikacjê klienta,
-\item Content partition -- podzia³ zasobów serwerów mo¿e nast±piæ ze wzglêdu na:
+\item Session identifiers -- odwoÅ‚ania HTTP, majÄ…ce ten sam identyfikator SSL lub ten sam znacznik cookie przypisywane sÄ… do 
+tego samego serwera -- zmniejsza to czas konieczny na ponownÄ… identyfikacjÄ™ klienta,
+\item Content partition -- podziaÅ‚ zasobÃ³w serwerÃ³w moÅ¼e nastÄ…piÄ‡ ze wzglÄ™du na:
 \begin{itemize}
-\item typy plików -- dane, pliki graficzne, pliki audio umieszczone s± na specjalizowanych serwerach,
-\item wielko¶æ plików -- du¿e pliki na szybszych serwerach lub równomierne roz³o¿enie plików w przypadku serwerów 
+\item typy plikÃ³w -- dane, pliki graficzne, pliki audio umieszczone sÄ… na specjalizowanych serwerach,
+\item wielkoÅ›Ä‡ plikÃ³w -- duÅ¼e pliki na szybszych serwerach lub rÃ³wnomierne rozÅ‚oÅ¼enie plikÃ³w w przypadku serwerÃ³w 
 homogenicznych, 
 \end{itemize}
-\item Multi--class round--robin -- zasoby s± podzielone ze wzglêdu na z³o¿ono¶æ obliczeniow± i czasow±, jaka zostanie 
-wygenerowana podczas ich obs³ugi, np. po³±czenia szyfrowane wymagaj± mocy obliczeniowej procesora, odwo³ania do bazy danych 
-wymagaj± zwiêkszonej obs³ugi dysków, czy wreszcie pobieranie du¿ych plików w znacznym stopniu obci±¿a sieæ.
+\item Multi--class round--robin -- zasoby sÄ… podzielone ze wzglÄ™du na zÅ‚oÅ¼onoÅ›Ä‡ obliczeniowÄ… i czasowÄ…, jaka zostanie 
+wygenerowana podczas ich obsÅ‚ugi, np. poÅ‚Ä…czenia szyfrowane wymagajÄ… mocy obliczeniowej procesora, odwoÅ‚ania do bazy danych 
+wymagajÄ… zwiÄ™kszonej obsÅ‚ugi dyskÃ³w, czy wreszcie pobieranie duÅ¼ych plikÃ³w w znacznym stopniu obciÄ…Å¼a sieÄ‡.
 \end{itemize}
 
-Zasada dzia³ania algorytmu wykorzystuj±cego informacje o kliencie i serwerze jest nastêpuj±ca. Pierwsze zapytanie klienta o 
-zasoby przekierowywane jest wed³ug algorytmu Least loaded server (metryk± jest ilo¶æ aktywnych po³±czeñ z serwerem). Pozosta³e 
-zapytania klienta o ten sam zasób przekierowywane s± do tego samego serwera. Dziêki temu zwiêkszona jest skuteczno¶æ odwo³añ 
-do pamiêci podrêcznej (cache) tego serwera. Algorytm ten zwany jest Locality-Aware Request Distribution (LARD).
+Zasada dziaÅ‚ania algorytmu wykorzystujÄ…cego informacje o kliencie i serwerze jest nastÄ™pujÄ…ca. Pierwsze zapytanie klienta o 
+zasoby przekierowywane jest wedÅ‚ug algorytmu Least loaded server (metrykÄ… jest iloÅ›Ä‡ aktywnych poÅ‚Ä…czeÅ„ z serwerem). PozostaÅ‚e 
+zapytania klienta o ten sam zasÃ³b przekierowywane sÄ… do tego samego serwera. DziÄ™ki temu zwiÄ™kszona jest skutecznoÅ›Ä‡ odwoÅ‚aÅ„ 
+do pamiÄ™ci podrÄ™cznej (cache) tego serwera. Algorytm ten zwany jest Locality-Aware Request Distribution (LARD).
 
-\subsection{Algorytmy szeregowania wykorzystywane w przypadku przekierowañ na poziomie protoko³u HTTP}
+\subsection{Algorytmy szeregowania wykorzystywane w przypadku przekierowaÅ„ na poziomie protokoÅ‚u HTTP}
 
-Gdy stosuje siê rozwi±zania oparte na warstwowej strukturze, istnieje mo¿liwo¶æ zarz±dzania zapytaniami z poziomu protoko³u \cite{modele18}. 
-Takie rozwi±zanie jest przezroczyste dla u¿ytkowników. G³ównym celem stosowania tego mechanizmu jest zapobieganie 
-przeci±¿eniom serwerów webowych. Przekierowywanie odbywa siê poprzez przes³anie klientowi informacji w nag³ówku: HTTP OK. 
+Gdy stosuje siÄ™ rozwiÄ…zania oparte na warstwowej strukturze, istnieje moÅ¼liwoÅ›Ä‡ zarzÄ…dzania zapytaniami z poziomu protokoÅ‚u \cite{modele18}. 
+Takie rozwiÄ…zanie jest przezroczyste dla uÅ¼ytkownikÃ³w. GÅ‚Ã³wnym celem stosowania tego mechanizmu jest zapobieganie 
+przeciÄ…Å¼eniom serwerÃ³w webowych. Przekierowywanie odbywa siÄ™ poprzez przesÅ‚anie klientowi informacji w nagÅ‚Ã³wku: HTTP OK. 
 302 -- Moved temporary to a new location.
 
-Adres nowej lokalizacji mo¿e byæ podany w postaci nazwy domenowej lub adresu IP. Podanie adresu IP jest bardziej efektywne, 
-poniewa¿ nastêpuje bezpo¶rednie odwo³anie do nowego serwera (klastra), a nie do serwera DNS.
-Przekierowania mo¿na realizowaæ w zale¿no¶ci od kilku parametrów \cite{modele13}. Proces przekierowañ mo¿e dotyczyæ:
+Adres nowej lokalizacji moÅ¼e byÄ‡ podany w postaci nazwy domenowej lub adresu IP. Podanie adresu IP jest bardziej efektywne, 
+poniewaÅ¼ nastÄ™puje bezpoÅ›rednie odwoÅ‚anie do nowego serwera (klastra), a nie do serwera DNS.
+Przekierowania moÅ¼na realizowaÄ‡ w zaleÅ¼noÅ›ci od kilku parametrÃ³w \cite{modele13}. Proces przekierowaÅ„ moÅ¼e dotyczyÄ‡:
 \begin{itemize}
 \item wszystkich stron,
-\item tylko stron przekraczaj±cych okre¶lon± wielko¶æ,
-\item tylko stron, których ilo¶æ obiektów sk³adowych przekracza okre¶lon± liczbê,
+\item tylko stron przekraczajÄ…cych okreÅ›lonÄ… wielkoÅ›Ä‡,
+\item tylko stron, ktÃ³rych iloÅ›Ä‡ obiektÃ³w skÅ‚adowych przekracza okreÅ›lonÄ… liczbÄ™,
 \end{itemize}
 
-Wybór serwera, który powinien przej±æ zapytanie, mo¿e odbywaæ siê z wykorzystaniem jednej z poni¿szych strategii:
+WybÃ³r serwera, ktÃ³ry powinien przejÄ…Ä‡ zapytanie, moÅ¼e odbywaÄ‡ siÄ™ z wykorzystaniem jednej z poniÅ¼szych strategii:
 \begin{itemize}
 \item Round--robin,
 \item Least Loaded,
@@ -279,79 +279,79 @@ Wybór serwera, który powinien przej±æ zapytanie, mo¿e odbywaæ siê z wykorzystani
 \item Client to server proximity.
 \end{itemize}
 
-\section{Metody równowa¿enia obci±¿eñ -- przyk³ady}
+\section{Metody rÃ³wnowaÅ¼enia obciÄ…Å¼eÅ„ -- przykÅ‚ady}
 
-\subsubsection{Równowa¿enie obci±¿eñ z wykorzystaniem filtra datagramów}
+\subsubsection{RÃ³wnowaÅ¼enie obciÄ…Å¼eÅ„ z wykorzystaniem filtra datagramÃ³w}
 
-Inn± implementacj± rozproszonego algorytmu wspó³dzielenia obci±¿eñ jest zastosowanie na ka¿dym serwerze 
-wchodz±cym w sk³ad klastra tzw. filtra datagramów. Klaster taki powinien byæ po³±czony z Internetem poprzez 
-pojedynczy router brzegowy. Ka¿dy serwer w klastrze posiada skonfigurowane dwa adresy IP: adres ,,prywatny'' i 
-jednakowy dla wszystkich serwerów adres IP klastra. Router po otrzymaniu datagramu opatrzonego adresem IP 
-klastra nadaje mu fizyczny (sprzêtowy np. adres Ethernet) adres typu broadcast (je¿eli do routera przy³±czone 
-s± tylko serwery nale¿±ce do klastra) lub multicast (je¿eli klaster jest tylko wyró¿nion± grup± w¶ród 
-wszystkich hostów przy³±czonych do serwera). Zastosowanie takiego adresu sprawia, ¿e karty sieciowe wszystkich 
-serwerów w klastrze akceptuj± datagram. Pomiêdzy sterownikiem karty sieciowej, a oprogramowaniem TCP/IP na 
-ka¿dym serwerze musi pracowaæ specjalny proces, który zadecyduje, czy pakiet nale¿y odrzuciæ czy obs³u¿yæ. 
-Proces ten nazywamy filtrem pakietów \cite{barylo34}. Decyzja o odrzuceniu lub obs³u¿eniu datagramu podejmowana jest na 
-podstawie zawarto¶ci dwóch struktur danych: tablicy po³±czeñ TCP (datagramy nale¿±ce do jednego po³±czenia 
-TCP musz± byæ obs³ugiwane przez serwer który nawi±za³ dane po³±czenie) oraz tablicy zawieraj±cych wielko¶æ 
-obci±¿enia poszczególnych serwerów klastra. Tablica ta jest uaktualniana przez same serwery. Ka¿dy serwer musi 
-wysy³aæ okresowo komunikat typu broadcast zawieraj±cy wielko¶æ jego obci±¿enia. Je¿eli do klastra nadchodzi 
-datagram otwieraj±cy nowe po³±czenie TCP (nag³ówek TCP zawiera flagê SYN) serwer o najni¿szym indeksie 
-obci±¿enia w tablicy (indeksem tym jest zwykle liczba otwartych po³±czeñ TCP) jest zobowi±zany do jego 
-przyjêcia. Dla zwiêkszenia wydajno¶ci klastra w serwerach stosowaæ mo¿na dwie karty sieciowe: jedn± ze 
-skonfigurowanym adresem IP klastra i drug± z prywatnym adresem serwera.  W takim przypadku pakiety, które nie 
-musz± byæ filtrowane (np. wymiana danych SNMP) przechodziæ bêd± przez  ,,prywatn±'' kartê. Ten typ równowa¿enia 
-dotyczyæ mo¿e ka¿dej us³ugi korzystaj±cej z TCP, w szczególno¶ci WWW.
-Pierwsz± komercyjn± implementacj± tego rozwi±zania by³ pakiet oprogramowania Convoy Cluster firmy 
-Valence Research przeznaczony dla systemu Microsoft Windows NT. Jako miarê obci±¿enia serwera przyjêto w nim 
-ilo¶æ otwartych po³±czeñ TCP, a komunikaty og³aszaj±ce stan obci±¿enia wysy³ane by³y przez serwery co sekundê. 
-Oprogramowanie umo¿liwia³o dynamiczn± konfiguracjê klastra przez dodawanie lub usuwanie serwera z klastra bez 
-przerywania pracy klastra. Serwery w klastrze musia³y powielaæ swoje dane. W pierwszej wersji wymagane by³o 
-stosowanie dwóch kart sieciowych na ka¿dym serwerze, a nadchodz±ce datagramy rozg³aszane by³y w trybie broadcast 
-(dociera³y do ka¿dego hosta w sieci lokalnej klastra, nawet je¶li nie by³ on serwerem) Wersja 2.0 Convoy 
-Cluster wyeliminowa³a te niedogodno¶ci i oferowa³a liczne dodatkowe mo¿liwo¶ci konfiguracyjne np. opcjonalne 
-stosowanie pokrewieñstwa z klientem (ang. \emph{client affinity}), co umo¿liwia obs³ugê wszystkich datagramów 
-nadchodz±cych od raz zidentyfikowanego (w trakcie nawi±zywania pierwszego po³±czenia) klienta przez jeden 
-serwer. W roku 1999 firma Microsoft wykupi³a od Valence Research technologiê Convoy Cluster i po 
-,,kosmetycznych'' zmianach udostêpni³a j± w pakiecie Microsoft Windows NT 4.0 Enterprise Server pod nazw± 
+InnÄ… implementacjÄ… rozproszonego algorytmu wspÃ³Å‚dzielenia obciÄ…Å¼eÅ„ jest zastosowanie na kaÅ¼dym serwerze 
+wchodzÄ…cym w skÅ‚ad klastra tzw. filtra datagramÃ³w. Klaster taki powinien byÄ‡ poÅ‚Ä…czony z Internetem poprzez 
+pojedynczy router brzegowy. KaÅ¼dy serwer w klastrze posiada skonfigurowane dwa adresy IP: adres ,,prywatny'' i 
+jednakowy dla wszystkich serwerÃ³w adres IP klastra. Router po otrzymaniu datagramu opatrzonego adresem IP 
+klastra nadaje mu fizyczny (sprzÄ™towy np. adres Ethernet) adres typu broadcast (jeÅ¼eli do routera przyÅ‚Ä…czone 
+sÄ… tylko serwery naleÅ¼Ä…ce do klastra) lub multicast (jeÅ¼eli klaster jest tylko wyrÃ³Å¼nionÄ… grupÄ… wÅ›rÃ³d 
+wszystkich hostÃ³w przyÅ‚Ä…czonych do serwera). Zastosowanie takiego adresu sprawia, Å¼e karty sieciowe wszystkich 
+serwerÃ³w w klastrze akceptujÄ… datagram. PomiÄ™dzy sterownikiem karty sieciowej, a oprogramowaniem TCP/IP na 
+kaÅ¼dym serwerze musi pracowaÄ‡ specjalny proces, ktÃ³ry zadecyduje, czy pakiet naleÅ¼y odrzuciÄ‡ czy obsÅ‚uÅ¼yÄ‡. 
+Proces ten nazywamy filtrem pakietÃ³w \cite{barylo34}. Decyzja o odrzuceniu lub obsÅ‚uÅ¼eniu datagramu podejmowana jest na 
+podstawie zawartoÅ›ci dwÃ³ch struktur danych: tablicy poÅ‚Ä…czeÅ„ TCP (datagramy naleÅ¼Ä…ce do jednego poÅ‚Ä…czenia 
+TCP muszÄ… byÄ‡ obsÅ‚ugiwane przez serwer ktÃ³ry nawiÄ…zaÅ‚ dane poÅ‚Ä…czenie) oraz tablicy zawierajÄ…cych wielkoÅ›Ä‡ 
+obciÄ…Å¼enia poszczegÃ³lnych serwerÃ³w klastra. Tablica ta jest uaktualniana przez same serwery. KaÅ¼dy serwer musi 
+wysyÅ‚aÄ‡ okresowo komunikat typu broadcast zawierajÄ…cy wielkoÅ›Ä‡ jego obciÄ…Å¼enia. JeÅ¼eli do klastra nadchodzi 
+datagram otwierajÄ…cy nowe poÅ‚Ä…czenie TCP (nagÅ‚Ã³wek TCP zawiera flagÄ™ SYN) serwer o najniÅ¼szym indeksie 
+obciÄ…Å¼enia w tablicy (indeksem tym jest zwykle liczba otwartych poÅ‚Ä…czeÅ„ TCP) jest zobowiÄ…zany do jego 
+przyjÄ™cia. Dla zwiÄ™kszenia wydajnoÅ›ci klastra w serwerach stosowaÄ‡ moÅ¼na dwie karty sieciowe: jednÄ… ze 
+skonfigurowanym adresem IP klastra i drugÄ… z prywatnym adresem serwera.  W takim przypadku pakiety, ktÃ³re nie 
+muszÄ… byÄ‡ filtrowane (np. wymiana danych SNMP) przechodziÄ‡ bÄ™dÄ… przez  ,,prywatnÄ…'' kartÄ™. Ten typ rÃ³wnowaÅ¼enia 
+dotyczyÄ‡ moÅ¼e kaÅ¼dej usÅ‚ugi korzystajÄ…cej z TCP, w szczegÃ³lnoÅ›ci WWW.
+PierwszÄ… komercyjnÄ… implementacjÄ… tego rozwiÄ…zania byÅ‚ pakiet oprogramowania Convoy Cluster firmy 
+Valence Research przeznaczony dla systemu Microsoft Windows NT. Jako miarÄ™ obciÄ…Å¼enia serwera przyjÄ™to w nim 
+iloÅ›Ä‡ otwartych poÅ‚Ä…czeÅ„ TCP, a komunikaty ogÅ‚aszajÄ…ce stan obciÄ…Å¼enia wysyÅ‚ane byÅ‚y przez serwery co sekundÄ™. 
+Oprogramowanie umoÅ¼liwiaÅ‚o dynamicznÄ… konfiguracjÄ™ klastra przez dodawanie lub usuwanie serwera z klastra bez 
+przerywania pracy klastra. Serwery w klastrze musiaÅ‚y powielaÄ‡ swoje dane. W pierwszej wersji wymagane byÅ‚o 
+stosowanie dwÃ³ch kart sieciowych na kaÅ¼dym serwerze, a nadchodzÄ…ce datagramy rozgÅ‚aszane byÅ‚y w trybie broadcast 
+(docieraÅ‚y do kaÅ¼dego hosta w sieci lokalnej klastra, nawet jeÅ›li nie byÅ‚ on serwerem) Wersja 2.0 Convoy 
+Cluster wyeliminowaÅ‚a te niedogodnoÅ›ci i oferowaÅ‚a liczne dodatkowe moÅ¼liwoÅ›ci konfiguracyjne np. opcjonalne 
+stosowanie pokrewieÅ„stwa z klientem (ang. \emph{client affinity}), co umoÅ¼liwia obsÅ‚ugÄ™ wszystkich datagramÃ³w 
+nadchodzÄ…cych od raz zidentyfikowanego (w trakcie nawiÄ…zywania pierwszego poÅ‚Ä…czenia) klienta przez jeden 
+serwer. W roku 1999 firma Microsoft wykupiÅ‚a od Valence Research technologiÄ™ Convoy Cluster i po 
+,,kosmetycznych'' zmianach udostÄ™pniÅ‚a jÄ… w pakiecie Microsoft Windows NT 4.0 Enterprise Server pod nazwÄ… 
 Microsoft Load Balancing Service.
-Najwa¿niejsz± zalet± stosowania filtra pakietów jest jego du¿a wydajno¶æ w porównaniu do 
-scentralizowanych urz±dzeñ rozdzielaj±cych zadania (np. LSNAT). Uzyskiwane jest to dziêki temu, ¿e na ¿adnym 
-etapie obs³ugi zadania nie s± modyfikowane datagramy i nie istnieje pojedynczy punkt podejmowania decyzji o 
-obs³udze zadania. Wa¿na jest równie¿ ³atwo¶æ konfiguracji klastra i du¿a niezawodno¶æ (serwer, który ulega 
-awarii przestaje wysy³aæ komunikaty o stanie swego obci±¿enia, nie jest wiêc uwzglêdniany w tablicach obci±¿enia 
-serwerów w pozosta³ych wêz³ach klastra i w ten sposób nie bierze udzia³u w równowa¿eniu obci±¿eñ). Koszt jaki 
-nale¿y ponie¶æ, aby uzyskaæ te niew±tpliwie po¿±dane cechy to trudniejsza konfiguracja poszczególnych serwerów 
-(konieczno¶æ instalacji i konfiguracji filtra pakietów) oraz du¿y ruch w sieci lokalnej klastra wynikaj±cy z 
-aktualizacji tablic obci±¿enia. Aktualizacje te musz± byæ czêste, gdy¿ ³atwo mo¿na wyobraziæ sobie sytuacjê, w 
-której serwer o najni¿szym indeksie obci±¿enia ulega awarii. W takiej sytuacji pozosta³e serwery a¿ do 
-aktualizacji swoich tablic obci±¿enia bêd± odrzucaæ wszystkie datagramy otwieraj±ce nowe po³±czenia, co z 
-pewno¶ci± nie jest zjawiskiem po¿±danym.
+NajwaÅ¼niejszÄ… zaletÄ… stosowania filtra pakietÃ³w jest jego duÅ¼a wydajnoÅ›Ä‡ w porÃ³wnaniu do 
+scentralizowanych urzÄ…dzeÅ„ rozdzielajÄ…cych zadania (np. LSNAT). Uzyskiwane jest to dziÄ™ki temu, Å¼e na Å¼adnym 
+etapie obsÅ‚ugi zadania nie sÄ… modyfikowane datagramy i nie istnieje pojedynczy punkt podejmowania decyzji o 
+obsÅ‚udze zadania. WaÅ¼na jest rÃ³wnieÅ¼ Å‚atwoÅ›Ä‡ konfiguracji klastra i duÅ¼a niezawodnoÅ›Ä‡ (serwer, ktÃ³ry ulega 
+awarii przestaje wysyÅ‚aÄ‡ komunikaty o stanie swego obciÄ…Å¼enia, nie jest wiÄ™c uwzglÄ™dniany w tablicach obciÄ…Å¼enia 
+serwerÃ³w w pozostaÅ‚ych wÄ™zÅ‚ach klastra i w ten sposÃ³b nie bierze udziaÅ‚u w rÃ³wnowaÅ¼eniu obciÄ…Å¼eÅ„). Koszt jaki 
+naleÅ¼y ponieÅ›Ä‡, aby uzyskaÄ‡ te niewÄ…tpliwie poÅ¼Ä…dane cechy to trudniejsza konfiguracja poszczegÃ³lnych serwerÃ³w 
+(koniecznoÅ›Ä‡ instalacji i konfiguracji filtra pakietÃ³w) oraz duÅ¼y ruch w sieci lokalnej klastra wynikajÄ…cy z 
+aktualizacji tablic obciÄ…Å¼enia. Aktualizacje te muszÄ… byÄ‡ czÄ™ste, gdyÅ¼ Å‚atwo moÅ¼na wyobraziÄ‡ sobie sytuacjÄ™, w 
+ktÃ³rej serwer o najniÅ¼szym indeksie obciÄ…Å¼enia ulega awarii. W takiej sytuacji pozostaÅ‚e serwery aÅ¼ do 
+aktualizacji swoich tablic obciÄ…Å¼enia bÄ™dÄ… odrzucaÄ‡ wszystkie datagramy otwierajÄ…ce nowe poÅ‚Ä…czenia, co z 
+pewnoÅ›ciÄ… nie jest zjawiskiem poÅ¼Ä…danym.
 
-\subsubsection{Równowa¿enie obci±¿eñ z wykorzystaniem redirekcji HTTP}
+\subsubsection{RÃ³wnowaÅ¼enie obciÄ…Å¼eÅ„ z wykorzystaniem redirekcji HTTP}
 
-Redirekcja jest  mechanizmem protoko³u HTTP, który zaprojektowano z my¶l± o obs³udze sytuacji w których 
-zasób (plik) wskazywany przez pewien URL zmienia swoje fizyczne po³o¿enie (zostaje przeniesiony na inny serwer) 
-i w zwi±zku z tym uzyskuje inny URL. Aby nie zmuszaæ u¿ytkownika do poszukiwania tego zasobu na w³asn± rêkê 
-serwer WWW przechowuje tzw. tablice redirekcji. Jest to tablica zawieraj±ca URL, które wcze¶niej dotyczy³y 
-zasobów danego serwera, lecz obecnie zasoby te znajduj± siê pod innym URL. Tablica zawiera równie¿ aktualny URL 
-dla ka¿dego przeniesionego zasobu. W przypadku zapytania o taki ,,zdezaktualizowany'' URL serwer WWW zwraca 
-odpowied¼ HTTP typu ,,przeniesiono'' i jako dane przekazuje aktualny URL zasobu. Przegl±darka po otrzymaniu takiej 
-odpowiedzi musi zestawiæ nowe po³±czenie z serwerem wskazanym przez otrzymany URL.
+Redirekcja jest  mechanizmem protokoÅ‚u HTTP, ktÃ³ry zaprojektowano z myÅ›lÄ… o obsÅ‚udze sytuacji w ktÃ³rych 
+zasÃ³b (plik) wskazywany przez pewien URL zmienia swoje fizyczne poÅ‚oÅ¼enie (zostaje przeniesiony na inny serwer) 
+i w zwiÄ…zku z tym uzyskuje inny URL. Aby nie zmuszaÄ‡ uÅ¼ytkownika do poszukiwania tego zasobu na wÅ‚asnÄ… rÄ™kÄ™ 
+serwer WWW przechowuje tzw. tablice redirekcji. Jest to tablica zawierajÄ…ca URL, ktÃ³re wczeÅ›niej dotyczyÅ‚y 
+zasobÃ³w danego serwera, lecz obecnie zasoby te znajdujÄ… siÄ™ pod innym URL. Tablica zawiera rÃ³wnieÅ¼ aktualny URL 
+dla kaÅ¼dego przeniesionego zasobu. W przypadku zapytania o taki ,,zdezaktualizowany'' URL serwer WWW zwraca 
+odpowiedÅº HTTP typu ,,przeniesiono'' i jako dane przekazuje aktualny URL zasobu. PrzeglÄ…darka po otrzymaniu takiej 
+odpowiedzi musi zestawiÄ‡ nowe poÅ‚Ä…czenie z serwerem wskazanym przez otrzymany URL.
 
-Opisany mechanizm w prosty sposób wykorzystaæ mo¿na do pewnego rodzaju równowa¿enia obci±¿eñ serwerów 
-WWW \cite{barylo22,barylo23}. W klastrze serwerów wydzieliæ mo¿na tzw. serwer redirekcji, którego nazwa DNS reprezentowaæ 
-bêdzie ca³y klaster. Jedynym zadaniem takiego serwera jest utrzymywanie tablicy redirekcji i przekierowanie 
-nadchodz±cych zapytañ do odpowiedniego serwera z klastra. W takiej architekturze serwery zwykle nie powielaj± 
-swych zasobów, ka¿dy z nich przechowuje czê¶æ danych udostêpnianych przez klaster, a to który z nich obs³u¿y 
-zapytanie determinowane jest przez rodzaj ¿±danych informacji. Przyk³adowo je¶li pod nazw± www.pogoda.com 
-dostêpny jest serwis prezentuj±cy prognozê pogody dla ka¿dego kontynentu to zasoby serwisu podzieliæ mo¿na 
-pomiêdzy siedem serwerów (po jednym dla ka¿dego kontynentu) a pod adresem IP stanowi±cym odwzorowanie nazwy 
-serwisu nale¿y umie¶ciæ serwer redirekcji. W odpowiedzi na zapytanie o dowolny URL zaczynaj±cy siê np. od ci±gu 
-www.pogoda.com/Azja/ serwer redirekcji dokonywa³by przekierowania do serwera przechowuj±cego dokumenty o 
-pogodzie w Azji (np. wwwazja.pogoda.com) \cite{barylo22}. Poni¿szy rysunek przedstawia schemat nawi±zywania 
-po³±czenia w przypadku stosowania redirekcji HTTP:
+Opisany mechanizm w prosty sposÃ³b wykorzystaÄ‡ moÅ¼na do pewnego rodzaju rÃ³wnowaÅ¼enia obciÄ…Å¼eÅ„ serwerÃ³w 
+WWW \cite{barylo22,barylo23}. W klastrze serwerÃ³w wydzieliÄ‡ moÅ¼na tzw. serwer redirekcji, ktÃ³rego nazwa DNS reprezentowaÄ‡ 
+bÄ™dzie caÅ‚y klaster. Jedynym zadaniem takiego serwera jest utrzymywanie tablicy redirekcji i przekierowanie 
+nadchodzÄ…cych zapytaÅ„ do odpowiedniego serwera z klastra. W takiej architekturze serwery zwykle nie powielajÄ… 
+swych zasobÃ³w, kaÅ¼dy z nich przechowuje czÄ™Å›Ä‡ danych udostÄ™pnianych przez klaster, a to ktÃ³ry z nich obsÅ‚uÅ¼y 
+zapytanie determinowane jest przez rodzaj Å¼Ä…danych informacji. PrzykÅ‚adowo jeÅ›li pod nazwÄ… www.pogoda.com 
+dostÄ™pny jest serwis prezentujÄ…cy prognozÄ™ pogody dla kaÅ¼dego kontynentu to zasoby serwisu podzieliÄ‡ moÅ¼na 
+pomiÄ™dzy siedem serwerÃ³w (po jednym dla kaÅ¼dego kontynentu) a pod adresem IP stanowiÄ…cym odwzorowanie nazwy 
+serwisu naleÅ¼y umieÅ›ciÄ‡ serwer redirekcji. W odpowiedzi na zapytanie o dowolny URL zaczynajÄ…cy siÄ™ np. od ciÄ…gu 
+www.pogoda.com/Azja/ serwer redirekcji dokonywaÅ‚by przekierowania do serwera przechowujÄ…cego dokumenty o 
+pogodzie w Azji (np. wwwazja.pogoda.com) \cite{barylo22}. PoniÅ¼szy rysunek przedstawia schemat nawiÄ…zywania 
+poÅ‚Ä…czenia w przypadku stosowania redirekcji HTTP:
 \begin{figure}[h]
 \centering
 \includegraphics[width=4.9in]{./rysunki/redirekcja.eps}
@@ -360,293 +360,293 @@ po³±czenia w przypadku stosowania redirekcji HTTP:
 \end{figure}
 
 Stosowanie redirekcji ma zasadniczo dwie zalety. Po pierwsze utrzymanie statycznej tablicy redirekcji jest 
-bardzo proste i tanie w implementacji, nie wymaga stosowania specjalnego sprzêtu ani oprogramowania. Po drugie, 
-poniewa¿ u¿ywane s± adresy URL, klaster stanowi±cy logiczn± ca³o¶æ mo¿e byæ rozproszony geograficznie tzn. 
-serwer prezentuj±cy dane o pogodzie w Azji mo¿e rzeczywi¶cie znajdowaæ siê na terenie tego kontynentu, co mo¿e 
-byæ dobrym pomys³em przy za³o¿eniu, ¿e o pogodê w Azji pytaæ bêd± g³ównie Azjaci.
-Redirekcja ma jednak wiele wad \cite{barylo30}. Przede wszystkim ograniczona jest do protoko³u HTTP, a jak wiadomo 
-wiele ³±cz hipertekstowych dokonuje prze³±czenia do np. serwerów FTP, które czêsto pracuj± na fizycznie tych 
-samych komputerach, co serwery WWW. Druga wada jest wyra¼nie widoczna na Rys. \ref{redirekcja}. Aby rozpocz±æ pobieranie 
-¿±danego dokumentu przegl±darka musi dokonaæ dwóch po³±czeñ, najpierw z serwerem redirekcji, a nastêpnie z 
-w³a¶ciwym serwerem. Wprowadza to znaczne opó¼nienie i powoduje dodatkowe obci±¿enie sieci, która jest czêsto 
-w±skim gard³em wydajno¶ci WWW. 
+bardzo proste i tanie w implementacji, nie wymaga stosowania specjalnego sprzÄ™tu ani oprogramowania. Po drugie, 
+poniewaÅ¼ uÅ¼ywane sÄ… adresy URL, klaster stanowiÄ…cy logicznÄ… caÅ‚oÅ›Ä‡ moÅ¼e byÄ‡ rozproszony geograficznie tzn. 
+serwer prezentujÄ…cy dane o pogodzie w Azji moÅ¼e rzeczywiÅ›cie znajdowaÄ‡ siÄ™ na terenie tego kontynentu, co moÅ¼e 
+byÄ‡ dobrym pomysÅ‚em przy zaÅ‚oÅ¼eniu, Å¼e o pogodÄ™ w Azji pytaÄ‡ bÄ™dÄ… gÅ‚Ã³wnie Azjaci.
+Redirekcja ma jednak wiele wad \cite{barylo30}. Przede wszystkim ograniczona jest do protokoÅ‚u HTTP, a jak wiadomo 
+wiele Å‚Ä…cz hipertekstowych dokonuje przeÅ‚Ä…czenia do np. serwerÃ³w FTP, ktÃ³re czÄ™sto pracujÄ… na fizycznie tych 
+samych komputerach, co serwery WWW. Druga wada jest wyraÅºnie widoczna na Rys. \ref{redirekcja}. Aby rozpoczÄ…Ä‡ pobieranie 
+Å¼Ä…danego dokumentu przeglÄ…darka musi dokonaÄ‡ dwÃ³ch poÅ‚Ä…czeÅ„, najpierw z serwerem redirekcji, a nastÄ™pnie z 
+wÅ‚aÅ›ciwym serwerem. Wprowadza to znaczne opÃ³Åºnienie i powoduje dodatkowe obciÄ…Å¼enie sieci, ktÃ³ra jest czÄ™sto 
+wÄ…skim gardÅ‚em wydajnoÅ›ci WWW. 
 
-Prezentowane powy¿ej podej¶cie jest z gruntu statyczne i zak³ada wiedzê o tym, które dane bêd± 
-poszukiwane najczê¶ciej, co umo¿liwia aprioryczne przydzielenie najsilniejszego serwera w klastrze do obs³ugi 
-najpopularniejszej czê¶ci serwisu WWW. Poniewa¿ tablica redirekcji nie zawiera ¿adnych danych o obci±¿eniu 
-poszczególnych serwerów trudno jest  dynamicznie uwzglêdniaæ takie dane podczas wyboru serwera. W literaturze 
-proponowano architektury piêtrowe. Przyk³adowo dane dotycz±ce pogody w Azji mog³yby byæ powielane pomiêdzy 
-kilka serwerów, które raportowa³yby stopieñ swego obci±¿enia, a na podstawie tych danych serwer redirekcji 
-móg³by dynamicznie aktualizowaæ tablice redirekcji. Zbyt czêsta aktualizacja tej tablicy czyni j± jednak 
-bezu¿yteczn± (tablica jest niedostêpna w trakcie aktualizacji), a zbyt rzadka powoduje nierównomierno¶æ 
-obci±¿enia. Innym rozwi±zaniem jest zachowanie podzia³u na serwery tematyczne z mo¿liwo¶ci± dynamicznego 
-przeniesienia czê¶ci zawarto¶ci z serwera mocno obci±¿onego na serwer posiadaj±cy rezerwê wydajno¶ci. 
-Aktualizacje tablicy redirekcji by³yby wtedy rzadsze, lecz procedura taka wymaga³aby kosztownego ¶ledzenia, 
-które pliki pobierane s± najczê¶ciej (tylko przeniesienie takich plików znacz±co mo¿e zmniejszyæ obci±¿enie 
-serwera), dodatkowo dane by³yby niedostêpne przez czas przenoszenia. Obydwie metody dynamicznego wykorzystania 
-tablicy redirekcji mog± byæ ominiête przez u¿ytkownika, je¶li po po³±czeniu z serwerem docelowym umie¶ci on 
-zak³adkê (ang. \emph{bookmark}) na pobieranych stronach WWW. 
-Statyczna redirekcja HTTP jest skuteczna tylko w przypadku serwisów charakteryzuj±cych siê ³atwym do 
-przewidzenia wzorcem dostêpu do dokumentów.
+Prezentowane powyÅ¼ej podejÅ›cie jest z gruntu statyczne i zakÅ‚ada wiedzÄ™ o tym, ktÃ³re dane bÄ™dÄ… 
+poszukiwane najczÄ™Å›ciej, co umoÅ¼liwia aprioryczne przydzielenie najsilniejszego serwera w klastrze do obsÅ‚ugi 
+najpopularniejszej czÄ™Å›ci serwisu WWW. PoniewaÅ¼ tablica redirekcji nie zawiera Å¼adnych danych o obciÄ…Å¼eniu 
+poszczegÃ³lnych serwerÃ³w trudno jest  dynamicznie uwzglÄ™dniaÄ‡ takie dane podczas wyboru serwera. W literaturze 
+proponowano architektury piÄ™trowe. PrzykÅ‚adowo dane dotyczÄ…ce pogody w Azji mogÅ‚yby byÄ‡ powielane pomiÄ™dzy 
+kilka serwerÃ³w, ktÃ³re raportowaÅ‚yby stopieÅ„ swego obciÄ…Å¼enia, a na podstawie tych danych serwer redirekcji 
+mÃ³gÅ‚by dynamicznie aktualizowaÄ‡ tablice redirekcji. Zbyt czÄ™sta aktualizacja tej tablicy czyni jÄ… jednak 
+bezuÅ¼ytecznÄ… (tablica jest niedostÄ™pna w trakcie aktualizacji), a zbyt rzadka powoduje nierÃ³wnomiernoÅ›Ä‡ 
+obciÄ…Å¼enia. Innym rozwiÄ…zaniem jest zachowanie podziaÅ‚u na serwery tematyczne z moÅ¼liwoÅ›ciÄ… dynamicznego 
+przeniesienia czÄ™Å›ci zawartoÅ›ci z serwera mocno obciÄ…Å¼onego na serwer posiadajÄ…cy rezerwÄ™ wydajnoÅ›ci. 
+Aktualizacje tablicy redirekcji byÅ‚yby wtedy rzadsze, lecz procedura taka wymagaÅ‚aby kosztownego Å›ledzenia, 
+ktÃ³re pliki pobierane sÄ… najczÄ™Å›ciej (tylko przeniesienie takich plikÃ³w znaczÄ…co moÅ¼e zmniejszyÄ‡ obciÄ…Å¼enie 
+serwera), dodatkowo dane byÅ‚yby niedostÄ™pne przez czas przenoszenia. Obydwie metody dynamicznego wykorzystania 
+tablicy redirekcji mogÄ… byÄ‡ ominiÄ™te przez uÅ¼ytkownika, jeÅ›li po poÅ‚Ä…czeniu z serwerem docelowym umieÅ›ci on 
+zakÅ‚adkÄ™ (ang. \emph{bookmark}) na pobieranych stronach WWW. 
+Statyczna redirekcja HTTP jest skuteczna tylko w przypadku serwisÃ³w charakteryzujÄ…cych siÄ™ Å‚atwym do 
+przewidzenia wzorcem dostÄ™pu do dokumentÃ³w.
 
-\subsubsection{Równowa¿enie obci±¿eñ z wykorzystaniem NAT}
+\subsubsection{RÃ³wnowaÅ¼enie obciÄ…Å¼eÅ„ z wykorzystaniem NAT}
 
-Mechanizm translacji adresów sieciowych NAT (ang. \emph{Network Address Translation}) zosta³ zaprojektowany z 
-my¶l± o mo¿liwo¶ci w³±czenia prywatnych sieci lokalnych do Internetu z wykorzystaniem jednego, globalnie 
-unikalnego adresu IP dla ca³ej sieci. W standardowej konfiguracji urz±dzeniem realizuj±cym NAT jest router 
-brzegowy o adresie IP reprezentuj±cym ca³± sieæ, który stanowi jedyne po³±czenie pomiêdzy sieci± prywatn± a 
-rozleg³±. Hosty w sieci prywatnej nie musz± posiadaæ globalnie unikalnych adresów IP, gdy¿ podczas nawi±zywania 
-po³±czenia z komputerem spoza sieci prywatnej urz±dzenie NAT zamienia adres nadawcy datagramu IP (pochodz±cy z 
-sieci prywatnej) na swój w³asny, dokonuje przeliczenia odpowiednich sum kontrolnych i aby poprawnie kierowaæ 
-datagramami nale¿±cymi do jednego po³±czenia TCP zapamiêtuje w wewnêtrznych tablicach parametry po³±czenia 
-(adresy i porty ¼ród³owe i docelowe). Celem wprowadzenia mechanizmu NAT by³o zapewnienie pewnego stopnia 
-bezpieczeñstwa sieciom prywatnym, gdy¿ je¶li wewn±trz takiej sieci komputery nie posiadaj± globalnie unikalnych 
-adresów IP, to nie istnieje mo¿liwo¶æ  nawi±zania po³±czenia z takim komputerem spoza sieci prywatnej. 
-Istnieje wiele rozwi±zañ komercyjnych realizuj±cych równowa¿enie (wspó³dzielenie)  obci±¿eñ serwerów 
-WWW poprzez mechanizm NAT. Idea polega na kierowaniu zapytañ nadchodz±cych do klastra serwerów poprzez 
-specjalizowane urz±dzenie NAT, okre¶lane czasem jako LSNAT (ang. \emph{Load Sharing NAT}), które kierowa³oby zapytanie 
-do konkretnego serwera \cite{barylo7}. Algorytm wed³ug którego zapytanie by³yby kierowane do serwerów mo¿e uwzglêdniaæ 
-ró¿nice w ich wydajno¶ci jak i stopieñ ich obci±¿enia, istnieje równie¿ mo¿liwo¶æ uwzglêdnienia w nim numeru 
-portu TCP, co sprawia, ¿e LSNAT stosowaæ mo¿na do równowa¿enia obci±¿eñ wszystkich us³ug TCP. Obci±¿enie 
-serwerów okre¶lane jest zazwyczaj na podstawie tablicy otwartych po³±czeñ utrzymywanej przez LSNAT dla ka¿dego 
-serwera. Aby dane te by³y aktualne konieczna jest analiza nag³ówków TCP w celu wykrywania datagramów 
-zamykaj±cych po³±czenie. Serwery w klastrze powinny powielaæ swoje dane, gdy¿ wykorzystanie rozproszonego 
-systemu plików powoduje zbyt du¿e obci±¿enie sieci lokalnej klastra. Poni¿ej schematycznie przedstawiono dwie 
-typowe konfiguracje urz±dzenia NAT jako modu³u realizuj±cego  równowa¿enie obci±¿eñ. Na ka¿dym rysunku klaster 
-serwerów reprezentowany jest przez adres IP 172.87.0.100.
+Mechanizm translacji adresÃ³w sieciowych NAT (ang. \emph{Network Address Translation}) zostaÅ‚ zaprojektowany z 
+myÅ›lÄ… o moÅ¼liwoÅ›ci wÅ‚Ä…czenia prywatnych sieci lokalnych do Internetu z wykorzystaniem jednego, globalnie 
+unikalnego adresu IP dla caÅ‚ej sieci. W standardowej konfiguracji urzÄ…dzeniem realizujÄ…cym NAT jest router 
+brzegowy o adresie IP reprezentujÄ…cym caÅ‚Ä… sieÄ‡, ktÃ³ry stanowi jedyne poÅ‚Ä…czenie pomiÄ™dzy sieciÄ… prywatnÄ… a 
+rozlegÅ‚Ä…. Hosty w sieci prywatnej nie muszÄ… posiadaÄ‡ globalnie unikalnych adresÃ³w IP, gdyÅ¼ podczas nawiÄ…zywania 
+poÅ‚Ä…czenia z komputerem spoza sieci prywatnej urzÄ…dzenie NAT zamienia adres nadawcy datagramu IP (pochodzÄ…cy z 
+sieci prywatnej) na swÃ³j wÅ‚asny, dokonuje przeliczenia odpowiednich sum kontrolnych i aby poprawnie kierowaÄ‡ 
+datagramami naleÅ¼Ä…cymi do jednego poÅ‚Ä…czenia TCP zapamiÄ™tuje w wewnÄ™trznych tablicach parametry poÅ‚Ä…czenia 
+(adresy i porty ÅºrÃ³dÅ‚owe i docelowe). Celem wprowadzenia mechanizmu NAT byÅ‚o zapewnienie pewnego stopnia 
+bezpieczeÅ„stwa sieciom prywatnym, gdyÅ¼ jeÅ›li wewnÄ…trz takiej sieci komputery nie posiadajÄ… globalnie unikalnych 
+adresÃ³w IP, to nie istnieje moÅ¼liwoÅ›Ä‡  nawiÄ…zania poÅ‚Ä…czenia z takim komputerem spoza sieci prywatnej. 
+Istnieje wiele rozwiÄ…zaÅ„ komercyjnych realizujÄ…cych rÃ³wnowaÅ¼enie (wspÃ³Å‚dzielenie)  obciÄ…Å¼eÅ„ serwerÃ³w 
+WWW poprzez mechanizm NAT. Idea polega na kierowaniu zapytaÅ„ nadchodzÄ…cych do klastra serwerÃ³w poprzez 
+specjalizowane urzÄ…dzenie NAT, okreÅ›lane czasem jako LSNAT (ang. \emph{Load Sharing NAT}), ktÃ³re kierowaÅ‚oby zapytanie 
+do konkretnego serwera \cite{barylo7}. Algorytm wedÅ‚ug ktÃ³rego zapytanie byÅ‚yby kierowane do serwerÃ³w moÅ¼e uwzglÄ™dniaÄ‡ 
+rÃ³Å¼nice w ich wydajnoÅ›ci jak i stopieÅ„ ich obciÄ…Å¼enia, istnieje rÃ³wnieÅ¼ moÅ¼liwoÅ›Ä‡ uwzglÄ™dnienia w nim numeru 
+portu TCP, co sprawia, Å¼e LSNAT stosowaÄ‡ moÅ¼na do rÃ³wnowaÅ¼enia obciÄ…Å¼eÅ„ wszystkich usÅ‚ug TCP. ObciÄ…Å¼enie 
+serwerÃ³w okreÅ›lane jest zazwyczaj na podstawie tablicy otwartych poÅ‚Ä…czeÅ„ utrzymywanej przez LSNAT dla kaÅ¼dego 
+serwera. Aby dane te byÅ‚y aktualne konieczna jest analiza nagÅ‚Ã³wkÃ³w TCP w celu wykrywania datagramÃ³w 
+zamykajÄ…cych poÅ‚Ä…czenie. Serwery w klastrze powinny powielaÄ‡ swoje dane, gdyÅ¼ wykorzystanie rozproszonego 
+systemu plikÃ³w powoduje zbyt duÅ¼e obciÄ…Å¼enie sieci lokalnej klastra. PoniÅ¼ej schematycznie przedstawiono dwie 
+typowe konfiguracje urzÄ…dzenia NAT jako moduÅ‚u realizujÄ…cego  rÃ³wnowaÅ¼enie obciÄ…Å¼eÅ„. Na kaÅ¼dym rysunku klaster 
+serwerÃ³w reprezentowany jest przez adres IP 172.87.0.100.
 
-W takiej konfiguracji w datagramach przychodz±cych do klastra nastêpuje zmiana adresu docelowego z adresu 
-urz±dzenia LSNAT na adres wybranego serwera oraz zmiana adresu nadawcy na adres urz±dzenia LSNAT. W datagramach 
-wysy³anych w przeciwnym kierunku adres nadawcy zmienia siê z adresu serwera na adres LSNAT a adres docelowy z 
-adresu LSNAT na adres rzeczywistego odbiorcy datagramu. Takie postêpowanie powoduje, ¿e wszystkie datagramy 
-kierowane do klastra i z powrotem musz± przej¶æ przez urz±dzenie LSNAT, co umo¿liwia skonfigurowanie klastra 
-rozproszonego geograficznie. Dzieje siê tak kosztem utrzymywania w LSNAT bardziej rozbudowanej (w stosunku do 
-poprzedniej konfiguracji) tablicy po³±czeñ, która umo¿liwia³aby identyfikacjê ka¿dego po³±czenia. Identyfikacji 
-tej dokonuje siê wykorzystuj±c numery portów TCP (wraz z translacj± adresów datagramu dokonuje siê zmiany 
-numeru portu ¼ród³owego na unikaln± dla danego serwera warto¶æ powy¿ej 5000, identyfikacji odpowiedzi adresata
-dokonuje siê na podstawie adresu serwera, który j± wys³a³ i numeru portu docelowego). Powy¿sza konfiguracja 
-pracowaæ mo¿e równie¿ z adresami prywatnymi, uniemo¿liwia to jednak u¿ycie serwerów odleg³ych geograficznie.
-Poni¿ej przedstawiono krótki opis dwóch popularnych rozwi±zañ komercyjnych wykorzystuj±cych mechanizm 
-NAT do równowa¿enia obci±¿eñ serwerów WWW.
+W takiej konfiguracji w datagramach przychodzÄ…cych do klastra nastÄ™puje zmiana adresu docelowego z adresu 
+urzÄ…dzenia LSNAT na adres wybranego serwera oraz zmiana adresu nadawcy na adres urzÄ…dzenia LSNAT. W datagramach 
+wysyÅ‚anych w przeciwnym kierunku adres nadawcy zmienia siÄ™ z adresu serwera na adres LSNAT a adres docelowy z 
+adresu LSNAT na adres rzeczywistego odbiorcy datagramu. Takie postÄ™powanie powoduje, Å¼e wszystkie datagramy 
+kierowane do klastra i z powrotem muszÄ… przejÅ›Ä‡ przez urzÄ…dzenie LSNAT, co umoÅ¼liwia skonfigurowanie klastra 
+rozproszonego geograficznie. Dzieje siÄ™ tak kosztem utrzymywania w LSNAT bardziej rozbudowanej (w stosunku do 
+poprzedniej konfiguracji) tablicy poÅ‚Ä…czeÅ„, ktÃ³ra umoÅ¼liwiaÅ‚aby identyfikacjÄ™ kaÅ¼dego poÅ‚Ä…czenia. Identyfikacji 
+tej dokonuje siÄ™ wykorzystujÄ…c numery portÃ³w TCP (wraz z translacjÄ… adresÃ³w datagramu dokonuje siÄ™ zmiany 
+numeru portu ÅºrÃ³dÅ‚owego na unikalnÄ… dla danego serwera wartoÅ›Ä‡ powyÅ¼ej 5000, identyfikacji odpowiedzi adresata
+dokonuje siÄ™ na podstawie adresu serwera, ktÃ³ry jÄ… wysÅ‚aÅ‚ i numeru portu docelowego). PowyÅ¼sza konfiguracja 
+pracowaÄ‡ moÅ¼e rÃ³wnieÅ¼ z adresami prywatnymi, uniemoÅ¼liwia to jednak uÅ¼ycie serwerÃ³w odlegÅ‚ych geograficznie.
+PoniÅ¼ej przedstawiono krÃ³tki opis dwÃ³ch popularnych rozwiÄ…zaÅ„ komercyjnych wykorzystujÄ…cych mechanizm 
+NAT do rÃ³wnowaÅ¼enia obciÄ…Å¼eÅ„ serwerÃ³w WWW.
 
-Rozwi±zania korzystaj±ce z mechanizmu NAT do równowa¿enia obci±¿eñ s± znacznym postêpem w stosunku do metod 
-opisanych wcze¶niej w tej pacy. Umo¿liwiaj± skuteczne uwzglêdnienie stopnia obci±¿enia poszczególnych serwerów 
-w klastrze jak i ich indywidualnych w³a¶ciwo¶ci. LSNAT umo¿liwia rozró¿nianie po³±czeñ na podstawie numerów 
-portów TCP jak i równowa¿enie obci±¿eñ pomiêdzy serwery odleg³e geograficznie. Metoda ta nie jest jednak 
-pozbawiona wad. W oczywisty sposób urz±dzenie LSNAT staje siê w±skim gard³em wydajno¶ci klastra, gdy¿ ca³y 
-ruch pomiêdzy klasterem, a Internetem musi przez nie przechodziæ. Je¶li wzi±æ pod uwagê, ¿e w przypadku WWW 
-objêto¶æ odpowiedzi serwera jest co najmniej dziesiêciokrotnie wiêksza ni¿ zapytanie, jasnym staje siê, ¿e w 
-obliczu ci±g³ego wzrostu liczby u¿ytkowników, najwydajniejsze nawet urz±dzenie LSNAT mo¿e w koñcu ograniczyæ 
-wydajno¶æ klastra. Nale¿y równie¿ zauwa¿yæ, ¿e zmiana adresu IP w nag³ówku datagramu poci±ga za sob± 
-konieczno¶æ wyliczenia nowej sumy kontrolnej dla ca³ego datagramu. Jest to operacja czasoch³onna przez co 
-wprowadza opó¼nienie w transmisji danych jak i konieczno¶æ kolejkowania pakietów w samym urz±dzeniu (trudno 
-oczekiwaæ, ¿e nawet urz±dzenie przetwarzaj±ce klika pakietów równolegle poradzi sobie bez opó¼nieñ z ca³ym 
-przechodz±cym przez nie ruchem). Ta w³a¶ciwo¶æ LSNAT znacznie ogranicza jego skalowalno¶æ, gdy¿ dodawanie 
-nowych serwerów do klastra w prosty sposób zwiêksza kolejkê pakietów w urz±dzeniu, a¿ do momentu, w którym 
-przekroczone zostan± jego mo¿liwo¶ci lub cierpliwo¶æ u¿ytkowników. 
+RozwiÄ…zania korzystajÄ…ce z mechanizmu NAT do rÃ³wnowaÅ¼enia obciÄ…Å¼eÅ„ sÄ… znacznym postÄ™pem w stosunku do metod 
+opisanych wczeÅ›niej w tej pacy. UmoÅ¼liwiajÄ… skuteczne uwzglÄ™dnienie stopnia obciÄ…Å¼enia poszczegÃ³lnych serwerÃ³w 
+w klastrze jak i ich indywidualnych wÅ‚aÅ›ciwoÅ›ci. LSNAT umoÅ¼liwia rozrÃ³Å¼nianie poÅ‚Ä…czeÅ„ na podstawie numerÃ³w 
+portÃ³w TCP jak i rÃ³wnowaÅ¼enie obciÄ…Å¼eÅ„ pomiÄ™dzy serwery odlegÅ‚e geograficznie. Metoda ta nie jest jednak 
+pozbawiona wad. W oczywisty sposÃ³b urzÄ…dzenie LSNAT staje siÄ™ wÄ…skim gardÅ‚em wydajnoÅ›ci klastra, gdyÅ¼ caÅ‚y 
+ruch pomiÄ™dzy klasterem, a Internetem musi przez nie przechodziÄ‡. JeÅ›li wziÄ…Ä‡ pod uwagÄ™, Å¼e w przypadku WWW 
+objÄ™toÅ›Ä‡ odpowiedzi serwera jest co najmniej dziesiÄ™ciokrotnie wiÄ™ksza niÅ¼ zapytanie, jasnym staje siÄ™, Å¼e w 
+obliczu ciÄ…gÅ‚ego wzrostu liczby uÅ¼ytkownikÃ³w, najwydajniejsze nawet urzÄ…dzenie LSNAT moÅ¼e w koÅ„cu ograniczyÄ‡ 
+wydajnoÅ›Ä‡ klastra. NaleÅ¼y rÃ³wnieÅ¼ zauwaÅ¼yÄ‡, Å¼e zmiana adresu IP w nagÅ‚Ã³wku datagramu pociÄ…ga za sobÄ… 
+koniecznoÅ›Ä‡ wyliczenia nowej sumy kontrolnej dla caÅ‚ego datagramu. Jest to operacja czasochÅ‚onna przez co 
+wprowadza opÃ³Åºnienie w transmisji danych jak i koniecznoÅ›Ä‡ kolejkowania pakietÃ³w w samym urzÄ…dzeniu (trudno 
+oczekiwaÄ‡, Å¼e nawet urzÄ…dzenie przetwarzajÄ…ce klika pakietÃ³w rÃ³wnolegle poradzi sobie bez opÃ³ÅºnieÅ„ z caÅ‚ym 
+przechodzÄ…cym przez nie ruchem). Ta wÅ‚aÅ›ciwoÅ›Ä‡ LSNAT znacznie ogranicza jego skalowalnoÅ›Ä‡, gdyÅ¼ dodawanie 
+nowych serwerÃ³w do klastra w prosty sposÃ³b zwiÄ™ksza kolejkÄ™ pakietÃ³w w urzÄ…dzeniu, aÅ¼ do momentu, w ktÃ³rym 
+przekroczone zostanÄ… jego moÅ¼liwoÅ›ci lub cierpliwoÅ›Ä‡ uÅ¼ytkownikÃ³w. 
 
-\subsubsection{Równowa¿enie obci±¿eñ poprzez ,,pó³--po³±czeniowe'' marszrutowanie TCP}
+\subsubsection{RÃ³wnowaÅ¼enie obciÄ…Å¼eÅ„ poprzez ,,pÃ³Å‚--poÅ‚Ä…czeniowe'' marszrutowanie TCP}
 
-Rozpatruj±c przedstawione kolejno w tej pracy metody równowa¿enia obci±¿eñ mo¿na zauwa¿yæ pewn± 
-prawid³owo¶æ. Otó¿ im dana metoda jest bardziej skuteczna i zaawansowana koncepcyjnie, tym w ni¿szej warstwie 
-sieciowej operuje. Redirekcja HTTP i RR--DNS dzia³a³y powy¿ej warstwy transportowej, w ogóle nie ingeruj±c w 
-zawarto¶æ datagramów IP. Rozwi±zania oparte o LSNAT i DPR pracowa³y w warstwie sieciowej i aby skutecznie 
-rozdzielaæ zadania pomiêdzy serwery musia³y dokonywaæ modyfikacji (adresów i sum kontrolnych) w nag³ówkach  
-datagramów IP. Metoda opisana w tym punkcie operuje w warstwie fizycznej  i do rozdzia³u zadañ nie musi 
-zmieniaæ zawarto¶ci datagramów IP.
+RozpatrujÄ…c przedstawione kolejno w tej pracy metody rÃ³wnowaÅ¼enia obciÄ…Å¼eÅ„ moÅ¼na zauwaÅ¼yÄ‡ pewnÄ… 
+prawidÅ‚owoÅ›Ä‡. OtÃ³Å¼ im dana metoda jest bardziej skuteczna i zaawansowana koncepcyjnie, tym w niÅ¼szej warstwie 
+sieciowej operuje. Redirekcja HTTP i RR--DNS dziaÅ‚aÅ‚y powyÅ¼ej warstwy transportowej, w ogÃ³le nie ingerujÄ…c w 
+zawartoÅ›Ä‡ datagramÃ³w IP. RozwiÄ…zania oparte o LSNAT i DPR pracowaÅ‚y w warstwie sieciowej i aby skutecznie 
+rozdzielaÄ‡ zadania pomiÄ™dzy serwery musiaÅ‚y dokonywaÄ‡ modyfikacji (adresÃ³w i sum kontrolnych) w nagÅ‚Ã³wkach  
+datagramÃ³w IP. Metoda opisana w tym punkcie operuje w warstwie fizycznej  i do rozdziaÅ‚u zadaÅ„ nie musi 
+zmieniaÄ‡ zawartoÅ›ci datagramÃ³w IP.
 
-,,Pó³--po³±czeniowe'' marszrutowanie TCP (ang. \emph{half--connection TCP routing}) jest opatentowan± przez 
-firmê IBM technologi±, która leg³a u podstaw zasady dzia³ania pakietu oprogramowania Network Dispatcher \cite{barylo35,barylo36}. 
-W swej podstawowej konfiguracji pakiet ten umo¿liwia zestawienie klastra z³o¿onego z po³±czonych 
-sieci± lokaln± serwerów korzystaj±cych TCP lub UDP (w szczególno¶ci serwerów WWW) i udostêpnienie go pod 
-jednym adresem IP. W klastrze tym serwery maj± unikalne globalnie lub lokalnie adresy IP i  musz± powielaæ 
-swoje dane. W obszarze tej samej sieci lokalnej, w której dzia³a klaster, musi byæ wyznaczony komputer, na 
-którym pracowaæ bêdzie oprogramowanie Network Dispatcher. Komputer ten musi posiadaæ dwa adresy IP, jeden z 
-nich, tzw. adres NFA (ang. \emph{Non--Forwarding Address}) jest ,,osobistym'' adresem komputera, pod którym mo¿na 
-skontaktowaæ siê z pracuj±cym na tym komputerze oprogramowaniem (np. z agentem SNMP). Drugi adres, to adres 
-reprezentuj±cy klaster serwerów, wszystkie datagramy IP opatrzone tym adresem bêd± przetwarzane przez program 
-Network Dispatcher i na podstawie algorytmu wspó³dzielenia obci±¿eñ przekazywane do jednego z serwerów w 
-klastrze. Dispatcher zmienia jedynie docelowy adres fizyczny (sprzêtowy) datagramu, zawarty w nag³ówku 
-sprzêtowym, dodawanym przed nag³ówek IP (np. w nag³ówku Ethernet). Dziêki temu datagramy wysy³ane przez serwer 
-w odpowiedzi mog± byæ kierowane bezpo¶rednio do klienta, bez konieczno¶ci ponownego przej¶cia przez 
-oprogramowanie Network Dispatcher (w celu np. przywrócenia oryginalnych adresów IP). St±d pochodzi nazwa tej 
-metody -- ,,pó³--po³±czeniowe'' marszrutowanie TCP. Serwer wysy³aj±c odpowied¼ dokonuje standardowej zamiany adresów 
-IP nadawcy i odbiorcy pobieraj±c obydwa te adresy z nag³ówka otrzymanego datagramu. Jak pamiêtamy adresem 
-docelowym jest w tym datagramie adres klastra (komputera, na którym pracuje Dispatcher), wiêc adres ten stanie 
-siê adresem nadawcy odpowiedzi, co sprawi, ¿e kolejne datagramy dotycz±ce danego po³±czenia skierowane zostan± 
+,,PÃ³Å‚--poÅ‚Ä…czeniowe'' marszrutowanie TCP (ang. \emph{half--connection TCP routing}) jest opatentowanÄ… przez 
+firmÄ™ IBM technologiÄ…, ktÃ³ra legÅ‚a u podstaw zasady dziaÅ‚ania pakietu oprogramowania Network Dispatcher \cite{barylo35,barylo36}. 
+W swej podstawowej konfiguracji pakiet ten umoÅ¼liwia zestawienie klastra zÅ‚oÅ¼onego z poÅ‚Ä…czonych 
+sieciÄ… lokalnÄ… serwerÃ³w korzystajÄ…cych TCP lub UDP (w szczegÃ³lnoÅ›ci serwerÃ³w WWW) i udostÄ™pnienie go pod 
+jednym adresem IP. W klastrze tym serwery majÄ… unikalne globalnie lub lokalnie adresy IP i  muszÄ… powielaÄ‡ 
+swoje dane. W obszarze tej samej sieci lokalnej, w ktÃ³rej dziaÅ‚a klaster, musi byÄ‡ wyznaczony komputer, na 
+ktÃ³rym pracowaÄ‡ bÄ™dzie oprogramowanie Network Dispatcher. Komputer ten musi posiadaÄ‡ dwa adresy IP, jeden z 
+nich, tzw. adres NFA (ang. \emph{Non--Forwarding Address}) jest ,,osobistym'' adresem komputera, pod ktÃ³rym moÅ¼na 
+skontaktowaÄ‡ siÄ™ z pracujÄ…cym na tym komputerze oprogramowaniem (np. z agentem SNMP). Drugi adres, to adres 
+reprezentujÄ…cy klaster serwerÃ³w, wszystkie datagramy IP opatrzone tym adresem bÄ™dÄ… przetwarzane przez program 
+Network Dispatcher i na podstawie algorytmu wspÃ³Å‚dzielenia obciÄ…Å¼eÅ„ przekazywane do jednego z serwerÃ³w w 
+klastrze. Dispatcher zmienia jedynie docelowy adres fizyczny (sprzÄ™towy) datagramu, zawarty w nagÅ‚Ã³wku 
+sprzÄ™towym, dodawanym przed nagÅ‚Ã³wek IP (np. w nagÅ‚Ã³wku Ethernet). DziÄ™ki temu datagramy wysyÅ‚ane przez serwer 
+w odpowiedzi mogÄ… byÄ‡ kierowane bezpoÅ›rednio do klienta, bez koniecznoÅ›ci ponownego przejÅ›cia przez 
+oprogramowanie Network Dispatcher (w celu np. przywrÃ³cenia oryginalnych adresÃ³w IP). StÄ…d pochodzi nazwa tej 
+metody -- ,,pÃ³Å‚--poÅ‚Ä…czeniowe'' marszrutowanie TCP. Serwer wysyÅ‚ajÄ…c odpowiedÅº dokonuje standardowej zamiany adresÃ³w 
+IP nadawcy i odbiorcy pobierajÄ…c obydwa te adresy z nagÅ‚Ã³wka otrzymanego datagramu. Jak pamiÄ™tamy adresem 
+docelowym jest w tym datagramie adres klastra (komputera, na ktÃ³rym pracuje Dispatcher), wiÄ™c adres ten stanie 
+siÄ™ adresem nadawcy odpowiedzi, co sprawi, Å¼e kolejne datagramy dotyczÄ…ce danego poÅ‚Ä…czenia skierowane zostanÄ… 
 na adres Network Dispatcher--a \cite{barylo36}.
 
-Adres IP ka¿dego serwera w klastrze jest ró¿ny od adresu klastra. Fakt, ¿e pomimo to oprogramowanie 
-TCP/IP w serwerze akceptuje pakiety opatrzone adresem klastra jest mo¿liwy dziêki dodaniu aliasu do adresu 
-interfejsu pêtli zwrotnej (ang. \emph{loopback interface}) w ka¿dym serwerze. Do standardowego adresu 127.0.0.1 
-dodawany jest jako alias adres klastra (w przypadku przedstawionym na rysunku 139.37.38.39). Mo¿liwo¶æ 
-nadawania wielu adresów interfejsowi pêtli zwrotnej jest jedynym wymaganiem Dipatcher-a w stosunku do serwerów.
-Poniewa¿ Network Dispatcher rozró¿nia porty TCP i UDP mo¿liwe jest równowa¿enie obci±¿eñ powodowanych 
-przez dowolny protokó³ korzystaj±cy z TCP lub UDP m.in. HTTP (WWW), FTP, SSL, SMTP, POP3 czy Telnet. Poniewa¿ 
-wszystkie serwery powielaj± swoje dane, mo¿liwa jest sytuacja w której np. plik HTML opisuj±cy stronê WWW 
-pobierany jest z serwera A, a pliki graficzne sk³adaj±ce siê na stronê pobierane s± z serwera B.
-W celu zarz±dzania po³±czeniami Network Dispatcher przechowuje dwie struktury danych- tablicê po³±czeñ 
-aktywnych (otwartych) i tablicê nowo przydzielonych po³±czeñ. Tablica otwartych po³±czeñ s³u¿y do poprawnego 
-kierowania datagramów dotycz±cych nawi±zanego po³±czenia TCP (po³±czenie TCP nie mo¿e byæ przez Dipatcher 
-przekazane pomiêdzy serwerami). Zawiera ono adres IP nadawcy i numer ¼ród³owego portu TCP oraz adres IP serwera, 
-który obs³uguje po³±czenie i numer portu docelowego TCP oraz pole stanu po³±czenia. Pozycje z tej tablicy s± 
-usuwane po wykryciu w nag³ówku TCP flagi FIN lub RST. Ilo¶æ po³±czeñ otwartych na danym serwerze jest równie¿ 
-uwzglêdniana podczas obliczenia wagi serwera. Tablica nowo przydzielonych po³±czeñ s³u¿y do zapamiêtania jak 
-wiele po³±czeñ zosta³o przydzielonych do danego serwera od ostatniego od¶wie¿enia wag serwerów i jako miara 
-prêdko¶ci zmian obci±¿enia serwera wykorzystywana jest do obliczenia jego wagi.
+Adres IP kaÅ¼dego serwera w klastrze jest rÃ³Å¼ny od adresu klastra. Fakt, Å¼e pomimo to oprogramowanie 
+TCP/IP w serwerze akceptuje pakiety opatrzone adresem klastra jest moÅ¼liwy dziÄ™ki dodaniu aliasu do adresu 
+interfejsu pÄ™tli zwrotnej (ang. \emph{loopback interface}) w kaÅ¼dym serwerze. Do standardowego adresu 127.0.0.1 
+dodawany jest jako alias adres klastra (w przypadku przedstawionym na rysunku 139.37.38.39). MoÅ¼liwoÅ›Ä‡ 
+nadawania wielu adresÃ³w interfejsowi pÄ™tli zwrotnej jest jedynym wymaganiem Dipatcher-a w stosunku do serwerÃ³w.
+PoniewaÅ¼ Network Dispatcher rozrÃ³Å¼nia porty TCP i UDP moÅ¼liwe jest rÃ³wnowaÅ¼enie obciÄ…Å¼eÅ„ powodowanych 
+przez dowolny protokÃ³Å‚ korzystajÄ…cy z TCP lub UDP m.in. HTTP (WWW), FTP, SSL, SMTP, POP3 czy Telnet. PoniewaÅ¼ 
+wszystkie serwery powielajÄ… swoje dane, moÅ¼liwa jest sytuacja w ktÃ³rej np. plik HTML opisujÄ…cy stronÄ™ WWW 
+pobierany jest z serwera A, a pliki graficzne skÅ‚adajÄ…ce siÄ™ na stronÄ™ pobierane sÄ… z serwera B.
+W celu zarzÄ…dzania poÅ‚Ä…czeniami Network Dispatcher przechowuje dwie struktury danych- tablicÄ™ poÅ‚Ä…czeÅ„ 
+aktywnych (otwartych) i tablicÄ™ nowo przydzielonych poÅ‚Ä…czeÅ„. Tablica otwartych poÅ‚Ä…czeÅ„ sÅ‚uÅ¼y do poprawnego 
+kierowania datagramÃ³w dotyczÄ…cych nawiÄ…zanego poÅ‚Ä…czenia TCP (poÅ‚Ä…czenie TCP nie moÅ¼e byÄ‡ przez Dipatcher 
+przekazane pomiÄ™dzy serwerami). Zawiera ono adres IP nadawcy i numer ÅºrÃ³dÅ‚owego portu TCP oraz adres IP serwera, 
+ktÃ³ry obsÅ‚uguje poÅ‚Ä…czenie i numer portu docelowego TCP oraz pole stanu poÅ‚Ä…czenia. Pozycje z tej tablicy sÄ… 
+usuwane po wykryciu w nagÅ‚Ã³wku TCP flagi FIN lub RST. IloÅ›Ä‡ poÅ‚Ä…czeÅ„ otwartych na danym serwerze jest rÃ³wnieÅ¼ 
+uwzglÄ™dniana podczas obliczenia wagi serwera. Tablica nowo przydzielonych poÅ‚Ä…czeÅ„ sÅ‚uÅ¼y do zapamiÄ™tania jak 
+wiele poÅ‚Ä…czeÅ„ zostaÅ‚o przydzielonych do danego serwera od ostatniego odÅ›wieÅ¼enia wag serwerÃ³w i jako miara 
+prÄ™dkoÅ›ci zmian obciÄ…Å¼enia serwera wykorzystywana jest do obliczenia jego wagi.
 
-Je¿eli na adres Dispatcher--a przychodzi datagram nie nale¿±cy do ¿adnego z po³±czeñ zapisanych w 
-tablicy aktywnych po³±czeñ, oznacza to, ¿e jest to nowe po³±czenie i nale¿y przydzieliæ serwer do jego obs³ugi. 
-Dispatcher utrzymuje cykliczn± listê serwerów zawieraj±c± ich wagi. Waga serwera oddaje stopieñ jego obci±¿enia 
-i jest obliczana przez Dispatcher okresowo dla klastra (dla wszystkich serwerów jednocze¶nie). Dispatcher 
-pamiêta numer i wagê serwera do którego przydzielono ostatnie po³±czenie TCP i rozpoczynaj±c przeszukiwanie 
-listy od tego miejsca poszukuje serwera o wadze wiêkszej lub równej zapamiêtanej wadze (im wiêksza waga, tym 
-mniej obci±¿ony serwer). Do znalezionego w ten sposób serwera przydzielane jest nowe po³±czenie, co znajduje 
-odwzorowanie w tablicy aktywnych po³±czeñ. 
+JeÅ¼eli na adres Dispatcher--a przychodzi datagram nie naleÅ¼Ä…cy do Å¼adnego z poÅ‚Ä…czeÅ„ zapisanych w 
+tablicy aktywnych poÅ‚Ä…czeÅ„, oznacza to, Å¼e jest to nowe poÅ‚Ä…czenie i naleÅ¼y przydzieliÄ‡ serwer do jego obsÅ‚ugi. 
+Dispatcher utrzymuje cyklicznÄ… listÄ™ serwerÃ³w zawierajÄ…cÄ… ich wagi. Waga serwera oddaje stopieÅ„ jego obciÄ…Å¼enia 
+i jest obliczana przez Dispatcher okresowo dla klastra (dla wszystkich serwerÃ³w jednoczeÅ›nie). Dispatcher 
+pamiÄ™ta numer i wagÄ™ serwera do ktÃ³rego przydzielono ostatnie poÅ‚Ä…czenie TCP i rozpoczynajÄ…c przeszukiwanie 
+listy od tego miejsca poszukuje serwera o wadze wiÄ™kszej lub rÃ³wnej zapamiÄ™tanej wadze (im wiÄ™ksza waga, tym 
+mniej obciÄ…Å¼ony serwer). Do znalezionego w ten sposÃ³b serwera przydzielane jest nowe poÅ‚Ä…czenie, co znajduje 
+odwzorowanie w tablicy aktywnych poÅ‚Ä…czeÅ„. 
 
-Waga dla ka¿dego serwera obliczana jest na podstawie ilo¶ci otwartych po³±czeñ TCP, ilo¶ci nowo 
-przydzielonych po³±czeñ, stopnia obci±¿enia procesora w serwerze (miara ta uwzglêdnia równie¿ obci±¿enie 
-wynikaj±ce z zadañ uruchamianych lokalnie i pochodzi od modu³u ISS (ang. \emph{Interactive Session Support}) pakietu 
-Network Dispatcher, ISS uwzglêdnia równie¿ indywidualne w³a¶ciwo¶ci serwera) oraz na podstawie danych 
-pochodz±cych z tzw. Advisor--ów. Advisor jest programem symuluj±cym klienta danego protoko³u i bada jak szybko 
-serwer jest w stanie zareagowaæ na typowe dla danego protoko³u ¿±danie. Np. Advisor HTTP wysy³a do serwera 
-¿±danie HTTP GET / (prze¶lij domy¶lny dokument g³ównego katalogu w serwisie) i jako wynik zwraca czas, po którym 
-otrzyma³ pierwszy bajt odpowiedzi. Proporcje z jakimi poszczególne elementy wchodz± w sk³ad wagi, jak i 
-czêstotliwo¶æ od¶wie¿ania wag ustalane s± przez administratora klastra.
-Network Dispatcher posiada wiele cech wyró¿niaj±cych go spo¶ród przedstawionych wcze¶niej rozwi±zañ. 
-Jest oczywi¶cie wolny od niekorzystnych cech RR--DNS i nie modyfikuje datagramów IP, a analiza, któr± na nich 
-prowadzi (zapamiêtanie adresów i portów, wykrywanie flag), nie jest czasoch³onna. Dodatkowo ruch przechodz±cy 
-przez Dispatcher--a stanowi± tylko datagramy nadchodz±ce do klastra (typowo mniejsze od odpowiedzi), dziêki 
-czemu nie jest ³atwo (w przeciwieñstwie do urz±dzeñ LSNAT) tak obci±¿yæ Dispatcher--a by sta³ siê ,,w±skim 
-gard³em'' wydajno¶ci klastra. W przeciwieñstwie do rozwi±zania z zastosowaniem DPR, Dispatcher nie wymaga 
-specjalistycznego oprogramowania pracuj±cego na serwerze, wiêc nie obci±¿a go np. zadaniem przetwarzania 
-datagramów IP.
+Waga dla kaÅ¼dego serwera obliczana jest na podstawie iloÅ›ci otwartych poÅ‚Ä…czeÅ„ TCP, iloÅ›ci nowo 
+przydzielonych poÅ‚Ä…czeÅ„, stopnia obciÄ…Å¼enia procesora w serwerze (miara ta uwzglÄ™dnia rÃ³wnieÅ¼ obciÄ…Å¼enie 
+wynikajÄ…ce z zadaÅ„ uruchamianych lokalnie i pochodzi od moduÅ‚u ISS (ang. \emph{Interactive Session Support}) pakietu 
+Network Dispatcher, ISS uwzglÄ™dnia rÃ³wnieÅ¼ indywidualne wÅ‚aÅ›ciwoÅ›ci serwera) oraz na podstawie danych 
+pochodzÄ…cych z tzw. Advisor--Ã³w. Advisor jest programem symulujÄ…cym klienta danego protokoÅ‚u i bada jak szybko 
+serwer jest w stanie zareagowaÄ‡ na typowe dla danego protokoÅ‚u Å¼Ä…danie. Np. Advisor HTTP wysyÅ‚a do serwera 
+Å¼Ä…danie HTTP GET / (przeÅ›lij domyÅ›lny dokument gÅ‚Ã³wnego katalogu w serwisie) i jako wynik zwraca czas, po ktÃ³rym 
+otrzymaÅ‚ pierwszy bajt odpowiedzi. Proporcje z jakimi poszczegÃ³lne elementy wchodzÄ… w skÅ‚ad wagi, jak i 
+czÄ™stotliwoÅ›Ä‡ odÅ›wieÅ¼ania wag ustalane sÄ… przez administratora klastra.
+Network Dispatcher posiada wiele cech wyrÃ³Å¼niajÄ…cych go spoÅ›rÃ³d przedstawionych wczeÅ›niej rozwiÄ…zaÅ„. 
+Jest oczywiÅ›cie wolny od niekorzystnych cech RR--DNS i nie modyfikuje datagramÃ³w IP, a analiza, ktÃ³rÄ… na nich 
+prowadzi (zapamiÄ™tanie adresÃ³w i portÃ³w, wykrywanie flag), nie jest czasochÅ‚onna. Dodatkowo ruch przechodzÄ…cy 
+przez Dispatcher--a stanowiÄ… tylko datagramy nadchodzÄ…ce do klastra (typowo mniejsze od odpowiedzi), dziÄ™ki 
+czemu nie jest Å‚atwo (w przeciwieÅ„stwie do urzÄ…dzeÅ„ LSNAT) tak obciÄ…Å¼yÄ‡ Dispatcher--a by staÅ‚ siÄ™ ,,wÄ…skim 
+gardÅ‚em'' wydajnoÅ›ci klastra. W przeciwieÅ„stwie do rozwiÄ…zania z zastosowaniem DPR, Dispatcher nie wymaga 
+specjalistycznego oprogramowania pracujÄ…cego na serwerze, wiÄ™c nie obciÄ…Å¼a go np. zadaniem przetwarzania 
+datagramÃ³w IP.
 
-Pierwszy prototyp Network Dispatcher--a obs³ugiwa³ Internetowy serwis IO w Atlancie w 1996. Kolejne, 
-ju¿ komercyjne wersje obs³ugiwa³y takie wydarzenia jak turniej US Open i IO w Nagano w 1998 oraz mecze szachowe 
-Deep Blue vs. Garri Kasparow. Szczytowe obci±¿enie klastra w przypadku IO w Nagano osi±gnê³o 110 414 zapytañ na
- minutê, a mimo to równowa¿enie obci±¿eñ przy u¿yciu Network Dispatcher--a zapewni³o wszystkim u¿ytkownikom dobry 
-czas odpowiedzi i zadowalaj±cy transfer.
+Pierwszy prototyp Network Dispatcher--a obsÅ‚ugiwaÅ‚ Internetowy serwis IO w Atlancie w 1996. Kolejne, 
+juÅ¼ komercyjne wersje obsÅ‚ugiwaÅ‚y takie wydarzenia jak turniej US Open i IO w Nagano w 1998 oraz mecze szachowe 
+Deep Blue vs. Garri Kasparow. Szczytowe obciÄ…Å¼enie klastra w przypadku IO w Nagano osiÄ…gnÄ™Å‚o 110 414 zapytaÅ„ na
+ minutÄ™, a mimo to rÃ³wnowaÅ¼enie obciÄ…Å¼eÅ„ przy uÅ¼yciu Network Dispatcher--a zapewniÅ‚o wszystkim uÅ¼ytkownikom dobry 
+czas odpowiedzi i zadowalajÄ…cy transfer.
 
-\subsubsection{Rówowa¿enie obci±¿eñ poprzez bezpo¶rednie routowanie -- \emph{Direct Routing}}
+\subsubsection{RÃ³wowaÅ¼enie obciÄ…Å¼eÅ„ poprzez bezpoÅ›rednie routowanie -- \emph{Direct Routing}}
 
 Architektura ta jest podobna do wykorzystywanej w produkcie firmy IBM -- oprogramowaniu SecureWay Network Dispatcher. 
 
-Adres wirtualny serwera jest wspó³dzielony poprzez poszczególne nody i load balancer. Interfejs sieciowy dystrybutora jest 
-skonfigurowany tak¿e do wirtualnego adresu, który jest wykorzystywany do przyjmowania pakietów przychodz±cych oraz do 
-bezpo¶redniego routowania pakietów do wybranych serwerów. Wszystkie rzeczywiste serwery maj± swoje non--arp aliasy interfejsu 
-sieciowego skonfigurowane z adresem wirtualnym lub bezpo¶rednio przekierowuj± pakiety przeznaczone na adres wirtualny do 
-lokalnych gniazd, w ten sposób, ¿e rzeczywiste serwery mog± przenosiæ pakiety tylko lokalnie. Zarówno load balancer jak i 
-rzeczywiste serwery musz± mieæ interfejsy sieciowe fizycznie skojarzone z HUB--em lub switchem. Wygl±da to w ten sposób, ¿e
+Adres wirtualny serwera jest wspÃ³Å‚dzielony poprzez poszczegÃ³lne nody i load balancer. Interfejs sieciowy dystrybutora jest 
+skonfigurowany takÅ¼e do wirtualnego adresu, ktÃ³ry jest wykorzystywany do przyjmowania pakietÃ³w przychodzÄ…cych oraz do 
+bezpoÅ›redniego routowania pakietÃ³w do wybranych serwerÃ³w. Wszystkie rzeczywiste serwery majÄ… swoje non--arp aliasy interfejsu 
+sieciowego skonfigurowane z adresem wirtualnym lub bezpoÅ›rednio przekierowujÄ… pakiety przeznaczone na adres wirtualny do 
+lokalnych gniazd, w ten sposÃ³b, Å¼e rzeczywiste serwery mogÄ… przenosiÄ‡ pakiety tylko lokalnie. ZarÃ³wno load balancer jak i 
+rzeczywiste serwery muszÄ… mieÄ‡ interfejsy sieciowe fizycznie skojarzone z HUB--em lub switchem. WyglÄ…da to w ten sposÃ³b, Å¼e
 dystrybutor po prostu zmienia adres MAC na adres rzeczywistego serwera i retransmituje do niego pakiet. 
 
-\section{Przyk³ady produktów stosowanych do równowa¿enia obci±¿enia wielokomputerowych serwerów WWW}
+\section{PrzykÅ‚ady produktÃ³w stosowanych do rÃ³wnowaÅ¼enia obciÄ…Å¼enia wielokomputerowych serwerÃ³w WWW}
 
 \subsection{LinuxVirtualServer}
 
-Linux Virtual Server jest wysoce skalowalnym i dostêpnym serwerem zbudowanym na klastrze rzeczywistych serwerów wraz 
-z mo¿liwo¶ci± realizacji równowa¿enia obci±¿êñ. System ten oparty jest na systemie Linux. Architektura tego rozwi±zania
-jest (jak i pozosta³e) przezroczysta dla klienta i odbywa siê na poziomie protoko³u IP (warstwa czwarta). 
+Linux Virtual Server jest wysoce skalowalnym i dostÄ™pnym serwerem zbudowanym na klastrze rzeczywistych serwerÃ³w wraz 
+z moÅ¼liwoÅ›ciÄ… realizacji rÃ³wnowaÅ¼enia obciÄ…Å¼Ä™Å„. System ten oparty jest na systemie Linux. Architektura tego rozwiÄ…zania
+jest (jak i pozostaÅ‚e) przezroczysta dla klienta i odbywa siÄ™ na poziomie protokoÅ‚u IP (warstwa czwarta). 
 
-Rzeczywiste serwery mog± byæ po³±czone w obrêbie sieci lokalnej lub geograficznie rozproszone w sieci WAN. Fron-endem tych
-rzeczywistych serwerów jest dystrybutor (load balancer), który marszrutuje ¿±dania do ró¿nych serwerów oraz powoduje, ¿e
-równoleg³e us³ugi dzia³aj±ce w obrêbie klastra wydaj± siê byæ jedn± wirtualn± us³ug± dla ca³ego klastra na jednym adresie IP.
-Skalowalno¶æ w tym systemie oznacza, ¿e w przezroczysty sposób mo¿na dodawaæ i usuwaæ poszczególne nody do klastra. Wysoka 
-dostêpno¶æ jest realizowana poprzez detekcjê uszkodzonych nodów lub niesprawnych demonów oraz równoczesn± rekonfiguracjê
+Rzeczywiste serwery mogÄ… byÄ‡ poÅ‚Ä…czone w obrÄ™bie sieci lokalnej lub geograficznie rozproszone w sieci WAN. Fron-endem tych
+rzeczywistych serwerÃ³w jest dystrybutor (load balancer), ktÃ³ry marszrutuje Å¼Ä…dania do rÃ³Å¼nych serwerÃ³w oraz powoduje, Å¼e
+rÃ³wnolegÅ‚e usÅ‚ugi dziaÅ‚ajÄ…ce w obrÄ™bie klastra wydajÄ… siÄ™ byÄ‡ jednÄ… wirtualnÄ… usÅ‚ugÄ… dla caÅ‚ego klastra na jednym adresie IP.
+SkalowalnoÅ›Ä‡ w tym systemie oznacza, Å¼e w przezroczysty sposÃ³b moÅ¼na dodawaÄ‡ i usuwaÄ‡ poszczegÃ³lne nody do klastra. Wysoka 
+dostÄ™pnoÅ›Ä‡ jest realizowana poprzez detekcjÄ™ uszkodzonych nodÃ³w lub niesprawnych demonÃ³w oraz rÃ³wnoczesnÄ… rekonfiguracjÄ™
 systemu.
 
-Virtual Server mo¿na implementowaæ na trzy sposoby:
+Virtual Server moÅ¼na implementowaÄ‡ na trzy sposoby:
 \begin{description}
-\item[Virtual Server poprzez NAT] -- zalet± tego rozwi±zania jest fakt, ¿e rzeczywiste serwery mog± pracowaæ na dowolnym
-systemie operacyjnym, który w³ada protoko³em TCP/IP. Rzeczywiste serwery maj± prywatny adresy IP i tylko one s± potrzebne
-dystrybutorowi do pracy. Wad± tego rozwi±zania jest raczej niewielka skalowalno¶æ, poniewa¿ w tym wypadku \emph{load balancer}
-mo¿e stanowiæ w±skie gard³o ca³ego systemu gdy liczba pod³±czonych serwerów bêdzie wynosiæ oko³o 20 lub wiêcej. Jest to
-spowodowane tym, ¿e zarówno ruch przychodz±cy (niewielki) jak i wychodz±cy (o wiele wiêkszy) s± przepisywane przez dystrybutora.
-Mo¿na to omin±c poprzez korzystanie z pozosta³ych rozwi±zañ Virtual Servera lub poprzez rozwi±zanie hybrydowe z DNS i kilkoma
+\item[Virtual Server poprzez NAT] -- zaletÄ… tego rozwiÄ…zania jest fakt, Å¼e rzeczywiste serwery mogÄ… pracowaÄ‡ na dowolnym
+systemie operacyjnym, ktÃ³ry wÅ‚ada protokoÅ‚em TCP/IP. Rzeczywiste serwery majÄ… prywatny adresy IP i tylko one sÄ… potrzebne
+dystrybutorowi do pracy. WadÄ… tego rozwiÄ…zania jest raczej niewielka skalowalnoÅ›Ä‡, poniewaÅ¼ w tym wypadku \emph{load balancer}
+moÅ¼e stanowiÄ‡ wÄ…skie gardÅ‚o caÅ‚ego systemu gdy liczba podÅ‚Ä…czonych serwerÃ³w bÄ™dzie wynosiÄ‡ okoÅ‚o 20 lub wiÄ™cej. Jest to
+spowodowane tym, Å¼e zarÃ³wno ruch przychodzÄ…cy (niewielki) jak i wychodzÄ…cy (o wiele wiÄ™kszy) sÄ… przepisywane przez dystrybutora.
+MoÅ¼na to ominÄ…c poprzez korzystanie z pozostaÅ‚ych rozwiÄ…zaÅ„ Virtual Servera lub poprzez rozwiÄ…zanie hybrydowe z DNS i kilkoma
 osobnymi Virtual Serverami;
 \item[Virtual Server poprzez Tunelowanie IP] -- w tym wypadku load balancer tylko przekazuje
-ruch wchodz±cy do poszczególnych rzeczywistych serwerów, za¶ one odpowiadaj± bezpo¶rednio do u¿ytkowników. W tym rozwi±zaniu 
-jak widaæ serwer virtualny mo¿e siê sk³adaæ i z ponad 100 serwerów i nadal dystrybutor nie bêdzie stanowi³ w±skiego gard³a.
-Maksymalna wydajno¶æ Virtual Servera w tym przypadku mo¿e siêgaæ powy¿ej 1Gbps -- w przypadku gdy dystrybutor dysponowaæ
-bêdzie 100Mbps kart± sieciow±. Rozwi±zanie oparte na tunelowaniu IP mo¿e byæ u¿ywane do serwerów wirtualnych w bardzo 
-wysokich wydajno¶ciach, szczególnie dobrych do tworzenia virtualnych proxy serwerów. Wad± tego rozwi±zania jest to, ¿e ka¿dy
-serwer musi umieæ dokonywaæ enkapsulacji IP (tunelowanie IP) wewn±trz IP; 
-\item[Virtual Server poprzez bezpo¶rednie routowanie]\footnote{ang. \emph{Direct Routing}} -- opisany powy¿ej. Wad± tego 
-rozwi±zanie jest brak mo¿liwo¶ci rozbudowy wirtualnego serwera powy¿ej sieci lokalnej, jednak¿e w porównaniu z poprzedni±
-architektur± rzeczywiste serwery nie potrzebuj± pos³ugiwaæ siê enkapsulacj± IP.
+ruch wchodzÄ…cy do poszczegÃ³lnych rzeczywistych serwerÃ³w, zaÅ› one odpowiadajÄ… bezpoÅ›rednio do uÅ¼ytkownikÃ³w. W tym rozwiÄ…zaniu 
+jak widaÄ‡ serwer virtualny moÅ¼e siÄ™ skÅ‚adaÄ‡ i z ponad 100 serwerÃ³w i nadal dystrybutor nie bÄ™dzie stanowiÅ‚ wÄ…skiego gardÅ‚a.
+Maksymalna wydajnoÅ›Ä‡ Virtual Servera w tym przypadku moÅ¼e siÄ™gaÄ‡ powyÅ¼ej 1Gbps -- w przypadku gdy dystrybutor dysponowaÄ‡
+bÄ™dzie 100Mbps kartÄ… sieciowÄ…. RozwiÄ…zanie oparte na tunelowaniu IP moÅ¼e byÄ‡ uÅ¼ywane do serwerÃ³w wirtualnych w bardzo 
+wysokich wydajnoÅ›ciach, szczegÃ³lnie dobrych do tworzenia virtualnych proxy serwerÃ³w. WadÄ… tego rozwiÄ…zania jest to, Å¼e kaÅ¼dy
+serwer musi umieÄ‡ dokonywaÄ‡ enkapsulacji IP (tunelowanie IP) wewnÄ…trz IP; 
+\item[Virtual Server poprzez bezpoÅ›rednie routowanie]\footnote{ang. \emph{Direct Routing}} -- opisany powyÅ¼ej. WadÄ… tego 
+rozwiÄ…zanie jest brak moÅ¼liwoÅ›ci rozbudowy wirtualnego serwera powyÅ¼ej sieci lokalnej, jednakÅ¼e w porÃ³wnaniu z poprzedniÄ…
+architekturÄ… rzeczywiste serwery nie potrzebujÄ… posÅ‚ugiwaÄ‡ siÄ™ enkapsulacjÄ… IP.
 \end{description}
 
-W po³±czeniu z ka¿d± implementacj± Virtual Server korzysta z nastêpuj±cych algorytmów dystrubuuj±cych pakiety:
+W poÅ‚Ä…czeniu z kaÅ¼dÄ… implementacjÄ… Virtual Server korzysta z nastÄ™pujÄ…cych algorytmÃ³w dystrubuujÄ…cych pakiety:
 \begin{itemize}
 \item marszrutowanie algorytmem Round--Robin;
-\item marszrutowanie algorytmem Weighted Round--Robin (statyczne wagi, bez wykorzystywania informacji o stanie systemów);
+\item marszrutowanie algorytmem Weighted Round--Robin (statyczne wagi, bez wykorzystywania informacji o stanie systemÃ³w);
 \item marszrutowanie typu Least Connection (dynamiczny algorytm -- opisany w tekscie);
-\item marszrutowanie typu Weighted Least Connection (jak wy¿ej + statycznie nadawane wagi poszczególnym serwerom);
+\item marszrutowanie typu Weighted Least Connection (jak wyÅ¼ej + statycznie nadawane wagi poszczegÃ³lnym serwerom);
 \item marszrutowanie Locality--Based Least Connection;
 \item marszrutowanie Locality--Based Least Connection witch Replcation;
 \item marszrutowanie typu Destination Hashing;
 \item marszrutowanie typu Source Hashing.
 \end{itemize}
 
-Zalet± Virtual Servera jest jego dzia³anie w obrêbie j±dra co oznacza wysok± wydajno¶æ i stabilno¶æ. Kolejn± zalet± jest 
-dostêpno¶æ kodu ¼ród³owego (oprogramowanie typu OpenSource) co oznacza mo¿liwo¶æ modyfikacji kodu w zale¿no¶ci od potrzeb.
+ZaletÄ… Virtual Servera jest jego dziaÅ‚anie w obrÄ™bie jÄ…dra co oznacza wysokÄ… wydajnoÅ›Ä‡ i stabilnoÅ›Ä‡. KolejnÄ… zaletÄ… jest 
+dostÄ™pnoÅ›Ä‡ kodu ÅºrÃ³dÅ‚owego (oprogramowanie typu OpenSource) co oznacza moÅ¼liwoÅ›Ä‡ modyfikacji kodu w zaleÅ¼noÅ›ci od potrzeb.
 
 \subsection{Cisco LocalDirector}
 
-LocalDirector jest nazw± rodziny urz±dzeñ produkowanych przez firmê Cisco. Urz±dzenia te s³u¿± do 
-równowa¿enia obci±¿eñ dowolnych serwerów wykorzystuj±cych TCP (np. serwery WWW, FTP, SSL) \cite{barylo30,barylo31}. 
-LocalDirector instalowany jest w konfiguracji przedstawionej na Rys. \ref{LocalDirector} z wykorzystaniem adresów prywatnych, 
+LocalDirector jest nazwÄ… rodziny urzÄ…dzeÅ„ produkowanych przez firmÄ™ Cisco. UrzÄ…dzenia te sÅ‚uÅ¼Ä… do 
+rÃ³wnowaÅ¼enia obciÄ…Å¼eÅ„ dowolnych serwerÃ³w wykorzystujÄ…cych TCP (np. serwery WWW, FTP, SSL) \cite{barylo30,barylo31}. 
+LocalDirector instalowany jest w konfiguracji przedstawionej na Rys. \ref{LocalDirector} z wykorzystaniem adresÃ³w prywatnych, 
 \begin{figure}[h]
 \centering
 \includegraphics[width=4in]{./rysunki/LocalDirector.eps}
-\caption{LSNAT symetrycznie zmieniaj±cy adres IP.}
+\caption{LSNAT symetrycznie zmieniajÄ…cy adres IP.}
 \label{LocalDirector}
 \end{figure}
 
-musi wiêc byæ instalowany jako jedyne po³±czenie pomiêdzy klasterem a bramk± (ang. \emph{gateway}) do sieci rozleg³ej. 
-LocalDirector wymaga powielania zawarto¶ci pomiêdzy serwerami w klastrze. Serwery mog± byæ po³±czone z 
-LocalDirector-em poprzez sieæ Ethernet, FastEthernet lub FDDI. Wybór serwera dokonywany jest sekwencyjnie na 
-podstawie wag uwzglêdniaj±cych indywidualne w³a¶ciwo¶ci serwera i jego obci±¿enie w postaci liczby otwartych 
-po³±czeñ TCP. LocalDirector sprawdza czy serwer siê nie za³ama³ poprzez okresowe nawi±zywanie z nim po³±czenia 
-kontrolnego (Ping, HTTP GET /). Producent zapewnia, ¿e LocalDirector, w zale¿no¶ci od modelu, jest w stanie 
-obs³u¿yæ od 7000 do 25000 po³±czeñ na sekundê przy przepustowo¶ci od 80 Mbit/sek. do 400 Mbit/sek. Istnieje 
-mo¿liwo¶æ piêtrowej konfiguracji LocalDirector-a. Kilka rozproszonych geograficznie klasterów, z których ka¿dy 
-obs³ugiwany jest przez jedno urz±dzenie LocalDirector, mo¿na zaprezentowaæ jako jeden klaster z u¿yciem tzw. 
-GlobalDirectora. GlobalDirector to w rzeczywisto¶ci serwer DNS rozdzielaj±cy zapytania pomiêdzy klastery na 
+musi wiÄ™c byÄ‡ instalowany jako jedyne poÅ‚Ä…czenie pomiÄ™dzy klasterem a bramkÄ… (ang. \emph{gateway}) do sieci rozlegÅ‚ej. 
+LocalDirector wymaga powielania zawartoÅ›ci pomiÄ™dzy serwerami w klastrze. Serwery mogÄ… byÄ‡ poÅ‚Ä…czone z 
+LocalDirector-em poprzez sieÄ‡ Ethernet, FastEthernet lub FDDI. WybÃ³r serwera dokonywany jest sekwencyjnie na 
+podstawie wag uwzglÄ™dniajÄ…cych indywidualne wÅ‚aÅ›ciwoÅ›ci serwera i jego obciÄ…Å¼enie w postaci liczby otwartych 
+poÅ‚Ä…czeÅ„ TCP. LocalDirector sprawdza czy serwer siÄ™ nie zaÅ‚amaÅ‚ poprzez okresowe nawiÄ…zywanie z nim poÅ‚Ä…czenia 
+kontrolnego (Ping, HTTP GET /). Producent zapewnia, Å¼e LocalDirector, w zaleÅ¼noÅ›ci od modelu, jest w stanie 
+obsÅ‚uÅ¼yÄ‡ od 7000 do 25000 poÅ‚Ä…czeÅ„ na sekundÄ™ przy przepustowoÅ›ci od 80 Mbit/sek. do 400 Mbit/sek. Istnieje 
+moÅ¼liwoÅ›Ä‡ piÄ™trowej konfiguracji LocalDirector-a. Kilka rozproszonych geograficznie klasterÃ³w, z ktÃ³rych kaÅ¼dy 
+obsÅ‚ugiwany jest przez jedno urzÄ…dzenie LocalDirector, moÅ¼na zaprezentowaÄ‡ jako jeden klaster z uÅ¼yciem tzw. 
+GlobalDirectora. GlobalDirector to w rzeczywistoÅ›ci serwer DNS rozdzielajÄ…cy zapytania pomiÄ™dzy klastery na 
 zasadzie podobnej do RR--DNS. 
 
 \subsection{F5 Labs BigIP}
 
-BigIP firmy F5 Labs jest tzw. rozwi±zaniem ,,pod klucz'' (ang. \emph{turn--key solution}). Oznacza to, ¿e dostarczany 
-jest tak jak urz±dzenie sprzêtowe (np. LocalDirector), choæ w rzeczywisto¶ci jest to komputer pracuj±cy pod 
-kontrol± specjalizowanego oprogramowania i systemu operacyjnego firmy F5 Labs. BigIP umo¿liwia równowa¿enie 
-obci±¿eñ ka¿dego serwera korzystaj±cego z protoko³u TCP lub UDP \cite{barylo32,barylo33}. Urz±dzenie mo¿e byæ pod³±czone w 
-konfiguracji przedstawionej na Rys. \ref{LocalDirector} lub Rys. \ref{LocalDirector1} w obydwu jednak przypadkach, aby uniemo¿liwiæ ominiêcie 
+BigIP firmy F5 Labs jest tzw. rozwiÄ…zaniem ,,pod klucz'' (ang. \emph{turn--key solution}). Oznacza to, Å¼e dostarczany 
+jest tak jak urzÄ…dzenie sprzÄ™towe (np. LocalDirector), choÄ‡ w rzeczywistoÅ›ci jest to komputer pracujÄ…cy pod 
+kontrolÄ… specjalizowanego oprogramowania i systemu operacyjnego firmy F5 Labs. BigIP umoÅ¼liwia rÃ³wnowaÅ¼enie 
+obciÄ…Å¼eÅ„ kaÅ¼dego serwera korzystajÄ…cego z protokoÅ‚u TCP lub UDP \cite{barylo32,barylo33}. UrzÄ…dzenie moÅ¼e byÄ‡ podÅ‚Ä…czone w 
+konfiguracji przedstawionej na Rys. \ref{LocalDirector} lub Rys. \ref{LocalDirector1} w obydwu jednak przypadkach, aby uniemoÅ¼liwiÄ‡ ominiÄ™cie 
 \begin{figure}[h]
 \centering
 \includegraphics[width=4in]{./rysunki/LocalDirector1.eps}
-\caption{LSNAT zmieniaj±cy jeden z adresów IP}
+\caption{LSNAT zmieniajÄ…cy jeden z adresÃ³w IP}
 \label{LocalDirector1}
 \end{figure}
 
-mechanizmu równowa¿enia obci±¿eñ, BigIP powinien znajdowaæ siê pomiêdzy klasterem serwerów, a bramk± do 
-Intetrnet-u. BigIP mo¿na po³±czyæ z klasterem poprzez sieæ Ethernet, FastEthernet, FDDI lub opcjonalnie 
-GigaBitEthernet. Urz±dzenie oferuje do wyboru siedem algorytmów rozdzia³u zadañ. Trzy z nich to algorytmy 
-statyczne, s± to: algorytm cykliczny (ang. \emph{Round--robin}); algorytm proporcjonalny przydzielaj±cy zadania wed³ug 
-ustalonych na sta³e wag i algorytm priorytetowy, który umo¿liwia wydzielenie w klastrze grup serwerów o 
-okre¶lonym priorytecie i rozdzia³ zadañ do grup, w ka¿dej z grup serwer do obs³ugi konkretnego zadania 
-wskazywany jest cyklicznie. Pozosta³e algorytmy s± dynamiczne i uwzglêdniaj± obci±¿enie poszczególnych 
-serwerów. S± to algorytm LC (ang. \emph{Least Connections}) przydzielaj±cy zadania do serwera utrzymuj±cego najmniej 
-otwartych po³±czeñ, algorytm wyznaczaj±cy ten serwer, który najszybciej odpowie na zapytanie kontrolne (np. 
-HTTP GET /), tzw. algorytm obserwacyjny bêd±cy kombinacj± powy¿szych i algorytm predyktywny, który przydziela 
-zadania (po³±czenia) do serwera, którego obci±¿enie (mierzone jako kombinacja ilo¶ci otwartych po³±czeñ i czasu 
-odpowiedzi na zapytanie kontrolne) zmniejsza³o siê najszybciej w ci±gu np. ostatnich 5 sekund.
-Konkretne modele BigIP wyposa¿one s± w procesory Intel Pentium II 450 do 600 MHz pamiêæ RAM 128 MB do 
-1GB i dysk twardy 4 GB do 8.4 GB. Producent gwarantuje przepustowo¶æ od 170 Mbit/sek. do 350 Mbit/sek. i 
-obs³ugê do 20000 zapytañ na sekundê.
+mechanizmu rÃ³wnowaÅ¼enia obciÄ…Å¼eÅ„, BigIP powinien znajdowaÄ‡ siÄ™ pomiÄ™dzy klasterem serwerÃ³w, a bramkÄ… do 
+Intetrnet-u. BigIP moÅ¼na poÅ‚Ä…czyÄ‡ z klasterem poprzez sieÄ‡ Ethernet, FastEthernet, FDDI lub opcjonalnie 
+GigaBitEthernet. UrzÄ…dzenie oferuje do wyboru siedem algorytmÃ³w rozdziaÅ‚u zadaÅ„. Trzy z nich to algorytmy 
+statyczne, sÄ… to: algorytm cykliczny (ang. \emph{Round--robin}); algorytm proporcjonalny przydzielajÄ…cy zadania wedÅ‚ug 
+ustalonych na staÅ‚e wag i algorytm priorytetowy, ktÃ³ry umoÅ¼liwia wydzielenie w klastrze grup serwerÃ³w o 
+okreÅ›lonym priorytecie i rozdziaÅ‚ zadaÅ„ do grup, w kaÅ¼dej z grup serwer do obsÅ‚ugi konkretnego zadania 
+wskazywany jest cyklicznie. PozostaÅ‚e algorytmy sÄ… dynamiczne i uwzglÄ™dniajÄ… obciÄ…Å¼enie poszczegÃ³lnych 
+serwerÃ³w. SÄ… to algorytm LC (ang. \emph{Least Connections}) przydzielajÄ…cy zadania do serwera utrzymujÄ…cego najmniej 
+otwartych poÅ‚Ä…czeÅ„, algorytm wyznaczajÄ…cy ten serwer, ktÃ³ry najszybciej odpowie na zapytanie kontrolne (np. 
+HTTP GET /), tzw. algorytm obserwacyjny bÄ™dÄ…cy kombinacjÄ… powyÅ¼szych i algorytm predyktywny, ktÃ³ry przydziela 
+zadania (poÅ‚Ä…czenia) do serwera, ktÃ³rego obciÄ…Å¼enie (mierzone jako kombinacja iloÅ›ci otwartych poÅ‚Ä…czeÅ„ i czasu 
+odpowiedzi na zapytanie kontrolne) zmniejszaÅ‚o siÄ™ najszybciej w ciÄ…gu np. ostatnich 5 sekund.
+Konkretne modele BigIP wyposaÅ¼one sÄ… w procesory Intel Pentium II 450 do 600 MHz pamiÄ™Ä‡ RAM 128 MB do 
+1GB i dysk twardy 4 GB do 8.4 GB. Producent gwarantuje przepustowoÅ›Ä‡ od 170 Mbit/sek. do 350 Mbit/sek. i 
+obsÅ‚ugÄ™ do 20000 zapytaÅ„ na sekundÄ™.
 	
 \subsection{IBM SecureWay Network Dispatcher}
 
-W zwi±zku z tym, ¿e pakiet ten jest jednym z g³ównych elementów tej pracy, jego dok³adny opis i konfiguracja znajduje siê 
-w nastêpnym rozdziale (Rozdz. \ref{r05}).
+W zwiÄ…zku z tym, Å¼e pakiet ten jest jednym z gÅ‚Ã³wnych elementÃ³w tej pracy, jego dokÅ‚adny opis i konfiguracja znajduje siÄ™ 
+w nastÄ™pnym rozdziale (Rozdz. \ref{r05}).
 
