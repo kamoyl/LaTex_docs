@@ -4,7 +4,7 @@ My **resume** written based on ModernVC template:
 * [GitHub Page of author](https://github.com/xdanaux/moderncv)
 
 If you would like to see ready example of it, please do:
-* `<git clone git@github.com:kamoyl/docs.git>`
+* ```git clone git@github.com:kamoyl/docs.git```
 * in `<cv>` directory run:
 * `<lualatex KamilCzarnecki.tex>`
 
