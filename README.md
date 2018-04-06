@@ -5,8 +5,8 @@ My **resume** written based on ModernVC template:
 
 If you would like to see ready example of it, please do:
 * ```git clone git@github.com:kamoyl/docs.git```
-* in `<cv>` directory run:
-* `<lualatex KamilCzarnecki.tex>`
+* in ```cv``` directory run:
+* ```lualatex KamilCzarnecki.tex```
 
 Of course - main prerequisite is to have installed **LaTeX**: 
 * for Linux: [TexLive](http://www.tug.org/texlive/)
@@ -23,19 +23,19 @@ This is a funny short story about some old geeks who have taken care of computer
 somewhere in the 80's using mostly phone, whistling and pieces of paper  :bowtie:  
 
 If you would like to see ready example of it, please do:
-* `<git clone git@github.com:kamoyl/docs.git>`
-* in root of cloned repo, run: `<latexmk sendbajt.tex`>:
-* main prerequisite is... fluent polish :)
+* ```git clone git@github.com:kamoyl/docs.git```
+* in root of cloned repo, run: ```latexmk sendbajt.tex```;
+* main prerequisite is... fluent polish :wink:
 
 # thesis:
 One of my thesis (**Computer Science**) written in LaTeX years ago, in time when LB was heavy big
 expensive soft, cost as hell and possibkle to install mostly on big machines like **IBM Power**  
 
 If you would like to see ready example of it, please do:
-* `<git clone git@github.com:kamoyl/docs.git>`
-* in `<thesis>` directory run:
-* `<latexmk dyplom.tex>` or 3x times `<pdflatex dyplom.tex`> or 3x times `<latex dyplom.tex`>
-* main prerequisite is... fluent polish :)
+* ```git clone git@github.com:kamoyl/docs.git```
+* in ```thesis``` directory run:
+* ```latexmk dyplom.tex``` or 3x times ```pdflatex dyplom.tex``` or 3x times ```latex dyplom.tex```
+* main prerequisite is... fluent polish :wink:
 
 > You've gotta dance like there's nobody watching,  
 > Love like you'll never be hurt,  
