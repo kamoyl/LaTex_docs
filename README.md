@@ -194,7 +194,4 @@ If you would like to see ready example of it, please do:
 * __Initial commit__
 
     [Kamil Czarnecki](kamoyl@outlook.com) - Mon, 5 Mar 2018 22:52:15 +0100
-    
-    
-    
-
+ 
