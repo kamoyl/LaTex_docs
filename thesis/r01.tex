@@ -1,0 +1,113 @@
+\chapter{Wprowadzenie. Cel pracy}
+\label{r01}
+Celem pracy jest zaprojektowanie i realizacja systemu do zarządzania wielokomputerowymi
+serwerami WWW oraz przedstawienie całokształtu tematyki w zakresie równoważenia obciążeń 
+systemów wielokomputerowych i problematyki z tym związanej.
+
+Działanie ogólnoświatowej sieci rozległej -- Internetu, rozumiane jest jako ,,luźno zorganizowana 
+międzynarodowa współpraca autonomicznych, połączonych ze sobą sieci komputerowych, w oparciu o komunikację 
+host--to--host poprzez dobrowolną przynależność do otwartych protokołów i procedur zdefiniowanych w dokumentach 
+Internet Standards, RFC 1310, RFC1311 i  RFC 1312''. 
+
+Początków Internetu należy szukać w projektach realizowanych na zlecenie Departamentu Obrony USA przez agencję 
+ARPA (ang. \emph{Advanced Research Projects Agency}) oraz jej następczynię -- agencję DARPA (ang. \emph{Defense Advanced 
+Research Projects Agency}). Przed tymi instytucjami postawiono zadanie opracowania standardów umożliwiających 
+budowę rozległej sieci komunikacyjnej odpornej na unicestwienie nawet poprzez atak nuklearny znacznej części 
+jej węzłów \cite{barylo1}. W wyniku prowadzonych prac w roku 1971 przekazana zostaje do użytku sieć ARPANET. Stosowane w niej 
+protokoły transmisji nie zapewniały jednak wystarczającej przepustowości dla stale rosnącej liczby użytkowników
+i już w roku 1973 pojawiają się propozycje pierwszych protokołów z rodziny TCP/IP -- \emph{de facto} dzisiejszego
+standardu transmisji internetowych. W roku 1981 na bazie ARPANET--u utworzona zostaje CSN (ang. \emph{Computer Science 
+Newtwork})  wykorzystywana wspólnie przez abonentów wojskowych i cywilnych. W roku 1982 
+protokoły TCP/IP wypierają całkowicie starsze protokoły (np. protokół NCP),  a do CSN średnio co 20 dni 
+podłączany jest nowy komputer. W roku 1984 następuje podział sieci na część wojskową -- MILNET i cywilną, 
+która zachowuje tradycyjną nazwę ARPANET. W miarę jak zaczyna przekraczać ona granice USA i w miarę przybywania 
+abonentów komercyjnych zaczyna pojawiać się nazwa Internet. W roku 1990 decyzją rządu USA szkielet sieci ARPANET 
+składający się z  czterech węzłów komutacyjnch (Los Angeles, Santa Barbara, Uniwersytet Stanforda i Uniwersytet 
+Utah) zbudowanych w oparciu o minikomputery Honeywell 316 zostaje uznany za przestarzały i przeznaczony do 
+rozbiórki. Zastępuje go sieć NSFNET, która do dziś jest szkieletową siecią amerykańskiej części Internetu.
+
+Kluczową ze względu na treść tej pracy datę w historii Internetu jest rok 1990. Wtedy to w Europejskim Ośrodku 
+Badań Jądrowych CERN w Genewie został opracowany i uruchomiony pierwszy serwer WWW (ang. \emph{World Wide Web}). WWW 
+jest systemem hipertekstowym tzn. przechowującym dane w postaci sieci dokumentów (plików) połączonych poprzez 
+odsyłacze. Sam dokument może zawierać tekst, grafikę, dźwięk, animacje,  sekwencje video i inne rodzaje danych.  
+Elementy wskazywane przez odsyłacze mogą znajdować się w tym samym dokumencie lub być innymi dokumentami na tym 
+samym lub innym serwerze, co dokument zawierający dany odsyłacz. Obecnie WWW to zbiór dziesiątków tysięcy, 
+połączonych siecią odsyłaczy, serwerów w wielu krajach. Każdy serwer udostępnia użytkownikom zgromadzone na nim 
+dokumenty o różnorodnej treści informacyjnej, reklamowej, rozrywkowej, handlowej (e--banki, sklepy internetowe) itp.
+Narzędziem umożliwiającym zwykłemu użytkownikowi Internetu korzystanie z zasobów WWW jest przeglądarka
+(ang. \emph{browser}). Komunikacja przeglądarki z serwerem WWW odbywa się w architekturze klient--serwer i jest 
+zawsze inicjowana przez zapytania ze strony klienta (przeglądarki). Odpowiadając na zapytania przeglądarki serwer
+WWW przesyła do niej żądane dokumenty z wykorzystaniem protokołu HTTP (ang. 
+\emph{Hyper Text Transfer Protocol}). Najczęściej stosowanym językiem opisu dokumentu hipertekstowego jest HTML 
+(ang. \emph{Hyper Text Mark up Language}). Przeglądarka interpretując otrzymany plik HTML potrafi odpowiednio rozmieścić 
+na ekranie użytkownika tekst, grafikę i odsyłacze składające się na dokument. Pliki HTML mają  charakter 
+statyczny -- służą do prezentacji wcześniej przygotowanych danych. Specyfikacja HTML jest jednak bardzo 
+elastyczna -- do plików HTML można włączać skompilowane do postaci kodów bajtowych programy języka Java, 
+skrypty JavaScript, Visual Basic--a czy kontrolki ActiveX, w ten sposób serwer WWW powoduje uruchomienie w 
+komputerze użytkownika  programów przesłanych w dokumencie, co uatrakcyjnia wygląd dokumentu i umożliwia pewien 
+stopień dialogu z użytkownikiem. Dla zadań takich jak np. wyszukiwanie danych do pliku HTML dołączać można 
+odwołania do programów (skryptów) CGI (ang. \emph{Common Gateway Interface}). Program napisany zgodnie z normą CGI 
+wykonywany jest w tym samym komputerze, w którym działa proces serwera WWW -- w takiej sytuacji komputer ten 
+staje się serwerem aplikacji (może również prezentować dane wydobywane z baz danych).
+
+Nie sposób mówić o serwerach WWW w oderwaniu od takich usług internetowych jak 
+Gopher, czy serwery FTP, gdyż wiele dokumentów hipertekstowych zawiera odsyłacze inicjujące pobieranie plików z 
+serwerów FTP lub dokonujących przełączenia do systemu Gopher (czysto tekstowego systemu informacyjnego).
+
+Przedstawiana praca dotyczy problematyki rozwoju sieci Internet w zakresie burzliwie rozwijających się systemów 
+informacyjnych opartych o WWW, a dokładniej możliwości budowy i implementacji wysokowydajnych systemów WWW opartych
+o architekturę wieloserwerową. Tradycyjny system WWW, składający się z pojedynczego komputera nie jest w stanie spełnić
+wymagań rosnącej liczby coraz bardziej wybrednych klientów (zwiększanie procesorów, pamięci operacyjne i dyskowej w platformach
+jednoserwerowych ma swoje granice). Przeciętny użytkownik ,,pajęczyny'' oczekuje w miarę 
+szybkiego,
+ale przede wszystkim zawsze dostępnego serwisu internetowego. Mając na uwadze fakt, że systemy WWW stanowią od pewnego czasu
+znakomitą platformę do prowadzenia handlu elektronicznego -- dostępność witryn jest niezbędna do utrzymania się na rynku firm 
+prowadzących tego rodzaju usługi. Jedynym, jak się wydaje, rozwiązaniem jest tworzenie systemów WWW budowanych
+na bazie wieloserwerowej -- tylko takie rozwiązanie może zapewnić ciągłą dostępność do zasobów WWW (ich główną zaletą
+jest możliwość stopniowej i teoretycznie niograniczonej rozbudowy).
+
+Już w roku 1995 pakiety HTTP stanowiły 36\% wszystkich pakietów przesyłanych w 
+sieci szkieletowej NSFNET \cite{barylo2} i udział ten wykazywał stałą tendencję wzrostową. Obecnie głównym motorem rozwoju 
+,,światowej pajęczyny'' są wszelkiego rodzaju e--biznesy (platformy B2B, B2C i inne), co wiąże się z ogromną 
+integracją tradycyjnego statycznego HTML--a (lub XML--a) z elementami dynamicznymi zmieniającymi się w czasie. 
+Zwiększa to już i tak niemałe trudności w optymalnym konstruowaniu serwerów WWW. W związku z problemami 
+związanymi z potężnym przyrostem internautów oraz komplikacjami w ciągłym rozwijaniu pojedynczych komputerów 
+będących serwerami WWW, a także wiązaniu ze sobą różnorakich usług internetowych -- stale zwiększającym się 
+uznaniem (oraz znakomitym stosunkiem wydajność/cena) cieszą się systemy rozproszone: 
+\begin{description}
+\item[klastry webowe] -- serwery WWW rozproszone lokalnie tzn. funkcjonujące w obrębie sieci lokalnej;
+\item[rozproszone serwery webowe] -- rozproszone geograficznie serwery webowe pomiędzy którymi istnieje mechanizm szeregowania;
+\item[rozproszone klastry webowe] -- jest to szczególny przypadek rozmieszczenia serwerów webowych -- stanowi kombinację 
+globalnego i lokalnego rozproszenia. 
+\end{description}
+Problemem w ich wykorzystaniu 
+jest odpowiednie skierowanie klientów do najlepszego serwisu tzn. takiego, który bez względu na obciążenie jest osiągalny dla 
+klienta i zwraca mu odpowiedź możliwie najszybciej. Aby zrealizować tego typu architekturę konieczne jest stworzenie
+odpowiednich mechanizmów szeregowania zapytań klienckich, algorytmów szeregowania wyznaczającego najlepszy serwer oraz 
+urządzenia, w którym jest zaimplementowany mechanizm i algorytm szeregowania. W zależności od umiejscowienia jednostki
+szeregującej zapytania od klientów można wyróżnić trzy grupy metod:
+\begin{itemize}
+\item podejście: po stronie klienta (wymagające modyfikacji po stronie klienta -- np.: ingerencji w budowę przeglądarki);
+\item podejście z wykożystaniem niezależnego węzła dystrybuującego zapytania od klientów (polegające na modyfikacji lub przekazywaniu
+pakietów kierowanych do systemu konkretnym serwerom realizującym zlecenie -- np.: komputer z zainstalowanym oprogramowaniem SecureWay Network Dispatcher firmy IBM);
+\item podejście: po stronie serwera (wymagające modyfikacji po stronie serwera)
+\end{itemize}
+Szczegółowo, zarówno mechanizmy szeregowania zapytań, algorytmy szeregowania jak i urządzenia, oraz sposób implementacji tak 
+mechanizmów jak i algorytmów zostanie szczegółowo omówiony w dalszej części tej pracy (patrz: rozdział \ref{r03} i \ref{r04})
+
+Jako przykład systemu o większej wydajności i dostępności zaimplementowane zostanie rozwiązanie oparte o architekturę 
+wieloserwerową w oparciu o komputery IBM RS/6000 pracujące pod kontrolą systemu operacyjnego AIX oraz maszyny typu PC
+pracujące pod kontrolą MS Windows NT z wykorzystaniem profesjonalnego oprogramowania równoważącego obciążenie -- pakietu
+IBM SecureWay Nework Dispatcher. 
+
+Celem pracy jest prezentacja algorytmów i rozwiązań służących do zarządzania rozproszonymi 
+systemami WWW oraz przykład implementacji takiego rozwiązania. 
+Omawiana instalacja serwerowa została zestawiona w laboratorium Instytutu Sterowania i Techniki Systemów 
+Politechniki Wrocławskiej. 
+
+W dalszej części pracy zostaną przedstawione protkoły TCP/IP, których znajomość jest konieczna do zrozumienia treści zawartych 
+w części praktycznej. Ten krótki opis obejmie IP, TCP, UDP, HTTP, FTP, SMTP, SNMP, SSL, DNS, oraz adresowanie URL. Po opisie 
+protokołów zostanie szczegółowo przybliżona architektura klient--serwer, struktura WWW oraz klasyfikacja i opis architektur
+rozproszonych serwerów WWW. Kolejny rozdział wyjaśnia czym jest i do czego jest potrzebne zarządzanie wielkomputerowymi 
+systemami WWW oraz w jakich sytuacjach się to zarządzanie stosuje. Ostatnim punktem tej pracy jest opis konfiguracji 
+przykładowego systemu WWW wykorzystującego oprogramowanie IBM Network Dispatcher\footnote{Aktualnie IBM Network Dispatcher jest elementem oprogramowania o nazwie IBM WebSphere Edge Server}.
