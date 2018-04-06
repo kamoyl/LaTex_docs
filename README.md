@@ -3,42 +3,45 @@ My **resume** written based on ModernVC template:
 * [LaTeX templates ModernCV page](http://www.latextemplates.com/template/moderncv-cv-and-cover-letter)
 * [GitHub Page of author](https://github.com/xdanaux/moderncv)
 
-## ToDo:
-- [ ] - correct first paragraph - regarding to works done;
-- [ ] - upgrade to newest ModernCV
-- [ ] - corections in paragraph
-
 If you would like to see ready example of it, please do:
-* `<git clone git@github.com:kamoyl/docs.git>`
-* in `<cv>` directory run:
-* `<lualatex KamilCzarnecki.tex>`
+* ```git clone git@github.com:kamoyl/docs.git```
+* in ```cv``` directory run:
+* ```lualatex KamilCzarnecki.tex```
 
 Of course - main prerequisite is to have installed **LaTeX**: 
 * for Linux: [TexLive](http://www.tug.org/texlive/)
 * for macOS: [macTeX](http://www.tug.org/mactex/)
 * for windows: [micTeX](https://miktex.org/)
 
+## ToDo:
+- [ ] - correct first paragraph - regarding to works done;
+- [ ] - upgrade to newest ModernCV
+- [ ] - corections in paragraph
+
 # sendbajt story:
 This is a funny short story about some old geeks who have taken care of computer science 
-somewhere in the 80's using mostly phone, whistling and pieces of paper :)
+somewhere in the 80's using mostly phone, whistling and pieces of paper  :bowtie:  
+
 If you would like to see ready example of it, please do:
-* `<git clone git@github.com:kamoyl/docs.git>`
-* in root of cloned repo, run: `<latexmk sendbajt.tex`>:
-* main prerequisite is... fluent polish :)
+* ```git clone git@github.com:kamoyl/docs.git```
+* in root of cloned repo, run: ```latexmk sendbajt.tex```;
+* main prerequisite is... fluent polish :wink:
 
 # thesis:
 One of my thesis (**Computer Science**) written in LaTeX years ago, in time when LB was heavy big
-expensive soft, cost as hell and possibkle to install mostly on big machines like **IBM Power**
-If you would like to see ready example of it, please do:
-* `<git clone git@github.com:kamoyl/docs.git>`
-* in `<thesis>` directory run:
-* `<latexmk dyplom.tex>` or 3x times `<pdflatex dyplom.tex`> or 3x times `<latex dyplom.tex`>
-* main prerequisite is... fluent polish :)
+expensive soft, cost as hell and possibkle to install mostly on big machines like **IBM Power**  
 
-> You've gotta dance like there's nobody watching,
-> Love like you'll never be hurt,
-> Sing like there's nobody listening,
-> And live like it's heaven on earth.
+If you would like to see ready example of it, please do:
+* ```git clone git@github.com:kamoyl/docs.git```
+* in ```thesis``` directory run:
+* ```latexmk dyplom.tex``` or 3x times ```pdflatex dyplom.tex``` or 3x times ```latex dyplom.tex```
+* main prerequisite is... fluent polish :wink:
+
+> You've gotta dance like there's nobody watching,  
+> Love like you'll never be hurt,  
+> Sing like there's nobody listening,  
+> And live like it's heaven on earth.  
+
 ― William W. Purkey
 
 # Changelog:
