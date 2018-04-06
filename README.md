@@ -3,11 +3,6 @@ My **resume** written based on ModernVC template:
 * [LaTeX templates ModernCV page](http://www.latextemplates.com/template/moderncv-cv-and-cover-letter)
 * [GitHub Page of author](https://github.com/xdanaux/moderncv)
 
-## ToDo:
-- [ ] - correct first paragraph - regarding to works done;
-- [ ] - upgrade to newest ModernCV
-- [ ] - corections in paragraph  
-
 If you would like to see ready example of it, please do:
 * `<git clone git@github.com:kamoyl/docs.git>`
 * in `<cv>` directory run:
@@ -17,6 +12,11 @@ Of course - main prerequisite is to have installed **LaTeX**:
 * for Linux: [TexLive](http://www.tug.org/texlive/)
 * for macOS: [macTeX](http://www.tug.org/mactex/)
 * for windows: [micTeX](https://miktex.org/)
+
+## ToDo:
+- [ ] - correct first paragraph - regarding to works done;
+- [ ] - upgrade to newest ModernCV
+- [ ] - corections in paragraph
 
 # sendbajt story:
 This is a funny short story about some old geeks who have taken care of computer science 
