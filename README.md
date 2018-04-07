@@ -34,7 +34,7 @@ expensive soft, cost as hell and possibkle to install mostly on big machines lik
 If you would like to see ready example of it, please do:
 * ```git clone git@github.com:kamoyl/docs.git```
 * in ```thesis``` directory run:
-* ```latexmk dyplom.tex``` or 3x times ```pdflatex dyplom.tex``` or 3x times ```latex dyplom.tex```
+* ```latexmk dyplom.tex``` or times ```pdflatex dyplom.tex && bibtex dyplom && pdflatex dyplox.tex && pdflates dyplom.tex```
 * main prerequisite is... fluent polish :wink:
 
 > You've gotta dance like there's nobody watching,  
