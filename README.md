@@ -14,9 +14,9 @@ Of course - main prerequisite is to have installed **LaTeX**:
 * for windows: [micTeX](https://miktex.org/)
 
 ## ToDo:
-- [ ] - correct first paragraph - regarding to works done;
-- [ ] - upgrade to newest ModernCV
-- [ ] - corections in paragraph
+- [ ] correct first paragraph - regarding to works done;
+- [ ] upgrade to newest ModernCV
+- [ ] corections in paragraph
 
 # sendbajt story:
 This is a funny short story about some old geeks who have taken care of computer science 
