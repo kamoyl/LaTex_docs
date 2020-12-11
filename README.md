@@ -1,3 +1,9 @@
+# This repo is about some of docs I'm maintening
+
+It is about my resume written in LaTeX based on some fancy template
+It is about my thesis written also in LaTeX
+And last but not least it is about one funny story I have found from my youth about hackers group (it is a joke, but good one I think)...
+
 # my CV:
 My **resume** written based on ModernVC template: 
 * [LaTeX templates ModernCV page](http://www.latextemplates.com/template/moderncv-cv-and-cover-letter)
@@ -12,11 +18,6 @@ Of course - main prerequisite is to have installed **LaTeX**:
 * for Linux: [TexLive](http://www.tug.org/texlive/)
 * for macOS: [macTeX](http://www.tug.org/mactex/)
 * for windows: [micTeX](https://miktex.org/)
-
-## ToDo:
-- [ ] - correct first paragraph - regarding to works done;
-- [ ] - upgrade to newest ModernCV
-- [ ] - corections in paragraph
 
 # sendbajt story:
 This is a funny short story about some old geeks who have taken care of computer science 
