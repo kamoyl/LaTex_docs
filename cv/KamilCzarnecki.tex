@@ -28,6 +28,8 @@
 \moderncvstyle{casual} % CV theme - options include: 'casual' (default), 'classic', 'oldstyle' and 'banking'
 \moderncvcolor{orange} % CV color - options include: 'blue' (default), 'orange', 'green', 'red', 'purple', 'grey' and 'black'
 \usepackage[scale=0.75]{geometry} % Reduce document margins
+%\usepackage{expl3}
+%\expandafter\def\csname ver@l3regex.sty\endcsname{}
 
 %----------------------------------------------------------------------------------------
 %   NAME AND CONTACT INFORMATION SECTION
@@ -40,7 +42,7 @@
 \address{Aïda 4}{5629NP, Eindhoven}% optional, remove / comment the line if not wanted; the "postcode city" and "country" arguments can be omitted or provided empty
 \mobile{+31~(633)~241~768}
 \email{kamil.czarnecki@outlook.com}
-\homepage{facebook.com/ExclusiveDance4All}{facebook.com/ExclusiveDance4All} % The first argument is the url for the clickable link, the second argument is the url displayed in the template - this allows special characters to be displayed such as the tilde in this example
+%\homepage{facebook.com/ExclusiveDance4All}{facebook.com/ExclusiveDance4All} % The first argument is the url for the clickable link, the second argument is the url displayed in the template - this allows special characters to be displayed such as the tilde in this example
 %\extrainfo{additional information}
 \extrainfo{linkedIn: http://lnkd.in/9Qv2sD}
 \extrainfo{GitHub: https://github.com/kamoyl}
@@ -54,9 +56,8 @@
 \makecvtitle % Print the CV title
 
 \section{Summary}
-
-\cventry{}{{\footnotesize IT Specialist, Systems and Cloud Engineer - {\Large responsible} for implementing and maintening IT solutions with {\large huge} technical {\large knowledge and experience}. Analysing Operating Enviroments and Business Needs with {\Large excellent organisation and communication} skills. Very {\large organised} person with good {\large analytic} and logic thinking, {\large honest}, dutifull and {\large creative}. Good {\Large team player}. An experienced and curious problem {\large solver}, who adapts to challenging situations and {\Large learns quickly and constantly}. An aptitude for hard work with an ability to manage multiple tasks {\large efficiently} and a positive 'can-- do' attitude.
-\footnotesize My long-term goal is to be a {\large Team Leader} or an IT {\Large Architect}. I'm very interested in {\Large R\&D} work, or services {\large support} area}}{}{}{}{}
+\cventry{in short}{{\footnotesize IT Specialist, DevOps and AWS Cloud Engineer - {\Large responsible} for implementing and maintening IT solutions with {\large huge} and wide technical {\large knowledge and experience}. Analysing Operating Enviroments and Business Needs with {\Large excellent organisation and communication} skills. Very {\large organised} person with good {\large analytic} and logic thinking, {\large honest}, dutifull and {\large creative}. Good {\Large team player}. An experienced and curious problem {\large solver}, who adapts to challenging situations and {\Large learns quickly and constantly}. An aptitude for hard work with an ability to manage multiple tasks {\large efficiently} and a positive 'can-- do' attitude.}
+\newline\newline Personal development and learning new, current technologies is very important in IT -- so I'm doing my best to be aligned with it as well. I have planned (and started already) the whole education and certification path of cloud technologies (AWS and Azure). I recently prepared bunch of scripts which makes AWS EC2, Lambda, EventBridge, IAM, and couple of related features as easy to use as possible (\url{https://github.com/kamoyl/AWS_automation}). My responsibilities at work are to design and implement (and migrate to AWS) all automation in processes realated to management and maintenance of Teradata system. I personally design some of crucial, commonly used solutions in KPN - from the perspective of systems and cloud engineering.\newline\newline I'm born engineer, interested in Science\&Technology, treating IT as a hobby with passion -- testing and learning new solutions at home on my own complex network.}{\newline\newline My motto: Automation is the key (especially in the cloud)\newline\newline}{}{}{}
 
 %----------------------------------------------------------------------------------------
 %   Projects section
@@ -247,6 +248,12 @@
 \cvitemwithcomment{Dutch}{Basic}{}
 
 \section{Trainings}{}
+\cvitem{planned}{AWS Certified Security - Specialty}
+\cvitem{planned}{AWS Certified DevOps Engineer - Professional}
+\cvitem{planned}{AWS Certified SysOps Administrator - Associate}
+\cvitem{planned}{AWS Certified Developer - Associate}
+\cvitem{planned}{AWS Certified Solutions Architect - Professional}
+\cvitem{}{AWS Certified Solutions Architect Associate SAA-C02}
 \cvitem{}{Red Hat Ceph Storage Architecture and Administration}
 \cvitem{}{AIX 6 Jumpstart for UNIX Professionals}
 \cvitem{}{PowerHA for AIX I: Implementation, Configuration and Administration}
