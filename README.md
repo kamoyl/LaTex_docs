@@ -1,56 +1,129 @@
-# my CV:
-My **resume** written based on ModernVC template: 
-* [LaTeX templates ModernCV page](http://www.latextemplates.com/template/moderncv-cv-and-cover-letter)
-* [GitHub Page of author](https://github.com/xdanaux/moderncv)
 
-If you would like to see ready example of it, please do:
-* ```git clone git@github.com:kamoyl/docs.git```
-* in ```cv``` directory run:
-* ```lualatex KamilCzarnecki.tex```
+* __* added changelog__
 
-Of course - main prerequisite is to have installed **LaTeX**: 
-* for Linux: [TexLive](http://www.tug.org/texlive/)
-* for macOS: [macTeX](http://www.tug.org/mactex/)
-* for windows: [micTeX](https://miktex.org/)
+    [Kamil Czarnecki](kamoyl@outlook.com) - Wed, 17 Mar 2021 15:28:27 +0100
+    
+    
 
-## ToDo:
-- [ ] correct first paragraph - regarding to works done;
-- [ ] upgrade to newest ModernCV
-- [ ] corections in paragraph
+* __* updated moderncv package__
 
-# sendbajt story:
-This is a funny short story about some old geeks who have taken care of computer science 
-somewhere in the 80's using mostly phone, whistling and pieces of paper  :bowtie:  
+    [Kamil Czarnecki](kamoyl@outlook.com) - Wed, 17 Mar 2021 15:22:06 +0100
+    
+    * corrected nonexisted LaTex package i moderncv.sty
+    
+    * extended summary section in resume - in case of anything this might be one
+    and only page even
+    
 
-If you would like to see ready example of it, please do:
-* ```git clone git@github.com:kamoyl/docs.git```
-* in root of cloned repo, run: ```latexmk sendbajt.tex```;
-* main prerequisite is... fluent polish :wink:
+* __* Updated tasks in KPN__
 
-# thesis:
-One of my thesis (**Computer Science**) written in LaTeX years ago, in time when LB was heavy big
-expensive soft, cost as hell and possibkle to install mostly on big machines like **IBM Power**  
+    [Kamil Czarnecki](kamoyl@outlook.com) - Wed, 20 Jan 2021 21:26:57 +0100
+    
+    
 
-If you would like to see ready example of it, please do:
-* ```git clone git@github.com:kamoyl/docs.git```
-* in ```thesis``` directory run:
-* ```latexmk dyplom.tex``` or 
-```
-pdflatex dyplom.tex
-bibtex dyplom
-pdflatex dyplox.tex
-pdflates dyplom.tex
-```
-* main prerequisite is... fluent polish :wink:
+* __Added recent responsibilities__
 
-> You've gotta dance like there's nobody watching,  
-> Love like you'll never be hurt,  
-> Sing like there's nobody listening,  
-> And live like it's heaven on earth.  
+    [Kamil Czarnecki](kamoyl@outlook.com) - Wed, 8 Jul 2020 17:47:13 +0200
+    
+    Updated address
+    
 
-― William W. Purkey
+* __Small changes in last work description__
 
-# Changelog:
+    [Kamil Czarnecki](kamoyl@outlook.com) - Fri, 16 Aug 2019 12:06:12 +0200
+    
+    
+
+* __Removed things done section__
+
+    [Kamil Czarnecki](kamoyl@outlook.com) - Fri, 20 Jul 2018 01:13:54 +0200
+    
+    
+
+* __Only small changes to README__
+
+    [Kamil Czarnecki](kamoyl@outlook.com) - Sun, 8 Apr 2018 00:49:30 +0200
+    
+    
+
+* __Only small changes to README__
+
+    [Kamil Czarnecki](kamoyl@outlook.com) - Sun, 8 Apr 2018 00:48:36 +0200
+    
+    
+
+* __Only small changes to README__
+
+    [Kamil Czarnecki](kamoyl@outlook.com) - Sun, 8 Apr 2018 00:47:00 +0200
+    
+    
+
+* __Testing page break in markdown__
+
+    [Kamil Czarnecki](kamoyl@outlook.com) - Fri, 6 Apr 2018 12:57:47 +0200
+    
+    
+
+* __Testing page break in markdown__
+
+    [Kamil Czarnecki](kamoyl@outlook.com) - Fri, 6 Apr 2018 12:55:31 +0200
+    
+    
+
+* __Testing page break in markdown__
+
+    [Kamil Czarnecki](kamoyl@outlook.com) - Fri, 6 Apr 2018 12:54:12 +0200
+    
+    
+
+* __Testing page break in markdown__
+
+    [Kamil Czarnecki](kamoyl@outlook.com) - Fri, 6 Apr 2018 12:53:24 +0200
+    
+    
+
+* __Testing page break in markdown__
+
+    [Kamil Czarnecki](kamoyl@outlook.com) - Fri, 6 Apr 2018 12:52:36 +0200
+    
+    
+
+* __Testing page break in markdown__
+
+    [Kamil Czarnecki](kamoyl@outlook.com) - Fri, 6 Apr 2018 12:50:29 +0200
+    
+    
+
+* __Testing page break in markdown__
+
+    [Kamil Czarnecki](kamoyl@outlook.com) - Fri, 6 Apr 2018 12:48:58 +0200
+    
+    
+
+* __Testing page break in markdown__
+
+    [Kamil Czarnecki](kamoyl@outlook.com) - Fri, 6 Apr 2018 12:47:29 +0200
+    
+    
+
+* __Testing page break in markdown__
+
+    [Kamil Czarnecki](kamoyl@outlook.com) - Fri, 6 Apr 2018 12:46:46 +0200
+    
+    
+
+* __Adde README header for easier manipulation of Changelog__
+
+    [Kamil Czarnecki](kamoyl@outlook.com) - Fri, 6 Apr 2018 12:24:57 +0200
+    
+    
+
+* __Lots of changes to resume - still I&#39;m not convinced - they are well written, in appropriate place etc. :)__
+
+    [Kamil Czarnecki](kamoyl@outlook.com) - Fri, 6 Apr 2018 12:19:50 +0200
+    
+    added changed Changelog
+    
 
 * __Added README with proper markdown__
 
@@ -171,6 +244,12 @@ pdflates dyplom.tex
     
     
 
+* __Set theme jekyll-theme-cayman__
+
+    [Kamil Czarnecki](kamoyl@outlook.com) - Mon, 5 Mar 2018 23:27:19 +0100
+    
+    
+
 * __Modified packages to make document nicer looking__
 
     [Kamil Czarnecki](kamoyl@outlook.com) - Mon, 5 Mar 2018 23:24:54 +0100
@@ -203,4 +282,7 @@ pdflates dyplom.tex
 * __Initial commit__
 
     [Kamil Czarnecki](kamoyl@outlook.com) - Mon, 5 Mar 2018 22:52:15 +0100
- 
+    
+    
+    
+
